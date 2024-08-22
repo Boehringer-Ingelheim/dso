@@ -27,7 +27,7 @@ def cli(name: str | None = None, description: str | None = None):
     this case, it will initialize files from the template that do not exist yet, but never overwrite existing files.
     """
     if name is None:
-        name = Prompt.ask('[bold]Please enter the name of the project, e.g. "BI_907828_1403_MDM2"')
+        name = Prompt.ask('[bold]Please enter the name of the project, e.g. "single_cell_lung_atlas"')
 
     target_dir = Path(getcwd()) / name
 
