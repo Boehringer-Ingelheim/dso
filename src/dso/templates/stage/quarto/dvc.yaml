@@ -1,0 +1,11 @@
+stages:
+  {{ stage_name }}:
+    params:
+      - dso.quarto
+    deps:
+      - src/{{ stage_name }}.qmd
+    outs:
+      - output
+      - report/{{ stage_name }}.html
+    cmd:
+      - dso exec quarto .

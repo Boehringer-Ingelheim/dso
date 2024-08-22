@@ -1,0 +1,41 @@
+# Editors
+*.code-workspace
+.vscode
+
+# Python stuff
+*.py[cod]
+*$py.class
+__pycache__
+.ipynb_checkpoints
+
+# R stuff
+.Rhistory
+.Rapp.history
+.RData
+.RDataTmp
+.Renviron
+*.Rproj
+## Temporary files created by R markdown
+*.utf8.md
+*.knit.md
+
+# Slurm
+*.out
+
+# Nextflow
+.nextflow*
+
+# Matlab stuff
+*.asv
+*.m~
+*.mex*
+slprj/
+sccprj/
+*.autosave
+*.slxc
+
+# nodejs/pre-commit
+/node_modules
+
+# dso
+.dso.json

@@ -1,0 +1,179 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog][],
+and this project adheres to [Semantic Versioning][].
+
+[keep a changelog]: https://keepachangelog.com/en/1.0.0/
+[semantic versioning]: https://semver.org/spec/v2.0.0.html
+
+## v0.8.1
+
+### Fixes
+
+-   Fixed and issue with spaces in image filenames when watermarking a quarto document
+
+## v0.8.0
+
+### New Features
+
+-   `dso init` and `dso create folder` now also work in existing directories. In such case missing files will be added
+    from the template, but existing files are never overwritten.
+-   There's now a template for a bash stage available in `dso create stage`. The stage template needs can be specified
+    via the `--template` flag, otherwise the user is prompted to choose a template.
+-   `dso` now has flags to control logging verbosity. The default log-level is `info`. `-q` will set it to `warning`,
+    `-qq` to `error` and `-v` to `debug`. The "quiet" option can also be activated by setting the environment variable
+    `DSO_QUIET=1` or `DSO_QUIET=2`.
+-   `dso exec` and `dso get-config` now have a `--skip-compile` flag to disable automatic internal calls to
+    `dso compile-config`. The flag can also be activated by setting the environment variable `DSO_SKIP_COMPILE=1`.
+
+### Fixes
+
+-   Fix that compile-config also compiles parents when in a directory without a `params.in.yaml` file.
+-   The order of dictionaries is now preserved by `dso get-config`.
+-   When running `dso init` or `dso create`, `dso compile-config` is now only executed
+    after it was clearly communicated with the user that the project/stage/folder was successfully created.
+-   Specifying a stylesheet using `css` via `dso.quarto` is now possible.
+-   Adjusted the log level of some messages to more reasonable defaults. Some messages that were previously `info`
+    messages are now `debug` messages and not shown by default.
+-   When running `dso repro`, configuration is only compiled once and not recompiled when `dso exec` or `dso get-config`
+    is called internally. This reduces runtime and redundant log messages.
+
+
+## v0.7.0
+
+-   Improved watermarking support
+
+    -   Added test cases for watermarking and the pandocfilter
+    -   Support for SVG images
+    -   There's now a `dso watermark` command line interface to watermark specified image files. In the future this
+        can be used to provide a custom plotting device in R that performs the watermarking.
+    -   Changed the watermark layout to use a tiled pattern which is less obstrusive and is guaranteed to cover the entire plot
+    -   The watermark is now fully configurable via `params.in.yaml`:
+
+        ```yaml
+        dso:
+            quarto:
+                watermark:
+                    text: WATERMARK
+                    # change the visuals - Usually fine to stick with the default, but these are the options that can be changed
+                    tile_size: [100, 100]
+                    font_size: 12
+                    font_outline: 2
+                    font_color: black
+                    font_outline_color: "#AA111160"
+        ```
+
+-   Fix issue where dso was stuck in an infinity loop while searching for a config file. Now it should fail
+    if it can't be found. To realize this the funcitonality for searching parent folders for a certain file
+    that was used in different places was refactored into a separate function.
+
+## v0.6.1
+
+-   Fix issue in `dso get-config` if multiple parameters have been used in a single line in `deps:`.
+
+## v0.6.0
+
+-   Add a `dso lint` command that performs consistency checks on dso projects. For now, only a single rule is
+    implemented, but it can be easily extended. The rule:
+    -   `DSO001`: In a quarto stage, ensure `dso::read_params` is called and stage name is correct.
+-   Logging information is now printed to STDERR instead of STDOUT
+-   Add `dso get-config <STAGE>` which will compile and print the configuration for a given stage to STDOUT.
+    Additionally, it filters the output to fields that are specified in `dvc.yaml` which forces the user
+    to declare all dependencies in `dvc.yaml`.
+-   Add automated watermarking of plots in quarto documents as experimental feature. For now, only png images are supported.
+    To enable, add to `params.in.yaml`:
+
+    -   `dso.quarto.watermark`: a text to be shown as watermark.
+    -   `dso.quarto.disclaimer.text`: a text to be shown as disclaimer box.
+    -   `dso.quarto.disclaimer.title`: title of the disclaimer box.
+
+    The disclaimer box is only shown if both text and title are set.
+
+### Migration advice
+
+-   Update `dso-r` to v0.3.0 to take advantage of `dso get-config`.
+
+-   Add the following rule to your `.pre-commit-config.yaml`:
+    ```yaml
+      - repo: local
+          hooks:
+          [...]
+          - id: lint
+              name: Run dso lint
+              entry: dso lint --skip-compile
+              language: system
+              stages: [commit]
+    ```
+
+## v0.5.0
+
+-   `dso.before_script` is now `dso.quarto.before_script`. This change has been made because different "exec" modules
+    will likely need different setup-scripts (i.e. environment modules). If the script shall be shared nevertheless,
+    this can be done with jinja templating.
+-   It is now possible to specify bibliography files in `params.in.config:dso.quarto.bibliography` using `!path`.
+-   Upon `dso repro`, the CLI asks once if the user wants to install the pre-commit hooks
+
+### Migration advice
+
+-   Move `dso.before_script` to `dso.quarto.before_script` in all your config files.
+-   Update all quarto stages to depend only on `params:dso.quarto` instead of `params:dso`. This will avoid
+    invalidating the cache unnecessarily.
+-   add `/.dso.json` to your .gitignore file
+
+## v0.4.4
+
+-   Remove confirmation before overwriting a newer `params.yaml` file - It turned out not to work well with
+    switching branches in git and led to way too many unnecessary questions.
+-   Do not fail when `dso.quarto` is `null` in `params.in.yaml` (not all cases were addressed in v0.4.3)
+
+## v0.4.3
+
+-   Fix confirmation to overwrite params.yaml
+-   Improve error message when `dso exec quarto` fails
+-   Make pre-commit hooks verbose
+-   Do not fail when `dso.quarto` is `null` in `params.in.yaml`
+
+## v0.4.2
+
+-   Update quarto template to include `dso` params as dependency
+-   Reduce the number of false-positives when asking for confirmation to overwrite params.yaml
+
+## v0.4.1
+
+-   Allow a tolerance of 1s when comparing timestamps of params.in.yaml and params.yaml
+
+## v0.4.0
+
+-   Ask for confirmation before overwriting a newer `params.yaml` file
+-   The log messages when compiling configuration files have improved
+-   Added `dso exec quarto`, a convenient wrapper to execute quarto stages
+    -   Quarto configuration/headers will be read from `params.yaml:qso.quarto`
+    -   A shell snippet specified in `params.yaml:dso.before_script` will be executed before rendering the report.
+        This is useful for setting up the environment, e.g. by loading modules
+
+## v0.3.1
+
+-   Update quarto template to be concordant with latest dso-r version
+
+## v0.3.0
+
+-   Updated quarto template to use dso code to load files
+-   `dso compile-config` now optionally supports specifying a list of paths
+-   Renamed `dso create project` to `dso init`
+-   Added `dso create folder` in addition to `dso create stage`.
+-   Currently only one template for `dso init`, `dso create folder` and `dso create stage` but prepared the project
+    to easily support multiple templates in the future
+-   Improved pre-commit config. Install it using `pre-commit install` in the project. It automatically performs some
+    consistency checks and dvc pull/push/checkout.
+
+## v0.2.0
+
+-   It's now possible to specify paths via the `!path` tag in params.in.yaml. These paths will be checked for existence
+    and automatically resolved such that they are always relative to the compiled params.yaml files.
+
+## v0.1.0
+
+-   initial prototype
+-   `dso create` command

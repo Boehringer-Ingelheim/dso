@@ -1,0 +1,2 @@
+params.yaml merge=ours
+dvc.lock merge=ours
