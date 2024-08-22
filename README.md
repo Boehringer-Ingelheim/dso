@@ -128,3 +128,13 @@ The tool will be made available on PyPI in the near future.
 ## Release notes
 
 See the [changelog](./CHANGELOG.md).
+
+## Credits
+
+dso was initially developed by
+ * [Gregor Sturm](https://github.com/grst)
+ * [Tom Schwarzl](https://github.com/tschwarzl)
+ * [Daniel Schreyer](https://github.com/dschreyer)
+ * [Alexander Peltzer](https://github.com/apeltzer)
+
+DSO depends on many great open source projects, most notably [dvc](https://github.com/iterative/dvc), [hiyapyco](https://github.com/zerwes/hiyapyco) and [jinja2](https://jinja.palletsprojects.com/). 
