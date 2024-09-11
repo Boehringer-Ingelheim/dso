@@ -17,6 +17,7 @@ def _filter_nested_dict(data: dict, keys: Collection[str]) -> dict:
     """Filter a nested dictionary based on a list of dot-separated keys, e.g. `xxx.yyy`, `xxx.yyy.zzz`"""
     result = {}
     keys = sorted((x.split(".", maxsplit=1) for x in keys), key=lambda x: x[0])  # type: ignore
+    print(keys)
     for k, g in groupby(keys, lambda x: x[0]):
         g = list(g)
         # if the key (without any sub-keys) is part of the group, we add the entire field
@@ -130,9 +131,9 @@ def cli(stage, all, skip_compile):
     If multiple stages are defined in a single `dvc.yaml`, the stage name MUST be specified using
     `path/to/stage:stage_name` unless `--all` is given.
     """
-    yaml = YAML(typ="safe")
     try:
         out_config = get_config(stage, all=all, skip_compile=skip_compile)
+        yaml = YAML()
         yaml.dump(out_config, sys.stdout)
     except KeyError:
         log.error("dvc.yaml defines parameter that is not in params.yaml")
