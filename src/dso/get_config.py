@@ -130,9 +130,9 @@ def cli(stage, all, skip_compile):
     If multiple stages are defined in a single `dvc.yaml`, the stage name MUST be specified using
     `path/to/stage:stage_name` unless `--all` is given.
     """
-    yaml = YAML(typ="safe")
     try:
         out_config = get_config(stage, all=all, skip_compile=skip_compile)
+        yaml = YAML()
         yaml.dump(out_config, sys.stdout)
     except KeyError:
         log.error("dvc.yaml defines parameter that is not in params.yaml")
