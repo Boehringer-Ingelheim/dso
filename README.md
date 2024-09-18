@@ -21,22 +21,14 @@ step of your analysis (usually one script with defined inputs and outputs) organ
 cannot be nested. A *folder* is used to organize stages in a hierarchical way within the project.
 
 You can use `dso init` to create a new project
-```
-$> dso init
-Please enter the name of the project, e.g. "single_cell_lung_atlas": my_cool_project
-Please add a short description of the project: This analysis solves *all* the problems!
-```
+
+![`dso init "my_cool_project"`](docs/img/dso_init.png)
 
 Within a project, you can use `dso create` to initalize folders and stages from a predefined template
 
-```
-$> dso create stage
-? Choose a template: (Use arrow keys)
-   bash
- » quarto
-Please enter the name of the stage, e.g. "01_preprocessing": 02_quality_control
-Please add a short description of the stage: Make a PCA to detect outliers
-```
+![`dso create stage --template bash --description 'Quality control'`](docs/img/dso_stage.png)
+
+All of the above is also possible in an interactively guided text based way if you do not supply the parameters directly.
 
 ### How-to write and use config files
 The config files in a project, subfolder or stage are the cornerstone of any reproducable analysis by minimising analysis configuration errors within related scripts. Additionally, config files reduce the time needed to modify your scripts when changing configurations such as p-value cutoffs, excluded samples, output directory, data input, and many more.
@@ -47,24 +39,16 @@ In DSO two parameter files are given called `params.yaml` and `params.in.yaml`. 
 
 <img src="docs/img/config.png" width="500" alt="Hierarchical configuration schema" />
 
-```
-$> dso compile-config
-[08/22/24 20:53:43] INFO     Detected /home/grst/my_cool_project as project root.
-                    INFO     Compiling a total of 2 config files.
-                    INFO     Configuration compiled successfully.
-```
+![`dso init "my_cool_project" --description "test" && cd my_cool_project && dso compile-config`](docs/img/dso_compile_config.png)
 
 ### Linting checks
 
 Dso provides linting checks that detect common errors in analysis projects. Right now only few checks are implemented,
 but more will be available in the future.
 
-To run the linting checks manuall, execute
+To run the linting checks manuall, execute `dso lint`:
 
-```
-$> dso lint
-[08/22/24 20:53:43] INFO     Compiled a list of 22 to be linted
-```
+![`dso init "my_cool_project" --description "test" && cd my_cool_project && dso lint`](docs/img/dso_lint.png)
 
 However, it is preferable to execute linting checks as pre-commit hooks and/or as continuous integration checks.
 A `.pre-commit-config.yaml` comes with the DSO project template. Simply activate it using `pre-commit install`.
