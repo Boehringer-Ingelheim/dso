@@ -55,15 +55,12 @@ A `.pre-commit-config.yaml` comes with the DSO project template. Simply activate
 
 ### Reproducing projects
 
-To reproduce/execute all stages within a project, run
+To reproduce/execute all stages within a project, run `dso repro`
 
-```
-$> dso repro
-```
+![`dso init "my_cool_project" --description "test" && cd my_cool_project && dso lint`](docs/img/dso_repro.png)
 
 This is a thin wrapper around `dvc repro` that compiles all configuration files beforehand.
 DVC will only reproduce stages defined in the dvc.yaml where changes have been made. When dependencies have been changed, previous stages will also be re-run.
-
 
 ### Integration with quarto
 
@@ -95,7 +92,6 @@ quarto stage via `dso create stage --template quarto` you are all set to use thi
 To access stage parameters and resolve file paths relative to the stage directory from within R, we provide the
 companion package [`dso-r`](https://github.com/Boehringer-Ingelheim/dso-r) that provides the two functions
 `read_params(stage_name)` and `stage_here(path)`.
-
 
 ## Installation
 
