@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+
+## v0.8.2
+
+### Fixes
+
+-   Fixed params.yaml sorting issue - params.yaml order will be kept intact when using `dso get-config`
+
 ## v0.8.1
 
 ### Fixes
