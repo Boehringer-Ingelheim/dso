@@ -33,8 +33,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
 
-      - name: Install libgit2 header files for libgit2, quarto and pandoc for testing purposes
-        run: sudo apt-get install -y libgit2-dev quarto pandoc
+      - name: Install libgit2 header files for libgit2 & pandoc for testing purposes
+        run: sudo apt-get install -y libgit2-dev pandoc
 
       - name: "Install DSO"
         run: pip install -e '.[test]'
