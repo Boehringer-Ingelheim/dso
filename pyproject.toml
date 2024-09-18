@@ -60,6 +60,9 @@ test = [
     "coverage",
     "freezegun",
     "quarto",
+    "pytest-cov",
+    "pytest-xdist",  # for parallel testing with `pytest -n`
+    "pytest-asyncio",  # for async tests
 ]
 
 [tool.coverage.run]
