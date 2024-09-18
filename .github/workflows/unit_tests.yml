@@ -34,7 +34,7 @@ jobs:
           allow-prereleases: true
 
       - name: Install libgit2
-        run: sudo apt-get install -y libgit2 libgit2dev
+        run: sudo apt-get install -y libgit2 libgit2-dev
 
       - name: "Install DSO"
         run: pip install -e '.[dev]'
