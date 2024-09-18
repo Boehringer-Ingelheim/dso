@@ -37,7 +37,7 @@ jobs:
         run: sudo apt-get install -y libgit2-dev
 
       - name: "Install DSO"
-        run: pip install -e '.[dev]'
+        run: pip install -e '.[test]'
 
       - name: "Run unit tests"
         run: pytest -vv tests -n ${{ env.worker_cores }} --cov=dso --cov-report=xml
