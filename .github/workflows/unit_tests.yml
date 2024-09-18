@@ -39,7 +39,6 @@ jobs:
       - name: "Install DSO"
         run: pip install -e '.[dev]'
 
-
       - name: "Run unit tests"
         run: pytest -vv tests -n ${{ env.worker_cores }} --cov=dso --cov-report=xml
 
