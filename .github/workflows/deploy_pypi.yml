@@ -4,8 +4,12 @@ on:
     types: [published]
 
 jobs:
-  build-n-publish:
+  release:
+    name: Upload release to PyPI
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/dso
 
     steps:
       - uses: actions/checkout@v4
@@ -14,6 +18,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
 
       - name: Install python dependencies
         run: |
@@ -23,8 +28,5 @@ jobs:
       - name: Build the distribution
         run: python setup.py sdist bdist_wheel
 
-      - name: Publish DSO to PyPI
-        if: github.repository == 'Boehringer-Ingelheim/dso'
+      - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
