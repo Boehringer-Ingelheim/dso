@@ -33,6 +33,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
 
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
       - name: Install libgit2 header files for libgit2 & pandoc for testing purposes
         run: sudo apt-get install -y libgit2-dev pandoc
 

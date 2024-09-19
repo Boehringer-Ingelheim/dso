@@ -63,7 +63,6 @@ test = [
     "pytest-cov",
     "pytest-xdist",  # for parallel testing with `pytest -n`
     "pytest-asyncio",  # for async tests
-    "quarto-cli", #for quarto tests
 ]
 
 [tool.coverage.run]
