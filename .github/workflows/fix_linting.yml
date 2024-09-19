@@ -6,11 +6,7 @@ on:
 jobs:
   fix_linting:
     runs-on: ubuntu-latest
-    # Only run if comment is on a PR with the main repo, and if it contains the magic keywords
-    if: >
-      github.repository_owner == 'Boehringer-Ingelheim' &&
-      github.event.issue.pull_request &&
-      startsWith(github.event.comment.body, '@dso-bot fix linting')
+    # Autofix
 
     steps:
       - uses: actions/checkout@v4
