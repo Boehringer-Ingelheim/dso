@@ -57,7 +57,7 @@ A `.pre-commit-config.yaml` comes with the DSO project template. Simply activate
 
 To reproduce/execute all stages within a project, run `dso repro`
 
-![`dso init "my_cool_project" --description "test" && cd my_cool_project && dso lint`](docs/img/dso_repro.png)
+![`dso init "my_cool_project" --description "test" && cd my_cool_project && dso repro`](docs/img/dso_repro.png)
 
 This is a thin wrapper around `dvc repro` that compiles all configuration files beforehand.
 DVC will only reproduce stages defined in the dvc.yaml where changes have been made. When dependencies have been changed, previous stages will also be re-run.
