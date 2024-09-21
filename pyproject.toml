@@ -1,148 +1,144 @@
 [build-system]
 build-backend = "hatchling.build"
-requires = ["hatchling"]
+requires = [ "hatchling" ]
 
 [project]
 name = "dso"
 version = "0.8.2"
 description = "Data Science Operations on top of dvc"
 readme = "README.md"
-requires-python = ">=3.10"
-license = {file = "LICENSE"}
-authors = [
-    {name = "Gregor Sturm"},
-    {name = "Thomas Schwarzl"},
-    {name = "Alexander Peltzer"}
-]
+license = { file = "LICENSE" }
 maintainers = [
-    {name = "Gregor Sturm", email = "gregor.sturm@boehringer-ingelheim.com"},
+  { name = "Gregor Sturm", email = "gregor.sturm@boehringer-ingelheim.com" },
+]
+authors = [
+  { name = "Gregor Sturm" },
+  { name = "Thomas Schwarzl" },
+  { name = "Alexander Peltzer" },
+]
+requires-python = ">=3.10"
+classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+  "dvc",
+  "jinja2",
+  "panflute",
+  "pillow",
+  "platformdirs",
+  "pre-commit",
+  "pyyaml",
+  "questionary",
+  "rich-click",
+  #    "hiyapyco",  # using vendored code now
+  "ruamel-yaml",
+  "svgutils",
+  "tqdm",
+]
+
+optional-dependencies.dev = [  ]
+optional-dependencies.doc = [
+  "docutils>=0.8,!=0.18.*,!=0.19.*",
+  # For notebooks
+  "ipykernel",
+  "ipython",
+  "myst-nb>=1.1",
+  "sphinx>=4",
+  "sphinx-autodoc-typehints",
+  "sphinx-book-theme>=1",
+  "sphinx-copybutton",
+  "sphinxcontrib-bibtex>=1",
+  "sphinxext-opengraph",
+]
+optional-dependencies.test = [
+  "coverage",
+  "freezegun",
+  "pytest",
+  "quarto",
 ]
 urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
-urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
 urls.Home-page = "https://github.com/Boehringer-Ingelheim/dso"
-dependencies = [
-    "rich-click",
-    "pyyaml",
-    "tqdm",
-    "platformdirs",
-    "Jinja2",
-    "pre-commit",
-#    "hiyapyco",  # using vendored code now
-    "ruamel.yaml",
-    "dvc",
-    "panflute",
-    "pillow",
-    "svgutils",
-    "questionary"
-]
-
-[project.scripts]
-dso = "dso:cli"
-dso_pandocfilter = "dso.pandocfilter:main"
-
-[project.optional-dependencies]
-dev = [ ]
-doc = [
-    "docutils>=0.8,!=0.18.*,!=0.19.*",
-    "sphinx>=4",
-    "sphinx-book-theme>=1.0.0",
-    "myst-nb>=1.1.0",
-    "sphinxcontrib-bibtex>=1.0.0",
-    "sphinx-autodoc-typehints",
-    "sphinxext-opengraph",
-    # For notebooks
-    "ipykernel",
-    "ipython",
-    "sphinx-copybutton",
-]
-test = [
-    "pytest",
-    "coverage",
-    "freezegun",
-    "quarto",
-]
-
-[tool.coverage.run]
-source = ["dso"]
-omit = [
-    "**/test_*.py",
-]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-xfail_strict = true
-addopts = [
-    "--import-mode=importlib",  # allow using test files with same name
-]
+urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
+scripts.dso = "dso:cli"
+scripts.dso_pandocfilter = "dso.pandocfilter:main"
 
 [tool.ruff]
 line-length = 120
-src = ["src"]
-extend-include = ["*.ipynb"]
+src = [ "src" ]
+extend-include = [ "*.ipynb" ]
 exclude = [
-    "src/dso/hiyapyco.py"
+  "src/dso/hiyapyco.py",
 ]
 
-[tool.ruff.format]
-docstring-code-format = true
-
-[tool.ruff.lint]
-select = [
-    "F",  # Errors detected by Pyflakes
-    "E",  # Error detected by Pycodestyle
-    "W",  # Warning detected by Pycodestyle
-    "I",  # isort
-    "D",  # pydocstyle
-    "B",  # flake8-bugbear
-    "TID",  # flake8-tidy-imports
-    "C4",  # flake8-comprehensions
-    "BLE",  # flake8-blind-except
-    "UP",  # pyupgrade
-    "RUF100",  # Report unused noqa directives
+format.docstring-code-format = true
+lint.select = [
+  "B",      # flake8-bugbear
+  "BLE",    # flake8-blind-except
+  "C4",     # flake8-comprehensions
+  "D",      # pydocstyle
+  "E",      # Error detected by Pycodestyle
+  "F",      # Errors detected by Pyflakes
+  "I",      # isort
+  "RUF100", # Report unused noqa directives
+  "TID",    # flake8-tidy-imports
+  "UP",     # pyupgrade
+  "W",      # Warning detected by Pycodestyle
 ]
-ignore = [
-    # line too long -> we accept long comment lines; formatter gets rid of long code lines
-    "E501",
-    # Do not assign a lambda expression, use a def -> lambda expression assignments are convenient
-    "E731",
-    # allow I, O, l as variable names -> I is the identity matrix
-    "E741",
-    # Missing docstring in public package
-    "D104",
-    # Missing docstring in public module
-    "D100",
-    # Missing docstring in __init__
-    "D107",
-    # Errors from function calls in argument defaults. These are fine when the result is immutable.
-    "B008",
-    # __magic__ methods are often self-explanatory, allow missing docstrings
-    "D105",
-    # first line should end with a period [Bug: doesn't work with single-line docstrings]
-    "D400",
-    # First line should be in imperative mood; try rephrasing
-    "D401",
-    ## Disable one in each pair of mutually incompatible rules
-    # We don’t want a blank line before a class docstring
-    "D203",
-    # We want docstrings to start immediately after the opening triple quote
-    "D213",
+lint.ignore = [
+  # Errors from function calls in argument defaults. These are fine when the result is immutable.
+  "B008",
+  # Missing docstring in public module
+  "D100",
+  # Missing docstring in public package
+  "D104",
+  # __magic__ methods are often self-explanatory, allow missing docstrings
+  "D105",
+  # Missing docstring in __init__
+  "D107",
+  ## Disable one in each pair of mutually incompatible rules
+  # We don’t want a blank line before a class docstring
+  "D203",
+  # We want docstrings to start immediately after the opening triple quote
+  "D213",
+  # first line should end with a period [Bug: doesn't work with single-line docstrings]
+  "D400",
+  # First line should be in imperative mood; try rephrasing
+  "D401",
+  # line too long -> we accept long comment lines; formatter gets rid of long code lines
+  "E501",
+  # Do not assign a lambda expression, use a def -> lambda expression assignments are convenient
+  "E731",
+  # allow I, O, l as variable names -> I is the identity matrix
+  "E741",
+]
+lint.per-file-ignores."docs/*" = [ "I" ]
+lint.per-file-ignores."tests/*" = [ "D" ]
+lint.pydocstyle.convention = "numpy"
+
+[tool.pytest.ini_options]
+testpaths = [ "tests" ]
+xfail_strict = true
+addopts = [
+  "--import-mode=importlib", # allow using test files with same name
 ]
 
-[tool.ruff.lint.pydocstyle]
-convention = "numpy"
-
-[tool.ruff.lint.per-file-ignores]
-"docs/*" = ["I"]
-"tests/*" = ["D"]
+[tool.coverage.run]
+source = [ "dso" ]
+omit = [
+  "**/test_*.py",
+]
 
 [tool.cruft]
 skip = [
-    "tests",
-    "src/**/__init__.py",
-    "src/**/basic.py",
-    "docs/api.md",
-    "docs/changelog.md",
-    "docs/references.bib",
-    "docs/references.md",
-    "docs/notebooks/example.ipynb",
+  "tests",
+  "src/**/__init__.py",
+  "src/**/basic.py",
+  "docs/api.md",
+  "docs/changelog.md",
+  "docs/references.bib",
+  "docs/references.md",
+  "docs/notebooks/example.ipynb",
 ]
