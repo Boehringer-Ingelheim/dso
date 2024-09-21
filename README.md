@@ -1,6 +1,6 @@
 # DSO: data science operations
 
-<img src="docs/img/dso_kraken.jpg" alt="DSO Kraken" width="250" />
+<img src="img/dso_kraken.jpg" alt="DSO Kraken" width="250" />
 
 *DSO* is a command line helper for building reproducible data anlaysis projects with ease.
 It builds on top of [dvc](https://github.com/iterative/dvc) for data versioning and provides project
