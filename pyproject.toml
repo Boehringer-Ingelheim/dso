@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "hatchling.build"
-requires = [ "hatchling" ]
+requires = ["hatchling"]
 
 [project]
 name = "dso"
@@ -14,7 +14,7 @@ maintainers = [
 authors = [
   { name = "Gregor Sturm" },
   { name = "Thomas Schwarzl" },
-  { name = "Alexander Peltzer" },
+  { name = "Alexander Peltzer" }
 ]
 requires-python = ">=3.10"
 classifiers = [
