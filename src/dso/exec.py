@@ -38,7 +38,7 @@ def _render_quarto(quarto_dir: Path, report_dir: Path, before_script: str, cwd: 
         set -euo pipefail
 
         # this flags enables building larger reports with embedded resources
-        export QUARTO_DENO_EXTRA_OPTIONS=--v8-flags=--max-old-space-size=8192
+        export QUARTO_DENO_V8_OPTIONS=--v8-flags=--max-old-space-size=8192
 
         {before_script}
 

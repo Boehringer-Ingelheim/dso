@@ -4,7 +4,7 @@ requires = ["hatchling"]
 
 [project]
 name = "dso"
-version = "0.8.1"
+version = "0.8.2"
 description = "Data Science Operations on top of dvc"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -59,10 +59,10 @@ test = [
     "pytest",
     "coverage",
     "freezegun",
-    "quarto",
     "pytest-cov",
     "pytest-xdist",  # for parallel testing with `pytest -n`
     "pytest-asyncio",  # for async tests
+    "quarto>=1.5.57",
 ]
 
 [tool.coverage.run]
