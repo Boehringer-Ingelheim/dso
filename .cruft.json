@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/scverse/cookiecutter-scverse",
-  "commit": "66a3c30e185cf0deb57a95329b5f3fec7b9f1352",
+  "commit": "4c8f4683073074b201a45b173d91b2a352d4a194",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -10,8 +10,9 @@
       "author_full_name": "Gregor Sturm",
       "author_email": "gregor.sturm@boehringer-ingelheim.com",
       "github_user": "sturmgre",
-      "project_repo": "ssh://git@bitbucket.biscrum.com:7999/binfdevops/dso.git",
+      "github_repo": "dso",
       "license": "MIT License",
+      "ide_integration": true,
       "_copy_without_render": [
         ".github/workflows/build.yaml",
         ".github/workflows/test.yaml",
