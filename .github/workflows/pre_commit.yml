@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
       - uses: actions/setup-python@v5
         with:
@@ -17,3 +19,5 @@ jobs:
           cache: "pip"
 
       - uses: pre-commit/action@v2.0.3
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
