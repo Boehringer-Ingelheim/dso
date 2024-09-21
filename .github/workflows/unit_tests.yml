@@ -5,11 +5,9 @@ on:
       - main
     paths-ignore:
       - "docs/**"
-      - "*.md"
   pull_request:
     paths-ignore:
       - "docs/**"
-      - "*.md"
 
 jobs:
   unit_tests_linux:
