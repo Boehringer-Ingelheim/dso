@@ -59,7 +59,7 @@ test = [
     "pytest",
     "coverage",
     "freezegun",
-    "quarto",
+    "quarto>=1.5.57",
 ]
 
 [tool.coverage.run]
