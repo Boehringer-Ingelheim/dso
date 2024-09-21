@@ -137,4 +137,4 @@ dso was initially developed by
  * [Daniel Schreyer](https://github.com/dschreyer)
  * [Alexander Peltzer](https://github.com/apeltzer)
 
-DSO depends on many great open source projects, most notably [dvc](https://github.com/iterative/dvc), [hiyapyco](https://github.com/zerwes/hiyapyco) and [jinja2](https://jinja.palletsprojects.com/). 
+DSO depends on many great open source projects, most notably [dvc](https://github.com/iterative/dvc), [hiyapyco](https://github.com/zerwes/hiyapyco) and [jinja2](https://jinja.palletsprojects.com/).
