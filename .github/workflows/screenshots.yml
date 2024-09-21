@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Check out DSO code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
       - uses: actions/setup-python@v5
         with:
@@ -22,5 +24,8 @@ jobs:
         uses: ewels/rich-codex@v1
         with:
           clean_img_paths: docs/images/screenshots/*.svg
-          commit_changes: "true"
-          skip_git_checks: "true"
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Rich codex
+          file_pattern: "docs/*.png"
