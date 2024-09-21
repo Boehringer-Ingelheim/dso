@@ -21,3 +21,4 @@ jobs:
       - uses: pre-commit/action@v2.0.3
 
       - uses: stefanzweifel/git-auto-commit-action@v5
+        if: '!cancelled()'
