@@ -57,6 +57,9 @@ optional-dependencies.test = [
   "coverage",
   "freezegun",
   "pytest",
+  "pytest-asyncio", # for async tests
+  "pytest-cov",
+  "pytest-xdist",   # for parallel testing with `pytest -n`
   "quarto",
 ]
 urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
