@@ -8,6 +8,7 @@ from typing import Generic, TypeVar
 
 import rich_click as click
 from PIL import Image, ImageDraw, ImageFont
+from pypdf import PdfReader, PdfWriter
 from svgutils import compose
 
 from dso import assets
@@ -162,10 +163,23 @@ class SVGWatermarker(Watermarker):
 class PDFWatermarker(Watermarker):
     """Add watermarks to PDF images. The watermark overlay will be a pixel graphic embedded in the svg."""
 
-    # e.g. https://www.geeksforgeeks.org/working-with-pdf-files-in-python/
+    # Inspired by https://www.geeksforgeeks.org/working-with-pdf-files-in-python/
     def apply_and_save(self, input_image: Path | str, output_image: Path | str):
         """Apply the watermark to an image and save it to the specified output file"""
-        raise NotImplementedError
+        reader = PdfReader(input_image)
+        writer = PdfWriter()
+        for page_obj in reader.pages:
+            size = (int(page_obj.mediabox.width), int(page_obj.mediabox.height))
+            watermark_overlay = self.get_watermark_overlay(size)
+            with tempfile.NamedTemporaryFile(suffix=".pdf") as tf:
+                watermark_overlay.save(tf)
+                watermark_overlay_pdf = PdfReader(tf.file).pages[0]
+                page_obj.merge_page(watermark_overlay_pdf)
+                writer.add_page(page_obj)
+
+        with open(output_image, "wb") as f:
+            writer.write(f)
+        reader.close()
 
 
 @click.command(name="watermark")

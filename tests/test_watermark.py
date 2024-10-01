@@ -4,7 +4,7 @@ import pytest
 from click.testing import CliRunner
 from PIL import Image
 
-from dso.watermark import SVGWatermarker, Watermarker, cli
+from dso.watermark import PDFWatermarker, SVGWatermarker, Watermarker, cli
 from tests.conftest import TESTDATA
 
 
@@ -28,6 +28,18 @@ def test_add_watermark(tmp_path, format, tile_size, image_size, font_size):
 def test_add_watermark_svg(tmp_path):
     wm = SVGWatermarker("test")
     wm.apply_and_save(TESTDATA / "git_logo.svg", tmp_path / "git_logo_watermarked.svg")
+
+
+@pytest.mark.parametrize(
+    "pdf_file",
+    [
+        "git_logo.pdf",  # single page, pixel
+        "lorem_ipsum.pdf",  # multi page, vector
+    ],
+)
+def test_add_watermark_pdf(tmp_path, pdf_file):
+    wm = PDFWatermarker("test")
+    wm.apply_and_save(TESTDATA / pdf_file, tmp_path / pdf_file)
 
 
 @pytest.mark.parametrize(
