@@ -7,6 +7,7 @@ from tests.conftest import TESTDATA
 
 def test_pandocfilter(quarto_stage):
     copyfile(TESTDATA / "git_logo.png", quarto_stage / "src" / "git_logo.png")
+    copyfile(TESTDATA / "git_logo.pdf", quarto_stage / "src" / "git_logo.pdf")
     copyfile(TESTDATA / "git_logo.svg", quarto_stage / "src" / "git_logo.svg")
     copyfile(TESTDATA / "git_logo.svg", quarto_stage / "src" / "git logo.svg")
     (quarto_stage / "src" / "_quarto.yml").write_text(
@@ -39,6 +40,10 @@ def test_pandocfilter(quarto_stage):
             a PNG Image
 
             ![PNG Image](git_logo.png)
+
+            a PDF Image
+
+            ![PDF Image](git_logo.pdf)
 
             and an SVG image
 
