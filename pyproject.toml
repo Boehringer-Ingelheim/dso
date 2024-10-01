@@ -4,7 +4,6 @@ requires = [ "hatch-vcs", "hatchling" ]
 
 [project]
 name = "dso"
-dynamic = ["version"]
 description = "Data Science Operations on top of dvc"
 readme = "README.md"
 license = { file = "LICENSE" }
