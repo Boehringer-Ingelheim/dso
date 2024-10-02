@@ -3,7 +3,7 @@ build-backend = "hatchling.build"
 requires = [ "hatch-vcs", "hatchling" ]
 
 [project]
-name = "dso"
+name = "dso-core"
 description = "Data Science Operations on top of dvc"
 readme = "README.md"
 license = { file = "LICENSE" }
