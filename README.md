@@ -123,7 +123,7 @@ You can install the latest version with pip using
 pip install dso-core
 ```
 
-Alternatively, you can install the development version from GitHub: 
+Alternatively, you can install the development version from GitHub:
 
 ```bash
 pip install git+https://github.com/Boehringer-Ingelheim/dso.git@main
