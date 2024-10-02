@@ -3,7 +3,7 @@ build-backend = "hatchling.build"
 requires = [ "hatch-vcs", "hatchling" ]
 
 [project]
-name = "dso"
+name = "dso-core"
 description = "Data Science Operations on top of dvc"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -70,6 +70,9 @@ scripts.dso_pandocfilter = "dso.pandocfilter:main"
 
 [tool.hatch.version]
 source = "vcs"
+
+[tool.hatch.build.targets.wheel]
+packages = [ "src/dso" ]
 
 [tool.ruff]
 line-length = 120

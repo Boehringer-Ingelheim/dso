@@ -4,7 +4,7 @@
   "checkout": null,
   "context": {
     "cookiecutter": {
-      "project_name": "dso",
+      "project_name": "dso-core",
       "package_name": "dso",
       "project_description": "data science operations",
       "author_full_name": "Gregor Sturm",
