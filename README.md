@@ -117,13 +117,17 @@ companion package [`dso-r`](https://github.com/Boehringer-Ingelheim/dso-r) that 
 
 DSO requires Python 3.10 or later.
 
-You can install it with pip using
+You can install the latest version with pip using
+
+```bash
+pip install dso-core
+```
+
+Alternatively, you can install the development version from GitHub:
 
 ```bash
 pip install git+https://github.com/Boehringer-Ingelheim/dso.git@main
 ```
-
-The tool will be made available on PyPI in the near future.
 
 ## Release notes
 
