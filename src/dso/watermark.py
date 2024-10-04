@@ -4,11 +4,13 @@ import tempfile
 from abc import abstractmethod
 from importlib import resources
 from pathlib import Path
-from typing import Generic, TypeVar
+from typing import TYPE_CHECKING, Generic, TypeVar
 
 import rich_click as click
-from PIL import Image, ImageDraw, ImageFont
-from svgutils import compose
+
+if TYPE_CHECKING:
+    from PIL import Image
+    from svgutils import compose
 
 from dso import assets
 
@@ -59,6 +61,8 @@ class Watermarker(Generic[ImgType]):
 
     def get_watermark_overlay(self, size: tuple[int, int]) -> Image.Image:
         """Generate an overlay with the watermark that has the same size as the base image"""
+        from PIL import Image
+
         watermark = self._get_watermark_tile()
         watermark_tiled = Image.new("RGBA", size)
         for x in range(0, size[0], self.tile_size[0]):
@@ -72,6 +76,8 @@ class Watermarker(Generic[ImgType]):
 
         (once top left corner, once middle right - this leads to a regular pattern)
         """
+        from PIL import Image, ImageDraw, ImageFont
+
         img = Image.new("RGBA", self.tile_size, color=(255, 255, 255, 0))
 
         d = ImageDraw.Draw(img)
@@ -122,6 +128,8 @@ class PILWatermarker(Watermarker):
 
     def apply_and_save(self, input_image: Path | str, output_image: Path | str):
         """Apply the watermark to an image and save it to the specified output file"""
+        from PIL import Image
+
         base_image = Image.open(input_image).convert("RGBA")
         watermark_overlay = self.get_watermark_overlay(base_image.size)
         combined = Image.alpha_composite(base_image, watermark_overlay)
@@ -148,6 +156,8 @@ class SVGWatermarker(Watermarker):
 
     def apply_and_save(self, input_image: Path | str, output_image: Path | str):
         """Apply the watermark to an image and save it to the specified output file"""
+        from svgutils import compose
+
         base_image = compose.SVG(input_image, fix_mpl=True)
         size = self._get_size(base_image)
 
