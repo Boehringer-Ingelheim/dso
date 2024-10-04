@@ -65,7 +65,7 @@ optional-dependencies.test = [
 urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
 urls.Home-page = "https://github.com/Boehringer-Ingelheim/dso"
 urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
-scripts.dso = "dso:cli"
+scripts.dso = "dso.cli:cli"
 scripts.dso_pandocfilter = "dso.pandocfilter:main"
 
 [tool.hatch.version]

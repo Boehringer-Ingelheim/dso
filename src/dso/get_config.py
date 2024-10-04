@@ -30,7 +30,7 @@ def _filter_nested_dict(data: dict, keys: Collection[str]) -> dict:
     return {k: result[k] for k in data if k in result}
 
 
-def get_config(stage: str, *, all: bool = False, skip_compile: bool | None = None) -> dict:
+def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> dict:
     """
     Get the configuration for a given stage
 
@@ -46,12 +46,8 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool | None = Non
         If true, the config is not filtered based on the `dvc.yaml` file.
     skip_compile
         If `True`, do not compile the config before loading it.
-        If `None`, do not compile if `DSO_SKIP_COMPILE=1`.
         If `False`, always compile.
     """
-    if skip_compile is None:
-        skip_compile = bool(int(os.environ.get("DSO_SKIP_COMPILE", 0)))
-
     proj_root = get_project_root(Path.cwd())
     log.info(f"Retrieving config for stage ./{stage}")
     if ":" in stage:
