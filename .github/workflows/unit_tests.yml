@@ -38,7 +38,7 @@ jobs:
         run: sudo apt-get install -y libgit2-dev pandoc
 
       - name: "Install DSO"
-        run: pip install -e '.[test]'
+        run: pip install -e '.[test,watermark]'
 
       - name: "Run unit tests"
         run: pytest -vv tests -n ${{ env.worker_cores }} --cov=dso --cov-report=xml
