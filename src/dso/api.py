@@ -26,21 +26,39 @@ CONFIG = Config()
 """Global configuration storage of the DSO API"""
 
 
-def here() -> Path:
-    """Get project root as a Path object"""
-    return get_project_root(Path.cwd())
+def here(rel_path: str | Path | None = None) -> Path:
+    """Get project root as a Path object
+
+    Parameters
+    ----------
+    rel_path
+        Relative path to be appended to the project root
+    """
+    proj_root = get_project_root(Path.cwd())
+    if rel_path is None:
+        return proj_root
+    else:
+        return proj_root / rel_path
 
 
-def stage_here() -> Path:
+def stage_here(rel_path: str | Path | None = None) -> Path:
     """
     Get the absolute path to the current stage
 
     The current stage is stored in `dso.CONFIG` and can be set using `dso.set_stage` or
     `dso.read_params`.
+
+    Parameters
+    ----------
+    rel_path
+        Relative path to be appended to the project root
     """
     if CONFIG.stage_here is None:
         raise RuntimeError("No stage has been set. Run `read_params` or `set_stage` first!")
-    return CONFIG.stage_here
+    if rel_path is None:
+        return CONFIG.stage_here
+    else:
+        return CONFIG.stage_here / rel_path
 
 
 def set_stage(stage: str | Path) -> None:

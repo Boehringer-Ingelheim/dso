@@ -9,6 +9,7 @@ def test_api(quarto_stage):
     chdir(quarto_stage)
 
     assert here() == (quarto_stage / "..").resolve()
+    assert here("quarto_stage") == quarto_stage
 
     # stage not yet initialized
     with pytest.raises(RuntimeError):
@@ -21,6 +22,7 @@ def test_api(quarto_stage):
     set_stage("quarto_stage")
 
     assert stage_here() == quarto_stage
+    assert stage_here("dvc.yaml") == quarto_stage / "dvc.yaml"
 
 
 def test_api_read_params(quarto_stage):
