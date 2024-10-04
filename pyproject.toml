@@ -26,12 +26,15 @@ dynamic = [ "version" ]
 dependencies = [
   "dvc",
   "jinja2",
+  "panflute",
+  "pillow",
   "pre-commit",
   "pyyaml",
   "questionary",
   "rich",
   "rich-click",
   "ruamel-yaml",
+  "svgutils",
 ]
 
 optional-dependencies.dev = [  ]
@@ -56,11 +59,6 @@ optional-dependencies.test = [
   "pytest-cov",
   "pytest-xdist",   # for parallel testing with `pytest -n`
   "quarto",
-]
-optional-dependencies.watermark = [
-  "panflute",
-  "pillow",
-  "svgutils",
 ]
 urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
 urls.Home-page = "https://github.com/Boehringer-Ingelheim/dso"
