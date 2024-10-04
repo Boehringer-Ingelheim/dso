@@ -9,12 +9,15 @@ from .compile_config import cli as compile_config_cli
 from .create import cli as create_cli
 from .exec import cli as exec_cli
 from .get_config import cli as get_config_cli
+from .get_config import get_config
 from .init import cli as init_cli
 from .lint import cli as lint_cli
 from .repro import cli as repro_cli
 from .watermark import cli as watermark_cli
 
 click.rich_click.USE_MARKDOWN = True
+
+__all__ = ["get_config"]
 
 
 @click.group()
