@@ -28,15 +28,13 @@ dependencies = [
   "jinja2",
   "panflute",
   "pillow",
-  "platformdirs",
   "pre-commit",
   "pyyaml",
   "questionary",
+  "rich",
   "rich-click",
-  #    "hiyapyco",  # using vendored code now
   "ruamel-yaml",
   "svgutils",
-  "tqdm",
 ]
 
 optional-dependencies.dev = [  ]
@@ -65,7 +63,7 @@ optional-dependencies.test = [
 urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
 urls.Home-page = "https://github.com/Boehringer-Ingelheim/dso"
 urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
-scripts.dso = "dso:cli"
+scripts.dso = "dso.cli:cli"
 scripts.dso_pandocfilter = "dso.pandocfilter:main"
 
 [tool.hatch.version]

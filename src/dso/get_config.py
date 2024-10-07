@@ -45,7 +45,8 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> 
     all
         If true, the config is not filtered based on the `dvc.yaml` file.
     skip_compile
-        If true, do not compile the config before loading it
+        If `True`, do not compile the config before loading it.
+        If `False`, always compile.
     """
     proj_root = get_project_root(Path.cwd())
     log.info(f"Retrieving config for stage ./{stage}")
