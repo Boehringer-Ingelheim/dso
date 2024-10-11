@@ -30,6 +30,7 @@ dependencies = [
   "pillow",
   "platformdirs",
   "pre-commit",
+  "pypdf",
   "pyyaml",
   "questionary",
   "rich-click",
