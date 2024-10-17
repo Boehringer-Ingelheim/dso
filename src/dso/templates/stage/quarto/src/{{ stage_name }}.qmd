@@ -1,12 +1,12 @@
 ```{r}
-#| label: load libraries
+#| label: load_libraries
 
 require(conflicted)
 require(dso)
 ```
 
 ```{r}
-#| label: read params
+#| label: read_params
 # read_params sets the stage directory, runs 'dso compile-config'
 # and loads params defined in the 'dvc.yaml' 'params' section of the stage
 
@@ -14,7 +14,7 @@ params <- read_params("{{ stage_path }}")
 ```
 
 ```{r}
-#| label: Obtain files relative to stage directory
+#| label: obtain_files_relative_to_stage_dir
 
 # stage_here locates your files relative to the stage path set in read_params
 # e.g.
