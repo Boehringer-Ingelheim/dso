@@ -55,6 +55,13 @@ def _load_yaml_with_auto_adjusting_paths(yaml_stream: TextIOWrapper, destination
     # inherit from `str` to make this compatible with hiyapyco interpolation
     @yaml_object(ruamel)
     class AutoAdjustingPathWithLocation(str):
+        """
+        Represents a YAML node that adjusts a relative path relative to a specified destination directory.
+
+        Can be evaulated either using Ruamel during dumping YAML to file, or whenever it is cast
+        to a string (e.g. by hiyapyco). To this end, __repr__ and __str__ are overridden.
+        """
+
         yaml_tag = "!path"
 
         def __init__(self, path: str):
@@ -73,6 +80,9 @@ def _load_yaml_with_auto_adjusting_paths(yaml_stream: TextIOWrapper, destination
             return representer.represent_str(str(node.get_adjusted()))
 
         def __repr__(self):
+            return str(self.get_adjusted())
+
+        def __str__(self):
             return str(self.get_adjusted())
 
         @classmethod
