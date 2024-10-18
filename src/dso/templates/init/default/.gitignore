@@ -1,3 +1,7 @@
+# dso
+.dso.jso
+params.yaml
+
 # Editors
 *.code-workspace
 .vscode
@@ -37,5 +41,6 @@ sccprj/
 # nodejs/pre-commit
 /node_modules
 
-# dso
-.dso.json
+# Windows
+Thumbs.db
+~$*

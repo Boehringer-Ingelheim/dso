@@ -28,16 +28,14 @@ dependencies = [
   "jinja2",
   "panflute",
   "pillow",
-  "platformdirs",
   "pre-commit",
   "pypdf",
   "pyyaml",
   "questionary",
+  "rich",
   "rich-click",
-  #    "hiyapyco",  # using vendored code now
   "ruamel-yaml",
   "svgutils",
-  "tqdm",
 ]
 
 optional-dependencies.dev = [ "hatch", "pre-commit" ]
@@ -88,6 +86,8 @@ scripts.clean = "git clean -fdX -- {args:docs}"
 
 [tool.hatch.envs.hatch-test]
 features = [ "test" ]
+[[tool.hatch.envs.hatch-test.matrix]]
+python = [ "3.12" ]
 
 [tool.ruff]
 line-length = 120
