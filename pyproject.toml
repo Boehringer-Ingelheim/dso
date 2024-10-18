@@ -40,7 +40,7 @@ dependencies = [
   "tqdm",
 ]
 
-optional-dependencies.dev = [  ]
+optional-dependencies.dev = [ "hatch" ]
 optional-dependencies.doc = [
   "docutils>=0.8,!=0.18.*,!=0.19.*",
   # For notebooks
@@ -74,6 +74,19 @@ source = "vcs"
 
 [tool.hatch.build.targets.wheel]
 packages = [ "src/dso" ]
+
+[tool.hatch.envs.default]
+installer = "uv"
+features = [ "dev" ]
+
+[tool.hatch.envs.docs]
+features = [ "doc" ]
+scripts.build = "sphinx-build -M html docs docs/_build {args}"
+scripts.open = "python -m webbrowser -t docs/_build/html/index.html"
+scripts.clean = "git clean -fdX -- {args:docs}"
+
+[tool.hatch.envs.hatch-test]
+features = [ "test" ]
 
 [tool.ruff]
 line-length = 120

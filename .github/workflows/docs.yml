@@ -26,11 +26,11 @@ jobs:
         with:
           python-version: 3.12
 
-      - name: "Install DSO"
-        run: pip install '.[doc]'
+      - name: "Install hatch"
+        run: pip install hatch
 
       - name: "Build docs with Sphinx"
-        run: cd docs && make html
+        run: hatch run docs:build -W --keep-going
 
       - name: Deploy preview
         if: github.event_name == 'pull_request'
