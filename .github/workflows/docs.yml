@@ -21,16 +21,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: "Set up Python"
-        uses: actions/setup-python@v5
+      # - name: "Set up Python"
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: 3.12
+
+      # - name: "Install DSO"
+      #   run: pip install '.[doc]'
+
+      # - name: "Build docs with Sphinx"
+      #   run: cd docs && make html
+
+      - name: Build Sphinx docs
+        uses: ammaraskar/sphinx-action@master
+        if:  github.event.action != 'closed'
         with:
-          python-version: 3.12
-
-      - name: "Install DSO"
-        run: pip install '.[doc]'
-
-      - name: "Build docs with Sphinx"
-        run: cd docs && make html
+          pre-build-command: pip install -e '.[doc]'
+          docs-folder: "docs/"
 
       - name: Deploy preview
         if: github.event_name == 'pull_request'

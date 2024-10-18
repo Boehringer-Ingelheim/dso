@@ -8,6 +8,9 @@ buck-out/
 __pycache__/
 .*cache/
 
+# UV
+uv.lock
+
 # Distribution / packaging
 /dist/
 
