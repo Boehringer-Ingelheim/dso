@@ -87,7 +87,7 @@ class DSO001(QuartoRule):
         # .parent to remove the dvc.yaml filename
         stage_path_expected = str(stage_path_expected.parent.relative_to(root_path))
         content = file.read_text()
-        pattern = r"params\s*(=|<-)\s*(dso::)?read_params\s*\(([\s\S]*?)\)"
+        pattern = r"params\s*(=|<-)\s*(dso::)?read_params\s*\(([\s\S]*?)(\s*,.*)?\)"
         res = re.findall(pattern, content, flags=re.MULTILINE)
         if len(res) == 0:
             raise LintError(f"no `params = read_params('{stage_path_expected}')` statement found in qmd document")

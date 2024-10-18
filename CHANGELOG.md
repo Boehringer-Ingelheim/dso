@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning][].
 -   `dso watermark` now supports files in PDF format. With this change, quarto reports using the watermark feature can
     be rendered to PDF, too ([#26](https://github.com/Boehringer-Ingelheim/dso/pull/26)).
 
+### Fixes
+
+-   Fix linting rule DSO001: It is now allowed to specify additional arguments in `read_params()`, e.g. `quiet = TRUE`.
+
 ### Documentation
 
 -   Documentation is now built via sphinx and hosted on GitHub pages: https://boehringer-ingelheim.github.io/dso/ ([#35](https://github.com/Boehringer-Ingelheim/dso/pull/35)).

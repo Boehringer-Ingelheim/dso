@@ -48,6 +48,43 @@ def test_auto_adjusting_path(tmp_path):
     assert actual.strip() == "- my_path: ../../test.txt"
 
 
+@pytest.mark.parametrize(
+    "test_yaml,expected",
+    [
+        (
+            """\
+            A: !path dir_A
+            B: {{ A }}/B.txt
+            """,
+            "dir_A/B.txt",
+        ),
+        (
+            """\
+            A: dir_A
+            B: !path {{ A }}/B.txt
+            """,
+            "dir_A/B.txt",
+        ),
+    ],
+)
+def test_auto_adjusting_path_with_jinja(tmp_path, test_yaml, expected):
+    runner = CliRunner()
+    with runner.isolated_filesystem(temp_dir=tmp_path) as td:
+        td = Path(td)
+        test_file = td / "params.in.yaml"
+        (td / ".git").mkdir()
+
+        with test_file.open("w") as f:
+            f.write(dedent(test_yaml))
+
+        result = runner.invoke(cli, [])
+        print(result.output)
+        td = Path(td)
+        assert result.exit_code == 0
+        with (td / "params.yaml").open() as f:
+            assert yaml.safe_load(f)["B"] == expected
+
+
 def test_compile_configs(tmp_path):
     runner = CliRunner()
     with runner.isolated_filesystem(temp_dir=tmp_path) as td:
