@@ -87,7 +87,11 @@ def test_quarto_rule_is_applicable_pattern(quarto_stage, file, expected):
         ),
         (
             """foo = read_params("quarto_stage")""",
-            LintError,
+            None,
+        ),
+        (
+            """read_params("quarto_stage")""",
+            None,
         ),
         (
             """\
