@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning][].
 ### Template updates
 
 -   Make instruction comments in quarto template more descriptive ([#33](https://github.com/Boehringer-Ingelheim/dso/pull/33)).
+-   Include `params.yaml` in default project `.gitignore`. We decided to not track `params.yaml` in git anymore
+    since it adds noise during code review and led to merge conflicts in some cases. In the future, a certain
+    `dso` version will be tied to each project, improving reproducibility also without `params.yaml` files.
+
+### Migration advice
+
+-   Add `params.yaml` to your project-level `.gitignore`. Then execute `find -iname "params.yaml" -exec git rm --cached {} \;`
+    to untrack existing `params.yaml` files.
 
 ## v0.8.2
 

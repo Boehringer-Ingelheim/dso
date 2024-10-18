@@ -48,7 +48,6 @@ def test_git_list_files(dso_project):
     assert files == [
         dso_project / x
         for x in [
-            "params.yaml",
             ".dvc/.gitignore",
             ".dvc/config",
             ".dvcignore",
