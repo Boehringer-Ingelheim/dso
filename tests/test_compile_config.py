@@ -54,14 +54,14 @@ def test_auto_adjusting_path(tmp_path):
         (
             """\
             A: !path dir_A
-            B: {{ A }}/B.txt
+            B: "{{ A }}/B.txt"
             """,
             "dir_A/B.txt",
         ),
         (
             """\
             A: dir_A
-            B: !path {{ A }}/B.txt
+            B: !path "{{ A }}/B.txt"
             """,
             "dir_A/B.txt",
         ),
