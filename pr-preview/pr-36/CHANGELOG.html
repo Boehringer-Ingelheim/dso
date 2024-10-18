@@ -50,7 +50,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=64eba951"></script>
+    <script src="_static/documentation_options.js?v=b13e2877"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -347,6 +347,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New Features</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation">Documentation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#template-updates">Template updates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#migration-advice">Migration advice</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-2">v0.8.2</a><ul class="nav section-nav flex-column">
@@ -365,11 +366,11 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-7-0">v0.7.0</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-6-1">v0.6.1</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-6-0">v0.6.0</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#migration-advice">Migration advice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Migration advice</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-5-0">v0.5.0</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Migration advice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Migration advice</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-4">v0.4.4</a></li>
@@ -416,6 +417,16 @@ be rendered to PDF, too (<a class="reference external" href="https://github.com/
 <h3>Template updates<a class="headerlink" href="#template-updates" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Make instruction comments in quarto template more descriptive (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/33">#33</a>).</p></li>
+<li><p>Include <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> in default project <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>. We decided to not track <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> in git anymore
+since it adds noise during code review and led to merge conflicts in some cases. In the future, a certain
+<code class="docutils literal notranslate"><span class="pre">dso</span></code> version will be tied to each project, improving reproducibility also without <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files.</p></li>
+</ul>
+</section>
+<section id="migration-advice">
+<h3>Migration advice<a class="headerlink" href="#migration-advice" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> to your project-level <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>. Then execute <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">-iname</span> <span class="pre">&quot;params.yaml&quot;</span> <span class="pre">-exec</span> <span class="pre">git</span> <span class="pre">rm</span> <span class="pre">--cached</span> <span class="pre">{}</span> <span class="pre">\;</span></code>
+to untrack existing <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files.</p></li>
 </ul>
 </section>
 </section>
@@ -528,8 +539,8 @@ To enable, add to <code class="docutils literal notranslate"><span class="pre">p
 <p>The disclaimer box is only shown if both text and title are set.</p>
 </li>
 </ul>
-<section id="migration-advice">
-<h3>Migration advice<a class="headerlink" href="#migration-advice" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h3>Migration advice<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <ul>
 <li><p>Update <code class="docutils literal notranslate"><span class="pre">dso-r</span></code> to v0.3.0 to take advantage of <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code>.</p></li>
 <li><p>Add the following rule to your <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code>:</p>
@@ -556,8 +567,8 @@ this can be done with jinja templating.</p></li>
 <li><p>It is now possible to specify bibliography files in <code class="docutils literal notranslate"><span class="pre">params.in.config:dso.quarto.bibliography</span></code> using <code class="docutils literal notranslate"><span class="pre">!path</span></code>.</p></li>
 <li><p>Upon <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code>, the CLI asks once if the user wants to install the pre-commit hooks</p></li>
 </ul>
-<section id="id4">
-<h3>Migration advice<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h3>Migration advice<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Move <code class="docutils literal notranslate"><span class="pre">dso.before_script</span></code> to <code class="docutils literal notranslate"><span class="pre">dso.quarto.before_script</span></code> in all your config files.</p></li>
 <li><p>Update all quarto stages to depend only on <code class="docutils literal notranslate"><span class="pre">params:dso.quarto</span></code> instead of <code class="docutils literal notranslate"><span class="pre">params:dso</span></code>. This will avoid
@@ -694,6 +705,7 @@ and automatically resolved such that they are always relative to the compiled pa
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New Features</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation">Documentation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#template-updates">Template updates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#migration-advice">Migration advice</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-2">v0.8.2</a><ul class="nav section-nav flex-column">
@@ -712,11 +724,11 @@ and automatically resolved such that they are always relative to the compiled pa
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-7-0">v0.7.0</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-6-1">v0.6.1</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-6-0">v0.6.0</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#migration-advice">Migration advice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Migration advice</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-5-0">v0.5.0</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Migration advice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Migration advice</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-4">v0.4.4</a></li>
