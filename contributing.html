@@ -12,7 +12,12 @@
 <meta property="og:url" content="contributing.html" />
 <meta property="og:site_name" content="Project name not set" />
 <meta property="og:description" content="We assume that you are already familiar with git and with making pull requests on GitHub. If not, please refer to the [scanpy developer guide][]. Installing dev dependencies: In addition to the pac..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_contributing_2d2427d4.png" />
+<meta property="og:image:alt" content="We assume that you are already familiar with git and with making pull requests on GitHub. If not, please refer to the [scanpy developer guide][]. Installing..." />
 <meta name="description" content="We assume that you are already familiar with git and with making pull requests on GitHub. If not, please refer to the [scanpy developer guide][]. Installing dev dependencies: In addition to the pac..." />
+<meta name="twitter:card" content="summary_large_image" />
 
     <title>Contributing guide &#8212; dso-core</title>
   
@@ -45,7 +50,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=36e7c026"></script>
+    <script src="_static/documentation_options.js?v=3309c3c4"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -54,7 +59,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'contributing';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="References" href="references.html" />
+    <link rel="next" title="Python API" href="dso_python.html" />
     <link rel="prev" title="Changelog" href="CHANGELOG.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -159,11 +164,22 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Contributing guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO Python API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dso_python.html">Python API</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO R API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dso_r.html">DSO R package</a></li>
 </ul>
 
     </div>
@@ -447,7 +463,7 @@ This project uses <a class="reference external" href="https://www.sphinx-doc.org
 <li><p>The <a class="reference external" href="https://myst-parser.readthedocs.io/en/latest/intro.html">myst</a> extension allows to write documentation in markdown/Markedly Structured Text</p></li>
 <li><p><a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">Numpy-style docstrings</a> (through the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html">napoloen</a> extension).</p></li>
 <li><p><a class="reference external" href="https://github.com/tox-dev/sphinx-autodoc-typehints">sphinx-autodoc-typehints</a>, to automatically reference annotated input and output types</p></li>
-<li><p>Citations (like <span id="id2">[<a class="reference internal" href="references.html#id2" title="Isaac Virshup, Danila Bredikhin, Lukas Heumos, Giovanni Palla, Gregor Sturm, Adam Gayoso, Ilia Kats, Mikaela Koutrouli, Philipp Angerer, Volker Bergen, Pierre Boyeau, Maren Büttner, Gokcen Eraslan, David Fischer, Max Frank, Justin Hong, Michal Klein, Marius Lange, Romain Lopez, Mohammad Lotfollahi, Malte D. Luecken, Fidel Ramirez, Jeffrey Regier, Sergei Rybakov, Anna C. Schaar, Valeh Valiollah Pour Amiri, Philipp Weiler, Galen Xing, Bonnie Berger, Dana Pe'er, Aviv Regev, Sarah A. Teichmann, Francesca Finotello, F. Alexander Wolf, Nir Yosef, Oliver Stegle, and Fabian J. Theis and. The scverse project provides a computational ecosystem for single-cell omics data analysis. Nature Biotechnology, apr 2023. URL: https://doi.org/10.1038%2Fs41587-023-01733-8, doi:10.1038/s41587-023-01733-8.">VBH+23</a>]</span>) can be included with <a class="reference external" href="https://sphinxcontrib-bibtex.readthedocs.io/">sphinxcontrib-bibtex</a></p></li>
+<li><p>Citations can be included with <a class="reference external" href="https://sphinxcontrib-bibtex.readthedocs.io/">sphinxcontrib-bibtex</a></p></li>
 </ul>
 <p>See scanpy’s <a class="reference external" href="https://scanpy.readthedocs.io/en/stable/dev/documentation.html" title="(in Scanpy v1.10.3)"><span>Documentation</span></a> for more information on how to write your own.</p>
 <section id="hints">
@@ -490,11 +506,11 @@ hatch<span class="w"> </span>docs:open
       </div>
     </a>
     <a class="right-next"
-       href="references.html"
+       href="dso_python.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">References</p>
+        <p class="prev-next-title">Python API</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
