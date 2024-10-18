@@ -46,6 +46,7 @@ optional-dependencies.doc = [
   # For notebooks
   "ipykernel",
   "ipython",
+  "matplotlib",
   "myst-nb>=1.1",
   "sphinx>=4",
   "sphinx-autodoc-typehints",

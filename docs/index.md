@@ -23,10 +23,14 @@ contributing.md
 :hidden: true
 :maxdepth: 1
 :caption: DSO Python API
+
+dso_python.md
 ```
 
 ```{toctree}
 :hidden: true
 :maxdepth: 1
 :caption: DSO R API
+
+dso_r.md
 ```
