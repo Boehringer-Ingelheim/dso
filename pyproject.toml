@@ -28,16 +28,14 @@ dependencies = [
   "jinja2",
   "panflute",
   "pillow",
-  "platformdirs",
   "pre-commit",
   "pypdf",
   "pyyaml",
   "questionary",
+  "rich",
   "rich-click",
-  #    "hiyapyco",  # using vendored code now
   "ruamel-yaml",
   "svgutils",
-  "tqdm",
 ]
 
 optional-dependencies.dev = [ "hatch", "pre-commit" ]

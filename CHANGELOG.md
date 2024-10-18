@@ -8,12 +8,21 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
-## [Unreleased]
+## v0.9.0
 
 ### New Features
 
 -   `dso watermark` now supports files in PDF format. With this change, quarto reports using the watermark feature can
-    be rendered to PDF, too.
+    be rendered to PDF, too ([#26](https://github.com/Boehringer-Ingelheim/dso/pull/26)).
+
+### Documentation
+
+-   Documentation is now built via sphinx and hosted on GitHub pages: https://boehringer-ingelheim.github.io/dso/ ([#35](https://github.com/Boehringer-Ingelheim/dso/pull/35)).
+
+
+### Template updates
+
+-   Make instruction comments in quarto template more descriptive ([#33](https://github.com/Boehringer-Ingelheim/dso/pull/33)).
 
 ## v0.8.2
 
