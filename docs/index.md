@@ -7,7 +7,7 @@
 :maxdepth: 1
 
 api.md
-changelog.md
+CHANGELOG.md
 contributing.md
 references.md
 ```
