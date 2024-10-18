@@ -5,9 +5,28 @@
 ```{toctree}
 :hidden: true
 :maxdepth: 1
+:caption: User Guide
 
-api.md
+getting_started.md
+```
+
+```{toctree}
+:hidden: true
+:maxdepth: 1
+:caption: DSO CLI
+
 CHANGELOG.md
 contributing.md
-references.md
+```
+
+```{toctree}
+:hidden: true
+:maxdepth: 1
+:caption: DSO Python API
+```
+
+```{toctree}
+:hidden: true
+:maxdepth: 1
+:caption: DSO R API
 ```
