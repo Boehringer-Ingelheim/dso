@@ -17,12 +17,12 @@ and this project adheres to [Semantic Versioning][].
 
 ### Fixes
 
--   Fix linting rule DSO001: It is now allowed to specify additional arguments in `read_params()`, e.g. `quiet = TRUE`.
+-   Fix linting rule DSO001: It is now allowed to specify additional arguments in `read_params()`, e.g. `quiet = TRUE` ([#36](https://github.com/Boehringer-Ingelheim/dso/pull/36)).
+-   It is now possible to use Jinja2 interpolation in combination with `!path` objects ([#36](https://github.com/Boehringer-Ingelheim/dso/pull/36))
 
 ### Documentation
 
 -   Documentation is now built via sphinx and hosted on GitHub pages: https://boehringer-ingelheim.github.io/dso/ ([#35](https://github.com/Boehringer-Ingelheim/dso/pull/35)).
-
 
 ### Template updates
 
@@ -73,7 +73,6 @@ and this project adheres to [Semantic Versioning][].
     messages are now `debug` messages and not shown by default.
 -   When running `dso repro`, configuration is only compiled once and not recompiled when `dso exec` or `dso get-config`
     is called internally. This reduces runtime and redundant log messages.
-
 
 ## v0.7.0
 
