@@ -127,7 +127,7 @@ This project uses [sphinx][] with the following features:
 -   The [myst][] extension allows to write documentation in markdown/Markedly Structured Text
 -   [Numpy-style docstrings][numpydoc] (through the [napoloen][numpydoc-napoleon] extension).
 -   [sphinx-autodoc-typehints][], to automatically reference annotated input and output types
--   Citations (like {cite:p}`Virshup_2023`) can be included with [sphinxcontrib-bibtex](https://sphinxcontrib-bibtex.readthedocs.io/)
+-   Citations can be included with [sphinxcontrib-bibtex](https://sphinxcontrib-bibtex.readthedocs.io/)
 
 See scanpy’s {doc}`scanpy:dev/documentation` for more information on how to write your own.
 
