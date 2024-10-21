@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning][].
 
 -   Fix linting rule DSO001: It is now allowed to specify additional arguments in `read_params()`, e.g. `quiet = TRUE` ([#36](https://github.com/Boehringer-Ingelheim/dso/pull/36)).
 -   It is now possible to use Jinja2 interpolation in combination with `!path` objects ([#36](https://github.com/Boehringer-Ingelheim/dso/pull/36))
+-   Improve error messages when `dso get-config` can't find required input files ([#36](https://github.com/Boehringer-Ingelheim/dso/pull/36))
 
 ### Documentation
 
