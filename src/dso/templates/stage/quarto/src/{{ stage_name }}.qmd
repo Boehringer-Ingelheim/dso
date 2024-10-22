@@ -5,9 +5,9 @@ require(conflicted)
 require(dso)
 ```
 
-`read_params(..)` 
+`read_params(..)`
 1.   sets the stage directory
-2.   runs 'dso compile-config', which hierachically compiles config files (params.in.yaml and params.yaml) and 
+2.   runs 'dso compile-config', which hierachically compiles config files (params.in.yaml and params.yaml) and
 3.   loads parameters defined in the file defining stage dependencies ('params' section in the 'dvc.yaml' file) from the compiled stage config file (params.yaml)
 
 ```{r}
