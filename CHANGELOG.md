@@ -8,12 +8,34 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
-## [Unreleased]
+## v0.9.0
 
 ### New Features
 
 -   `dso watermark` now supports files in PDF format. With this change, quarto reports using the watermark feature can
-    be rendered to PDF, too.
+    be rendered to PDF, too ([#26](https://github.com/Boehringer-Ingelheim/dso/pull/26)).
+
+### Fixes
+
+-   Fix linting rule DSO001: It is now allowed to specify additional arguments in `read_params()`, e.g. `quiet = TRUE` ([#36](https://github.com/Boehringer-Ingelheim/dso/pull/36)).
+-   It is now possible to use Jinja2 interpolation in combination with `!path` objects ([#36](https://github.com/Boehringer-Ingelheim/dso/pull/36))
+-   Improve error messages when `dso get-config` can't find required input files ([#36](https://github.com/Boehringer-Ingelheim/dso/pull/36))
+
+### Documentation
+
+-   Documentation is now built via sphinx and hosted on GitHub pages: https://boehringer-ingelheim.github.io/dso/ ([#35](https://github.com/Boehringer-Ingelheim/dso/pull/35)).
+
+### Template updates
+
+-   Make instruction comments in quarto template more descriptive ([#33](https://github.com/Boehringer-Ingelheim/dso/pull/33)).
+-   Include `params.yaml` in default project `.gitignore`. We decided to not track `params.yaml` in git anymore
+    since it adds noise during code review and led to merge conflicts in some cases. In the future, a certain
+    `dso` version will be tied to each project, improving reproducibility also without `params.yaml` files.
+
+### Migration advice
+
+-   Add `params.yaml` to your project-level `.gitignore`. Then execute `find -iname "params.yaml" -exec git rm --cached {} \;`
+    to untrack existing `params.yaml` files.
 
 ## v0.8.2
 
@@ -52,7 +74,6 @@ and this project adheres to [Semantic Versioning][].
     messages are now `debug` messages and not shown by default.
 -   When running `dso repro`, configuration is only compiled once and not recompiled when `dso exec` or `dso get-config`
     is called internally. This reduces runtime and redundant log messages.
-
 
 ## v0.7.0
 
