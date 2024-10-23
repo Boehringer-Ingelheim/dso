@@ -5,10 +5,8 @@ require(conflicted)
 require(dso)
 ```
 
-`read_params(..)`
-1.   sets the stage directory
-2.   runs 'dso compile-config', which hierachically compiles config files (params.in.yaml and params.yaml) and
-3.   loads parameters defined in the file defining stage dependencies ('params' section in the 'dvc.yaml' file) from the compiled stage config file (params.yaml)
+Load the stage-specific 'params.yaml' config using the `read_params(..)` function. This function specifically loads 
+only the stage-dependent parameters that are defined in the 'params' section of the 'dvc.yaml' file.
 
 ```{r}
 #| label: read_params
@@ -16,13 +14,20 @@ require(dso)
 params <- read_params("{{ stage_path }}")
 ```
 
-Once `params <- read_params(..)` is executed, use 'reload(params)' to quickly rerun read_params and reload the params while developing
+When modifying the 'dvc.yaml', 'params.in.yaml', or 'params.yaml' files during development, use the 'reload(params)'
+function to ensure proper application of the changes by rebuilding and reloading the configuration.
 
+```{r}
+#| label: reload_params
 
-To locate your files relative to the stage path use `stage_here(..)`. This command uses the stage path set in read_params.
+reload(params)
+```
+
+To locate your files relative to the stage path use `stage_here(..)`. 
 
 ```{r}
 #| label: obtain_files_relative_to_stage_dir
 
+# e.g.
 samplesheet <- readr::read_csv(stage_here(params$samplesheet))
 ```
