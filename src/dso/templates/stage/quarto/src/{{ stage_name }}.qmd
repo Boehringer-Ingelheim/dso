@@ -5,7 +5,7 @@ require(conflicted)
 require(dso)
 ```
 
-Load the stage-specific 'params.yaml' config using the `read_params(..)` function. This function specifically loads 
+Load the stage-specific 'params.yaml' config using the `read_params(..)` function. This function specifically loads
 only the stage-dependent parameters that are defined in the 'params' section of the 'dvc.yaml' file.
 
 ```{r}
@@ -23,7 +23,7 @@ function to ensure proper application of the changes by rebuilding and reloading
 reload(params)
 ```
 
-To locate your files relative to the stage path use `stage_here(..)`. 
+To locate your files relative to the stage path use `stage_here(..)`.
 
 ```{r}
 #| label: obtain_files_relative_to_stage_dir
