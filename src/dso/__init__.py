@@ -13,6 +13,7 @@ from .init import cli as init_cli
 from .lint import cli as lint_cli
 from .repro import cli as repro_cli
 from .watermark import cli as watermark_cli
+from .rename import cli as rename_cli
 
 click.rich_click.USE_MARKDOWN = True
 
@@ -60,3 +61,4 @@ cli.add_command(exec_cli)
 cli.add_command(lint_cli)
 cli.add_command(get_config_cli)
 cli.add_command(watermark_cli)
+cli.add_command(rename_cli)
