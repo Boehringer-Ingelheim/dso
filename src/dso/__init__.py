@@ -11,9 +11,9 @@ from .exec import cli as exec_cli
 from .get_config import cli as get_config_cli
 from .init import cli as init_cli
 from .lint import cli as lint_cli
+from .rename import cli as rename_cli
 from .repro import cli as repro_cli
 from .watermark import cli as watermark_cli
-from .rename import cli as rename_cli
 
 click.rich_click.USE_MARKDOWN = True
 
