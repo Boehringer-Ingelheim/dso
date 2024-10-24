@@ -11,6 +11,7 @@ from .exec import cli as exec_cli
 from .get_config import cli as get_config_cli
 from .init import cli as init_cli
 from .lint import cli as lint_cli
+from .rename import cli as rename_cli
 from .repro import cli as repro_cli
 from .watermark import cli as watermark_cli
 
@@ -60,3 +61,4 @@ cli.add_command(exec_cli)
 cli.add_command(lint_cli)
 cli.add_command(get_config_cli)
 cli.add_command(watermark_cli)
+cli.add_command(rename_cli)
