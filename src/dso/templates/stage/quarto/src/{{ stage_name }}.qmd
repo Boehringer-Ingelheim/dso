@@ -1,33 +1,45 @@
+---
+title: "{{ stage_name }}"
+description: "{{ stage_description }}" 
+---
+
+# Setup
+
+## Load libraries
+
 ```{r}
-#| label: load_libraries
+#| label: load_required_libraries
 
 require(conflicted)
 require(dso)
 ```
 
-Load the stage-specific 'params.yaml' config using the `read_params(..)` function. This function specifically loads
-only the stage-dependent parameters that are defined in the 'params' section of the 'dvc.yaml' file.
+## Load stage specific config
 
 ```{r}
 #| label: read_params
 
+# Load the stage-specific 'params.yaml' config using the `read_params(..)` function. 
+# This function specifically loads only the stage-dependent parameters that are defined
+# in the 'params', 'deps' and 'outs' section of the 'dvc.yaml' file.
+
 params <- read_params("{{ stage_path }}")
 ```
 
-When modifying the 'dvc.yaml', 'params.in.yaml', or 'params.yaml' files during development, use the 'reload(params)'
-function to ensure proper application of the changes by rebuilding and reloading the configuration.
+<!--
+When modifying the 'dvc.yaml', 'params.in.yaml', or 'params.yaml' files during development,
+use the 'reload(params)' function in the console to ensure proper application of the changes 
+by rebuilding and reloading the configuration.
+-->
 
-```{r}
-#| label: reload_params
-
-reload(params)
-```
-
-To locate your files relative to the stage path use `stage_here(..)`.
+## Input files
 
 ```{r}
 #| label: obtain_files_relative_to_stage_dir
 
-# e.g.
+# To locate your files relative to the stage path use `stage_here(..)`. 
+# e.g. when samplesheet is defined with `samplesheet = !path input/samplesheet.csv` in 
+# params.in.yaml and `samplesheet` is listed in 'deps' in 'dvc.yaml' 
+
 samplesheet <- readr::read_csv(stage_here(params$samplesheet))
 ```
