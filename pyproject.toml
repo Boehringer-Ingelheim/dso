@@ -25,6 +25,7 @@ classifiers = [
 dynamic = [ "version" ]
 dependencies = [
   "dvc",
+  "hiyapyco>=0.7",
   "jinja2",
   "panflute",
   "pillow",

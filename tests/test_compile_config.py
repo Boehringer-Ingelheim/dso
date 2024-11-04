@@ -3,12 +3,12 @@ from io import StringIO
 from pathlib import Path
 from textwrap import dedent
 
+import hiyapyco
 import pytest
 import yaml
 from click.testing import CliRunner
 from ruamel.yaml import YAML
 
-from dso import hiyapyco
 from dso.compile_config import (
     _get_list_of_configs_to_compile,
     _get_parent_configs,
@@ -122,6 +122,29 @@ def test_compile_configs(tmp_path):
             assert yaml.safe_load(f) == {"only_root": "foo", "value": "B", "list": [1, 2, 3, 4]}
         with (td / "A/B/C/params.yaml").open() as f:
             assert yaml.safe_load(f) == {"only_root": "foo", "value": "C", "list": [1, 2, 3, 4, 5], "jinja2": "foo"}
+
+
+def test_compile_configs_null_override(tmp_path):
+    """Test that null overrides any value"""
+    runner = CliRunner()
+    with runner.isolated_filesystem(temp_dir=tmp_path) as td:
+        td = Path(td)
+        (td / ".git").mkdir()
+        _setup_yaml_configs(
+            td,
+            {
+                "params.in.yaml": {"str": "str", "list": [1, 2, 3], "dict": {"A": 1, "B": 2}, "null": None},
+                "A/B/params.in.yaml": {"str": None, "list": None, "dict": None, "null": None},
+            },
+        )
+        result = runner.invoke(cli, [])
+        print(result.output)
+        td = Path(td)
+        assert result.exit_code == 0
+        with (td / "params.yaml").open() as f:
+            assert yaml.safe_load(f) == {"str": "str", "list": [1, 2, 3], "dict": {"A": 1, "B": 2}, "null": None}
+        with (td / "A/B/params.yaml").open() as f:
+            assert yaml.safe_load(f) == {"str": None, "list": None, "dict": None, "null": None}
 
 
 @pytest.mark.parametrize(
