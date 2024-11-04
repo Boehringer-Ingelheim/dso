@@ -8,10 +8,9 @@ from io import TextIOWrapper
 from pathlib import Path
 from textwrap import dedent
 
+import hiyapyco
 import rich_click as click
 from ruamel.yaml import YAML, yaml_object
-
-from dso import hiyapyco
 
 from ._logging import log
 from ._util import _find_in_parent, check_project_roots
@@ -151,6 +150,7 @@ def compile_all_configs(paths: Sequence[Path]):
         conf = hiyapyco.load(
             *[str(x) for x in configs_to_merge],
             method=hiyapyco.METHOD_MERGE,
+            none_behavior=hiyapyco.NONE_BEHAVIOR_OVERRIDE,
             interpolate=True,
             loader_callback=partial(_load_yaml_with_auto_adjusting_paths, destination=config.parent),
         )
