@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning][].
 ### Fixes
 -   Remove vendored `hiyapyco` code since required changes were released upstream in v0.7.0 ([#45](https://github.com/Boehringer-Ingelheim/dso/pull/45)).
 -   `None` values in `params.in.yaml` can now be used to override anything, e.g. to disable watermarking only in a specific stage ([#45](https://github.com/Boehringer-Ingelheim/dso/pull/45)).
+-   Add `.gitignore` catch-all clauses for `output` and `report` folders in stages to not pick up data and repots being tracked via git ([#46](https://github.com/Boehringer-Ingelheim/dso/issues/46)).
 
 ## v0.9.0
 
