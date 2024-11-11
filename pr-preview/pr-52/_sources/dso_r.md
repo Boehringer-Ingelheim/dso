@@ -1,3 +1,0 @@
-# DSO R package
-
-TODO
