@@ -2,6 +2,9 @@
 .dso.jso
 params.yaml
 
+# uv
+.venv
+
 # Editors
 *.code-workspace
 .vscode
