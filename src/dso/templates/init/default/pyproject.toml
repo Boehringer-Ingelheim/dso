@@ -8,6 +8,12 @@ dependencies = [
   "dso-core>=0.9",
 ]
 
+[tool.dso]
+use_dso_mgr = true
+
+[tool.uv]
+package = false
+
 [tool.ruff]
 line-length = 120
 extend-include = [ "*.ipynb" ]
