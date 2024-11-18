@@ -43,6 +43,9 @@ def _load_yaml_with_auto_adjusting_paths(
         Path of the yaml file to load
     destination
         Path to which the file shall be adjusted
+    missing_path_warnings
+        set in which we keep track of warnings for missing paths to ensure we are
+        not emitting the same warning twice.
 
     Returns
     -------
@@ -73,6 +76,7 @@ def _load_yaml_with_auto_adjusting_paths(
         def __init__(self, path: str):
             self.path = Path(path)
             if not (source / self.path).exists():
+                # check if warning for the same path was already emitted
                 if (self.path, source) not in missing_path_warnings:
                     # Warn, but do not fail (it could also be an output path to be populated by a dvc stage)
                     log.warning(f"Path {self.path} in stage {stage} does not exist!")
