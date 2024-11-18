@@ -13,7 +13,7 @@ import rich_click as click
 from ruamel.yaml import YAML, yaml_object
 
 from ._logging import log
-from ._util import _find_in_parent, check_project_roots
+from ._util import _find_in_parent, check_project_roots, get_project_root
 
 PARAMS_YAML_DISCLAIMER = dedent(
     """\
@@ -29,7 +29,9 @@ PARAMS_YAML_DISCLAIMER = dedent(
 )
 
 
-def _load_yaml_with_auto_adjusting_paths(yaml_stream: TextIOWrapper, destination: Path):
+def _load_yaml_with_auto_adjusting_paths(
+    yaml_stream: TextIOWrapper, destination: Path, missing_path_warnings: set[tuple[Path, Path]]
+):
     """
     Load a yaml file and adjust paths for all !path objects based on a destination file
 
@@ -48,6 +50,8 @@ def _load_yaml_with_auto_adjusting_paths(yaml_stream: TextIOWrapper, destination
 
     # The folder of the source config file
     source = Path(yaml_stream.name).parent
+    # stage name for logging purposes only
+    stage = source.relative_to(get_project_root(source))
     if not destination.is_relative_to(source):
         raise ValueError("Destination path can be the same as source, or a child thereof.")
 
@@ -66,8 +70,10 @@ def _load_yaml_with_auto_adjusting_paths(yaml_stream: TextIOWrapper, destination
         def __init__(self, path: str):
             self.path = Path(path)
             if not (source / self.path).exists():
-                # Warn, but do not fail (it could also be an output path to be populated by a dvc stage)
-                log.warning(f"Path {self.path} does not exist!")
+                if (self.path, source) not in missing_path_warnings:
+                    # Warn, but do not fail (it could also be an output path to be populated by a dvc stage)
+                    log.warning(f"Path {self.path} in stage {stage} does not exist!")
+                    missing_path_warnings.add((self.path, source))
 
         def get_adjusted(self):
             # not possible with pathlib, because pathlib requires the paths to be subpaths of each other
@@ -143,6 +149,10 @@ def compile_all_configs(paths: Sequence[Path]):
     all_configs = _get_list_of_configs_to_compile(paths, project_root)
     log.info(f"Compiling a total of {len(all_configs)} config files.")
 
+    # keep track of paths for which we emitted a warning that the path doesn't exist to ensure
+    # we are only emitting one warning for each (file path, source yaml file path)
+    missing_path_warnings: set[tuple[Path, Path]] = set()
+
     for config in all_configs:
         # sorted sorts path from parent to child. This is what we want as hyapyco gives precedence to configs
         # later in the list.
@@ -152,7 +162,11 @@ def compile_all_configs(paths: Sequence[Path]):
             method=hiyapyco.METHOD_MERGE,
             none_behavior=hiyapyco.NONE_BEHAVIOR_OVERRIDE,
             interpolate=True,
-            loader_callback=partial(_load_yaml_with_auto_adjusting_paths, destination=config.parent),
+            loader_callback=partial(
+                _load_yaml_with_auto_adjusting_paths,
+                destination=config.parent,
+                missing_path_warnings=missing_path_warnings,
+            ),
         )
         # an empty configuration should actually be an empty dictionary.
         if conf is None:
