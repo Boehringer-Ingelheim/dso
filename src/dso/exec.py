@@ -29,6 +29,16 @@ def _render_quarto(quarto_dir: Path, report_dir: Path, before_script: str, cwd: 
     before_script = indent(before_script, " " * 8)
     report_dir = report_dir.absolute()
     report_dir.mkdir(exist_ok=True)
+
+    # clean up existing `.rmarkdown` files that may interfere with rendering
+    # these are leftovers from a previous, failed `quarto render` attempt. If they still exist, the next attempt
+    # fails. We remove them *before* the run instead of cleaning them up *after* the run, because they
+    # may be usefule for debugging failures.
+    # see https://github.com/Boehringer-Ingelheim/dso/issues/54
+    for f in quarto_dir.glob("*.rmarkdown"):
+        if f.is_file():
+            f.unlink()
+
     pandocfilter = "--filter dso_pandocfilter" if with_pandocfilter else ""
     # propagate quiet setting to quarto
     quiet = "--quiet" if bool(int(os.environ.get("DSO_QUIET", 0))) else ""
