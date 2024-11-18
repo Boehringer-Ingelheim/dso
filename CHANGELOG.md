@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning][].
 -   Add `.gitignore` catch-all clauses for `output` and `report` folders in stages to not pick up data and repots being tracked via git ([#46](https://github.com/Boehringer-Ingelheim/dso/issues/46)).
 -   Every dso project is now also a [uv project](https://docs.astral.sh/uv/concepts/projects/#building-projects) declaring Python dependencies in `pyproject.toml`. This makes it possible to
     use a different dso version per project and makes it easy to work with virtual Python environments ([#52](https://github.com/Boehringer-Ingelheim/dso/pull/52))
+-   bash templates now include `-euo pipefail` settings, ensuring that stages fail early and return a nonzero error code if something failed.
 
 ### Fixes
 -   Remove vendored `hiyapyco` code since required changes were released upstream in v0.7.0 ([#45](https://github.com/Boehringer-Ingelheim/dso/pull/45)).
