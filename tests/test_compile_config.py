@@ -51,7 +51,9 @@ def test_auto_adjusting_path(tmp_path, interpolate):
             str(test_file),
             method=hiyapyco.METHOD_MERGE,
             interpolate=interpolate,
-            loader_callback=partial(_load_yaml_with_auto_adjusting_paths, destination=destination),
+            loader_callback=partial(
+                _load_yaml_with_auto_adjusting_paths, destination=destination, missing_path_warnings=set()
+            ),
         )
 
     ruamel = YAML()
