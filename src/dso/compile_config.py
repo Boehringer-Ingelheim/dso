@@ -30,7 +30,9 @@ PARAMS_YAML_DISCLAIMER = dedent(
 
 
 def _load_yaml_with_auto_adjusting_paths(
-    yaml_stream: TextIOWrapper, destination: Path, missing_path_warnings: set[tuple[Path, Path]]
+    yaml_stream: TextIOWrapper,
+    destination: Path,
+    missing_path_warnings: set[tuple[Path, Path]],
 ):
     """
     Load a yaml file and adjust paths for all !path objects based on a destination file
@@ -52,6 +54,7 @@ def _load_yaml_with_auto_adjusting_paths(
     source = Path(yaml_stream.name).parent
     # stage name for logging purposes only
     stage = source.relative_to(get_project_root(source))
+
     if not destination.is_relative_to(source):
         raise ValueError("Destination path can be the same as source, or a child thereof.")
 

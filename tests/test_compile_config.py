@@ -34,6 +34,7 @@ def test_auto_adjusting_path(tmp_path, interpolate):
     as an object that can be dumped by ruamel using the custom representer.
     """
     test_file = tmp_path / "params.in.yaml"
+    (tmp_path / ".git").mkdir()
     destination = tmp_path / "subproject1" / "stageA"
     destination.mkdir(parents=True)
     (tmp_path / "test.txt").touch()  # create fake file, otherwise check for missing file will fail.
