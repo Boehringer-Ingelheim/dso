@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning][].
 ### Fixes
 -   Remove vendored `hiyapyco` code since required changes were released upstream in v0.7.0 ([#45](https://github.com/Boehringer-Ingelheim/dso/pull/45)).
 -   `None` values in `params.in.yaml` can now be used to override anything, e.g. to disable watermarking only in a specific stage ([#45](https://github.com/Boehringer-Ingelheim/dso/pull/45)).
+-   DSO now respects a `DSO_SKIP_CHECK_ASK_PRE_COMMIT` environment variable.  If it is set
+    to anything that evaluates as `True`, we skip the check if pre-commit is installed. This was a
+    requirement introduced by the R API package, see [#50](https://github.com/Boehringer-Ingelheim/dso/issues/50) ([#58](https://github.com/Boehringer-Ingelheim/dso/pull/58)).
 
 ## v0.9.0
 
