@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="_static/documentation_options.js?v=1044619b"></script>
+    <script src="_static/documentation_options.js?v=d280b184"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <link rel="prev" title="Getting started" href="getting_started.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g6209c9e" />
+  <meta name="docsearch:version" content="0.1.dev1+gd51ec25" />
   </head>
   
   
@@ -402,6 +402,10 @@ use a different dso version per project and makes it easy to work with virtual P
 <ul class="simple">
 <li><p>Remove vendored <code class="docutils literal notranslate"><span class="pre">hiyapyco</span></code> code since required changes were released upstream in v0.7.0 (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/45">#45</a>).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> values in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> can now be used to override anything, e.g. to disable watermarking only in a specific stage (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/45">#45</a>).</p></li>
+<li><p>Clean up existing <code class="docutils literal notranslate"><span class="pre">*.rmarkdown</span></code> files in quarto stage before running <code class="docutils literal notranslate"><span class="pre">quarto</span> <span class="pre">render</span></code>. This fixes issues with re-running quarto stages that failed in the previous attempt (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/57">#57</a>).</p></li>
+<li><p>DSO now respects a <code class="docutils literal notranslate"><span class="pre">DSO_SKIP_CHECK_ASK_PRE_COMMIT</span></code> environment variable.  If it is set
+to anything that evaluates as <code class="docutils literal notranslate"><span class="pre">True</span></code>, we skip the check if pre-commit is installed. This was a
+requirement introduced by the R API package, see <a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/issues/50">#50</a> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/58">#58</a>).</p></li>
 <li><p>Improve logging for “missing path” warning during <code class="docutils literal notranslate"><span class="pre">compile-config</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/59">#59</a>).</p></li>
 <li><p>Improve logging for missing parameters in <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> during <code class="docutils literal notranslate"><span class="pre">get-config</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/59">#59</a>).</p></li>
 </ul>
