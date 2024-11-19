@@ -1,0 +1,825 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Changelog" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="CHANGELOG.html" />
+<meta property="og:site_name" content="Project name not set" />
+<meta property="og:description" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.[Unreleased]: Template updates: Improve..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_CHANGELOG_48d2abeb.png" />
+<meta property="og:image:alt" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning..." />
+<meta name="description" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.[Unreleased]: Template updates: Improve..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Changelog &#8212; dso-core</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=366103d0" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/documentation_options.js?v=300b87ce"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'CHANGELOG';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing guide" href="contributing.html" />
+    <link rel="prev" title="Getting started" href="getting_started.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.dev1+g8b5f2fc" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">dso-core</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO Python API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dso_python.html">Python API</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO R API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dso_r.html">DSO R package</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/Boehringer-Ingelheim/dso" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/CHANGELOG.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Changelog</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unreleased">[Unreleased]</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#template-updates">Template updates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-9-0">v0.9.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation">Documentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Template updates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#migration-advice">Migration advice</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-2">v0.8.2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-1">v0.8.1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-0">v0.8.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">New Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-7-0">v0.7.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-6-1">v0.6.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-6-0">v0.6.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Migration advice</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-5-0">v0.5.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Migration advice</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-4">v0.4.4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-3">v0.4.3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-2">v0.4.2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-1">v0.4.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-0">v0.4.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-1">v0.3.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-0">v0.3.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-2-0">v0.2.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-0">v0.1.0</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
+<p>All notable changes to this project will be documented in this file.</p>
+<p>The format is based on <a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
+and this project adheres to <a class="reference external" href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<section id="unreleased">
+<h2>[Unreleased]<a class="headerlink" href="#unreleased" title="Link to this heading">#</a></h2>
+<section id="template-updates">
+<h3>Template updates<a class="headerlink" href="#template-updates" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Improve instruction text in quarto template to get users started more quickly (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/40">#40</a>)</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> catch-all clauses for <code class="docutils literal notranslate"><span class="pre">output</span></code> and <code class="docutils literal notranslate"><span class="pre">report</span></code> folders in stages to not pick up data and repots being tracked via git (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/issues/46">#46</a>).</p></li>
+<li><p>Every dso project is now also a <a class="reference external" href="https://docs.astral.sh/uv/concepts/projects/#building-projects">uv project</a> declaring Python dependencies in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. This makes it possible to
+use a different dso version per project and makes it easy to work with virtual Python environments (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/52">#52</a>)</p></li>
+<li><p>bash templates now include <code class="docutils literal notranslate"><span class="pre">-euo</span> <span class="pre">pipefail</span></code> settings, ensuring that stages fail early and return a nonzero error code if something failed (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/59">#59</a>).</p></li>
+</ul>
+</section>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Remove vendored <code class="docutils literal notranslate"><span class="pre">hiyapyco</span></code> code since required changes were released upstream in v0.7.0 (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/45">#45</a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> values in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> can now be used to override anything, e.g. to disable watermarking only in a specific stage (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/45">#45</a>).</p></li>
+<li><p>Clean up existing <code class="docutils literal notranslate"><span class="pre">*.rmarkdown</span></code> files in quarto stage before running <code class="docutils literal notranslate"><span class="pre">quarto</span> <span class="pre">render</span></code>. This fixes issues with re-running quarto stages that failed in the previous attempt (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/57">#57</a>).</p></li>
+<li><p>DSO now respects a <code class="docutils literal notranslate"><span class="pre">DSO_SKIP_CHECK_ASK_PRE_COMMIT</span></code> environment variable.  If it is set
+to anything that evaluates as <code class="docutils literal notranslate"><span class="pre">True</span></code>, we skip the check if pre-commit is installed. This was a
+requirement introduced by the R API package, see <a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/issues/50">#50</a> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/58">#58</a>).</p></li>
+<li><p>Improve logging for “missing path” warning during <code class="docutils literal notranslate"><span class="pre">compile-config</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/59">#59</a>).</p></li>
+<li><p>Improve logging for missing parameters in <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> during <code class="docutils literal notranslate"><span class="pre">get-config</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/59">#59</a>).</p></li>
+</ul>
+</section>
+</section>
+<section id="v0-9-0">
+<h2>v0.9.0<a class="headerlink" href="#v0-9-0" title="Link to this heading">#</a></h2>
+<section id="new-features">
+<h3>New Features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">watermark</span></code> now supports files in PDF format. With this change, quarto reports using the watermark feature can
+be rendered to PDF, too (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/26">#26</a>).</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>Fixes<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fix linting rule DSO001: It is now allowed to specify additional arguments in <code class="docutils literal notranslate"><span class="pre">read_params()</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">quiet</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/36">#36</a>).</p></li>
+<li><p>It is now possible to use Jinja2 interpolation in combination with <code class="docutils literal notranslate"><span class="pre">!path</span></code> objects (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/36">#36</a>)</p></li>
+<li><p>Improve error messages when <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code> can’t find required input files (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/36">#36</a>)</p></li>
+</ul>
+</section>
+<section id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Documentation is now built via sphinx and hosted on GitHub pages: https://boehringer-ingelheim.github.io/dso/ (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/35">#35</a>).</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Template updates<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Make instruction comments in quarto template more descriptive (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/33">#33</a>).</p></li>
+<li><p>Include <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> in default project <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>. We decided to not track <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> in git anymore
+since it adds noise during code review and led to merge conflicts in some cases. In the future, a certain
+<code class="docutils literal notranslate"><span class="pre">dso</span></code> version will be tied to each project, improving reproducibility also without <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files.</p></li>
+</ul>
+</section>
+<section id="migration-advice">
+<h3>Migration advice<a class="headerlink" href="#migration-advice" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> to your project-level <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>. Then execute <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">-iname</span> <span class="pre">&quot;params.yaml&quot;</span> <span class="pre">-exec</span> <span class="pre">git</span> <span class="pre">rm</span> <span class="pre">--cached</span> <span class="pre">{}</span> <span class="pre">\;</span></code>
+to untrack existing <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files.</p></li>
+</ul>
+</section>
+</section>
+<section id="v0-8-2">
+<h2>v0.8.2<a class="headerlink" href="#v0-8-2" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>Fixes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed params.yaml sorting issue - params.yaml order will be kept intact when using <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="v0-8-1">
+<h2>v0.8.1<a class="headerlink" href="#v0-8-1" title="Link to this heading">#</a></h2>
+<section id="id4">
+<h3>Fixes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed and issue with spaces in image filenames when watermarking a quarto document</p></li>
+</ul>
+</section>
+</section>
+<section id="v0-8-0">
+<h2>v0.8.0<a class="headerlink" href="#v0-8-0" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h3>New Features<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> and <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">folder</span></code> now also work in existing directories. In such case missing files will be added
+from the template, but existing files are never overwritten.</p></li>
+<li><p>There’s now a template for a bash stage available in <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">stage</span></code>. The stage template needs can be specified
+via the <code class="docutils literal notranslate"><span class="pre">--template</span></code> flag, otherwise the user is prompted to choose a template.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dso</span></code> now has flags to control logging verbosity. The default log-level is <code class="docutils literal notranslate"><span class="pre">info</span></code>. <code class="docutils literal notranslate"><span class="pre">-q</span></code> will set it to <code class="docutils literal notranslate"><span class="pre">warning</span></code>,
+<code class="docutils literal notranslate"><span class="pre">-qq</span></code> to <code class="docutils literal notranslate"><span class="pre">error</span></code> and <code class="docutils literal notranslate"><span class="pre">-v</span></code> to <code class="docutils literal notranslate"><span class="pre">debug</span></code>. The “quiet” option can also be activated by setting the environment variable
+<code class="docutils literal notranslate"><span class="pre">DSO_QUIET=1</span></code> or <code class="docutils literal notranslate"><span class="pre">DSO_QUIET=2</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">exec</span></code> and <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code> now have a <code class="docutils literal notranslate"><span class="pre">--skip-compile</span></code> flag to disable automatic internal calls to
+<code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">compile-config</span></code>. The flag can also be activated by setting the environment variable <code class="docutils literal notranslate"><span class="pre">DSO_SKIP_COMPILE=1</span></code>.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Fixes<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fix that compile-config also compiles parents when in a directory without a <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file.</p></li>
+<li><p>The order of dictionaries is now preserved by <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code>.</p></li>
+<li><p>When running <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> or <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code>, <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">compile-config</span></code> is now only executed
+after it was clearly communicated with the user that the project/stage/folder was successfully created.</p></li>
+<li><p>Specifying a stylesheet using <code class="docutils literal notranslate"><span class="pre">css</span></code> via <code class="docutils literal notranslate"><span class="pre">dso.quarto</span></code> is now possible.</p></li>
+<li><p>Adjusted the log level of some messages to more reasonable defaults. Some messages that were previously <code class="docutils literal notranslate"><span class="pre">info</span></code>
+messages are now <code class="docutils literal notranslate"><span class="pre">debug</span></code> messages and not shown by default.</p></li>
+<li><p>When running <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code>, configuration is only compiled once and not recompiled when <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">exec</span></code> or <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code>
+is called internally. This reduces runtime and redundant log messages.</p></li>
+</ul>
+</section>
+</section>
+<section id="v0-7-0">
+<h2>v0.7.0<a class="headerlink" href="#v0-7-0" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>Improved watermarking support</p>
+<ul>
+<li><p>Added test cases for watermarking and the pandocfilter</p></li>
+<li><p>Support for SVG images</p></li>
+<li><p>There’s now a <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">watermark</span></code> command line interface to watermark specified image files. In the future this
+can be used to provide a custom plotting device in R that performs the watermarking.</p></li>
+<li><p>Changed the watermark layout to use a tiled pattern which is less obstrusive and is guaranteed to cover the entire plot</p></li>
+<li><p>The watermark is now fully configurable via <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">dso</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">quarto</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">watermark</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WATERMARK</span>
+<span class="w">            </span><span class="c1"># change the visuals - Usually fine to stick with the default, but these are the options that can be changed</span>
+<span class="w">            </span><span class="nt">tile_size</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">100</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">100</span><span class="p p-Indicator">]</span>
+<span class="w">            </span><span class="nt">font_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12</span>
+<span class="w">            </span><span class="nt">font_outline</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">            </span><span class="nt">font_color</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">black</span>
+<span class="w">            </span><span class="nt">font_outline_color</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#AA111160&quot;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Fix issue where dso was stuck in an infinity loop while searching for a config file. Now it should fail
+if it can’t be found. To realize this the funcitonality for searching parent folders for a certain file
+that was used in different places was refactored into a separate function.</p></li>
+</ul>
+</section>
+<section id="v0-6-1">
+<h2>v0.6.1<a class="headerlink" href="#v0-6-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix issue in <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code> if multiple parameters have been used in a single line in <code class="docutils literal notranslate"><span class="pre">deps:</span></code>.</p></li>
+</ul>
+</section>
+<section id="v0-6-0">
+<h2>v0.6.0<a class="headerlink" href="#v0-6-0" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>Add a <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">lint</span></code> command that performs consistency checks on dso projects. For now, only a single rule is
+implemented, but it can be easily extended. The rule:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DSO001</span></code>: In a quarto stage, ensure <code class="docutils literal notranslate"><span class="pre">dso::read_params</span></code> is called and stage name is correct.</p></li>
+</ul>
+</li>
+<li><p>Logging information is now printed to STDERR instead of STDOUT</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span> <span class="pre">&lt;STAGE&gt;</span></code> which will compile and print the configuration for a given stage to STDOUT.
+Additionally, it filters the output to fields that are specified in <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> which forces the user
+to declare all dependencies in <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code>.</p></li>
+<li><p>Add automated watermarking of plots in quarto documents as experimental feature. For now, only png images are supported.
+To enable, add to <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dso.quarto.watermark</span></code>: a text to be shown as watermark.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dso.quarto.disclaimer.text</span></code>: a text to be shown as disclaimer box.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dso.quarto.disclaimer.title</span></code>: title of the disclaimer box.</p></li>
+</ul>
+<p>The disclaimer box is only shown if both text and title are set.</p>
+</li>
+</ul>
+<section id="id7">
+<h3>Migration advice<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">dso-r</span></code> to v0.3.0 to take advantage of <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code>.</p></li>
+<li><p>Add the following rule to your <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">hooks</span><span class="p p-Indicator">:</span>
+<span class="w">      </span><span class="p p-Indicator">[</span><span class="nv">...</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lint</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run dso lint</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">entry</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dso lint --skip-compile</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">stages</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">commit</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="v0-5-0">
+<h2>v0.5.0<a class="headerlink" href="#v0-5-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dso.before_script</span></code> is now <code class="docutils literal notranslate"><span class="pre">dso.quarto.before_script</span></code>. This change has been made because different “exec” modules
+will likely need different setup-scripts (i.e. environment modules). If the script shall be shared nevertheless,
+this can be done with jinja templating.</p></li>
+<li><p>It is now possible to specify bibliography files in <code class="docutils literal notranslate"><span class="pre">params.in.config:dso.quarto.bibliography</span></code> using <code class="docutils literal notranslate"><span class="pre">!path</span></code>.</p></li>
+<li><p>Upon <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code>, the CLI asks once if the user wants to install the pre-commit hooks</p></li>
+</ul>
+<section id="id8">
+<h3>Migration advice<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Move <code class="docutils literal notranslate"><span class="pre">dso.before_script</span></code> to <code class="docutils literal notranslate"><span class="pre">dso.quarto.before_script</span></code> in all your config files.</p></li>
+<li><p>Update all quarto stages to depend only on <code class="docutils literal notranslate"><span class="pre">params:dso.quarto</span></code> instead of <code class="docutils literal notranslate"><span class="pre">params:dso</span></code>. This will avoid
+invalidating the cache unnecessarily.</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">/.dso.json</span></code> to your .gitignore file</p></li>
+</ul>
+</section>
+</section>
+<section id="v0-4-4">
+<h2>v0.4.4<a class="headerlink" href="#v0-4-4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Remove confirmation before overwriting a newer <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file - It turned out not to work well with
+switching branches in git and led to way too many unnecessary questions.</p></li>
+<li><p>Do not fail when <code class="docutils literal notranslate"><span class="pre">dso.quarto</span></code> is <code class="docutils literal notranslate"><span class="pre">null</span></code> in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> (not all cases were addressed in v0.4.3)</p></li>
+</ul>
+</section>
+<section id="v0-4-3">
+<h2>v0.4.3<a class="headerlink" href="#v0-4-3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Fix confirmation to overwrite params.yaml</p></li>
+<li><p>Improve error message when <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">exec</span> <span class="pre">quarto</span></code> fails</p></li>
+<li><p>Make pre-commit hooks verbose</p></li>
+<li><p>Do not fail when <code class="docutils literal notranslate"><span class="pre">dso.quarto</span></code> is <code class="docutils literal notranslate"><span class="pre">null</span></code> in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code></p></li>
+</ul>
+</section>
+<section id="v0-4-2">
+<h2>v0.4.2<a class="headerlink" href="#v0-4-2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Update quarto template to include <code class="docutils literal notranslate"><span class="pre">dso</span></code> params as dependency</p></li>
+<li><p>Reduce the number of false-positives when asking for confirmation to overwrite params.yaml</p></li>
+</ul>
+</section>
+<section id="v0-4-1">
+<h2>v0.4.1<a class="headerlink" href="#v0-4-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Allow a tolerance of 1s when comparing timestamps of params.in.yaml and params.yaml</p></li>
+</ul>
+</section>
+<section id="v0-4-0">
+<h2>v0.4.0<a class="headerlink" href="#v0-4-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Ask for confirmation before overwriting a newer <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file</p></li>
+<li><p>The log messages when compiling configuration files have improved</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">exec</span> <span class="pre">quarto</span></code>, a convenient wrapper to execute quarto stages</p>
+<ul>
+<li><p>Quarto configuration/headers will be read from <code class="docutils literal notranslate"><span class="pre">params.yaml:qso.quarto</span></code></p></li>
+<li><p>A shell snippet specified in <code class="docutils literal notranslate"><span class="pre">params.yaml:dso.before_script</span></code> will be executed before rendering the report.
+This is useful for setting up the environment, e.g. by loading modules</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="v0-3-1">
+<h2>v0.3.1<a class="headerlink" href="#v0-3-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Update quarto template to be concordant with latest dso-r version</p></li>
+</ul>
+</section>
+<section id="v0-3-0">
+<h2>v0.3.0<a class="headerlink" href="#v0-3-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Updated quarto template to use dso code to load files</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">compile-config</span></code> now optionally supports specifying a list of paths</p></li>
+<li><p>Renamed <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">project</span></code> to <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">folder</span></code> in addition to <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">stage</span></code>.</p></li>
+<li><p>Currently only one template for <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code>, <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">folder</span></code> and <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">stage</span></code> but prepared the project
+to easily support multiple templates in the future</p></li>
+<li><p>Improved pre-commit config. Install it using <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">install</span></code> in the project. It automatically performs some
+consistency checks and dvc pull/push/checkout.</p></li>
+</ul>
+</section>
+<section id="v0-2-0">
+<h2>v0.2.0<a class="headerlink" href="#v0-2-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>It’s now possible to specify paths via the <code class="docutils literal notranslate"><span class="pre">!path</span></code> tag in params.in.yaml. These paths will be checked for existence
+and automatically resolved such that they are always relative to the compiled params.yaml files.</p></li>
+</ul>
+</section>
+<section id="v0-1-0">
+<h2>v0.1.0<a class="headerlink" href="#v0-1-0" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>initial prototype</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> command</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="getting_started.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Getting started</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="contributing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Contributing guide</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unreleased">[Unreleased]</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#template-updates">Template updates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-9-0">v0.9.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation">Documentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Template updates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#migration-advice">Migration advice</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-2">v0.8.2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-1">v0.8.1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-0">v0.8.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">New Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-7-0">v0.7.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-6-1">v0.6.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-6-0">v0.6.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Migration advice</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-5-0">v0.5.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Migration advice</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-4">v0.4.4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-3">v0.4.3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-2">v0.4.2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-1">v0.4.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-0">v0.4.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-1">v0.3.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-3-0">v0.3.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-2-0">v0.2.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-1-0">v0.1.0</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gregor Sturm, Thomas Schwarzl, Alexander Peltzer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Gregor Sturm, Thomas Schwarzl, Alexander Peltzer..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
