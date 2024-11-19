@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="_static/documentation_options.js?v=a18af324"></script>
+    <script src="_static/documentation_options.js?v=1044619b"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <link rel="prev" title="Getting started" href="getting_started.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g87b6338" />
+  <meta name="docsearch:version" content="0.1.dev1+g6209c9e" />
   </head>
   
   
@@ -394,6 +394,7 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> catch-all clauses for <code class="docutils literal notranslate"><span class="pre">output</span></code> and <code class="docutils literal notranslate"><span class="pre">report</span></code> folders in stages to not pick up data and repots being tracked via git (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/issues/46">#46</a>).</p></li>
 <li><p>Every dso project is now also a <a class="reference external" href="https://docs.astral.sh/uv/concepts/projects/#building-projects">uv project</a> declaring Python dependencies in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. This makes it possible to
 use a different dso version per project and makes it easy to work with virtual Python environments (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/52">#52</a>)</p></li>
+<li><p>bash templates now include <code class="docutils literal notranslate"><span class="pre">-euo</span> <span class="pre">pipefail</span></code> settings, ensuring that stages fail early and return a nonzero error code if something failed (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/59">#59</a>).</p></li>
 </ul>
 </section>
 <section id="fixes">
@@ -401,6 +402,8 @@ use a different dso version per project and makes it easy to work with virtual P
 <ul class="simple">
 <li><p>Remove vendored <code class="docutils literal notranslate"><span class="pre">hiyapyco</span></code> code since required changes were released upstream in v0.7.0 (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/45">#45</a>).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> values in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> can now be used to override anything, e.g. to disable watermarking only in a specific stage (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/45">#45</a>).</p></li>
+<li><p>Improve logging for “missing path” warning during <code class="docutils literal notranslate"><span class="pre">compile-config</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/59">#59</a>).</p></li>
+<li><p>Improve logging for missing parameters in <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> during <code class="docutils literal notranslate"><span class="pre">get-config</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/59">#59</a>).</p></li>
 </ul>
 </section>
 </section>
