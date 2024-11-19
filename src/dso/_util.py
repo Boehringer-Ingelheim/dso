@@ -5,7 +5,13 @@ import sys
 from collections.abc import Sequence
 from functools import cache
 from importlib import resources
-from importlib.resources.abc import Traversable
+
+try:
+    # has been added in Python 3.11
+    from importlib.resources.abc import Traversable
+except ImportError:
+    # will be removed in Python 3.14
+    from importlib.abc import Traversable
 from os import environ
 from pathlib import Path
 from typing import Literal
