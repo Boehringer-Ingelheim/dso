@@ -15,13 +15,7 @@ from dso.compile_config import compile_all_configs
 from ._logging import log
 
 
-def _render_quarto(
-    quarto_dir: Path,
-    report_dir: Path,
-    before_script: str,
-    cwd: Path,
-    with_pandocfilter: bool = False,
-):
+def _render_quarto(quarto_dir: Path, report_dir: Path, before_script: str, cwd: Path, with_pandocfilter: bool = False):
     """
     Render a quarto project
 
