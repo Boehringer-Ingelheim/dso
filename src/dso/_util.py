@@ -5,7 +5,7 @@ import sys
 from collections.abc import Sequence
 from functools import cache
 from importlib import resources
-from importlib.abc import Traversable
+from importlib.resources.abc import Traversable
 from os import environ
 from pathlib import Path
 from typing import Literal
