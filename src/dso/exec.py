@@ -1,6 +1,8 @@
 import os
+import stat
 import subprocess
 import sys
+import tempfile
 from contextlib import contextmanager
 from pathlib import Path
 from textwrap import dedent, indent
@@ -39,7 +41,25 @@ def _render_quarto(quarto_dir: Path, report_dir: Path, before_script: str, cwd: 
         if f.is_file():
             f.unlink()
 
-    pandocfilter = "--filter dso_pandocfilter" if with_pandocfilter else ""
+    # Enable pandocfilter if requested.
+    # We create a temporary script that then calls the current python binary with the dso.pandocfilter module
+    # This may seem cumbersome, but we do it this way because
+    #  * pandoc only supports a single binary for `--filter`, referring to subcommands or `-m` is not possible here
+    #  * we want to ensure that exactly the same python/dso version is used for the pandocfilter as for the
+    #    parent command (important when running through dso-mgr)
+    filter_script = None
+    if with_pandocfilter:
+        with tempfile.NamedTemporaryFile(delete=False, mode="w") as f:
+            f.write("#!/bin/bash\n")
+            f.write(f'{sys.executable} -m dso.pandocfilter "$@"\n')
+            filter_script = Path(f.name)
+
+        filter_script.chmod(filter_script.stat().st_mode | stat.S_IEXEC)
+
+        pandocfilter = f"--filter {filter_script}"
+    else:
+        pandocfilter = ""
+
     # propagate quiet setting to quarto
     quiet = "--quiet" if bool(int(os.environ.get("DSO_QUIET", 0))) else ""
     script = dedent(
@@ -56,6 +76,11 @@ def _render_quarto(quarto_dir: Path, report_dir: Path, before_script: str, cwd: 
         """
     )
     res = subprocess.run(script, shell=True, executable="/bin/bash", cwd=cwd)
+
+    # clean up
+    if filter_script is not None:
+        filter_script.unlink()
+
     if res.returncode:
         sys.exit(res.returncode)
 

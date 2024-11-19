@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning][].
     requirement introduced by the R API package, see [#50](https://github.com/Boehringer-Ingelheim/dso/issues/50) ([#58](https://github.com/Boehringer-Ingelheim/dso/pull/58)).
 -   Improve logging for "missing path" warning during `compile-config` ([#59](https://github.com/Boehringer-Ingelheim/dso/pull/59)).
 -   Improve logging for missing parameters in `dvc.yaml` during `get-config` ([#59](https://github.com/Boehringer-Ingelheim/dso/pull/59)).
+-   Make sure internal calls to the dso pandocfilter use the same python and dso version as the parent command. This is important for the upcoming `dso-mgr` feature ([#61](https://github.com/Boehringer-Ingelheim/dso/pull/61)).
 
 ## v0.9.0
 
