@@ -6,7 +6,7 @@ stages:
       - output
     cmd:
       - |
-        bash << EOF
+        bash -euo pipefail << EOF
 
         # add bash code here
 
