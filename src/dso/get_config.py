@@ -148,6 +148,6 @@ def cli(stage, all, skip_compile):
         out_config = get_config(stage, all=all, skip_compile=skip_compile)
         yaml = YAML()
         yaml.dump(out_config, sys.stdout)
-    except KeyError:
-        log.error("dvc.yaml defines parameter that is not in params.yaml")
+    except KeyError as e:
+        log.error(f"dvc.yaml defines parameter {e} that is not in params.yaml")
         sys.exit(1)
