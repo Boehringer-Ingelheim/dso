@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning][].
 
 ### Template updates
 
--   Do not ignore gitignore files in output/report directories of template ([#62](https://github.com/Boehringer-Ingelheim/dso/pull/62))
+-   Do not ignore gitignore files in output/report directories of template ([#63](https://github.com/Boehringer-Ingelheim/dso/pull/63))
 
 ## v0.10.0
 
