@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning][].
 ## [Unreleased]
 
 ### Template updates
+
+-   Do not ignore gitignore files in output/report directories of template ([#63](https://github.com/Boehringer-Ingelheim/dso/pull/63))
+
+## v0.10.0
+
+### Template updates
 -   Improve instruction text in quarto template to get users started more quickly ([#40](https://github.com/Boehringer-Ingelheim/dso/pull/40))
 -   Add `.gitignore` catch-all clauses for `output` and `report` folders in stages to not pick up data and repots being tracked via git ([#46](https://github.com/Boehringer-Ingelheim/dso/issues/46)).
 -   Every dso project is now also a [uv project](https://docs.astral.sh/uv/concepts/projects/#building-projects) declaring Python dependencies in `pyproject.toml`. This makes it possible to
