@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning][].
 
 -   Take comments into account when linting for `DSO001` ([#69](https://github.com/Boehringer-Ingelheim/dso/pull/69))
 -   Make it possible to override watermarks/disclaimers with a simple `null` ([#69](https://github.com/Boehringer-Ingelheim/dso/pull/69)).
+-   Compile *all* configs on `dso repro`, not just the ones relvant to the specified stage. This is required because we don't
+    know which other stages dvc might compile ([#69](https://github.com/Boehringer-Ingelheim/dso/pull/69)).
 
 ### Template updates
 
