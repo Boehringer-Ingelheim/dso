@@ -8,11 +8,15 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
-## [Unreleased]
+## v0.10.1
+
+### Fixes
+
+-   Take comments into account when linting for `DSO001`
 
 ### Template updates
 
--   Do not ignore gitignore files in output/report directories of template ([#63](https://github.com/Boehringer-Ingelheim/dso/pull/63))
+-   Do not ignore the `.gitignore` files in output/report directories of template ([#63](https://github.com/Boehringer-Ingelheim/dso/pull/63))
 
 ## v0.10.0
 
