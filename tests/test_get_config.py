@@ -142,6 +142,44 @@ def test_get_config_order(dso_project):
     assert list(config["B1"]) == ["C", "A", "D", "B", "Z", "X"]
 
 
+def test_get_config_matrix(dso_project):
+    """Test that get-config is compatible with dvc's matrix feature"""
+    chdir(dso_project)
+    stage = dso_project / "mystage"
+    stage.mkdir()
+    (stage / "params.in.yaml").touch()
+
+    (dso_project / "params.in.yaml").write_text(
+        dedent(
+            """\
+            matrix_param: ['p1', 'p2']
+            A: "aaa"
+            B: "bbb"
+            """
+        )
+    )
+
+    (stage / "dvc.yaml").write_text(
+        dedent(
+            """\
+            stages:
+               mystage01:
+                 matrix:
+                    mp: ${ matrix_param }
+                 params:
+                   - A
+                   - item.mp
+                 outs:
+                   - output/${ item.mp }
+                 cmd: "echo Hello World!"
+            """
+        )
+    )
+
+    config = get_config("mystage")
+    assert list(config) == ["A"]
+
+
 def test_get_config_path_relative_to_root_dir(quarto_stage):
     chdir(quarto_stage)
     config1 = get_config("quarto_stage")

@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning][].
 -   Make it possible to override watermarks/disclaimers with a simple `null` ([#69](https://github.com/Boehringer-Ingelheim/dso/pull/69)).
 -   Compile *all* configs on `dso repro`, not just the ones relvant to the specified stage. This is required because we don't
     know which other stages dvc might compile ([#69](https://github.com/Boehringer-Ingelheim/dso/pull/69)).
+-   Make `get-config` compatible with dvc matrix stages ([#69](https://github.com/Boehringer-Ingelheim/dso/pull/69)).
 
 ### Template updates
 
