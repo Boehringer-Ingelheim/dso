@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning][].
 
 ### Fixes
 
--   Take comments into account when linting for `DSO001`
+-   Take comments into account when linting for `DSO001` ([#69](https://github.com/Boehringer-Ingelheim/dso/pull/69))
 
 ### Template updates
 
