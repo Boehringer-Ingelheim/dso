@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning][].
 ### Template updates
 
 -   Do not ignore the `.gitignore` files in output/report directories of template ([#63](https://github.com/Boehringer-Ingelheim/dso/pull/63))
+-   Update `.pre-commit-config.yaml` for pre-commit 4.x ([#63](https://github.com/Boehringer-Ingelheim/dso/pull/63))
 
 ## v0.10.0
 

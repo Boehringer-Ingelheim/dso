@@ -43,12 +43,12 @@ repos:
       - id: dvc-pre-commit
         language_version: python3
         stages:
-          - commit
+          - pre-commit
       - id: dvc-pre-push
         additional_dependencies: ["s3"]
         language_version: python3
         stages:
-          - push
+          - pre-push
         verbose: true
       - id: dvc-post-checkout
         always_run: true
@@ -62,9 +62,9 @@ repos:
         name: Run dso compile-config
         entry: dso compile-config
         language: system
-        stages: [commit]
+        stages: [pre-commit]
       - id: lint
         name: Run dso lint
         entry: dso lint --skip-compile
         language: system
-        stages: [commit]
+        stages: [pre-commit]
