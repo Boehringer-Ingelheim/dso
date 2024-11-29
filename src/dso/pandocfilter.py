@@ -75,7 +75,7 @@ def _sanitize_watermark_config(config):
 def action(elem, doc):
     """Panflutes action"""
     watermark_config = _sanitize_watermark_config(doc.get_metadata("watermark"))
-    if watermark_config is not None:
+    if watermark_config:  # could be "" or None, both which evaluate to False
         if "text" not in watermark_config:
             log.error("Need to specify at least `watermark.text`")
             sys.exit(1)
