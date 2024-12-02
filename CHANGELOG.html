@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="CHANGELOG.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.[Unreleased]: Template updates: Do not ..." />
+<meta property="og:description" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning. v0.10.1: Fixes: Take comments into acc..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
 <meta property="og:image" content="/_images/social_previews/summary_CHANGELOG_48d2abeb.png" />
 <meta property="og:image:alt" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning..." />
-<meta name="description" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.[Unreleased]: Template updates: Do not ..." />
+<meta name="description" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning. v0.10.1: Fixes: Take comments into acc..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Changelog &#8212; dso-core</title>
@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="_static/documentation_options.js?v=878ad66c"></script>
+    <script src="_static/documentation_options.js?v=5b3f7223"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <link rel="prev" title="Getting started" href="getting_started.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g6de46a8" />
+  <meta name="docsearch:version" content="0.1.dev1+gebd5cab" />
   </head>
   
   
@@ -324,44 +324,45 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unreleased">[Unreleased]</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-10-1">v0.10.1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#template-updates">Template updates</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-10-0">v0.10.0</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Template updates</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Fixes</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-9-0">v0.9.0</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New Features</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Fixes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation">Documentation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Template updates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Template updates</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#migration-advice">Migration advice</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-2">v0.8.2</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fixes</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-1">v0.8.1</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Fixes</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-1">v0.8.1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Fixes</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-0">v0.8.0</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">New Features</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">New Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Fixes</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-7-0">v0.7.0</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-6-1">v0.6.1</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-6-0">v0.6.0</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Migration advice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Migration advice</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-5-0">v0.5.0</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Migration advice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Migration advice</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-4">v0.4.4</a></li>
@@ -389,12 +390,23 @@
 <p>All notable changes to this project will be documented in this file.</p>
 <p>The format is based on <a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
 and this project adheres to <a class="reference external" href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<section id="unreleased">
-<h2>[Unreleased]<a class="headerlink" href="#unreleased" title="Link to this heading">#</a></h2>
+<section id="v0-10-1">
+<h2>v0.10.1<a class="headerlink" href="#v0-10-1" title="Link to this heading">#</a></h2>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Take comments into account when linting for <code class="docutils literal notranslate"><span class="pre">DSO001</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/69">#69</a>)</p></li>
+<li><p>Make it possible to override watermarks/disclaimers with a simple <code class="docutils literal notranslate"><span class="pre">null</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/69">#69</a>).</p></li>
+<li><p>Compile <em>all</em> configs on <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code>, not just the ones relvant to the specified stage. This is required because we don’t
+know which other stages dvc might compile (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/69">#69</a>).</p></li>
+<li><p>Make <code class="docutils literal notranslate"><span class="pre">get-config</span></code> compatible with dvc matrix stages (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/69">#69</a>).</p></li>
+</ul>
+</section>
 <section id="template-updates">
 <h3>Template updates<a class="headerlink" href="#template-updates" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Do not ignore gitignore files in output/report directories of template (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/63">#63</a>)</p></li>
+<li><p>Do not ignore the <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> files in output/report directories of template (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/63">#63</a>)</p></li>
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> for pre-commit 4.x (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/63">#63</a>)</p></li>
 </ul>
 </section>
 </section>
@@ -410,8 +422,8 @@ use a different dso version per project and makes it easy to work with virtual P
 <li><p>bash templates now include <code class="docutils literal notranslate"><span class="pre">-euo</span> <span class="pre">pipefail</span></code> settings, ensuring that stages fail early and return a nonzero error code if something failed (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/59">#59</a>).</p></li>
 </ul>
 </section>
-<section id="fixes">
-<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<section id="id2">
+<h3>Fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Remove vendored <code class="docutils literal notranslate"><span class="pre">hiyapyco</span></code> code since required changes were released upstream in v0.7.0 (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/45">#45</a>).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> values in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> can now be used to override anything, e.g. to disable watermarking only in a specific stage (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/45">#45</a>).</p></li>
@@ -434,8 +446,8 @@ requirement introduced by the R API package, see <a class="reference external" h
 be rendered to PDF, too (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/26">#26</a>).</p></li>
 </ul>
 </section>
-<section id="id2">
-<h3>Fixes<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="id3">
+<h3>Fixes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Fix linting rule DSO001: It is now allowed to specify additional arguments in <code class="docutils literal notranslate"><span class="pre">read_params()</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">quiet</span> <span class="pre">=</span> <span class="pre">TRUE</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/36">#36</a>).</p></li>
 <li><p>It is now possible to use Jinja2 interpolation in combination with <code class="docutils literal notranslate"><span class="pre">!path</span></code> objects (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/36">#36</a>)</p></li>
@@ -448,8 +460,8 @@ be rendered to PDF, too (<a class="reference external" href="https://github.com/
 <li><p>Documentation is now built via sphinx and hosted on GitHub pages: https://boehringer-ingelheim.github.io/dso/ (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/35">#35</a>).</p></li>
 </ul>
 </section>
-<section id="id3">
-<h3>Template updates<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h3>Template updates<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Make instruction comments in quarto template more descriptive (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/33">#33</a>).</p></li>
 <li><p>Include <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> in default project <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>. We decided to not track <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> in git anymore
@@ -467,8 +479,8 @@ to untrack existing <code class="docutils literal notranslate"><span class="pre"
 </section>
 <section id="v0-8-2">
 <h2>v0.8.2<a class="headerlink" href="#v0-8-2" title="Link to this heading">#</a></h2>
-<section id="id4">
-<h3>Fixes<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h3>Fixes<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Fixed params.yaml sorting issue - params.yaml order will be kept intact when using <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code></p></li>
 </ul>
@@ -476,8 +488,8 @@ to untrack existing <code class="docutils literal notranslate"><span class="pre"
 </section>
 <section id="v0-8-1">
 <h2>v0.8.1<a class="headerlink" href="#v0-8-1" title="Link to this heading">#</a></h2>
-<section id="id5">
-<h3>Fixes<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<section id="id6">
+<h3>Fixes<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Fixed and issue with spaces in image filenames when watermarking a quarto document</p></li>
 </ul>
@@ -485,8 +497,8 @@ to untrack existing <code class="docutils literal notranslate"><span class="pre"
 </section>
 <section id="v0-8-0">
 <h2>v0.8.0<a class="headerlink" href="#v0-8-0" title="Link to this heading">#</a></h2>
-<section id="id6">
-<h3>New Features<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<section id="id7">
+<h3>New Features<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> and <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">folder</span></code> now also work in existing directories. In such case missing files will be added
 from the template, but existing files are never overwritten.</p></li>
@@ -499,8 +511,8 @@ via the <code class="docutils literal notranslate"><span class="pre">--template<
 <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">compile-config</span></code>. The flag can also be activated by setting the environment variable <code class="docutils literal notranslate"><span class="pre">DSO_SKIP_COMPILE=1</span></code>.</p></li>
 </ul>
 </section>
-<section id="id7">
-<h3>Fixes<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<section id="id8">
+<h3>Fixes<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Fix that compile-config also compiles parents when in a directory without a <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file.</p></li>
 <li><p>The order of dictionaries is now preserved by <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code>.</p></li>
@@ -574,8 +586,8 @@ To enable, add to <code class="docutils literal notranslate"><span class="pre">p
 <p>The disclaimer box is only shown if both text and title are set.</p>
 </li>
 </ul>
-<section id="id8">
-<h3>Migration advice<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<section id="id9">
+<h3>Migration advice<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
 <ul>
 <li><p>Update <code class="docutils literal notranslate"><span class="pre">dso-r</span></code> to v0.3.0 to take advantage of <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code>.</p></li>
 <li><p>Add the following rule to your <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code>:</p>
@@ -602,8 +614,8 @@ this can be done with jinja templating.</p></li>
 <li><p>It is now possible to specify bibliography files in <code class="docutils literal notranslate"><span class="pre">params.in.config:dso.quarto.bibliography</span></code> using <code class="docutils literal notranslate"><span class="pre">!path</span></code>.</p></li>
 <li><p>Upon <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code>, the CLI asks once if the user wants to install the pre-commit hooks</p></li>
 </ul>
-<section id="id9">
-<h3>Migration advice<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<section id="id10">
+<h3>Migration advice<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Move <code class="docutils literal notranslate"><span class="pre">dso.before_script</span></code> to <code class="docutils literal notranslate"><span class="pre">dso.quarto.before_script</span></code> in all your config files.</p></li>
 <li><p>Update all quarto stages to depend only on <code class="docutils literal notranslate"><span class="pre">params:dso.quarto</span></code> instead of <code class="docutils literal notranslate"><span class="pre">params:dso</span></code>. This will avoid
@@ -737,44 +749,45 @@ and automatically resolved such that they are always relative to the compiled pa
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unreleased">[Unreleased]</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-10-1">v0.10.1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#template-updates">Template updates</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-10-0">v0.10.0</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Template updates</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Fixes</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-9-0">v0.9.0</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New Features</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Fixes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation">Documentation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Template updates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Template updates</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#migration-advice">Migration advice</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-2">v0.8.2</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fixes</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-1">v0.8.1</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Fixes</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-1">v0.8.1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Fixes</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-8-0">v0.8.0</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">New Features</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">New Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Fixes</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-7-0">v0.7.0</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-6-1">v0.6.1</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-6-0">v0.6.0</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Migration advice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Migration advice</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-5-0">v0.5.0</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Migration advice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Migration advice</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v0-4-4">v0.4.4</a></li>
