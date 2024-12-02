@@ -99,6 +99,7 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> 
 
         # We want to include parameters mentioned in either `params`, `deps`, `outs`.
         # The parameters in `deps`/`outs` are encapsulated in `${ <param> }`
+        is_matrix_stage = "matrix" in dvc_stage_config
         keep_params = set(dvc_stage_config.get("params", []))
         dvc_param_pat = re.compile(r"\$\{\s*(.*?)\s*\}")
         for dep in dvc_stage_config.get("deps", []):
@@ -111,6 +112,9 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> 
         log.info(
             f"Only including the following parameters which are listed in `dvc.yaml`: [green]{', '.join(keep_params)}"
         )
+
+        if is_matrix_stage:
+            keep_params = {p for p in keep_params if not (p.startswith("item.") or p == "item")}
 
         return _filter_nested_dict(config, keep_params)
 

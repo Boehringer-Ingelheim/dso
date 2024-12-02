@@ -87,6 +87,15 @@ class DSO001(QuartoRule):
         # .parent to remove the dvc.yaml filename
         stage_path_expected = str(stage_path_expected.parent.relative_to(root_path))
         content = file.read_text()
+
+        # remove comments
+        # TODO there are still edge cases, e.g. a `#` within a string doesn't initiate a comment
+        # However this is hard/impossible (?) to solve with a regular expression alone, we'd need a proper
+        # R parse to address all edge cases. See also https://github.com/Boehringer-Ingelheim/dso/issues/66
+        pattern_is_comment = re.compile(r"#.*$")
+        content = "\n".join([re.sub(pattern_is_comment, "", line) for line in content.split("\n")])
+
+        # detect pattern
         pattern = r"[\s\S]*?(dso::)?read_params\s*\(([\s\S]*?)(\s*,.*)?\)"
         res = re.findall(pattern, content, flags=re.MULTILINE)
         if len(res) == 0:
