@@ -6,7 +6,6 @@ from importlib import resources
 from pathlib import Path
 from typing import Generic, TypeVar
 
-import rich_click as click
 from PIL import Image, ImageDraw, ImageFont
 from pypdf import PdfReader, PdfWriter
 from svgutils import compose
@@ -180,27 +179,3 @@ class PDFWatermarker(Watermarker):
         with open(output_image, "wb") as f:
             writer.write(f)
         reader.close()
-
-
-@click.command(name="watermark")
-@click.argument("input_image", type=Path)
-@click.argument("output_image", type=Path)
-@click.option("--text", help="Text to use as watermark", required=True)
-@click.option(
-    "--tile_size",
-    type=(int, int),
-    help="watermark text will be arranged in tile of this size (once at top left, once at middle right). Specify the tile size as e.g. `120 80`",
-)
-@click.option("--font_size", type=int)
-@click.option("--font_outline", type=int)
-@click.option("--font_color", help="Use RGBA (e.g. `#AAAAAA88`) to specify transparency")
-@click.option("--font_outline_color", help="Use RGBA (e.g. `#AAAAAA88`) to specify transparency")
-def cli(input_image, output_image, text, **kwargs):
-    """Add a watermark to an image
-
-    To be called from the dso-r package for implementing a custom graphics device.
-    Can also be used standalone for watermarking images.
-    """
-    kwargs = {k: v for k, v in kwargs.items() if v is not None}
-
-    Watermarker.add_watermark(input_image, output_image, text=text, **kwargs)

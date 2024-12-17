@@ -5,15 +5,12 @@ from os import getcwd
 from pathlib import Path
 from textwrap import dedent, indent
 
-import questionary
 import rich_click as click
 from rich.prompt import Confirm, Prompt
 
 from dso._logging import log
-from dso._util import _get_template_path, _instantiate_template, get_project_root
-from dso.compile_config import compile_all_configs
+from dso._util import get_project_root, get_template_path, instantiate_template
 
-DEFAULT_BRANCH = "master"
 # list of stage template with description - can be later populated also from external directories
 STAGE_TEMPLATES = {
     "bash": "Execute a simple bash snippet or call an external script (e.g. nextflow)",
@@ -36,8 +33,12 @@ CREATE_STAGE_HELP_TEXT = dedent(
 @click.option("--template", type=click.Choice(list(STAGE_TEMPLATES)))
 @click.argument("name", required=False)
 @click.command("stage", help=CREATE_STAGE_HELP_TEXT)
-def create_stage(name: str | None = None, template: str | None = None, description: str | None = None):
+def create_stage_cli(name: str | None = None, template: str | None = None, description: str | None = None):
     """Create a new stage."""
+    import questionary
+
+    from dso._compile_config import compile_all_configs
+
     if template is None:
         template = str(questionary.select("Choose a template:", choices=list(STAGE_TEMPLATES)).ask())
 
@@ -57,8 +58,8 @@ def create_stage(name: str | None = None, template: str | None = None, descripti
     project_root = get_project_root(target_dir)
     stage_path = target_dir.relative_to(project_root)
 
-    _instantiate_template(
-        _get_template_path("stage", template),
+    instantiate_template(
+        get_template_path("stage", template),
         target_dir,
         stage_name=name,
         stage_description=description,
@@ -70,7 +71,7 @@ def create_stage(name: str | None = None, template: str | None = None, descripti
 
 @click.argument("name", required=False)
 @click.command("folder")
-def create_folder(name: str | None = None):
+def create_folder_cli(name: str | None = None):
     """Create a new folder. A folder can contain subfolders or stages.
 
     Technically, nothing prevents you from just using `mkdir`. This command additionally adds some default
@@ -80,6 +81,8 @@ def create_folder(name: str | None = None):
     be copied to the folder. Existing files will never be overwritten.
     """
     # currently there's only one template for folders
+    from dso._compile_config import compile_all_configs
+
     template = "default"
 
     if name is None:
@@ -93,16 +96,16 @@ def create_folder(name: str | None = None):
 
     target_dir.mkdir(exist_ok=True)
 
-    _instantiate_template(_get_template_path("folder", template), target_dir, stage_name=name)
+    instantiate_template(get_template_path("folder", template), target_dir, stage_name=name)
     log.info("[green]Folder created successfully.")
     compile_all_configs([target_dir])
 
 
 @click.group(name="create")
-def cli():
+def create_cli():
     """Create stage folder structure subcommand."""
     pass
 
 
-cli.add_command(create_stage)
-cli.add_command(create_folder)
+create_cli.add_command(create_stage_cli)
+create_cli.add_command(create_folder_cli)

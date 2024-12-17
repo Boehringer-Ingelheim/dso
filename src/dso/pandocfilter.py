@@ -4,7 +4,7 @@ Pandocfilter that add watermarks to quarto reports
  * warning box at the top
  * watermark to all PNG images
 
-Called internally by `dso exec quarto`.
+Called internally by `dso exec quarto` via `python -m dso.pandocfilter`.
 """
 
 import sys
@@ -20,7 +20,7 @@ import PIL.ImageFont
 from panflute import Div, Image, RawBlock, run_filter
 
 from dso._logging import log
-from dso.watermark import Watermarker
+from dso._watermark import Watermarker
 
 
 def _get_disclaimer_box(title, text):
