@@ -2,8 +2,8 @@ fail_fast: false
 default_language_version:
   python: python3
 default_stages:
-  - commit
-  - push
+  - pre-commit
+  - pre-push
 minimum_pre_commit_version: 2.16.0
 repos:
 #   - repo: https://github.com/pre-commit/mirrors-prettier
@@ -36,6 +36,7 @@ repos:
     rev: "2.2.4"
     hooks:
       - id: pyproject-fmt
+        exclude: "^src/dso/templates/.*"
   - repo: local
     hooks:
       - id: forbid-to-commit

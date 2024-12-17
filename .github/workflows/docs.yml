@@ -1,0 +1,48 @@
+name: "Build docs using sphinx"
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    # also run on 'closed' to clean up the github pages dir
+    types:
+        - opened
+        - reopened
+        - synchronize
+        - closed
+
+concurrency: preview-${{ github.ref }}
+
+jobs:
+  docs:
+    name: "Build Docs"
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: "Install hatch"
+        run: pip install hatch
+
+      - name: "Build docs with Sphinx"
+        run: hatch run docs:build -W --keep-going
+
+      - name: Deploy preview
+        if: github.event_name == 'pull_request'
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: docs/_build/html
+
+      - name: Deploy docs
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs/_build/html
+          branch: gh-pages
+          clean-exclude: pr-preview/
+          force: false

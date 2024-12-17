@@ -6,7 +6,7 @@ from pathlib import Path
 import rich_click as click
 
 from dso._logging import log
-from dso._util import check_ask_pre_commit
+from dso._util import check_ask_pre_commit, get_project_root
 from dso.compile_config import compile_all_configs
 
 
@@ -18,7 +18,7 @@ from dso.compile_config import compile_all_configs
 def cli(args):
     """Wrapper around dvc repro, compiling configuration before running."""
     check_ask_pre_commit(Path.cwd())
-    compile_all_configs([Path.cwd()])
+    compile_all_configs([get_project_root(Path.cwd())])
     os.environ["DSO_SKIP_COMPILE"] = "1"
     cmd = ["dvc", "repro", *args]
     log.info(f"Running `{' '.join(cmd)}`")

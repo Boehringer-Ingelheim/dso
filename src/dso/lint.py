@@ -87,13 +87,22 @@ class DSO001(QuartoRule):
         # .parent to remove the dvc.yaml filename
         stage_path_expected = str(stage_path_expected.parent.relative_to(root_path))
         content = file.read_text()
-        pattern = r"params\s*(=|<-)\s*(dso::)?read_params\s*\(([\s\S]*?)\)"
+
+        # remove comments
+        # TODO there are still edge cases, e.g. a `#` within a string doesn't initiate a comment
+        # However this is hard/impossible (?) to solve with a regular expression alone, we'd need a proper
+        # R parse to address all edge cases. See also https://github.com/Boehringer-Ingelheim/dso/issues/66
+        pattern_is_comment = re.compile(r"#.*$")
+        content = "\n".join([re.sub(pattern_is_comment, "", line) for line in content.split("\n")])
+
+        # detect pattern
+        pattern = r"[\s\S]*?(dso::)?read_params\s*\(([\s\S]*?)(\s*,.*)?\)"
         res = re.findall(pattern, content, flags=re.MULTILINE)
         if len(res) == 0:
             raise LintError(f"no `params = read_params('{stage_path_expected}')` statement found in qmd document")
         if len(res) > 1:
             raise LintError("Multiple read_params statements found")
-        stage_path = res[0][2].strip().strip("'\"").rstrip("/")  # get what's within the brackets for read_params
+        stage_path = res[0][1].strip().strip("'\"").rstrip("/")  # get what's within the brackets for read_params
         if stage_path_expected != stage_path:
             raise LintError(
                 f"Stage path specified in read_params doesn't match. Expected: {stage_path_expected}, Actual: {stage_path}"

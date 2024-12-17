@@ -1,7 +1,9 @@
+from functools import partial
 from io import StringIO
 from pathlib import Path
 from textwrap import dedent
 
+import hiyapyco
 import pytest
 import yaml
 from click.testing import CliRunner
@@ -23,8 +25,16 @@ def _setup_yaml_configs(tmp_path, configs: dict[str, dict]):
             yaml.dump(dict, f)
 
 
-def test_auto_adjusting_path(tmp_path):
+@pytest.mark.parametrize("interpolate", [True, False])
+def test_auto_adjusting_path(tmp_path, interpolate):
+    """Test that audo-adjusting paths work as expected.
+
+    If `interpolate` is `True`, the AutoAdjustingPath object
+    is already evaluated by hiyapyco, otherwise it is returned
+    as an object that can be dumped by ruamel using the custom representer.
+    """
     test_file = tmp_path / "params.in.yaml"
+    (tmp_path / ".git").mkdir()
     destination = tmp_path / "subproject1" / "stageA"
     destination.mkdir(parents=True)
     (tmp_path / "test.txt").touch()  # create fake file, otherwise check for missing file will fail.
@@ -38,14 +48,58 @@ def test_auto_adjusting_path(tmp_path):
             )
         )
     with test_file.open("r") as f:
-        res = list(_load_yaml_with_auto_adjusting_paths(f, destination))
+        res = hiyapyco.load(
+            str(test_file),
+            method=hiyapyco.METHOD_MERGE,
+            interpolate=interpolate,
+            loader_callback=partial(
+                _load_yaml_with_auto_adjusting_paths, destination=destination, missing_path_warnings=set()
+            ),
+        )
 
     ruamel = YAML()
     with StringIO() as s:
         ruamel.dump(res, s)
         actual = s.getvalue()
 
-    assert actual.strip() == "- my_path: ../../test.txt"
+    assert actual.strip() == "my_path: ../../test.txt"
+
+
+@pytest.mark.parametrize(
+    "test_yaml,expected",
+    [
+        (
+            """\
+            A: !path dir_A
+            B: "{{ A }}/B.txt"
+            """,
+            "dir_A/B.txt",
+        ),
+        (
+            """\
+            A: dir_A
+            B: !path "{{ A }}/B.txt"
+            """,
+            "dir_A/B.txt",
+        ),
+    ],
+)
+def test_auto_adjusting_path_with_jinja(tmp_path, test_yaml, expected):
+    runner = CliRunner()
+    with runner.isolated_filesystem(temp_dir=tmp_path) as td:
+        td = Path(td)
+        test_file = td / "params.in.yaml"
+        (td / ".git").mkdir()
+
+        with test_file.open("w") as f:
+            f.write(dedent(test_yaml))
+
+        result = runner.invoke(cli, [])
+        print(result.output)
+        td = Path(td)
+        assert result.exit_code == 0
+        with (td / "params.yaml").open() as f:
+            assert yaml.safe_load(f)["B"] == expected
 
 
 def test_compile_configs(tmp_path):
@@ -71,6 +125,29 @@ def test_compile_configs(tmp_path):
             assert yaml.safe_load(f) == {"only_root": "foo", "value": "B", "list": [1, 2, 3, 4]}
         with (td / "A/B/C/params.yaml").open() as f:
             assert yaml.safe_load(f) == {"only_root": "foo", "value": "C", "list": [1, 2, 3, 4, 5], "jinja2": "foo"}
+
+
+def test_compile_configs_null_override(tmp_path):
+    """Test that null overrides any value"""
+    runner = CliRunner()
+    with runner.isolated_filesystem(temp_dir=tmp_path) as td:
+        td = Path(td)
+        (td / ".git").mkdir()
+        _setup_yaml_configs(
+            td,
+            {
+                "params.in.yaml": {"str": "str", "list": [1, 2, 3], "dict": {"A": 1, "B": 2}, "null": None},
+                "A/B/params.in.yaml": {"str": None, "list": None, "dict": None, "null": None},
+            },
+        )
+        result = runner.invoke(cli, [])
+        print(result.output)
+        td = Path(td)
+        assert result.exit_code == 0
+        with (td / "params.yaml").open() as f:
+            assert yaml.safe_load(f) == {"str": "str", "list": [1, 2, 3], "dict": {"A": 1, "B": 2}, "null": None}
+        with (td / "A/B/params.yaml").open() as f:
+            assert yaml.safe_load(f) == {"str": None, "list": None, "dict": None, "null": None}
 
 
 @pytest.mark.parametrize(

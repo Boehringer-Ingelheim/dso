@@ -3,6 +3,8 @@ Pandocfilter that add watermarks to quarto reports
 
  * warning box at the top
  * watermark to all PNG images
+
+Called internally by `dso exec quarto`.
 """
 
 import sys
@@ -73,7 +75,7 @@ def _sanitize_watermark_config(config):
 def action(elem, doc):
     """Panflutes action"""
     watermark_config = _sanitize_watermark_config(doc.get_metadata("watermark"))
-    if watermark_config is not None:
+    if watermark_config:  # could be "" or None, both which evaluate to False
         if "text" not in watermark_config:
             log.error("Need to specify at least `watermark.text`")
             sys.exit(1)
@@ -89,10 +91,5 @@ def action(elem, doc):
     return elem
 
 
-def main(doc=None):
-    """
-    A pandoc filter to add warning boxes to documents and watermarks to plots
-
-    Called internally by `dso exec quarto`.
-    """
-    return run_filter(action, prepare=prepare, doc=doc)
+if __name__ == "__main__":
+    run_filter(action, prepare=prepare, doc=None)

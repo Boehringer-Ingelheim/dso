@@ -5,7 +5,14 @@ import sys
 from collections.abc import Sequence
 from functools import cache
 from importlib import resources
-from importlib.abc import Traversable
+
+try:
+    # has been added in Python 3.11
+    from importlib.resources.abc import Traversable
+except ImportError:
+    # will be removed in Python 3.14
+    from importlib.abc import Traversable
+from os import environ
 from pathlib import Path
 from typing import Literal
 
@@ -205,7 +212,13 @@ def check_ask_pre_commit(dir: Path):
     Check if pre-commit hooks are installed and asks to install them
 
     If the user declines, info will be written to `.dso.json` to not ask again in the future.
+
+    Additionally, we respect a `DSO_SKIP_CHECK_ASK_PRE_COMMIT` environment variable. If it is set
+    to anything that evaluates as `True`, we skip the check and question altogether. This was a
+    requirement introduced by the R API package: https://github.com/Boehringer-Ingelheim/dso/issues/50.
     """
+    if environ.get("DSO_SKIP_CHECK_ASK_PRE_COMMIT", None):
+        return
     config = _read_dot_dso_json(dir)
     if config.get("check_ask_pre_commit", True):
         project_root = get_project_root(dir)

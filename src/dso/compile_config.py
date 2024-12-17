@@ -8,13 +8,12 @@ from io import TextIOWrapper
 from pathlib import Path
 from textwrap import dedent
 
+import hiyapyco
 import rich_click as click
 from ruamel.yaml import YAML, yaml_object
 
-from dso import hiyapyco
-
 from ._logging import log
-from ._util import _find_in_parent, check_project_roots
+from ._util import _find_in_parent, check_project_roots, get_project_root
 
 PARAMS_YAML_DISCLAIMER = dedent(
     """\
@@ -30,7 +29,11 @@ PARAMS_YAML_DISCLAIMER = dedent(
 )
 
 
-def _load_yaml_with_auto_adjusting_paths(yaml_stream: TextIOWrapper, destination: Path):
+def _load_yaml_with_auto_adjusting_paths(
+    yaml_stream: TextIOWrapper,
+    destination: Path,
+    missing_path_warnings: set[tuple[Path, Path]],
+):
     """
     Load a yaml file and adjust paths for all !path objects based on a destination file
 
@@ -40,6 +43,9 @@ def _load_yaml_with_auto_adjusting_paths(yaml_stream: TextIOWrapper, destination
         Path of the yaml file to load
     destination
         Path to which the file shall be adjusted
+    missing_path_warnings
+        set in which we keep track of warnings for missing paths to ensure we are
+        not emitting the same warning twice.
 
     Returns
     -------
@@ -49,18 +55,32 @@ def _load_yaml_with_auto_adjusting_paths(yaml_stream: TextIOWrapper, destination
 
     # The folder of the source config file
     source = Path(yaml_stream.name).parent
+    # stage name for logging purposes only
+    stage = source.relative_to(get_project_root(source))
+
     if not destination.is_relative_to(source):
         raise ValueError("Destination path can be the same as source, or a child thereof.")
 
+    # inherit from `str` to make this compatible with hiyapyco interpolation
     @yaml_object(ruamel)
-    class AutoAdjustingPathWithLocation:
+    class AutoAdjustingPathWithLocation(str):
+        """
+        Represents a YAML node that adjusts a relative path relative to a specified destination directory.
+
+        Can be evaulated either using Ruamel during dumping YAML to file, or whenever it is cast
+        to a string (e.g. by hiyapyco). To this end, __repr__ and __str__ are overridden.
+        """
+
         yaml_tag = "!path"
 
         def __init__(self, path: str):
             self.path = Path(path)
             if not (source / self.path).exists():
-                # Warn, but do not fail (it could also be an output path to be populated by a dvc stage)
-                log.warning(f"Path {self.path} does not exist!")
+                # check if warning for the same path was already emitted
+                if (self.path, source) not in missing_path_warnings:
+                    # Warn, but do not fail (it could also be an output path to be populated by a dvc stage)
+                    log.warning(f"Path {self.path} in stage {stage} does not exist!")
+                    missing_path_warnings.add((self.path, source))
 
         def get_adjusted(self):
             # not possible with pathlib, because pathlib requires the paths to be subpaths of each other
@@ -70,6 +90,12 @@ def _load_yaml_with_auto_adjusting_paths(yaml_stream: TextIOWrapper, destination
         @classmethod
         def to_yaml(cls, representer, node):
             return representer.represent_str(str(node.get_adjusted()))
+
+        def __repr__(self):
+            return str(self.get_adjusted())
+
+        def __str__(self):
+            return str(self.get_adjusted())
 
         @classmethod
         def from_yaml(cls, constructor, node):
@@ -130,6 +156,10 @@ def compile_all_configs(paths: Sequence[Path]):
     all_configs = _get_list_of_configs_to_compile(paths, project_root)
     log.info(f"Compiling a total of {len(all_configs)} config files.")
 
+    # keep track of paths for which we emitted a warning that the path doesn't exist to ensure
+    # we are only emitting one warning for each (file path, source yaml file path)
+    missing_path_warnings: set[tuple[Path, Path]] = set()
+
     for config in all_configs:
         # sorted sorts path from parent to child. This is what we want as hyapyco gives precedence to configs
         # later in the list.
@@ -137,8 +167,13 @@ def compile_all_configs(paths: Sequence[Path]):
         conf = hiyapyco.load(
             *[str(x) for x in configs_to_merge],
             method=hiyapyco.METHOD_MERGE,
+            none_behavior=hiyapyco.NONE_BEHAVIOR_OVERRIDE,
             interpolate=True,
-            loader_callback=partial(_load_yaml_with_auto_adjusting_paths, destination=config.parent),
+            loader_callback=partial(
+                _load_yaml_with_auto_adjusting_paths,
+                destination=config.parent,
+                missing_path_warnings=missing_path_warnings,
+            ),
         )
         # an empty configuration should actually be an empty dictionary.
         if conf is None:

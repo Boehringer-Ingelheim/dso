@@ -64,15 +64,29 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> 
         log.debug("Skipping compilation of configuration")
         compile_all_configs([stage_path])
     yaml = YAML(typ="safe")
-    config = yaml.load(stage_path / "params.yaml")
+
+    try:
+        config = yaml.load(stage_path / "params.yaml")
+    except OSError:
+        log.error("No params.yaml (or compilable params.in.yaml) found in directory.")
+        sys.exit(1)
 
     if all:
         return config
     else:
-        dvc_config = yaml.load(stage_path / "dvc.yaml")
-        dvc_stages = dvc_config.get("stages", None)
+        try:
+            dvc_config = yaml.load(stage_path / "dvc.yaml")
+        except OSError:
+            log.error("No dvc.yaml found in directory.")
+            sys.exit(1)
+
+        try:
+            dvc_stages = dvc_config.get("stages", None)
+        except AttributeError:
+            dvc_stages = None
+
         if not dvc_stages:
-            log.error("At least one stage must be defined in `dvc.yaml`")
+            log.error("At least one stage must be defined in `dvc.yaml` (unless --all is specified)")
             sys.exit(1)
         elif len(dvc_stages) > 1 and stage_name is None:
             log.error(
@@ -86,6 +100,7 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> 
 
         # We want to include parameters mentioned in either `params`, `deps`, `outs`.
         # The parameters in `deps`/`outs` are encapsulated in `${ <param> }`
+        is_matrix_stage = "matrix" in dvc_stage_config
         keep_params = set(dvc_stage_config.get("params", []))
         dvc_param_pat = re.compile(r"\$\{\s*(.*?)\s*\}")
         for dep in dvc_stage_config.get("deps", []):
@@ -98,6 +113,9 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> 
         log.info(
             f"Only including the following parameters which are listed in `dvc.yaml`: [green]{', '.join(keep_params)}"
         )
+
+        if is_matrix_stage:
+            keep_params = {p for p in keep_params if not (p.startswith("item.") or p == "item")}
 
         return _filter_nested_dict(config, keep_params)
 
@@ -135,6 +153,6 @@ def cli(stage, all, skip_compile):
         out_config = get_config(stage, all=all, skip_compile=skip_compile)
         yaml = YAML()
         yaml.dump(out_config, sys.stdout)
-    except KeyError:
-        log.error("dvc.yaml defines parameter that is not in params.yaml")
+    except KeyError as e:
+        log.error(f"dvc.yaml defines parameter {e} that is not in params.yaml")
         sys.exit(1)

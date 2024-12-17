@@ -78,8 +78,20 @@ def test_quarto_rule_is_applicable_pattern(quarto_stage, file, expected):
             None,
         ),
         (
+            """params = read_params("quarto_stage", quiet=TRUE)""",
+            None,
+        ),
+        (
+            """params = read_params("quarto_stage"\n, quiet=TRUE)""",
+            None,
+        ),
+        (
             """foo = read_params("quarto_stage")""",
-            LintError,
+            None,
+        ),
+        (
+            """read_params("quarto_stage")""",
+            None,
         ),
         (
             """\
@@ -104,6 +116,21 @@ def test_quarto_rule_is_applicable_pattern(quarto_stage, file, expected):
             """,
             LintError,
         ),
+        (
+            """\
+            params = read_params("quarto_stage")
+            # params = read_params("quarto_stage")
+            """,
+            None,
+        ),
+        # TODO no good way to cover that with regex alone, see https://github.com/Boehringer-Ingelheim/dso/issues/66
+        # (
+        #     """\
+        #     params = read_params("quarto_stage")
+        #     print(" foo # no comment"); params = read_params("quarto_stage")
+        #     """,
+        #     LintError,
+        # ),
         (
             """\
             params = read_params("wrong_path")

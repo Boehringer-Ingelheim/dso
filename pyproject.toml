@@ -25,10 +25,12 @@ classifiers = [
 dynamic = [ "version" ]
 dependencies = [
   "dvc",
+  "hiyapyco>=0.7",
   "jinja2",
   "panflute",
   "pillow",
   "pre-commit",
+  "pypdf",
   "pyyaml",
   "questionary",
   "rich",
@@ -37,12 +39,13 @@ dependencies = [
   "svgutils",
 ]
 
-optional-dependencies.dev = [  ]
+optional-dependencies.dev = [ "hatch", "pre-commit" ]
 optional-dependencies.doc = [
   "docutils>=0.8,!=0.18.*,!=0.19.*",
   # For notebooks
   "ipykernel",
   "ipython",
+  "matplotlib",
   "myst-nb>=1.1",
   "sphinx>=4",
   "sphinx-autodoc-typehints",
@@ -71,6 +74,21 @@ source = "vcs"
 
 [tool.hatch.build.targets.wheel]
 packages = [ "src/dso" ]
+
+[tool.hatch.envs.default]
+installer = "uv"
+features = [ "dev" ]
+
+[tool.hatch.envs.docs]
+features = [ "doc" ]
+scripts.build = "sphinx-build -M html docs docs/_build {args}"
+scripts.open = "python -m webbrowser -t docs/_build/html/index.html"
+scripts.clean = "git clean -fdX -- {args:docs}"
+
+[tool.hatch.envs.hatch-test]
+features = [ "test" ]
+[[tool.hatch.envs.hatch-test.matrix]]
+python = [ "3.12" ]
 
 [tool.ruff]
 line-length = 120
