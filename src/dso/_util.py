@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import importlib
 import json
 import subprocess
@@ -5,20 +7,14 @@ import sys
 from collections.abc import Sequence
 from functools import cache
 from importlib import resources
-
-try:
-    # has been added in Python 3.11
-    from importlib.resources.abc import Traversable
-except ImportError:
-    # will be removed in Python 3.14
-    from importlib.abc import Traversable
 from os import environ
 from pathlib import Path
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
-from git.repo import Repo
-from jinja2 import StrictUndefined, Template
-from rich.prompt import Confirm
+if TYPE_CHECKING:
+    from importlib.resources.abc import Traversable
+
+    from rich.prompt import Confirm
 
 from dso._logging import console, log
 
@@ -38,7 +34,7 @@ def check_project_roots(paths: Sequence[Path]) -> Path:
     return tmp_project_roots.pop()
 
 
-def _find_in_parent(start_directory: Path, file_or_folder: str, recurse_barrier: Path | None = None) -> Path | None:
+def find_in_parent(start_directory: Path, file_or_folder: str, recurse_barrier: Path | None = None) -> Path | None:
     """
     Recursively walk up to the folder directory until we either find `file_or_folder` or reach the root.
 
@@ -93,7 +89,7 @@ def get_project_root(start_directory: Path) -> Path:
     FileNotFoundError
         If the .git folder is not found.
     """
-    proj_root = _find_in_parent(start_directory, ".git")
+    proj_root = find_in_parent(start_directory, ".git")
     if proj_root is None:
         raise FileNotFoundError("Not within a dso project (No .git directory found)")
     else:
@@ -101,13 +97,15 @@ def get_project_root(start_directory: Path) -> Path:
         return proj_root.parent
 
 
-def _get_template_path(template_type: Literal["init", "folder", "stage"], template_name: str) -> Traversable:
+def get_template_path(template_type: Literal["init", "folder", "stage"], template_name: str) -> Traversable:
     template_module = importlib.import_module(f"dso.templates.{template_type}")
     return resources.files(template_module) / template_name
 
 
 def _copy_with_render(source: Traversable, destination: Path, params: dict):
     """Fill all placeholders in a file with jinja2 and save file to destination"""
+    from jinja2 import StrictUndefined, Template
+
     with source.open() as f:
         template = Template(f.read(), undefined=StrictUndefined)
     rendered_content = template.render(params)
@@ -118,8 +116,10 @@ def _copy_with_render(source: Traversable, destination: Path, params: dict):
             file.write("\n")
 
 
-def _instantiate_template(template_path: Traversable, target_dir: Path | str, **params) -> None:
+def instantiate_template(template_path: Traversable, target_dir: Path | str, **params) -> None:
     """Copy a template folder to a target directory, filling all placeholder values."""
+    from jinja2 import Template
+
     target_dir = Path(target_dir)
 
     def _traverse_template(curr_path, subdir):
@@ -136,16 +136,18 @@ def _instantiate_template(template_path: Traversable, target_dir: Path | str, **
     _traverse_template(template_path, Path("."))
 
 
-def _instantiate_with_repo(template: Traversable, target_dir: Path | str, **params) -> None:
+def instantiate_with_repo(template: Traversable, target_dir: Path | str, **params) -> None:
     """Create a git repo in a directory and render a template inside.
 
     Creates an initial commit.
     """
+    from git.repo import Repo
+
     target_dir = Path(target_dir)
     target_dir.mkdir(exist_ok=True)
     log.info("Created project directory.")
 
-    _instantiate_template(template, target_dir, **params)
+    instantiate_template(template, target_dir, **params)
     log.info("Created folder structure from template.")
 
     if not (target_dir / ".git").exists():
@@ -159,7 +161,7 @@ def _instantiate_with_repo(template: Traversable, target_dir: Path | str, **para
         log.info("Initalized local git repo.")
 
 
-def _git_list_files(dir: Path) -> list[Path]:
+def git_list_files(dir: Path) -> list[Path]:
     """
     Recursively list all files in `dir` that are not .gitignored.
 

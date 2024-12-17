@@ -4,7 +4,7 @@ from textwrap import dedent
 
 from click.testing import CliRunner
 
-from dso.exec import _render_quarto, cli
+from dso.exec import _render_quarto, exec_cli
 from tests.conftest import TESTDATA
 
 
@@ -100,7 +100,7 @@ def test_override_config(quarto_stage):
     chdir(quarto_stage)
     stage_path = "."
 
-    result = runner.invoke(cli, ["quarto", stage_path])
+    result = runner.invoke(exec_cli, ["quarto", stage_path])
     assert result.exit_code == 0
 
     out_html = (quarto_stage / "report" / "quarto_stage.html").read_text()

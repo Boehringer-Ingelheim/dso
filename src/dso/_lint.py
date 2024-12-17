@@ -1,4 +1,5 @@
-import os
+"""Linting functions for DSO projects"""
+
 import re
 import sys
 from abc import ABC, abstractmethod
@@ -7,12 +8,10 @@ from functools import cache
 from os import chdir
 from pathlib import Path
 
-import rich_click as click
 from ruamel.yaml import YAML
 
 from dso._logging import log
-from dso._util import _find_in_parent, _git_list_files, check_project_roots, get_project_root
-from dso.compile_config import compile_all_configs
+from dso._util import check_project_roots, find_in_parent, get_project_root, git_list_files
 
 
 class LintError(Exception):
@@ -67,7 +66,7 @@ class QuartoRule(Rule):
         Return true, if "dso exec quarto" is found in the dvc.yaml associated with this stage AND
         the file matches the pattern
         """
-        dvc_yaml = _find_in_parent(file, "dvc.yaml", get_project_root(file))
+        dvc_yaml = find_in_parent(file, "dvc.yaml", get_project_root(file))
         assert dvc_yaml is not None, "No dvc.yaml found in project"
         is_quarto_stage = "dso exec quarto ." in dvc_yaml.read_text()
         return is_quarto_stage and Rule._match_filename_pattern(cls.PATTERN, file)
@@ -82,7 +81,7 @@ class DSO001(QuartoRule):
     def check(cls, file):
         """Check that the file passes the linting step."""
         root_path = get_project_root(file)
-        stage_path_expected = _find_in_parent(file, "dvc.yaml", root_path)
+        stage_path_expected = find_in_parent(file, "dvc.yaml", root_path)
         assert stage_path_expected is not None, "No dvc.yaml found in project"
         # .parent to remove the dvc.yaml filename
         stage_path_expected = str(stage_path_expected.parent.relative_to(root_path))
@@ -204,7 +203,7 @@ class DSOLinter:
         if not file.is_file():
             raise ValueError("Only existing files (not directories) may be passed to linter")
 
-        config_path = _find_in_parent(file, "params.yaml", get_project_root(file))
+        config_path = find_in_parent(file, "params.yaml", get_project_root(file))
         assert config_path is not None, "No params.yaml found in project"
         config = DSOLinter._get_linting_config(config_path)
         rules = [r for r in self.rules if r.__name__ not in config.get("exclude", [])]
@@ -240,7 +239,7 @@ def lint(paths: Sequence[Path]):
         if p.is_file():
             files.add(p)
         else:
-            files.update(_git_list_files(p))
+            files.update(git_list_files(p))
 
     log.info(f"Compiled a list of {len(files)} to be linted")
 
@@ -258,31 +257,3 @@ def lint(paths: Sequence[Path]):
         log.warning(f"Linting completed with {warn} warnings and {error} errors")
     if error:
         sys.exit(1)
-
-
-@click.command(name="lint")
-@click.option(
-    "--skip-compile",
-    help="Do not compile configs before linting. The same can be achieved by setting the `DSO_SKIP_COMPILE=1` env var.",
-    type=bool,
-    default=bool(int(os.environ.get("DSO_SKIP_COMPILE", 0))),
-    is_flag=True,
-)
-@click.argument("args", nargs=-1)
-def cli(args, skip_compile: bool = False):
-    """Lint a dso project
-
-    Performs consistency checks according to a set of rules.
-
-    If passing no arguments, linting will be performed for the current working directory. Alternatively a list of paths
-    can be specified. In that case, all stages related to any of the files are linted (useful for using with pre-commit).
-
-    Configurations are compiled before linting.
-    """
-    if not len(args):
-        paths = [Path.cwd()]
-    else:
-        paths = [Path(x) for x in args]
-    if not skip_compile:
-        compile_all_configs(paths)
-    lint(paths)

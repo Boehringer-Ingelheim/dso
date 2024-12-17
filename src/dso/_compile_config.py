@@ -9,11 +9,10 @@ from pathlib import Path
 from textwrap import dedent
 
 import hiyapyco
-import rich_click as click
 from ruamel.yaml import YAML, yaml_object
 
 from ._logging import log
-from ._util import _find_in_parent, check_project_roots, get_project_root
+from ._util import check_project_roots, find_in_parent, get_project_root
 
 PARAMS_YAML_DISCLAIMER = dedent(
     """\
@@ -117,7 +116,7 @@ def _get_list_of_configs_to_compile(paths: Sequence[Path], project_root: Path):
         # Check each parent directory if it contains a "params.in.yaml" - If yes, add it to the list of all configs.
         # We don't need to re-check the parents of added items, because their parent is per definition also a parent
         # of a config that was already part of the list.
-        while (tmp_path := _find_in_parent(tmp_path.parent, "params.in.yaml", project_root)) is not None:
+        while (tmp_path := find_in_parent(tmp_path.parent, "params.in.yaml", project_root)) is not None:
             all_configs.add(tmp_path)
             # we don't want to find the current config again, therefore .parent
             tmp_path = tmp_path.parent
@@ -198,19 +197,3 @@ def compile_all_configs(paths: Sequence[Path]):
                 log.debug(f"./{config.relative_to(project_root)} [green]is already up-to-date!")
 
     log.info("[green]Configuration compiled successfully.")
-
-
-@click.command(name="compile-config")
-@click.argument("args", nargs=-1)
-def cli(args):
-    """Compile params.in.yaml into params.yaml using Jinja2 templating and resolving recursive templates.
-
-    If passing no arguments, configs will be resolved for the current working directory (i.e. all parent configs,
-    and all configs in child directories). Alternatively a list of paths can be specified. In that case, all configs
-    related to these paths will be compiled (useful for using with pre-commit).
-    """
-    if not len(args):
-        paths = [Path.cwd()]
-    else:
-        paths = [Path(x) for x in args]
-    compile_all_configs(paths)

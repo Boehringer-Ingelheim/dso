@@ -6,7 +6,7 @@ from click.testing import CliRunner
 from pytest import fixture
 
 from dso.compile_config import compile_all_configs
-from dso.create import cli as dso_create
+from dso.create import create_cli as dso_create
 from dso.init import cli as dso_init
 
 TESTDATA = Path(__file__).parent / "data"
