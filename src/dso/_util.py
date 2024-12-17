@@ -11,12 +11,12 @@ from os import environ
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal
 
-if TYPE_CHECKING:
-    from importlib.resources.abc import Traversable
-
-    from rich.prompt import Confirm
+from rich.prompt import Confirm
 
 from dso._logging import console, log
+
+if TYPE_CHECKING:
+    from importlib.resources.abc import Traversable
 
 DEFAULT_BRANCH = "master"
 
@@ -45,7 +45,9 @@ def find_in_parent(start_directory: Path, file_or_folder: str, recurse_barrier: 
     If the root is reached without finding the file, None is returned.
     """
     return _find_in_parent_abs(
-        start_directory.absolute(), file_or_folder, recurse_barrier.absolute() if recurse_barrier is not None else None
+        start_directory.absolute(),
+        file_or_folder,
+        recurse_barrier.absolute() if recurse_barrier is not None else None,
     )
 
 
@@ -169,7 +171,9 @@ def git_list_files(dir: Path) -> list[Path]:
     Source: https://stackoverflow.com/a/77197460/2340703
     """
     res = subprocess.run(
-        ["git", "ls-files", "--cached", "--others", "--exclude-standard"], cwd=dir, capture_output=True
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+        cwd=dir,
+        capture_output=True,
     )
     if res.returncode:
         sys.exit(res.returncode)

@@ -80,6 +80,70 @@ def get_config_cli(stage, all, skip_compile):
         sys.exit(1)
 
 
+@click.option("--description")
+@click.argument("name", required=False)
+@click.command(
+    "init",
+)
+def init_cli(name: str | None = None, description: str | None = None):
+    """
+    Initialize a new project. A project can contain several stages organized in arbitrary subdirectories.
+
+    If you wish to initialize DSO in an existing project, you can specify an existing directory. In
+    this case, it will initialize files from the template that do not exist yet, but never overwrite existing files.
+    """
+    from dso._compile_config import compile_all_configs
+
+    if name is None:
+        name = Prompt.ask('[bold]Please enter the name of the project, e.g. "single_cell_lung_atlas"')
+
+    target_dir = Path(getcwd()) / name
+
+    if target_dir.exists():
+        if not Confirm.ask("[bold]Directory already exists. Do you want to initialize DSO in an existing project?"):
+            sys.exit(1)
+
+    if description is None:
+        description = Prompt.ask("[bold]Please add a short description of the project")
+
+    instantiate_with_repo(
+        get_template_path("init", "default"), target_dir, project_name=name, project_description=description
+    )
+    log.info("[green]Project initalized successfully.")
+    compile_all_configs([target_dir])
+
+
+@click.command(name="lint")
+@click.option(
+    "--skip-compile",
+    help="Do not compile configs before linting. The same can be achieved by setting the `DSO_SKIP_COMPILE=1` env var.",
+    type=bool,
+    default=bool(int(os.environ.get("DSO_SKIP_COMPILE", 0))),
+    is_flag=True,
+)
+@click.argument("args", nargs=-1)
+def lint_cli(args, skip_compile: bool = False):
+    """Lint a dso project
+
+    Performs consistency checks according to a set of rules.
+
+    If passing no arguments, linting will be performed for the current working directory. Alternatively a list of paths
+    can be specified. In that case, all stages related to any of the files are linted (useful for using with pre-commit).
+
+    Configurations are compiled before linting.
+    """
+    from dso._compile_config import compile_all_configs
+    from dso._lint import lint
+
+    if not len(args):
+        paths = [Path.cwd()]
+    else:
+        paths = [Path(x) for x in args]
+    if not skip_compile:
+        compile_all_configs(paths)
+    lint(paths)
+
+
 @click.command(
     name="repro",
     context_settings={"ignore_unknown_options": True},
@@ -158,70 +222,6 @@ def cli(quiet: int, verbose: bool):
     elif verbose:
         log.setLevel(logging.DEBUG)
         os.environ["DSO_VERBOSE"] = "1"
-
-
-@click.command(name="lint")
-@click.option(
-    "--skip-compile",
-    help="Do not compile configs before linting. The same can be achieved by setting the `DSO_SKIP_COMPILE=1` env var.",
-    type=bool,
-    default=bool(int(os.environ.get("DSO_SKIP_COMPILE", 0))),
-    is_flag=True,
-)
-@click.argument("args", nargs=-1)
-def lint_cli(args, skip_compile: bool = False):
-    """Lint a dso project
-
-    Performs consistency checks according to a set of rules.
-
-    If passing no arguments, linting will be performed for the current working directory. Alternatively a list of paths
-    can be specified. In that case, all stages related to any of the files are linted (useful for using with pre-commit).
-
-    Configurations are compiled before linting.
-    """
-    from dso._compile_config import compile_all_configs
-    from dso._lint import lint
-
-    if not len(args):
-        paths = [Path.cwd()]
-    else:
-        paths = [Path(x) for x in args]
-    if not skip_compile:
-        compile_all_configs(paths)
-    lint(paths)
-
-
-@click.option("--description")
-@click.argument("name", required=False)
-@click.command(
-    "init",
-)
-def init_cli(name: str | None = None, description: str | None = None):
-    """
-    Initialize a new project. A project can contain several stages organized in arbitrary subdirectories.
-
-    If you wish to initialize DSO in an existing project, you can specify an existing directory. In
-    this case, it will initialize files from the template that do not exist yet, but never overwrite existing files.
-    """
-    from dso._compile_config import compile_all_configs
-
-    if name is None:
-        name = Prompt.ask('[bold]Please enter the name of the project, e.g. "single_cell_lung_atlas"')
-
-    target_dir = Path(getcwd()) / name
-
-    if target_dir.exists():
-        if not Confirm.ask("[bold]Directory already exists. Do you want to initialize DSO in an existing project?"):
-            sys.exit(1)
-
-    if description is None:
-        description = Prompt.ask("[bold]Please add a short description of the project")
-
-    instantiate_with_repo(
-        get_template_path("init", "default"), target_dir, project_name=name, project_description=description
-    )
-    log.info("[green]Project initalized successfully.")
-    compile_all_configs([target_dir])
 
 
 cli.add_command(create_cli)
