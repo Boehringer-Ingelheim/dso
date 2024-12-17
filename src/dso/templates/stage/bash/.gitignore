@@ -5,3 +5,4 @@
 !/input/*.dvc
 /output/*
 /report/*
+!*.gitkeep*
