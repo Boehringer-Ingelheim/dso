@@ -8,8 +8,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from textwrap import dedent
 
+from dso._get_config import get_config
 from dso._logging import log
-from dso.get_config import get_config
 
 from ._util import get_project_root
 

@@ -4,7 +4,8 @@ from textwrap import dedent
 
 from click.testing import CliRunner
 
-from dso.exec import _render_quarto, exec_cli
+from dso._quarto import render_quarto
+from dso.cli import exec_cli
 from tests.conftest import TESTDATA
 
 
@@ -59,8 +60,12 @@ def test_pandocfilter(quarto_stage):
         )
     )
 
-    _render_quarto(
-        quarto_stage / "src", quarto_stage / "report", before_script="", cwd=quarto_stage, with_pandocfilter=True
+    render_quarto(
+        quarto_stage / "src",
+        quarto_stage / "report",
+        before_script="",
+        cwd=quarto_stage,
+        with_pandocfilter=True,
     )
     out_html = (quarto_stage / "report" / "quarto_stage.html").read_text()
     assert "Disclaimer" in out_html

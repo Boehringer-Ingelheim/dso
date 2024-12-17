@@ -5,9 +5,8 @@ from textwrap import dedent
 from click.testing import CliRunner
 from pytest import fixture
 
-from dso.compile_config import compile_all_configs
-from dso.create import create_cli as dso_create
-from dso.init import cli as dso_init
+from dso._compile_config import compile_all_configs
+from dso.cli import create_cli, init_cli
 
 TESTDATA = Path(__file__).parent / "data"
 
@@ -18,7 +17,7 @@ def dso_project(tmp_path) -> Path:
     runner = CliRunner()
     proj_name = "dso_project"
     chdir(tmp_path)
-    runner.invoke(dso_init, [proj_name, "--description", "a test project"])
+    runner.invoke(init_cli, [proj_name, "--description", "a test project"])
 
     return tmp_path / proj_name
 
@@ -32,7 +31,7 @@ def quarto_stage(dso_project) -> Path:
     runner = CliRunner()
     stage_name = "quarto_stage"
     chdir(dso_project)
-    runner.invoke(dso_create, ["stage", stage_name, "--template", "quarto", "--description", "a quarto stage"])
+    runner.invoke(create_cli, ["stage", stage_name, "--template", "quarto", "--description", "a quarto stage"])
     with (Path(stage_name) / "src" / f"{stage_name}.qmd").open("w") as f:
         f.write(
             dedent(

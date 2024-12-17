@@ -4,7 +4,7 @@ from subprocess import check_call
 import pytest
 from click.testing import CliRunner
 
-from dso.create import create_cli
+from dso.cli import create_cli
 
 
 @pytest.mark.parametrize("template", ["bash", "quarto"])

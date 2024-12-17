@@ -4,7 +4,7 @@ from os import chdir
 import pytest
 from click.testing import CliRunner
 
-from dso.exec import exec_cli
+from dso.cli import exec_cli
 
 
 @pytest.mark.parametrize("quiet", [None, "2"])

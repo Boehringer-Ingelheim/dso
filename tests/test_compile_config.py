@@ -9,12 +9,12 @@ import yaml
 from click.testing import CliRunner
 from ruamel.yaml import YAML
 
-from dso.compile_config import (
+from dso._compile_config import (
     _get_list_of_configs_to_compile,
     _get_parent_configs,
     _load_yaml_with_auto_adjusting_paths,
-    cli,
 )
+from dso.cli import compile_config_cli
 
 
 def _setup_yaml_configs(tmp_path, configs: dict[str, dict]):
@@ -94,7 +94,7 @@ def test_auto_adjusting_path_with_jinja(tmp_path, test_yaml, expected):
         with test_file.open("w") as f:
             f.write(dedent(test_yaml))
 
-        result = runner.invoke(cli, [])
+        result = runner.invoke(compile_config_cli, [])
         print(result.output)
         td = Path(td)
         assert result.exit_code == 0
@@ -115,7 +115,7 @@ def test_compile_configs(tmp_path):
                 "A/B/C/params.in.yaml": {"value": "C", "jinja2": "{{ only_root }}", "list": [5]},
             },
         )
-        result = runner.invoke(cli, [])
+        result = runner.invoke(compile_config_cli, [])
         print(result.output)
         td = Path(td)
         assert result.exit_code == 0
@@ -140,7 +140,7 @@ def test_compile_configs_null_override(tmp_path):
                 "A/B/params.in.yaml": {"str": None, "list": None, "dict": None, "null": None},
             },
         )
-        result = runner.invoke(cli, [])
+        result = runner.invoke(compile_config_cli, [])
         print(result.output)
         td = Path(td)
         assert result.exit_code == 0
