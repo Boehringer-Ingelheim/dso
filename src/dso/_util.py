@@ -126,9 +126,11 @@ def _instantiate_template(template_path: Traversable, target_dir: Path | str, **
         for p in curr_path.iterdir():
             if p.is_file():
                 name_rendered = Template(p.name).render(params)
-                target_file = target_dir / subdir / name_rendered
-                if not target_file.exists():
-                    _copy_with_render(p, target_file, params)
+                # this file is used for checking in empty folders in git.
+                if name_rendered != ".gitkeeptemplate":
+                    target_file = target_dir / subdir / name_rendered
+                    if not target_file.exists():
+                        _copy_with_render(p, target_file, params)
             else:
                 (target_dir / subdir / p.name).mkdir(exist_ok=True)
                 _traverse_template(p, subdir / p.name)

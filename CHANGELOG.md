@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## [Unreleased]
+
+### Template updates
+
+-   Single `.gitignore` file per stage. Content of input/output/report folders is ignored. These folders
+    do not contain a separate `.gitignore` anymore. This means empty folders won't be tracked by git, but
+    this solves issues with dvc refusing to track the output folder because it is already partly tracked by git.
+
 ## v0.10.1
 
 ### Fixes
