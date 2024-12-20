@@ -1,6 +1,6 @@
 import pytest
 
-from dso._util import _find_in_parent, _git_list_files, _read_dot_dso_json, _update_dot_dso_json
+from dso._util import _read_dot_dso_json, _update_dot_dso_json, find_in_parent, git_list_files
 
 
 @pytest.mark.parametrize(
@@ -24,7 +24,7 @@ def test_find_in_parent(tmp_path, file_or_folder, recurse_barrier, expected):
         expected = tmp_path / expected
     if recurse_barrier is not None:
         recurse_barrier = tmp_path / recurse_barrier
-    assert _find_in_parent(subfolder, file_or_folder, recurse_barrier) == expected
+    assert find_in_parent(subfolder, file_or_folder, recurse_barrier) == expected
 
 
 def test_dot_dso_json(dso_project):
@@ -44,7 +44,7 @@ def test_dot_dso_json(dso_project):
 
 
 def test_git_list_files(dso_project):
-    files = _git_list_files(dso_project)
+    files = git_list_files(dso_project)
     assert files == [
         dso_project / x
         for x in [

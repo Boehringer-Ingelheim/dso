@@ -47,3 +47,6 @@ sccprj/
 # Windows
 Thumbs.db
 ~$*
+
+# dso
+.dso.json
