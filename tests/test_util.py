@@ -1,6 +1,12 @@
 import pytest
 
-from dso._util import _read_dot_dso_json, _update_dot_dso_json, find_in_parent, git_list_files
+from dso._util import (
+    _read_dot_dso_json,
+    _update_dot_dso_json,
+    find_in_parent,
+    get_dso_config_from_pyproject_toml,
+    git_list_files,
+)
 
 
 @pytest.mark.parametrize(
@@ -25,6 +31,21 @@ def test_find_in_parent(tmp_path, file_or_folder, recurse_barrier, expected):
     if recurse_barrier is not None:
         recurse_barrier = tmp_path / recurse_barrier
     assert find_in_parent(subfolder, file_or_folder, recurse_barrier) == expected
+
+
+@pytest.mark.parametrize(
+    "append,expected",
+    [
+        ["", {}],
+        ["\n[tool.dso]\ntest_bool = true\ntest_string = 'foo'", {"test_bool": True, "test_string": "foo"}],
+    ],
+)
+def test_get_config_from_pyproject_toml(append, expected, dso_project):
+    pyproject_toml = dso_project / "pyproject.toml"
+    with pyproject_toml.open("w+t") as f:
+        f.write(append)
+    config = get_dso_config_from_pyproject_toml(dso_project)
+    assert config == expected
 
 
 def test_dot_dso_json(dso_project):
