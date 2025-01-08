@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning][].
     do not contain a separate `.gitignore` anymore. This means empty folders won't be tracked by git, but
     this solves issues with dvc refusing to track the output folder because it is already partly tracked by git.
 
+### New Features
+
+- Python API that mirrors `dso-r` functionality (e.g. to be used from Jupyter notebooks) ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
+
+### Chore
+
+- Refactor CLI into separate module ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
+- Defer imports in CLI until they are actually needed to speed up CLI ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
+- Make all modules explicitly private that are not part of the public API ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
+
 ## v0.10.1
 
 ### Fixes

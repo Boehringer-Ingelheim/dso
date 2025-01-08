@@ -1,16 +1,15 @@
-import os
+"""Get configuration for a stage based on params.in.yaml and dvc.yaml"""
+
 import re
 import sys
 from collections.abc import Collection
 from itertools import groupby
 from pathlib import Path
 
-import rich_click as click
 from ruamel.yaml import YAML
 
 from dso._logging import log
 from dso._util import get_project_root
-from dso.compile_config import compile_all_configs
 
 
 def _filter_nested_dict(data: dict, keys: Collection[str]) -> dict:
@@ -45,8 +44,11 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> 
     all
         If true, the config is not filtered based on the `dvc.yaml` file.
     skip_compile
-        If true, do not compile the config before loading it
+        If `True`, do not compile the config before loading it.
+        If `False`, always compile.
     """
+    from dso._compile_config import compile_all_configs
+
     proj_root = get_project_root(Path.cwd())
     log.info(f"Retrieving config for stage ./{stage}")
     if ":" in stage:
@@ -117,41 +119,3 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> 
             keep_params = {p for p in keep_params if not (p.startswith("item.") or p == "item")}
 
         return _filter_nested_dict(config, keep_params)
-
-
-@click.command(name="get-config")
-@click.option(
-    "--all",
-    is_flag=True,
-    type=bool,
-    default=False,
-    help="Include all parameters, not only those mentioned in `dvc.yaml`",
-)
-@click.option(
-    "--skip-compile",
-    is_flag=True,
-    type=bool,
-    default=bool(int(os.environ.get("DSO_SKIP_COMPILE", 0))),
-    help="Do not compile configs before loading it. The same can be achieved by setting the `DSO_SKIP_COMPILE=1` env var.",
-)
-@click.argument(
-    "stage",
-)
-def cli(stage, all, skip_compile):
-    """Get the configuration for a given stage and print it to STDOUT in yaml format.
-
-    The path to the stage must be relative to the root dir of the project.
-
-    By default, the configuration is filtered to include only the keys that are mentioned in `dvc.yaml` to force
-    declaring all dependencies.
-
-    If multiple stages are defined in a single `dvc.yaml`, the stage name MUST be specified using
-    `path/to/stage:stage_name` unless `--all` is given.
-    """
-    try:
-        out_config = get_config(stage, all=all, skip_compile=skip_compile)
-        yaml = YAML()
-        yaml.dump(out_config, sys.stdout)
-    except KeyError as e:
-        log.error(f"dvc.yaml defines parameter {e} that is not in params.yaml")
-        sys.exit(1)
