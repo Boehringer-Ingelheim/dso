@@ -34,16 +34,18 @@ def test_find_in_parent(tmp_path, file_or_folder, recurse_barrier, expected):
 
 
 @pytest.mark.parametrize(
-    "append,expected",
+    "config,expected",
     [
         ["", {}],
         ["\n[tool.dso]\ntest_bool = true\ntest_string = 'foo'", {"test_bool": True, "test_string": "foo"}],
     ],
 )
-def test_get_config_from_pyproject_toml(append, expected, dso_project):
+def test_get_config_from_pyproject_toml(config, expected, dso_project):
     pyproject_toml = dso_project / "pyproject.toml"
-    with pyproject_toml.open("w+t") as f:
-        f.write(append)
+    with pyproject_toml.open("wt") as f:
+        f.write(config)
+    # this is necessary because `compile_config` is called by the dso_project fixture which already loads the pyproject.toml
+    get_dso_config_from_pyproject_toml.cache_clear()
     config = get_dso_config_from_pyproject_toml(dso_project)
     assert config == expected
 
