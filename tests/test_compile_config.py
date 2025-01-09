@@ -66,10 +66,11 @@ def test_auto_adjusting_path(tmp_path, interpolate, relative):
         ruamel.dump(res, s)
         actual = s.getvalue()
 
+    # using .split() to ignore differences in whitespace
     if relative:
-        assert actual.strip() == "my_path: ../../test.txt"
+        assert actual.split() == ["my_path:", "../../test.txt"]
     else:
-        assert actual.strip() == f"my_path: {tmp_path}/test.txt"
+        assert actual.split() == ["my_path:", f"{tmp_path}/test.txt"]
 
 
 @pytest.mark.parametrize("relative", [True, False])
