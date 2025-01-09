@@ -11,10 +11,16 @@ from os import environ
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal
 
-import tomllib
 from rich.prompt import Confirm
 
 from dso._logging import console, log
+
+# compatibilty with python 3.10
+try:
+    import tomllib
+except ImportError:
+    import tomli as tomllib
+
 
 if TYPE_CHECKING:
     from importlib.resources.abc import Traversable
