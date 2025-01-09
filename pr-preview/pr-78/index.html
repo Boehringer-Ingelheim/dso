@@ -1,0 +1,606 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="DSO: data science operations" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="index.html" />
+<meta property="og:site_name" content="Project name not set" />
+<meta property="og:description" content="DSO Kraken DSO is a command line helper for building reproducible data anlaysis projects with ease. It builds on top of dvc for data versioning and provides project templates, linting checks, hiera..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_index_e1814c86.png" />
+<meta property="og:image:alt" content="DSO Kraken DSO is a command line helper for building reproducible data anlaysis projects with ease. It builds on top of dvc for data versioning and provides..." />
+<meta name="description" content="DSO Kraken DSO is a command line helper for building reproducible data anlaysis projects with ease. It builds on top of dvc for data versioning and provides project templates, linting checks, hiera..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>DSO: data science operations &#8212; dso-core</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=366103d0" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=cf6ada8e"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting started" href="getting_started.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.dev1+g2bc9fa0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">dso-core</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO Python API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dso_python.html">Python API</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO R API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dso_r.html">DSO R package</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/Boehringer-Ingelheim/dso" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>DSO: data science operations</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting started</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-dvc">What is DVC?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-project-from-a-template">Creating a project from a template</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-write-and-use-config-files">How-to write and use config files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linting-checks">Linting checks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reproducing-projects">Reproducing projects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integration-with-quarto">Integration with quarto</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-notes">Release notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#credits">Credits</a><ul class="nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="dso-data-science-operations">
+<h1>DSO: data science operations<a class="headerlink" href="#dso-data-science-operations" title="Link to this heading">#</a></h1>
+<a class="reference internal image-reference" href="_images/dso_kraken.jpg"><img alt="DSO Kraken" src="_images/dso_kraken.jpg" style="width: 250px;" />
+</a>
+<p><em>DSO</em> is a command line helper for building reproducible data anlaysis projects with ease.
+It builds on top of <a class="reference external" href="https://github.com/iterative/dvc">dvc</a> for data versioning and provides project
+templates, linting checks, hierarchical overlay of configuration files and integrates with quarto and jupyter notebooks.</p>
+<p>At Boehringer Ingelheim, we introduced DSO to meet the high quality standards required for biomarker analysis
+in clinical trials. DSO is still under early development and we value community feedback.</p>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h2>
+<section id="what-is-dvc">
+<h3>What is DVC?<a class="headerlink" href="#what-is-dvc" title="Link to this heading">#</a></h3>
+<p><a class="reference external" href="https://github.com/iterative/dvc">DVC</a> is like “git for data”. It can version large data files and data directories alongside source code tracked with git. In addition to versioning files, dvc can be used to run analyses in a reproducible way by declaring input and output files as well as commands to be executed in a <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> configuration file. After executing an analysis, timestamps and checksums of all input and output files are stored in a <code class="docutils literal notranslate"><span class="pre">lock</span></code> file, providing a provenance record. Different analysis tasks are organized in <em>stages</em>. Since input and output files of each stage are declared, dvc can build a dependency graph of the stages to re-execute stages as appropriate if input data or preprocessing steps have been updated.</p>
+</section>
+<section id="creating-a-project-from-a-template">
+<h3>Creating a project from a template<a class="headerlink" href="#creating-a-project-from-a-template" title="Link to this heading">#</a></h3>
+<p>There are three types of DSO templates: project, folders and stages. A <em>project</em> is the root of your project
+and always a git repository at the same time. It can be created using <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code>. A <em>stage</em> is an executable
+step of your analysis (usually one script with defined inputs and outputs) organized in a folder. Stages
+cannot be nested. A <em>folder</em> is used to organize stages in a hierarchical way within the project.</p>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> to create a new project</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$&gt; dso init
+Please enter the name of the project, e.g. &quot;single_cell_lung_atlas&quot;: my_cool_project
+Please add a short description of the project: This analysis solves *all* the problems!
+</pre></div>
+</div>
+<p>Within a project, you can use <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> to initalize folders and stages from a predefined template</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$&gt; dso create stage
+? Choose a template: (Use arrow keys)
+   bash
+ » quarto
+Please enter the name of the stage, e.g. &quot;01_preprocessing&quot;: 02_quality_control
+Please add a short description of the stage: Make a PCA to detect outliers
+</pre></div>
+</div>
+</section>
+<section id="how-to-write-and-use-config-files">
+<h3>How-to write and use config files<a class="headerlink" href="#how-to-write-and-use-config-files" title="Link to this heading">#</a></h3>
+<p>The config files in a project, subfolder or stage are the cornerstone of any reproducable analysis by minimising analysis configuration errors within related scripts. Additionally, config files reduce the time needed to modify your scripts when changing configurations such as p-value cutoffs, excluded samples, output directory, data input, and many more.</p>
+<p>A config file of a project, subfolder, or stage contains all necessary parameters that should be consistent across the analyses. Therefore, changing parameters is done within the config files and not individually within an analysis script.</p>
+<p>In DSO two parameter files are given called <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> and <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code>. <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> is an autogenerated YAML containing all the parameters specified in the params.in.yaml and other params.yaml files in its parent directories (see figure below for an example how this behaves in real). <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> will be compiled when running <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">compile-config</span></code>.</p>
+<a class="reference internal image-reference" href="_images/config.png"><img alt="Hierarchical configuration schema" src="_images/config.png" style="width: 500px;" />
+</a>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$&gt; dso compile-config
+[08/22/24 20:53:43] INFO     Detected /home/grst/my_cool_project as project root.
+                    INFO     Compiling a total of 2 config files.
+                    INFO     Configuration compiled successfully.
+</pre></div>
+</div>
+</section>
+<section id="linting-checks">
+<h3>Linting checks<a class="headerlink" href="#linting-checks" title="Link to this heading">#</a></h3>
+<p>Dso provides linting checks that detect common errors in analysis projects. Right now only few checks are implemented,
+but more will be available in the future.</p>
+<p>To run the linting checks manuall, execute</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$&gt; dso lint
+[08/22/24 20:53:43] INFO     Compiled a list of 22 to be linted
+</pre></div>
+</div>
+<p>However, it is preferable to execute linting checks as pre-commit hooks and/or as continuous integration checks.
+A <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> comes with the DSO project template. Simply activate it using <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">install</span></code>.</p>
+</section>
+<section id="reproducing-projects">
+<h3>Reproducing projects<a class="headerlink" href="#reproducing-projects" title="Link to this heading">#</a></h3>
+<p>To reproduce/execute all stages within a project, run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$&gt; dso repro
+</pre></div>
+</div>
+<p>This is a thin wrapper around <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">repro</span></code> that compiles all configuration files beforehand.
+DVC will only reproduce stages defined in the dvc.yaml where changes have been made. When dependencies have been changed, previous stages will also be re-run.</p>
+</section>
+<section id="integration-with-quarto">
+<h3>Integration with quarto<a class="headerlink" href="#integration-with-quarto" title="Link to this heading">#</a></h3>
+<p>DSO provides some additional tooling around quarto documents for generating reproducible reports. When you create a
+quarto stage via <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">stage</span> <span class="pre">--template</span> <span class="pre">quarto</span></code> you are all set to use this tooling:</p>
+<ul>
+<li><p>Render quarto stages to html via <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">exec</span> <span class="pre">quarto</span> <span class="pre">.</span></code></p></li>
+<li><p>Inherit quarto configuration through the project from the <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files. Quarto configuration can be placed in
+<code class="docutils literal notranslate"><span class="pre">dso.quarto</span></code>, e.g.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">dso</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">quarto</span><span class="p">:</span>
+<span class="w">     </span><span class="nt">author</span><span class="p">:</span>
+<span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Jane Doe</span>
+<span class="w">     </span><span class="nt">execute</span><span class="p">:</span>
+<span class="w">       </span><span class="nt">warning</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</li>
+<li><p>Add a disclaimer box and watermarks to all plots (e.g. to mark them as drafts) by adding additional settings</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">dso</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">quarto</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">watermark</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DRAFT</span>
+<span class="w">    </span><span class="nt">disclaimer</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">This document is a DRAFT</span>
+<span class="w">      </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Please do not share!</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>To access stage parameters and resolve file paths relative to the stage directory from within R, we provide the
+companion package <a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso-r"><code class="docutils literal notranslate"><span class="pre">dso-r</span></code></a> that provides the two functions
+<code class="docutils literal notranslate"><span class="pre">read_params(stage_name)</span></code> and <code class="docutils literal notranslate"><span class="pre">stage_here(path)</span></code>.</p>
+</section>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<p>DSO requires Python 3.10 or later.</p>
+<p>You can install the latest version with pip using</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>dso-core
+</pre></div>
+</div>
+<p>Alternatively, you can install the development version from GitHub:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/Boehringer-Ingelheim/dso.git@main
+</pre></div>
+</div>
+</section>
+<section id="release-notes">
+<h2>Release notes<a class="headerlink" href="#release-notes" title="Link to this heading">#</a></h2>
+<p>See the <a class="reference internal" href="CHANGELOG.html"><span class="std std-doc">changelog</span></a>.</p>
+</section>
+<section id="credits">
+<h2>Credits<a class="headerlink" href="#credits" title="Link to this heading">#</a></h2>
+<p>dso was initially developed by</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/grst">Gregor Sturm</a></p></li>
+<li><p><a class="reference external" href="https://github.com/tschwarzl">Tom Schwarzl</a></p></li>
+<li><p><a class="reference external" href="https://github.com/dschreyer">Daniel Schreyer</a></p></li>
+<li><p><a class="reference external" href="https://github.com/apeltzer">Alexander Peltzer</a></p></li>
+</ul>
+<p>DSO depends on many great open source projects, most notably <a class="reference external" href="https://github.com/iterative/dvc">dvc</a>, <a class="reference external" href="https://github.com/zerwes/hiyapyco">hiyapyco</a> and <a class="reference external" href="https://jinja.palletsprojects.com/">jinja2</a>.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="getting_started.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Getting started</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting started</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-dvc">What is DVC?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-project-from-a-template">Creating a project from a template</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-write-and-use-config-files">How-to write and use config files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linting-checks">Linting checks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reproducing-projects">Reproducing projects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integration-with-quarto">Integration with quarto</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release-notes">Release notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#credits">Credits</a><ul class="nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gregor Sturm, Thomas Schwarzl, Alexander Peltzer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Gregor Sturm, Thomas Schwarzl, Alexander Peltzer..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
