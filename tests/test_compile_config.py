@@ -25,8 +25,9 @@ def _setup_yaml_configs(tmp_path, configs: dict[str, dict]):
             yaml.dump(dict, f)
 
 
+@pytest.mark.parametrize("relative", [True, False])
 @pytest.mark.parametrize("interpolate", [True, False])
-def test_auto_adjusting_path(tmp_path, interpolate):
+def test_auto_adjusting_path(tmp_path, interpolate, relative):
     """Test that audo-adjusting paths work as expected.
 
     If `interpolate` is `True`, the AutoAdjustingPath object
@@ -53,7 +54,10 @@ def test_auto_adjusting_path(tmp_path, interpolate):
             method=hiyapyco.METHOD_MERGE,
             interpolate=interpolate,
             loader_callback=partial(
-                _load_yaml_with_auto_adjusting_paths, destination=destination, missing_path_warnings=set()
+                _load_yaml_with_auto_adjusting_paths,
+                destination=destination,
+                missing_path_warnings=set(),
+                relative=relative,
             ),
         )
 
@@ -62,9 +66,13 @@ def test_auto_adjusting_path(tmp_path, interpolate):
         ruamel.dump(res, s)
         actual = s.getvalue()
 
-    assert actual.strip() == "my_path: ../../test.txt"
+    if relative:
+        assert actual.strip() == "my_path: ../../test.txt"
+    else:
+        assert actual.strip() == f"my_path: {tmp_path}/test.txt"
 
 
+@pytest.mark.parametrize("relative", [True, False])
 @pytest.mark.parametrize(
     "test_yaml,expected",
     [
@@ -84,12 +92,18 @@ def test_auto_adjusting_path(tmp_path, interpolate):
         ),
     ],
 )
-def test_auto_adjusting_path_with_jinja(tmp_path, test_yaml, expected):
+def test_auto_adjusting_path_with_jinja(tmp_path, relative, test_yaml, expected):
     runner = CliRunner()
     with runner.isolated_filesystem(temp_dir=tmp_path) as td:
         td = Path(td)
         test_file = td / "params.in.yaml"
         (td / ".git").mkdir()
+
+        # relative = true is the default for now
+        # to ensure it really is the default, we don't add a configuration file
+        # in that case.
+        if not relative:
+            (td / "pyproject.toml").write_text("[tool.dso]\nuse_relative_paths = false")
 
         with test_file.open("w") as f:
             f.write(dedent(test_yaml))
@@ -99,7 +113,10 @@ def test_auto_adjusting_path_with_jinja(tmp_path, test_yaml, expected):
         td = Path(td)
         assert result.exit_code == 0
         with (td / "params.yaml").open() as f:
-            assert yaml.safe_load(f)["B"] == expected
+            if relative:
+                assert yaml.safe_load(f)["B"] == expected
+            else:
+                assert yaml.safe_load(f)["B"] == str(td / expected)
 
 
 def test_compile_configs(tmp_path):

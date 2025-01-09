@@ -182,10 +182,17 @@ def git_list_files(dir: Path) -> list[Path]:
 
 
 @cache
-def get_dso_config_from_pyproject_toml(dir: Path):
-    """Read the pyproject.toml file when within a project"""
+def get_dso_config_from_pyproject_toml(dir: Path) -> dict:
+    """
+    Read the pyproject.toml file when within a project and return the [tool.dso] section as dict
+
+    If the pyproject.toml file doesn't exist, or it doesn't have a [tool.dso] section,
+    an empty dictionary is returned
+    """
     project_root = get_project_root(dir)
     pyproject_toml = project_root / "pyproject.toml"
+    if not pyproject_toml.exists():
+        return {}
     with pyproject_toml.open("rb") as f:
         data = tomllib.load(f)
     return data.get("tool", {}).get("dso", {})
