@@ -58,6 +58,7 @@ extensions = [
     "sphinx.ext.mathjax",
     "IPython.sphinxext.ipython_console_highlighting",
     "sphinxext.opengraph",
+    "sphinxcontrib.programoutput",
     *[p.stem for p in (HERE / "extensions").glob("*.py")],
 ]
 
