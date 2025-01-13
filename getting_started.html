@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="getting_started.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="TODO" />
+<meta property="og:description" content="dso init – Initialize a project: dso init initializes a new project in your current directory. It creates the root directory of your project with all the necessary configuration files for git, dvc,..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_getting_started_b4a6ff09.png" />
-<meta property="og:image:alt" content="TODO" />
-<meta name="description" content="TODO" />
+<meta property="og:image" content="/_images/social_previews/summary_getting_started_5c8e672e.png" />
+<meta property="og:image:alt" content="dso init – Initialize a project: dso init initializes a new project in your current directory. It creates the root directory of your project with all the nec..." />
+<meta name="description" content="dso init – Initialize a project: dso init initializes a new project in your current directory. It creates the root directory of your project with all the necessary configuration files for git, dvc,..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Getting started &#8212; dso-core</title>
@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=c9d92aa6"></script>
+    <script src="_static/documentation_options.js?v=0aef352d"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <link rel="prev" title="DSO: data science operations" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+gc54243f" />
+  <meta name="docsearch:version" content="0.1.dev1+g91466b9" />
   </head>
   
   
@@ -306,7 +306,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -322,6 +324,23 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init-initialize-a-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create-add-folders-or-stages-to-your-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-configuration-files">Writing configuration files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-a-stage">Implementing a stage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r">R</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro-reproducing-all-stages"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-changes-with-a-remote">Syncing changes with a remote</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -333,7 +352,87 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="getting-started">
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
-<p>TODO</p>
+<section id="dso-init-initialize-a-project">
+<h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project<a class="headerlink" href="#dso-init-initialize-a-project" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> initializes a new project in your current directory.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ dso init test_project --description &quot;This is a test project&quot;
+[01/13/25 10:49:43] INFO     Created project directory.                         
+                    INFO     Created folder structure from template.            
+                    INFO     Initalized local git repo.                         
+                    INFO     Project initalized successfully.                   
+                    INFO     Detected                                           
+                             /home/runner/work/dso/dso/docs/test_project as     
+                             project root.                                      
+                    INFO     Compiling a total of 1 config files.               
+                    INFO     Configuration compiled successfully.
+</pre></div>
+</div>
+<p>It creates the root directory of your project with all the necessary configuration files for <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">dvc</span></code>, <code class="docutils literal notranslate"><span class="pre">uv</span></code> and
+<code class="docutils literal notranslate"><span class="pre">dso</span></code> itself:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ ls -a test_project
+.
+..
+.dvc
+.dvcignore
+.editorconfig
+.git
+.gitattributes
+.gitignore
+.pre-commit-config.yaml
+README.md
+dvc.yaml
+params.in.yaml
+params.yaml
+pyproject.toml
+</pre></div>
+</div>
+</section>
+<section id="dso-create-add-folders-or-stages-to-your-project">
+<h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project<a class="headerlink" href="#dso-create-add-folders-or-stages-to-your-project" title="Link to this heading">#</a></h2>
+<p>We consider a <em>stage</em> an individual step in your analysis, usually a script with defined inputs and outputs.
+Stages can be organized in <em>folders</em> with arbitrary structures. <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> initializes folders and stages
+from predefined templates. We recommend naming stages with a numeric prefix, e.g. <code class="docutils literal notranslate"><span class="pre">01_</span></code> to declare the
+order of scripts, but this is not a requirement.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>test_project
+
+<span class="c1"># Let&#39;s create a folder that we&#39;ll use to organize all analysis steps related to &quot;RNA-seq&quot;</span>
+dso<span class="w"> </span>create<span class="w"> </span>folder<span class="w"> </span>RNA_seq
+
+<span class="c1"># Let&#39;s create first stage for pre-processing</span>
+<span class="nb">cd</span><span class="w"> </span>RNA_seq
+dso<span class="w"> </span>create<span class="w"> </span>stage<span class="w"> </span>01_preprocessing<span class="w"> </span>--template<span class="w"> </span>bash<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;Run nf-core/rnaseq&quot;</span>
+
+<span class="c1"># Let&#39;s create a second stage for quality control</span>
+dso<span class="w"> </span>create<span class="w"> </span>stage<span class="w"> </span>02_qc<span class="w"> </span>--template<span class="w"> </span>quarto<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;Perform RNA-seq quality control&quot;</span>
+</pre></div>
+</div>
+<p>Stages have the following pre-defined folder-structure. This folder system aims to make the structure coherent throughout a project for easy readability and navigation. Additional folders can still be added if necessary.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>stage
+  |-- input            # contains Input Data
+  |-- src              # contains Analysis Script(s)
+  |-- output           # contains TLF - Outputs generated by Analysis Scripts
+  |-- report           # contains HTML Report generated by Analysis Scripts
+</pre></div>
+</div>
+</section>
+<section id="writing-configuration-files">
+<h2>Writing configuration files<a class="headerlink" href="#writing-configuration-files" title="Link to this heading">#</a></h2>
+</section>
+<section id="implementing-a-stage">
+<h2>Implementing a stage<a class="headerlink" href="#implementing-a-stage" title="Link to this heading">#</a></h2>
+<section id="r">
+<h3>R<a class="headerlink" href="#r" title="Link to this heading">#</a></h3>
+</section>
+<section id="python">
+<h3>Python<a class="headerlink" href="#python" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="dso-repro-reproducing-all-stages">
+<h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages<a class="headerlink" href="#dso-repro-reproducing-all-stages" title="Link to this heading">#</a></h2>
+</section>
+<section id="syncing-changes-with-a-remote">
+<h2>Syncing changes with a remote<a class="headerlink" href="#syncing-changes-with-a-remote" title="Link to this heading">#</a></h2>
+</section>
 </section>
 
 
@@ -371,6 +470,31 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init-initialize-a-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create-add-folders-or-stages-to-your-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-configuration-files">Writing configuration files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-a-stage">Implementing a stage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r">R</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro-reproducing-all-stages"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-changes-with-a-remote">Syncing changes with a remote</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
