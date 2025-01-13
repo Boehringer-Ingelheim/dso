@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning][].
 
 ## [Unreleased]
 
+### Template updates
+
+-   Single `.gitignore` file per stage. Content of input/output/report folders is ignored. These folders
+    do not contain a separate `.gitignore` anymore. This means empty folders won't be tracked by git, but
+    this solves issues with dvc refusing to track the output folder because it is already partly tracked by git.
+
 ### New Features
 
 - Python API that mirrors `dso-r` functionality (e.g. to be used from Jupyter notebooks) ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
