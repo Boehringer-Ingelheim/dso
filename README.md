@@ -22,6 +22,10 @@ Please refer to the documentation, in particular ...
 
 TODO
 
+## Contact
+
+Please use the [issue tracker](https://github.com/Boehringer-Ingelheim/dso/issues).
+
 ## Release notes
 
 See the [changelog](./CHANGELOG.md).
