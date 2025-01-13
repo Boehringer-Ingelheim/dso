@@ -38,7 +38,7 @@ dso create stage 02_qc --template quarto --description "Perform RNA-seq quality 
 
 Stages have the following pre-defined folder-structure. This folder system aims to make the structure coherent throughout a project for easy readability and navigation. Additional folders can still be added if necessary.
 
-```txt
+```text
 stage
   |-- input            # contains Input Data
   |-- src              # contains Analysis Script(s)
