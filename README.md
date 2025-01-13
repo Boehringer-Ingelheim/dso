@@ -7,12 +7,8 @@ templates, linting checks, hierarchical overlay of configuration files and integ
 At Boehringer Ingelheim, we introduced DSO to meet the high quality standards required for biomarker analysis
 in clinical trials. DSO is under active development and we value community feedback.
 
-<table width="100%">
-    <tr>
-        <td width="35%"><img src="img/dso_kraken.jpg" alt="DSO Kraken"></td>
-        <td><img src="img/dso_tools.png" alt="tools used by DSO"></td>
-    </tr>
-</table>
+| <img src="img/dso_kraken.jpg" alt="DSO Kraken" width="700"> | <img src="img/dso_tools.png" alt="tools used by DSO"> |
+| ----------------------------------------------------------- | ----------------------------------------------------- |
 
 ## Getting started
 
