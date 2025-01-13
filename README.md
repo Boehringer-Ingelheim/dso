@@ -1,11 +1,7 @@
 # DSO: data science operations
 
-<table width="100%">
-    <tr>
-        <td width="35%"><img src="img/dso_kraken.jpg" alt="DSO Kraken"></td>
-        <td><img src="img/dso_tools.png" alt="tools used by DSO"></td>
-    </tr>
-</table>
+| <img src="img/dso_kraken.jpg" alt="DSO Kraken" width="700"> | <img src="img/dso_tools.png" alt="tools used by DSO"> |
+|--|--|
 
 
 _DSO_ is a command line helper for building reproducible data anlaysis projects with ease.
