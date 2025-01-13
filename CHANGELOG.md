@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning][].
 ### Fixes
 
 -   Do not change the configuration of the root logger, only the `dso` logger. Changing the root logger
-    had side-effects on other libraries when importing `dso` in Python ([#]()).
+    had side-effects on other libraries when importing `dso` in Python ([#80](https://github.com/Boehringer-Ingelheim/dso/pull/80)).
 
 ### New Features
 
