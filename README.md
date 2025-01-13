@@ -24,4 +24,24 @@ TODO
 
 ## Release notes
 
-See the [changelog](CHANGELOG.md).
+See the [changelog](./CHANGELOG.md).
+
+## License
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License (LGPL) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+Additionally, the templates files used internally by `dso init` and `dso create` are distributed under the Creative Commons Zero v1.0
+Universal license. See also the [separate LICENSE file](https://github.com/Boehringer-Ingelheim/dso/blob/main/src/dso/templates/LICENSE) in the `templates` directory.
+
+## Credits
+
+dso was initially developed by
+
+-   [Gregor Sturm](https://github.com/grst)
+-   [Tom Schwarzl](https://github.com/tschwarzl)
+-   [Daniel Schreyer](https://github.com/dschreyer)
+-   [Alexander Peltzer](https://github.com/apeltzer)
+
+DSO depends on many great open source projects, most notably [dvc](https://github.com/iterative/dvc), [hiyapyco](https://github.com/zerwes/hiyapyco) and [jinja2](https://jinja.palletsprojects.com/).
