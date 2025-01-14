@@ -15,6 +15,7 @@ getting_started.md
 :maxdepth: 1
 :caption: DSO CLI
 
+command_reference.md
 CHANGELOG.md
 contributing.md
 ```

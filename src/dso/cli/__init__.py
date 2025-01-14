@@ -15,15 +15,15 @@ from dso._logging import log
 from dso._metadata import __version__
 from dso._util import get_project_root, get_template_path, instantiate_with_repo
 
-from ._create import create_cli
-from ._exec import exec_cli
+from ._create import dso_create
+from ._exec import dso_exec
 
 click.rich_click.USE_MARKDOWN = True
 
 
 @click.command(name="compile-config")
 @click.argument("args", nargs=-1)
-def compile_config_cli(args):
+def dso_compile_config(args):
     """Compile params.in.yaml into params.yaml using Jinja2 templating and resolving recursive templates.
 
     If passing no arguments, configs will be resolved for the current working directory (i.e. all parent configs,
@@ -58,7 +58,7 @@ def compile_config_cli(args):
 @click.argument(
     "stage",
 )
-def get_config_cli(stage, all, skip_compile):
+def dso_get_config(stage, all, skip_compile):
     """Get the configuration for a given stage and print it to STDOUT in yaml format.
 
     The path to the stage must be relative to the root dir of the project.
@@ -85,7 +85,7 @@ def get_config_cli(stage, all, skip_compile):
 @click.command(
     "init",
 )
-def init_cli(name: str | None = None, description: str | None = None):
+def dso_init(name: str | None = None, description: str | None = None):
     """
     Initialize a new project. A project can contain several stages organized in arbitrary subdirectories.
 
@@ -122,7 +122,7 @@ def init_cli(name: str | None = None, description: str | None = None):
     is_flag=True,
 )
 @click.argument("args", nargs=-1)
-def lint_cli(args, skip_compile: bool = False):
+def dso_lint(args, skip_compile: bool = False):
     """Lint a dso project
 
     Performs consistency checks according to a set of rules.
@@ -149,7 +149,7 @@ def lint_cli(args, skip_compile: bool = False):
     context_settings={"ignore_unknown_options": True},
 )
 @click.argument("args", nargs=-1, type=click.UNPROCESSED)
-def repro_cli(args):
+def dso_repro(args):
     """Wrapper around dvc repro, compiling configuration before running."""
     from dso._compile_config import compile_all_configs
     from dso._util import check_ask_pre_commit
@@ -176,7 +176,7 @@ def repro_cli(args):
 @click.option("--font_outline", type=int)
 @click.option("--font_color", help="Use RGBA (e.g. `#AAAAAA88`) to specify transparency")
 @click.option("--font_outline_color", help="Use RGBA (e.g. `#AAAAAA88`) to specify transparency")
-def watermark_cli(input_image, output_image, text, **kwargs):
+def dso_watermark(input_image, output_image, text, **kwargs):
     """Add a watermark to an image
 
     To be called from the dso-r package for implementing a custom graphics device.
@@ -211,7 +211,7 @@ def watermark_cli(input_image, output_image, text, **kwargs):
     is_flag=True,
 )
 @click.version_option(version=__version__, prog_name="dso")
-def cli(quiet: int, verbose: bool):
+def dso(quiet: int, verbose: bool):
     """Root command"""
     if quiet >= 2:
         log.setLevel(logging.ERROR)
@@ -224,11 +224,11 @@ def cli(quiet: int, verbose: bool):
         os.environ["DSO_VERBOSE"] = "1"
 
 
-cli.add_command(create_cli)
-cli.add_command(init_cli)
-cli.add_command(compile_config_cli)
-cli.add_command(repro_cli)
-cli.add_command(exec_cli)
-cli.add_command(lint_cli)
-cli.add_command(get_config_cli)
-cli.add_command(watermark_cli)
+dso.add_command(dso_create)
+dso.add_command(dso_init)
+dso.add_command(dso_compile_config)
+dso.add_command(dso_repro)
+dso.add_command(dso_exec)
+dso.add_command(dso_lint)
+dso.add_command(dso_get_config)
+dso.add_command(dso_watermark)
