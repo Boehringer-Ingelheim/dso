@@ -1,6 +1,6 @@
 from click.testing import CliRunner
 
-from dso import cli
+from dso.cli import cli
 
 
 def test_root_command():

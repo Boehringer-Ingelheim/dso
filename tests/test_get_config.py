@@ -4,7 +4,8 @@ from textwrap import dedent
 import pytest
 from click.testing import CliRunner
 
-from dso.get_config import _filter_nested_dict, cli, get_config
+from dso._get_config import _filter_nested_dict, get_config
+from dso.cli import get_config_cli
 
 
 @pytest.mark.parametrize(
@@ -142,6 +143,44 @@ def test_get_config_order(dso_project):
     assert list(config["B1"]) == ["C", "A", "D", "B", "Z", "X"]
 
 
+def test_get_config_matrix(dso_project):
+    """Test that get-config is compatible with dvc's matrix feature"""
+    chdir(dso_project)
+    stage = dso_project / "mystage"
+    stage.mkdir()
+    (stage / "params.in.yaml").touch()
+
+    (dso_project / "params.in.yaml").write_text(
+        dedent(
+            """\
+            matrix_param: ['p1', 'p2']
+            A: "aaa"
+            B: "bbb"
+            """
+        )
+    )
+
+    (stage / "dvc.yaml").write_text(
+        dedent(
+            """\
+            stages:
+               mystage01:
+                 matrix:
+                    mp: ${ matrix_param }
+                 params:
+                   - A
+                   - item.mp
+                 outs:
+                   - output/${ item.mp }
+                 cmd: "echo Hello World!"
+            """
+        )
+    )
+
+    config = get_config("mystage")
+    assert list(config) == ["A"]
+
+
 def test_get_config_path_relative_to_root_dir(quarto_stage):
     chdir(quarto_stage)
     config1 = get_config("quarto_stage")
@@ -161,6 +200,6 @@ def test_get_config_invalid_stage(dso_project):
 def test_get_config_cli(quarto_stage):
     runner = CliRunner()
     chdir(quarto_stage)
-    result = runner.invoke(cli, ["quarto_stage"])
+    result = runner.invoke(get_config_cli, ["quarto_stage"])
     assert result.exit_code == 0
     assert "quarto:" in result.output

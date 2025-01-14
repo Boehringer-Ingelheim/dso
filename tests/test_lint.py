@@ -5,7 +5,8 @@ from textwrap import dedent
 import pytest
 from click.testing import CliRunner
 
-from dso.lint import DSO001, DSOLinter, LintError, QuartoRule, Rule, cli
+from dso._lint import DSO001, DSOLinter, LintError, QuartoRule, Rule
+from dso.cli import lint_cli
 
 
 @pytest.mark.parametrize(
@@ -118,6 +119,21 @@ def test_quarto_rule_is_applicable_pattern(quarto_stage, file, expected):
         ),
         (
             """\
+            params = read_params("quarto_stage")
+            # params = read_params("quarto_stage")
+            """,
+            None,
+        ),
+        # TODO no good way to cover that with regex alone, see https://github.com/Boehringer-Ingelheim/dso/issues/66
+        # (
+        #     """\
+        #     params = read_params("quarto_stage")
+        #     print(" foo # no comment"); params = read_params("quarto_stage")
+        #     """,
+        #     LintError,
+        # ),
+        (
+            """\
             params = read_params("wrong_path")
             """,
             LintError,
@@ -188,6 +204,6 @@ def test_lint(quarto_stage, skip, expect_warn, expect_error):
 def test_lint_cli(dso_project, paths):
     runner = CliRunner()
     chdir(dso_project)  # proj root
-    result = runner.invoke(cli, paths)
+    result = runner.invoke(lint_cli, paths)
     print(result.output)
     assert result.exit_code == 0

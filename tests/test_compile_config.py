@@ -3,18 +3,18 @@ from io import StringIO
 from pathlib import Path
 from textwrap import dedent
 
+import hiyapyco
 import pytest
 import yaml
 from click.testing import CliRunner
 from ruamel.yaml import YAML
 
-from dso import hiyapyco
-from dso.compile_config import (
+from dso._compile_config import (
     _get_list_of_configs_to_compile,
     _get_parent_configs,
     _load_yaml_with_auto_adjusting_paths,
-    cli,
 )
+from dso.cli import compile_config_cli
 
 
 def _setup_yaml_configs(tmp_path, configs: dict[str, dict]):
@@ -34,6 +34,7 @@ def test_auto_adjusting_path(tmp_path, interpolate):
     as an object that can be dumped by ruamel using the custom representer.
     """
     test_file = tmp_path / "params.in.yaml"
+    (tmp_path / ".git").mkdir()
     destination = tmp_path / "subproject1" / "stageA"
     destination.mkdir(parents=True)
     (tmp_path / "test.txt").touch()  # create fake file, otherwise check for missing file will fail.
@@ -51,7 +52,9 @@ def test_auto_adjusting_path(tmp_path, interpolate):
             str(test_file),
             method=hiyapyco.METHOD_MERGE,
             interpolate=interpolate,
-            loader_callback=partial(_load_yaml_with_auto_adjusting_paths, destination=destination),
+            loader_callback=partial(
+                _load_yaml_with_auto_adjusting_paths, destination=destination, missing_path_warnings=set()
+            ),
         )
 
     ruamel = YAML()
@@ -91,7 +94,7 @@ def test_auto_adjusting_path_with_jinja(tmp_path, test_yaml, expected):
         with test_file.open("w") as f:
             f.write(dedent(test_yaml))
 
-        result = runner.invoke(cli, [])
+        result = runner.invoke(compile_config_cli, [])
         print(result.output)
         td = Path(td)
         assert result.exit_code == 0
@@ -112,7 +115,7 @@ def test_compile_configs(tmp_path):
                 "A/B/C/params.in.yaml": {"value": "C", "jinja2": "{{ only_root }}", "list": [5]},
             },
         )
-        result = runner.invoke(cli, [])
+        result = runner.invoke(compile_config_cli, [])
         print(result.output)
         td = Path(td)
         assert result.exit_code == 0
@@ -122,6 +125,29 @@ def test_compile_configs(tmp_path):
             assert yaml.safe_load(f) == {"only_root": "foo", "value": "B", "list": [1, 2, 3, 4]}
         with (td / "A/B/C/params.yaml").open() as f:
             assert yaml.safe_load(f) == {"only_root": "foo", "value": "C", "list": [1, 2, 3, 4, 5], "jinja2": "foo"}
+
+
+def test_compile_configs_null_override(tmp_path):
+    """Test that null overrides any value"""
+    runner = CliRunner()
+    with runner.isolated_filesystem(temp_dir=tmp_path) as td:
+        td = Path(td)
+        (td / ".git").mkdir()
+        _setup_yaml_configs(
+            td,
+            {
+                "params.in.yaml": {"str": "str", "list": [1, 2, 3], "dict": {"A": 1, "B": 2}, "null": None},
+                "A/B/params.in.yaml": {"str": None, "list": None, "dict": None, "null": None},
+            },
+        )
+        result = runner.invoke(compile_config_cli, [])
+        print(result.output)
+        td = Path(td)
+        assert result.exit_code == 0
+        with (td / "params.yaml").open() as f:
+            assert yaml.safe_load(f) == {"str": "str", "list": [1, 2, 3], "dict": {"A": 1, "B": 2}, "null": None}
+        with (td / "A/B/params.yaml").open() as f:
+            assert yaml.safe_load(f) == {"str": None, "list": None, "dict": None, "null": None}
 
 
 @pytest.mark.parametrize(

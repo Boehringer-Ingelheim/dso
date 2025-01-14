@@ -25,6 +25,7 @@ classifiers = [
 dynamic = [ "version" ]
 dependencies = [
   "dvc",
+  "hiyapyco>=0.7",
   "jinja2",
   "panflute",
   "pillow",
@@ -51,6 +52,7 @@ optional-dependencies.doc = [
   "sphinx-book-theme>=1",
   "sphinx-copybutton",
   "sphinxcontrib-bibtex>=1",
+  "sphinxcontrib-programoutput>=0.18",
   "sphinxext-opengraph",
 ]
 optional-dependencies.test = [
@@ -65,8 +67,7 @@ optional-dependencies.test = [
 urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
 urls.Home-page = "https://github.com/Boehringer-Ingelheim/dso"
 urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
-scripts.dso = "dso:cli"
-scripts.dso_pandocfilter = "dso.pandocfilter:main"
+scripts.dso = "dso.cli:cli"
 
 [tool.hatch.version]
 source = "vcs"

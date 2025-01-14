@@ -1,67 +1,10 @@
 import os
-import subprocess
-import sys
-from contextlib import contextmanager
 from pathlib import Path
-from textwrap import dedent, indent
 
 import rich_click as click
 from ruamel.yaml import YAML
 
-from dso.compile_config import compile_all_configs
-
-from ._logging import log
-
-
-def _render_quarto(quarto_dir: Path, report_dir: Path, before_script: str, cwd: Path, with_pandocfilter: bool = False):
-    """
-    Render a quarto project
-
-    Parameters
-    ----------
-    quarto_dir
-        Path that contains the _quarto.yml document
-    report_dir
-        Output directory of the rendered document
-    before_script
-        Bash snippet to execute before running quarto (e.g. to setup the enviornment)
-    """
-    before_script = indent(before_script, " " * 8)
-    report_dir = report_dir.absolute()
-    report_dir.mkdir(exist_ok=True)
-    pandocfilter = "--filter dso_pandocfilter" if with_pandocfilter else ""
-    # propagate quiet setting to quarto
-    quiet = "--quiet" if bool(int(os.environ.get("DSO_QUIET", 0))) else ""
-    script = dedent(
-        f"""\
-        #!/bin/bash
-        set -euo pipefail
-
-        # this flags enables building larger reports with embedded resources
-        export QUARTO_DENO_V8_OPTIONS=--max-old-space-size=8192
-
-        {before_script}
-
-        quarto render "{quarto_dir}" --output-dir "{report_dir}" {quiet} {pandocfilter}
-        """
-    )
-    res = subprocess.run(script, shell=True, executable="/bin/bash", cwd=cwd)
-    if res.returncode:
-        sys.exit(res.returncode)
-
-
-@contextmanager
-def _quarto_config_yml(quarto_config: dict | None, quarto_dir: Path):
-    """Context manager that temporarily creates a _quarto.yml file and cleans up after itself"""
-    if quarto_config is None:
-        quarto_config = {}
-    config_file = quarto_dir / "_quarto.yml"
-    yaml = YAML(typ="safe")
-    yaml.dump(quarto_config, config_file)
-    try:
-        yield
-    finally:
-        config_file.unlink()
+from dso._logging import log
 
 
 @click.command("quarto")
@@ -73,7 +16,7 @@ def _quarto_config_yml(quarto_config: dict | None, quarto_dir: Path):
     default=bool(int(os.environ.get("DSO_SKIP_COMPILE", 0))),
     is_flag=True,
 )
-def exec_quarto(stage: str, skip_compile: bool = True):
+def exec_quarto_cli(stage: str, skip_compile: bool = True):
     """
     Render a quarto stage. Quarto parameters are inherited from params.yaml
 
@@ -89,6 +32,9 @@ def exec_quarto(stage: str, skip_compile: bool = True):
     stage
         Path to the stage, e.g. `.` for the current directory.
     """
+    from dso._compile_config import compile_all_configs
+    from dso._quarto import quarto_config_yml, render_quarto
+
     stage_dir = Path(stage).absolute()
     log.info(f"Executing quarto stage {stage_dir}")
     if not skip_compile:
@@ -127,8 +73,8 @@ def exec_quarto(stage: str, skip_compile: bool = True):
         except KeyError:
             pass
 
-    with _quarto_config_yml(quarto_config, stage_dir / "src"):
-        _render_quarto(
+    with quarto_config_yml(quarto_config, stage_dir / "src"):
+        render_quarto(
             stage_dir / "src",
             report_dir=stage_dir / "report",
             before_script=before_script,
@@ -138,9 +84,9 @@ def exec_quarto(stage: str, skip_compile: bool = True):
 
 
 @click.group(name="exec")
-def cli():
+def exec_cli():
     """Dso wrappers around various tools"""
     pass
 
 
-cli.add_command(exec_quarto)
+exec_cli.add_command(exec_quarto_cli)

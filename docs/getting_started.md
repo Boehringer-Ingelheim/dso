@@ -1,153 +1,105 @@
 # Getting started
 
-# Getting Started with DSO
+## `dso init` -- Initialize a project
 
-Welcome to the DSO (Data Science Operations) project! This guide will help you set up your project, configure your environment, and start using DSO and DVC for data version control and reproducible analyses.
-
-## Introduction
-
-DevOps practices empower data science teams to streamline their workflows, minimizing the time from change to finished analysis reports. By integrating development and operations, they can automate processes and ensure reproducibility and robustness.
-
-The DSO tool offers a flexible structure for data science projects with config management and supports the use of Git for code versioning and Data Version Control (DVC) for data versioning, compiling, and configurations. The two core units of a DSO project are folders and stages, where a stage is an executable step for an analysis.
-
-## Installation
-
-You can install the latest version with pip using
-```bash
-pip install dso-core
-```
-
-Alternatively, you can install the development version from GitHub:
-```bash
-pip install git+https://github.com/Boehringer-Ingelheim/dso.git@main
-```
-
-## Initialise a project
-In the context of DSO, a project is a structured environment where data science workflows are organized and managed. It serves as the root directory that contains all the necessary components for conducting data analyses.
+`dso init` initializes a new project in your current directory. In the context of DSO, a project is a structured environment where data science workflows are organized and managed.
 
 To initialize a project use the following command:
 
 ```bash
-dso init
-# Please enter the name of the project, e.g. "single_cell_lung_atlas":
-# Please add a short description of the project:
+# To initialize a project called "test_project" use the following command
+dso init test_project --description "This is a test project"
 ```
 
-By initializing the project, the project folder will be created with all the essential components for using `git`, `dvc`, and `dso`.
-
-## Create folders and stages
-
-### Folders
-
-A folder in DSO is a directory that helps organize different parts of your project. Folders can be nested to create a hierarchical structure that reflects the organization of your project, studies, workpackages, and stages.
-
-To set-up a folder, use:
-```bash
-dso create folder
-# Please enter the name of the folder, e.g. "RNAseq":
-```
-
-### Stages
-
-A stage in DSO represents an executable step in your data analysis pipeline. Each stage is represented with directory containing several sub-directories. A stage usually performs some type of analysis within your analysis pipeline, such as preprocessing of sequencing data or differential expression analysis.
-
-Each project or folder can have several stages and therefore it is recommended to adhere to a hierarchical structure numbering stages according to their position in your analysis pipeline.
-
-To create a stage use:
-```bash
-dso create stage
-# ? Choose a template: (Use arrow keys)
-#   bash
-#   quarto
-
-# Please enter the name of the stage, e.g. "01_preprocessing": 01_preprocessing
-# Please add a short description of the stage: Preprocessing stage
-```
-
-For now, two stage types are implemented. One is for
+It creates the root directory of your project with all the necessary configuration files for `git`, `dvc`, `uv` and `dso` itself.
 
 
-###
-Setting Up Your Project
-Create Folders and Stages
-Create a Folder Use dso create folder to create a new folder for your project:
+## `dso create` -- Add folders or stages to your project
+
+We consider a _stage_ an individual step in your analysis, usually a script with defined inputs and outputs.
+Stages can be organized in _folders_ with arbitrary structures. `dso create` initializes folders and stages
+from predefined templates. We recommend naming stages with a numeric prefix, e.g. `01_` to declare the
+order of scripts, but this is not a requirement.
 
 ```bash
-dso create folder
-# Please enter the name of the folder, e.g. "RNAseq"
+cd test_project
+
+# Let's create a folder that we'll use to organize all analysis steps related to "RNA-seq"
+dso create folder RNA_seq
+
+# Let's create first stage for pre-processing
+cd RNA_seq
+dso create stage 01_preprocessing --template bash --description "Run nf-core/rnaseq"
+
+# Let's create a second stage for quality control
+dso create stage 02_qc --template quarto --description "Perform RNA-seq quality control"
 ```
 
-Create a Stage Use dso create stage to create a new stage within your folder:
+Stages have the following pre-defined folder-structure. This folder system aims to make the structure coherent throughout a project for easy readability and navigation. Additional folders can still be added if necessary.
+
+```text
+stage
+  |-- input            # contains Input Data
+  |-- src              # contains Analysis Script(s)
+  |-- output           # contains TLF - Outputs generated by Analysis Scripts
+  |-- report           # contains HTML Report generated by Analysis Scripts
+```
+
+## Configuration files
+
+The config files in a _project_, _folder_, or _stage_ are the cornerstone of any reproducible analysis, serving as a single point of truth. Additionally, using config files reduces the modification time needed for making _project_/_folder_-wide changes.
+
+Config files are designed to contain all necessary parameters, input, and output files that should be consistent across the analyses. For this purpose, configurations can be defined at each level of your project in a `params.in.yaml` file. These configurations are then transferred into the `params.yaml` files when using `dso compile-config`.
+
+A `params.yaml` file consolidates configurations from `params.in.yaml` files located in its parent directories, as well as from the `params.in.yaml` file in its own directory. For your analysis, reading in the `params.yaml` of the respective stage gives you then access to all the configurations.
+
+The following diagram displays the inheritance of configurations:
+
+```{eval-rst}
+.. image:: ../img/dso-yaml-inherit.png
+   :width: 60%
+```
+
+### Writing configuration files
+To define your configurations in the `params.in.yaml` files, please adhere to the yaml syntax. Due to the implemented configuration inheritance, relative paths need to be resolved within each __folder__ or __stage__. Therefore, relative paths need to be specified with `!path`.
+
+An example `params.in.yaml` can look as follows:
 
 ```bash
-dso create stage
-# Please enter the name of the stage, e.g. "01_preprocessing":
-```
-
-Configure Remote Storage
-Add Remote Storage Add a remote storage to store version-controlled data:
-dvc remote add -d myremote /path/to/project/_DVC_STORAGE
-
-Configure Git to Track DVC Files Configure Git to automatically track .dvc files:
-dvc config core.autostage true
-git commit .dvc/config -m "Configure remote storage"
-
-## Writing Config Files
-params.in.yaml
-Edit the params.in.yaml file to specify your parameters:
-
 thresholds:
   fc: 2
   p_value: 0.05
   p_adjusted: 0.1
 
 samplesheet: !path "01_preprocessing/input/samplesheet.txt"
+
 metadata_file: !path "metadata/metadata.csv"
-sdtm_data_path: "/path/to/data/"
+
+file_with_abs_path: "/data/home/user/typical_analysis_data_set.csv"
+
 remove_outliers: true
+
 exclude_samples:
-  - Sample_1
-  - Sample_2
+  - sample_1
+  - sample_2
+  - sample_6
+  - sample_42
+```
 
-Compile Config Files
-Compile the config files to generate params.yaml:
+### Compiling `params.yaml` files
 
+All `params.yaml` files are automatically generated using:
+
+```bash
 dso compile-config
+```
 
-## Using DVC
-Track Changes with DVC
-Add Files to DVC Track changes of input or output files/directories:
-dvc add <filename/directoryname>
+## Implementing a stage
 
-Push Changes to Remote Storage Push your local data changes to the remote storage:
-dvc push
+### R
 
-Pull Changes from Remote Storage Pull the latest data from the remote storage:
-dvc pull
+### Python
 
-## Running Your Analysis
-Create and Run Stages
-Create a Stage Create a new stage for your analysis:
-dso create stage 01_analysis
+## `dso repro` -- Reproducing all stages
 
-Define Stage in dvc.yaml Edit the dvc.yaml file to define your stage:
-stages:
-  01_analysis:
-    params:
-      - dso
-      - thresholds
-    deps:
-      - src/01_analysis.qmd
-      - ${samplesheet}
-    outs:
-      - output
-      - report/01_analysis.html
-    cmd:
-      - dso exec quarto .
-
-Run the Stage Run your analysis stage:
-dso repro
-
-## Conclusion
-Congratulations! You have successfully set up your DSO project and run your first analysis. For more detailed information, refer to the DSO Documentation.
-TODO
+## Syncing changes with a remote

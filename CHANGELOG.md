@@ -8,6 +8,61 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## [Unreleased]
+
+### Fixes
+
+-   Do not change the configuration of the root logger, only the `dso` logger. Changing the root logger
+    had side-effects on other libraries when importing `dso` in Python ([#80](https://github.com/Boehringer-Ingelheim/dso/pull/80)).
+
+### New Features
+
+-   Python API that mirrors `dso-r` functionality (e.g. to be used from Jupyter notebooks) ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
+
+### Chore
+
+-   Refactor CLI into separate module ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
+-   Defer imports in CLI until they are actually needed to speed up CLI ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
+-   Make all modules explicitly private that are not part of the public API ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
+-   Relicense the package as LGPL-3.0-or-later, with an exception for the templates ([#76](https://github.com/Boehringer-Ingelheim/dso/pull/76))
+
+## v0.10.1
+
+### Fixes
+
+-   Take comments into account when linting for `DSO001` ([#69](https://github.com/Boehringer-Ingelheim/dso/pull/69))
+-   Make it possible to override watermarks/disclaimers with a simple `null` ([#69](https://github.com/Boehringer-Ingelheim/dso/pull/69)).
+-   Compile _all_ configs on `dso repro`, not just the ones relvant to the specified stage. This is required because we don't
+    know which other stages dvc might compile ([#69](https://github.com/Boehringer-Ingelheim/dso/pull/69)).
+-   Make `get-config` compatible with dvc matrix stages ([#69](https://github.com/Boehringer-Ingelheim/dso/pull/69)).
+
+### Template updates
+
+-   Do not ignore the `.gitignore` files in output/report directories of template ([#63](https://github.com/Boehringer-Ingelheim/dso/pull/63))
+-   Update `.pre-commit-config.yaml` for pre-commit 4.x ([#63](https://github.com/Boehringer-Ingelheim/dso/pull/63))
+
+## v0.10.0
+
+### Template updates
+
+-   Improve instruction text in quarto template to get users started more quickly ([#40](https://github.com/Boehringer-Ingelheim/dso/pull/40))
+-   Add `.gitignore` catch-all clauses for `output` and `report` folders in stages to not pick up data and repots being tracked via git ([#46](https://github.com/Boehringer-Ingelheim/dso/issues/46)).
+-   Every dso project is now also a [uv project](https://docs.astral.sh/uv/concepts/projects/#building-projects) declaring Python dependencies in `pyproject.toml`. This makes it possible to
+    use a different dso version per project and makes it easy to work with virtual Python environments ([#52](https://github.com/Boehringer-Ingelheim/dso/pull/52))
+-   bash templates now include `-euo pipefail` settings, ensuring that stages fail early and return a nonzero error code if something failed ([#59](https://github.com/Boehringer-Ingelheim/dso/pull/59)).
+
+### Fixes
+
+-   Remove vendored `hiyapyco` code since required changes were released upstream in v0.7.0 ([#45](https://github.com/Boehringer-Ingelheim/dso/pull/45)).
+-   `None` values in `params.in.yaml` can now be used to override anything, e.g. to disable watermarking only in a specific stage ([#45](https://github.com/Boehringer-Ingelheim/dso/pull/45)).
+-   Clean up existing `*.rmarkdown` files in quarto stage before running `quarto render`. This fixes issues with re-running quarto stages that failed in the previous attempt ([#57](https://github.com/Boehringer-Ingelheim/dso/pull/57)).
+-   DSO now respects a `DSO_SKIP_CHECK_ASK_PRE_COMMIT` environment variable. If it is set
+    to anything that evaluates as `True`, we skip the check if pre-commit is installed. This was a
+    requirement introduced by the R API package, see [#50](https://github.com/Boehringer-Ingelheim/dso/issues/50) ([#58](https://github.com/Boehringer-Ingelheim/dso/pull/58)).
+-   Improve logging for "missing path" warning during `compile-config` ([#59](https://github.com/Boehringer-Ingelheim/dso/pull/59)).
+-   Improve logging for missing parameters in `dvc.yaml` during `get-config` ([#59](https://github.com/Boehringer-Ingelheim/dso/pull/59)).
+-   Make sure internal calls to the dso pandocfilter use the same python and dso version as the parent command. This is important for the upcoming `dso-mgr` feature ([#61](https://github.com/Boehringer-Ingelheim/dso/pull/61)).
+
 ## v0.9.0
 
 ### New Features

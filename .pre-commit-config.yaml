@@ -36,6 +36,7 @@ repos:
     rev: "2.2.4"
     hooks:
       - id: pyproject-fmt
+        exclude: "^src/dso/templates/.*"
   - repo: local
     hooks:
       - id: forbid-to-commit
