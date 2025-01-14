@@ -41,6 +41,7 @@ dependencies = [
 
 optional-dependencies.dev = [ "hatch", "pre-commit" ]
 optional-dependencies.doc = [
+  "click-extra[sphinx]",
   "docutils>=0.8,!=0.18.*,!=0.19.*",
   # For notebooks
   "ipykernel",
@@ -52,7 +53,6 @@ optional-dependencies.doc = [
   "sphinx-book-theme>=1",
   "sphinx-copybutton",
   "sphinxcontrib-bibtex>=1",
-  "sphinxcontrib-programoutput>=0.18",
   "sphinxext-opengraph",
 ]
 optional-dependencies.test = [
@@ -67,7 +67,7 @@ optional-dependencies.test = [
 urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
 urls.Home-page = "https://github.com/Boehringer-Ingelheim/dso"
 urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
-scripts.dso = "dso.cli:cli"
+scripts.dso = "dso.cli:dso"
 
 [tool.hatch.version]
 source = "vcs"

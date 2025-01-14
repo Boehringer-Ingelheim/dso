@@ -4,7 +4,7 @@ from subprocess import check_call
 import pytest
 from click.testing import CliRunner
 
-from dso.cli import create_cli
+from dso.cli import dso_create
 
 
 @pytest.mark.parametrize("template", ["bash", "quarto"])
@@ -12,7 +12,7 @@ def test_create_stage(dso_project, template):
     runner = CliRunner()
     chdir(dso_project)
     result = runner.invoke(
-        create_cli, ["stage", "teststage", "--template", template, "--description", "testdescription"]
+        dso_create, ["stage", "teststage", "--template", template, "--description", "testdescription"]
     )
     print(result.output)
     assert result.exit_code == 0
@@ -31,7 +31,7 @@ def test_create_stage(dso_project, template):
 def test_create_folder(dso_project):
     runner = CliRunner()
     chdir(dso_project)
-    result = runner.invoke(create_cli, ["folder", "testfolder"])
+    result = runner.invoke(dso_create, ["folder", "testfolder"])
     print(result.output)
     assert result.exit_code == 0
     assert (dso_project / "testfolder").is_dir()
@@ -48,7 +48,7 @@ def test_create_folder_existing_dir(dso_project):
     (dso_project / "testfolder").mkdir()
     (dso_project / "testfolder" / "dvc.yaml").touch()
     chdir(dso_project)
-    result = runner.invoke(create_cli, ["folder", "testfolder"], input="y")
+    result = runner.invoke(dso_create, ["folder", "testfolder"], input="y")
     print(result.output)
     assert result.exit_code == 0
     assert (dso_project / "testfolder").is_dir()

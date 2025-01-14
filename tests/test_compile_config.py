@@ -14,7 +14,7 @@ from dso._compile_config import (
     _get_parent_configs,
     _load_yaml_with_auto_adjusting_paths,
 )
-from dso.cli import compile_config_cli
+from dso.cli import dso_compile_config
 
 
 def _setup_yaml_configs(tmp_path, configs: dict[str, dict]):
@@ -94,7 +94,7 @@ def test_auto_adjusting_path_with_jinja(tmp_path, test_yaml, expected):
         with test_file.open("w") as f:
             f.write(dedent(test_yaml))
 
-        result = runner.invoke(compile_config_cli, [])
+        result = runner.invoke(dso_compile_config, [])
         print(result.output)
         td = Path(td)
         assert result.exit_code == 0
@@ -115,7 +115,7 @@ def test_compile_configs(tmp_path):
                 "A/B/C/params.in.yaml": {"value": "C", "jinja2": "{{ only_root }}", "list": [5]},
             },
         )
-        result = runner.invoke(compile_config_cli, [])
+        result = runner.invoke(dso_compile_config, [])
         print(result.output)
         td = Path(td)
         assert result.exit_code == 0
@@ -140,7 +140,7 @@ def test_compile_configs_null_override(tmp_path):
                 "A/B/params.in.yaml": {"str": None, "list": None, "dict": None, "null": None},
             },
         )
-        result = runner.invoke(compile_config_cli, [])
+        result = runner.invoke(dso_compile_config, [])
         print(result.output)
         td = Path(td)
         assert result.exit_code == 0

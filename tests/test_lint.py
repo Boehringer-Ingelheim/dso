@@ -6,7 +6,7 @@ import pytest
 from click.testing import CliRunner
 
 from dso._lint import DSO001, DSOLinter, LintError, QuartoRule, Rule
-from dso.cli import lint_cli
+from dso.cli import dso_lint
 
 
 @pytest.mark.parametrize(
@@ -204,6 +204,6 @@ def test_lint(quarto_stage, skip, expect_warn, expect_error):
 def test_lint_cli(dso_project, paths):
     runner = CliRunner()
     chdir(dso_project)  # proj root
-    result = runner.invoke(lint_cli, paths)
+    result = runner.invoke(dso_lint, paths)
     print(result.output)
     assert result.exit_code == 0
