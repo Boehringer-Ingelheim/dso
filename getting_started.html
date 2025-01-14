@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="getting_started.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="dso init – Initialize a project: dso init initializes a new project in your current directory. It creates the root directory of your project with all the necessary configuration files for git, dvc,..." />
+<meta property="og:description" content="dso init – Initialize a project: dso init initializes a new project in your current directory. In the context of DSO, a project is a structured environment where data science workflows are organize..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_getting_started_5c8e672e.png" />
-<meta property="og:image:alt" content="dso init – Initialize a project: dso init initializes a new project in your current directory. It creates the root directory of your project with all the nec..." />
-<meta name="description" content="dso init – Initialize a project: dso init initializes a new project in your current directory. It creates the root directory of your project with all the necessary configuration files for git, dvc,..." />
+<meta property="og:image" content="/_images/social_previews/summary_getting_started_b58def23.png" />
+<meta property="og:image:alt" content="dso init – Initialize a project: dso init initializes a new project in your current directory. In the context of DSO, a project is a structured environment w..." />
+<meta name="description" content="dso init – Initialize a project: dso init initializes a new project in your current directory. In the context of DSO, a project is a structured environment where data science workflows are organize..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Getting started &#8212; dso-core</title>
@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=280cabd6"></script>
+    <script src="_static/documentation_options.js?v=6bc727e3"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <link rel="prev" title="DSO: data science operations" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g0fbd745" />
+  <meta name="docsearch:version" content="0.1.dev1+g82b6890" />
   </head>
   
   
@@ -331,7 +331,12 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init-initialize-a-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create-add-folders-or-stages-to-your-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-configuration-files">Writing configuration files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-files">Configuration files</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-configuration-files">Writing configuration files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-params-yaml-files">Compiling <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overwriting-parameters">Overwriting Parameters</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-a-stage">Implementing a stage</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r">R</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python</a></li>
@@ -354,38 +359,13 @@
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
 <section id="dso-init-initialize-a-project">
 <h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project<a class="headerlink" href="#dso-init-initialize-a-project" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> initializes a new project in your current directory.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ dso init test_project --description &quot;This is a test project&quot;
-[01/13/25 14:24:25] INFO     Created project directory.                         
-                    INFO     Created folder structure from template.            
-                    INFO     Initalized local git repo.                         
-                    INFO     Project initalized successfully.                   
-                    INFO     Detected                                           
-                             /home/runner/work/dso/dso/docs/test_project as     
-                             project root.                                      
-                    INFO     Compiling a total of 1 config files.               
-                    INFO     Configuration compiled successfully.
+<p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> initializes a new project in your current directory. In the context of DSO, a project is a structured environment where data science workflows are organized and managed.</p>
+<p>To initialize a project use the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># To initialize a project called &quot;test_project&quot; use the following command</span>
+dso<span class="w"> </span>init<span class="w"> </span>test_project<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;This is a test project&quot;</span>
 </pre></div>
 </div>
-<p>It creates the root directory of your project with all the necessary configuration files for <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">dvc</span></code>, <code class="docutils literal notranslate"><span class="pre">uv</span></code> and
-<code class="docutils literal notranslate"><span class="pre">dso</span></code> itself:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ ls -a test_project
-.
-..
-.dvc
-.dvcignore
-.editorconfig
-.git
-.gitattributes
-.gitignore
-.pre-commit-config.yaml
-README.md
-dvc.yaml
-params.in.yaml
-params.yaml
-pyproject.toml
-</pre></div>
-</div>
+<p>It creates the root directory of your project with all the necessary configuration files for <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">dvc</span></code>, <code class="docutils literal notranslate"><span class="pre">uv</span></code> and <code class="docutils literal notranslate"><span class="pre">dso</span></code> itself.</p>
 </section>
 <section id="dso-create-add-folders-or-stages-to-your-project">
 <h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project<a class="headerlink" href="#dso-create-add-folders-or-stages-to-your-project" title="Link to this heading">#</a></h2>
@@ -415,8 +395,50 @@ dso<span class="w"> </span>create<span class="w"> </span>stage<span class="w"> <
 </pre></div>
 </div>
 </section>
+<section id="configuration-files">
+<h2>Configuration files<a class="headerlink" href="#configuration-files" title="Link to this heading">#</a></h2>
+<p>The config files in a <em>project</em>, <em>folder</em>, or <em>stage</em> are the cornerstone of any reproducible analysis, serving as a single point of truth. Additionally, using config files reduces the modification time needed for making <em>project</em>/<em>folder</em>-wide changes.</p>
+<p>Config files are designed to contain all necessary parameters, input, and output files that should be consistent across the analyses. For this purpose, configurations can be defined at each level of your project in a <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file. These configurations are then transferred into the <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files when using <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">compile-config</span></code>.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file consolidates configurations from <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files located in its parent directories, as well as from the <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file in its own directory. For your analysis, reading in the <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> of the respective stage gives you then access to all the configurations.</p>
+<p>The following diagram displays the inheritance of configurations:</p>
+<a class="reference internal image-reference" href="_images/dso-yaml-inherit.png"><img alt="_images/dso-yaml-inherit.png" src="_images/dso-yaml-inherit.png" style="width: 60%;" />
+</a>
 <section id="writing-configuration-files">
-<h2>Writing configuration files<a class="headerlink" href="#writing-configuration-files" title="Link to this heading">#</a></h2>
+<h3>Writing configuration files<a class="headerlink" href="#writing-configuration-files" title="Link to this heading">#</a></h3>
+<p>To define your configurations in the <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files, please adhere to the yaml syntax. Due to the implemented configuration inheritance, relative paths need to be resolved within each <strong>folder</strong> or <strong>stage</strong>. Therefore, relative paths need to be specified with <code class="docutils literal notranslate"><span class="pre">!path</span></code>.</p>
+<p>An example <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> can look as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>thresholds:
+<span class="w">  </span>fc:<span class="w"> </span><span class="m">2</span>
+<span class="w">  </span>p_value:<span class="w"> </span><span class="m">0</span>.05
+<span class="w">  </span>p_adjusted:<span class="w"> </span><span class="m">0</span>.1
+
+samplesheet:<span class="w"> </span>!path<span class="w"> </span><span class="s2">&quot;01_preprocessing/input/samplesheet.txt&quot;</span>
+
+metadata_file:<span class="w"> </span>!path<span class="w"> </span><span class="s2">&quot;metadata/metadata.csv&quot;</span>
+
+file_with_abs_path:<span class="w"> </span><span class="s2">&quot;/data/home/user/typical_analysis_data_set.csv&quot;</span>
+
+remove_outliers:<span class="w"> </span><span class="nb">true</span>
+
+exclude_samples:
+<span class="w">  </span>-<span class="w"> </span>sample_1
+<span class="w">  </span>-<span class="w"> </span>sample_2
+<span class="w">  </span>-<span class="w"> </span>sample_6
+<span class="w">  </span>-<span class="w"> </span>sample_42
+</pre></div>
+</div>
+</section>
+<section id="compiling-params-yaml-files">
+<h3>Compiling <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files<a class="headerlink" href="#compiling-params-yaml-files" title="Link to this heading">#</a></h3>
+<p>All <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files are automatically generated using:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>compile-config
+</pre></div>
+</div>
+</section>
+<section id="overwriting-parameters">
+<h3>Overwriting Parameters<a class="headerlink" href="#overwriting-parameters" title="Link to this heading">#</a></h3>
+<p>When multiple <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files (such as those at the project, folder, or stage level) contain the same configuration, the value specified at the more specific level (e.g., stage) takes precedence over the value set at the broader level (e.g., project). This makes the analysis adaptable and enhances modifiability across the project.</p>
+</section>
 </section>
 <section id="implementing-a-stage">
 <h2>Implementing a stage<a class="headerlink" href="#implementing-a-stage" title="Link to this heading">#</a></h2>
@@ -483,7 +505,12 @@ dso<span class="w"> </span>create<span class="w"> </span>stage<span class="w"> <
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init-initialize-a-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create-add-folders-or-stages-to-your-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-configuration-files">Writing configuration files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-files">Configuration files</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-configuration-files">Writing configuration files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-params-yaml-files">Compiling <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overwriting-parameters">Overwriting Parameters</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-a-stage">Implementing a stage</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r">R</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python</a></li>
