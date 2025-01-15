@@ -1,0 +1,757 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Command reference" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="command_reference.html" />
+<meta property="og:site_name" content="Project name not set" />
+<meta property="og:description" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso repro: dso watermark:" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_command_reference_a152d682.png" />
+<meta property="og:image:alt" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso repro: dso water..." />
+<meta name="description" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso repro: dso watermark:" />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Command reference &#8212; dso-core</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=42210275" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=366103d0" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9813fda8"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'command_reference';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Changelog" href="CHANGELOG.html" />
+    <link rel="prev" title="Getting started" href="getting_started.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.dev1+g91492db" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">dso-core</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO Python API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dso_python.html">Python API</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO R API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dso_r.html">DSO R package</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/Boehringer-Ingelheim/dso" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/command_reference.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Command reference</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso">dso</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-compile-config">dso compile-config</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create">dso create</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create-folder">dso create folder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create-stage">dso create stage</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-exec">dso exec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-exec-quarto">dso exec quarto</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-get-config">dso get-config</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init">dso init</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-lint">dso lint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro">dso repro</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-watermark">dso watermark</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="command-reference">
+<h1>Command reference<a class="headerlink" href="#command-reference" title="Link to this heading">#</a></h1>
+<section id="dso">
+<h2>dso<a class="headerlink" href="#dso" title="Link to this heading">#</a></h2>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">COMMAND</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">ARGS</span>]...                                         
+                                                                                
+ Root command                                                                   
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--quiet</span>    <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-q</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER RANGE</span>  Reduce verbosity. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">-q</span> disables info messages,   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                               <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">-qq</span> disables warnings. Errors messages cannot  <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                               be disabled. The same can be achieved by       <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                               setting the env var <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_QUIET=1</span> or             <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                               <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_QUIET=2</span>, respectively.                     <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--verbose</span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-v</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">             </span>  Increase logging verbosity to include debug    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                               messages. The same can be achieved by setting  <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                               the env var <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_VERBOSE=1</span>.                     <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--version</span>      <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">             </span>  Show the version and exit.                     <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>         <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">             </span>  Show this message and exit.                    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+<span class=" -Color -Color-Faint -C-Faint">╭─ Commands ───────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">compile-config </span> Compile params.in.yaml into params.yaml using Jinja2         <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> templating and resolving recursive templates.                <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">create         </span> Create stage folder structure subcommand.                    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">exec           </span> Dso wrappers around various tools                            <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">get-config     </span> Get the configuration for a given stage and print it to      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> STDOUT in yaml format.                                       <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">init           </span> Initialize a new project. A project can contain several      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> stages organized in arbitrary subdirectories.                <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">lint           </span> Lint a dso project                                           <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">repro          </span> Wrapper around dvc repro, compiling configuration before     <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> running.                                                     <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">watermark      </span> Add a watermark to an image                                  <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
+<section id="dso-compile-config">
+<h2>dso compile-config<a class="headerlink" href="#dso-compile-config" title="Link to this heading">#</a></h2>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>compile-config<span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso compile-config</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">ARGS</span>]...                                  
+                                                                                
+ Compile params.in.yaml into params.yaml using Jinja2 templating and resolving  
+ recursive templates.                                                           
+ <span class=" -Color -Color-Faint -C-Faint">If passing no arguments, configs will be resolved for the current working </span>     
+ <span class=" -Color -Color-Faint -C-Faint">directory (i.e. all parent configs, and all configs in child directories). </span>    
+ <span class=" -Color -Color-Faint -C-Faint">Alternatively a list of paths can be specified. In that case, all configs </span>     
+ <span class=" -Color -Color-Faint -C-Faint">related to these paths will be compiled (useful for using with pre-commit).</span>    
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
+<section id="dso-create">
+<h2>dso create<a class="headerlink" href="#dso-create" title="Link to this heading">#</a></h2>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>create<span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso create</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">COMMAND</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">ARGS</span>]...                                  
+                                                                                
+ Create stage folder structure subcommand.                                      
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+<span class=" -Color -Color-Faint -C-Faint">╭─ Commands ───────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">folder </span> Create a new folder. A folder can contain subfolders or stages.      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">stage  </span> Create a new stage.                                                  <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+<section id="dso-create-folder">
+<h3>dso create folder<a class="headerlink" href="#dso-create-folder" title="Link to this heading">#</a></h3>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>create<span class="w"> </span>folder<span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso create folder</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">NAME</span>]                                      
+                                                                                
+ Create a new folder. A folder can contain subfolders or stages.                
+ <span class=" -Color -Color-Faint -C-Faint">Technically, nothing prevents you from just using </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">mkdir</span><span class=" -Color -Color-Faint -C-Faint">. This command </span>         
+ <span class=" -Color -Color-Faint -C-Faint">additionally adds some default files that might be useful, e.g. an empty </span>      
+ <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">dvc.yaml</span><span class=" -Color -Color-Faint -C-Faint">.</span>                                                                      
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">You can specify a path to an existing folder. In that case all template files </span> 
+ <span class=" -Color -Color-Faint -C-Faint">that do not exist will be copied to the folder. Existing files will never be </span>  
+ <span class=" -Color -Color-Faint -C-Faint">overwritten.</span>                                                                   
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
+<section id="dso-create-stage">
+<h3>dso create stage<a class="headerlink" href="#dso-create-stage" title="Link to this heading">#</a></h3>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>create<span class="w"> </span>stage<span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso create stage</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">NAME</span>]                                       
+                                                                                
+ Create a new stage.                                                            
+ <span class=" -Color -Color-Faint -C-Faint">A stage can be in any subfolder of the projects. Stages shall not be nested.</span>   
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">Available templates:</span>                                                           
+                                                                                
+ <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">bash</span><span class=" -Color -Color-Faint -C-Faint">: Execute a simple bash snippet or call an external script (e.g.       </span> 
+ <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">   </span><span class=" -Color -Color-Faint -C-Faint">nextflow)                                                                  </span> 
+ <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">quarto</span><span class=" -Color -Color-Faint -C-Faint">: Generate a report using quarto                                     </span> 
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--template</span>       <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">[</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">bash</span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">|</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">quarto</span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">]</span>                                               <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--description</span>    <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT         </span>                                               <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>           <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">             </span>  Show this message and exit.                  <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="dso-exec">
+<h2>dso exec<a class="headerlink" href="#dso-exec" title="Link to this heading">#</a></h2>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso exec</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">COMMAND</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">ARGS</span>]...                                    
+                                                                                
+ Dso wrappers around various tools                                              
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+<span class=" -Color -Color-Faint -C-Faint">╭─ Commands ───────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">quarto </span> Render a quarto stage. Quarto parameters are inherited from          <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">       </span> params.yaml                                                          <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+<section id="dso-exec-quarto">
+<h3>dso exec quarto<a class="headerlink" href="#dso-exec-quarto" title="Link to this heading">#</a></h3>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>quarto<span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso exec quarto</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">STAGE</span>                                         
+                                                                                
+ Render a quarto stage. Quarto parameters are inherited from params.yaml        
+ <span class=" -Color -Color-Faint -C-Faint">A quarto stage is assmed to have the following structure:</span>                      
+                                                                                
+ <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Faint -C-Faint">One or multiple </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">.qmd</span><span class=" -Color -Color-Faint -C-Faint"> files in </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">src</span><span class=" -Color -Color-Faint -C-Faint">                                          </span> 
+ <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Faint -C-Faint">Reports will be stored in </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">report</span><span class=" -Color -Color-Faint -C-Faint">                                           </span> 
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">No </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">_quarto.yml</span><span class=" -Color -Color-Faint -C-Faint"> shall be present as it will be automatically created </span>           
+ <span class=" -Color -Color-Faint -C-Faint">tempoarily. Instead supply quarto parameters in </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">params.in.yaml</span><span class=" -Color -Color-Faint -C-Faint"> under the key </span>  
+ <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">dso.quarto</span><span class=" -Color -Color-Faint -C-Faint">.</span>                                                                    
+                                                                                
+                                                                                
+                                   <span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">Parameters</span>                                   
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">stage Path to the stage, e.g. </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">.</span><span class=" -Color -Color-Faint -C-Faint"> for the current directory.</span>                     
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--skip-compile</span>      Do not compile configs before linting. The same can be   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                     achieved by setting the <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_SKIP_COMPILE=1</span> env var.      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>              Show this message and exit.                              <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="dso-get-config">
+<h2>dso get-config<a class="headerlink" href="#dso-get-config" title="Link to this heading">#</a></h2>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>get-config<span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso get-config</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">STAGE</span>                                          
+                                                                                
+ Get the configuration for a given stage and print it to STDOUT in yaml format. 
+ <span class=" -Color -Color-Faint -C-Faint">The path to the stage must be relative to the root dir of the project.</span>         
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">By default, the configuration is filtered to include only the keys that are </span>   
+ <span class=" -Color -Color-Faint -C-Faint">mentioned in </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">dvc.yaml</span><span class=" -Color -Color-Faint -C-Faint"> to force declaring all dependencies.</span>                     
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">If multiple stages are defined in a single </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">dvc.yaml</span><span class=" -Color -Color-Faint -C-Faint">, the stage name MUST be </span>   
+ <span class=" -Color -Color-Faint -C-Faint">specified using </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">path/to/stage:stage_name</span><span class=" -Color -Color-Faint -C-Faint"> unless </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--all</span><span class=" -Color -Color-Faint -C-Faint"> is given.</span>                
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--all</span>               Include all parameters, not only those mentioned in      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                     <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">dvc.yaml</span>                                                 <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--skip-compile</span>      Do not compile configs before loading it. The same can   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                     be achieved by setting the <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_SKIP_COMPILE=1</span> env var.   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>              Show this message and exit.                              <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
+<section id="dso-init">
+<h2>dso init<a class="headerlink" href="#dso-init" title="Link to this heading">#</a></h2>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>init<span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso init</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">NAME</span>]                                               
+                                                                                
+ Initialize a new project. A project can contain several stages organized in    
+ arbitrary subdirectories.                                                      
+ <span class=" -Color -Color-Faint -C-Faint">If you wish to initialize DSO in an existing project, you can specify an </span>      
+ <span class=" -Color -Color-Faint -C-Faint">existing directory. In this case, it will initialize files from the template </span>  
+ <span class=" -Color -Color-Faint -C-Faint">that do not exist yet, but never overwrite existing files.</span>                     
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--description</span>    <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>                                                        <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>           <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">    </span>  Show this message and exit.                           <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
+<section id="dso-lint">
+<h2>dso lint<a class="headerlink" href="#dso-lint" title="Link to this heading">#</a></h2>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>lint<span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso lint</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">ARGS</span>]...                                            
+                                                                                
+ Lint a dso project                                                             
+ <span class=" -Color -Color-Faint -C-Faint">Performs consistency checks according to a set of rules.</span>                       
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">If passing no arguments, linting will be performed for the current working </span>    
+ <span class=" -Color -Color-Faint -C-Faint">directory. Alternatively a list of paths can be specified. In that case, all </span>  
+ <span class=" -Color -Color-Faint -C-Faint">stages related to any of the files are linted (useful for using with </span>          
+ <span class=" -Color -Color-Faint -C-Faint">pre-commit).</span>                                                                   
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">Configurations are compiled before linting.</span>                                    
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--skip-compile</span>      Do not compile configs before linting. The same can be   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                     achieved by setting the <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_SKIP_COMPILE=1</span> env var.      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>              Show this message and exit.                              <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
+<section id="dso-repro">
+<h2>dso repro<a class="headerlink" href="#dso-repro" title="Link to this heading">#</a></h2>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>repro<span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso repro</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">ARGS</span>]...                                           
+                                                                                
+ Wrapper around dvc repro, compiling configuration before running.              
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
+<section id="dso-watermark">
+<h2>dso watermark<a class="headerlink" href="#dso-watermark" title="Link to this heading">#</a></h2>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>watermark<span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso watermark</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">INPUT_IMAGE</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OUTPUT_IMAGE</span>                        
+                                                                                
+ Add a watermark to an image                                                    
+ <span class=" -Color -Color-Faint -C-Faint">To be called from the dso-r package for implementing a custom graphics device.</span> 
+ <span class=" -Color -Color-Faint -C-Faint">Can also be used standalone for watermarking images.</span>                           
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Red -C-Red">*</span>  <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--text</span>                  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT                </span>  Text to use as watermark    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  <span class=" -Color -Color-Faint -Color-Faint-Red -C-Faint -C-Red">[required]                 </span> <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--tile_size</span>             <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">&lt;</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER INTEGER&gt;...</span>  watermark text will be      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  arranged in tile of this    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  size (once at top left,     <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  once at middle right).      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  Specify the tile size as    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  e.g. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">120 80</span>                 <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--font_size</span>             <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER             </span>                              <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--font_outline</span>          <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER             </span>                              <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--font_color</span>            <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT                </span>  Use RGBA (e.g. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">#AAAAAA88</span>)   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  to specify transparency     <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--font_outline_color</span>    <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT                </span>  Use RGBA (e.g. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">#AAAAAA88</span>)   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  to specify transparency     <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>                  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">                    </span>  Show this message and exit. <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="getting_started.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Getting started</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="CHANGELOG.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Changelog</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso">dso</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-compile-config">dso compile-config</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create">dso create</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create-folder">dso create folder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create-stage">dso create stage</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-exec">dso exec</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-exec-quarto">dso exec quarto</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-get-config">dso get-config</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init">dso init</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-lint">dso lint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro">dso repro</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-watermark">dso watermark</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gregor Sturm, Thomas Schwarzl, Alexander Peltzer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Gregor Sturm, Thomas Schwarzl, Alexander Peltzer..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
