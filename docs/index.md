@@ -15,7 +15,9 @@ getting_started.md
 :maxdepth: 1
 :caption: DSO CLI
 
-command_reference.md
+cli_installation.md
+cli_command_reference.md
+cli_configuration.md
 CHANGELOG.md
 contributing.md
 ```
@@ -25,7 +27,8 @@ contributing.md
 :maxdepth: 1
 :caption: DSO Python API
 
-dso_python.md
+python_usage.md
+python_api.md
 ```
 
 ```{toctree}
