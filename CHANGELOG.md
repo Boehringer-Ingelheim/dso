@@ -19,12 +19,16 @@ and this project adheres to [Semantic Versioning][].
 
 -   Python API that mirrors `dso-r` functionality (e.g. to be used from Jupyter notebooks) ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
 
+## Documentation
+
+-   Various documentation updates, working towards the first public version of the docs.
+
 ### Chore
 
 -   Refactor CLI into separate module ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
 -   Defer imports in CLI until they are actually needed to speed up CLI ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
 -   Make all modules explicitly private that are not part of the public API ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
--   Relicense the package as LGPL-3.0-or-later, with an exception for the templates ([#76](https://github.com/Boehringer-Ingelheim/dso/pull/76))
+-   Relicense the package as LGPL-3.0-or-later, with a more permissive exception for the templates ([#76](https://github.com/Boehringer-Ingelheim/dso/pull/76))
 
 ## v0.10.1
 
