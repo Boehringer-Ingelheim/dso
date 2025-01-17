@@ -163,10 +163,37 @@ A Bash stage, by default, does not include an additional script. Bash code can b
         EOF
 ```
 
-### R
+### Accessing Files and Configurations with R and Python
 
-### Python
+You can easily access files and configurations using either the DSO R-package or the Python module.
+
+A convenient way of accessing files and configurations of your is to use the DSO R-package or the Python module.
+
+For Python, refer to the [Python Usage Page](python_usage.md).
+
+For R, refer to the [R Package Page](dso_r.md).
 
 ## `dso repro` -- Reproducing all stages
+
+To execute or reproduce a stage, folder, or project use `dso repro`. `dso repro` is a wrapper around `dvc repro` and builds the config files before reproducing the complete or a part of the analyses pipeline.
+
+Several command options are available and are detailed in the [dvc repro documentation](https://dvc.org/doc/command-reference/repro). The most common usages are detailed below:
+
+```bash
+# Reproducing the whole project
+dso repro
+
+# Reproducing all stages within a specific directory
+dso repro -R <path>
+
+# Reproducing a single stage with its dependency stages
+dso repro subfolder/my_stage/dvc.yaml
+
+# Reproducing a single stage without its dependency stages
+dso repro -s subfolder/my_stage/dvc.yaml
+
+# reproduce stage even if no changes were found
+dso repro -s -f subfolder/my_stage/dvc.yaml
+```
 
 ## Syncing changes with a remote
