@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=e2a2c3fe"></script>
+    <script src="_static/documentation_options.js?v=d1831edd"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <link rel="prev" title="DSO: data science operations" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g5fe10fe" />
+  <meta name="docsearch:version" content="0.1.dev1+ge5487d8" />
   </head>
   
   
@@ -172,7 +172,8 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO R API</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="dso_r.html">DSO R package</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">Usage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/reference/index.html">API reference</a></li>
 </ul>
 
     </div>
@@ -348,8 +349,7 @@
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quarto-stage">Quarto Stage</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bash-stage">Bash Stage</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r">R</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-files-and-configurations-with-r-and-python">Accessing Files and Configurations with R and Python</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro-reproducing-all-stages"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages</a></li>
@@ -509,15 +509,34 @@ exclude_samples:
 </pre></div>
 </div>
 </section>
-<section id="r">
-<h3>R<a class="headerlink" href="#r" title="Link to this heading">#</a></h3>
-</section>
-<section id="python">
-<h3>Python<a class="headerlink" href="#python" title="Link to this heading">#</a></h3>
+<section id="accessing-files-and-configurations-with-r-and-python">
+<h3>Accessing Files and Configurations with R and Python<a class="headerlink" href="#accessing-files-and-configurations-with-r-and-python" title="Link to this heading">#</a></h3>
+<p>You can easily access files and configurations using either the DSO R-package or the Python module.</p>
+<p>A convenient way of accessing files and configurations of your is to use the DSO R-package or the Python module.</p>
+<p>For Python, refer to the <a class="reference internal" href="python_usage.html"><span class="std std-doc">Python Usage Page</span></a>.</p>
+<p>For R, refer to the <a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">R Package Page</a>.</p>
 </section>
 </section>
 <section id="dso-repro-reproducing-all-stages">
 <h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages<a class="headerlink" href="#dso-repro-reproducing-all-stages" title="Link to this heading">#</a></h2>
+<p>To execute or reproduce a stage, folder, or project use <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code>. <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> is a wrapper around <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">repro</span></code> and builds the config files before reproducing the complete or a part of the analyses pipeline.</p>
+<p>Several command options are available and are detailed in the <a class="reference external" href="https://dvc.org/doc/command-reference/repro">dvc repro documentation</a>. The most common usages are detailed below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproducing the whole project</span>
+dso<span class="w"> </span>repro
+
+<span class="c1"># Reproducing all stages within a specific directory</span>
+dso<span class="w"> </span>repro<span class="w"> </span>-R<span class="w"> </span>&lt;path&gt;
+
+<span class="c1"># Reproducing a single stage with its dependency stages</span>
+dso<span class="w"> </span>repro<span class="w"> </span>subfolder/my_stage/dvc.yaml
+
+<span class="c1"># Reproducing a single stage without its dependency stages</span>
+dso<span class="w"> </span>repro<span class="w"> </span>-s<span class="w"> </span>subfolder/my_stage/dvc.yaml
+
+<span class="c1"># reproduce stage even if no changes were found</span>
+dso<span class="w"> </span>repro<span class="w"> </span>-s<span class="w"> </span>-f<span class="w"> </span>subfolder/my_stage/dvc.yaml
+</pre></div>
+</div>
 </section>
 <section id="syncing-changes-with-a-remote">
 <h2>Syncing changes with a remote<a class="headerlink" href="#syncing-changes-with-a-remote" title="Link to this heading">#</a></h2>
@@ -585,8 +604,7 @@ exclude_samples:
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quarto-stage">Quarto Stage</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bash-stage">Bash Stage</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r">R</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-files-and-configurations-with-r-and-python">Accessing Files and Configurations with R and Python</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro-reproducing-all-stages"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages</a></li>
