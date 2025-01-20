@@ -6,7 +6,7 @@ The DSO Python API is part of the DSO CLI package. See [installation](cli_instal
 
 ## Typical usage
 
-The purpose of the Python API is to provide covenient access to stage parameters from Python scripts or notebooks.
+The purpose of the Python API is to provide convenient access to stage parameters from Python scripts or notebooks.
 Using {func}`~dso.read_params` the `params.yaml` file of the specified stage is compiled and loaded
 into a dictionary. The path must be specified relative to the project root -- this ensures that the correct stage is
 found irrespective of the current working directory, as long as it the project root or any subdirectory thereof.
