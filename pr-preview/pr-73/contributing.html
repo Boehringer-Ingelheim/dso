@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="contributing.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="We assume that you are already familiar with git and with making pull requests on GitHub. If not, please refer to the [scanpy developer guide][]. Installing dev dependencies: In addition to the pac..." />
+<meta property="og:description" content="We assume that you are already familiar with git and with making pull requests on GitHub. Installing dev dependencies: In addition to the packages needed to use this package, you need additional py..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_contributing_2d2427d4.png" />
-<meta property="og:image:alt" content="We assume that you are already familiar with git and with making pull requests on GitHub. If not, please refer to the [scanpy developer guide][]. Installing..." />
-<meta name="description" content="We assume that you are already familiar with git and with making pull requests on GitHub. If not, please refer to the [scanpy developer guide][]. Installing dev dependencies: In addition to the pac..." />
+<meta property="og:image" content="/_images/social_previews/summary_contributing_8d3f9afb.png" />
+<meta property="og:image:alt" content="We assume that you are already familiar with git and with making pull requests on GitHub. Installing dev dependencies: In addition to the packages needed to..." />
+<meta name="description" content="We assume that you are already familiar with git and with making pull requests on GitHub. Installing dev dependencies: In addition to the packages needed to use this package, you need additional py..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Contributing guide &#8212; dso-core</title>
@@ -41,7 +41,7 @@
   <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=42210275" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=f11525f6"></script>
+    <script src="_static/documentation_options.js?v=654b24ad"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,11 +62,11 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'contributing';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Python API" href="dso_python.html" />
+    <link rel="next" title="Usage" href="python_usage.html" />
     <link rel="prev" title="Changelog" href="CHANGELOG.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g1965a4e" />
+  <meta name="docsearch:version" content="0.1.dev1+g3723ec2" />
   </head>
   
   
@@ -159,12 +159,16 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
 <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cli_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_command_reference.html">Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_configuration.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Contributing guide</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO Python API</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="dso_python.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_api.html">API reference</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO R API</span></p>
 <ul class="nav bd-sidenav">
@@ -357,8 +361,7 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="contributing-guide">
 <h1>Contributing guide<a class="headerlink" href="#contributing-guide" title="Link to this heading">#</a></h1>
-<p>We assume that you are already familiar with git and with making pull requests on GitHub.
-If not, please refer to the [scanpy developer guide][].</p>
+<p>We assume that you are already familiar with git and with making pull requests on GitHub.</p>
 <section id="installing-dev-dependencies">
 <h2>Installing dev dependencies<a class="headerlink" href="#installing-dev-dependencies" title="Link to this heading">#</a></h2>
 <p>In addition to the packages needed to <em>use</em> this package,
@@ -492,11 +495,11 @@ hatch<span class="w"> </span>docs:open
       </div>
     </a>
     <a class="right-next"
-       href="dso_python.html"
+       href="python_usage.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Python API</p>
+        <p class="prev-next-title">Usage</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

@@ -1,7 +1,6 @@
 # Contributing guide
 
 We assume that you are already familiar with git and with making pull requests on GitHub.
-If not, please refer to the [scanpy developer guide][].
 
 ## Installing dev dependencies
 
@@ -113,7 +112,6 @@ Please adhere to [Semantic Versioning][semver], in brief
 > 3. PATCH version when you make backwards compatible bug fixes.
 >
 > Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
-
 
 [semver]: https://semver.org/
 [managing GitHub releases]: https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
