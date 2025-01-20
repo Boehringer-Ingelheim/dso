@@ -10,16 +10,26 @@ and this project adheres to [Semantic Versioning][].
 
 ## [Unreleased]
 
+### Fixes
+
+-   Do not change the configuration of the root logger, only the `dso` logger. Changing the root logger
+    had side-effects on other libraries when importing `dso` in Python ([#80](https://github.com/Boehringer-Ingelheim/dso/pull/80)).
+
 ### New Features
 
 -   Paths in `params.in.yaml` files declared with `!path` can now be compiled to absolute instead of relative paths ([#78](https://github.com/Boehringer-Ingelheim/dso/pull/78)).
 -   Python API that mirrors `dso-r` functionality (e.g. to be used from Jupyter notebooks) ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
+
+## Documentation
+
+-   Various documentation updates, working towards the first public version of the docs.
 
 ### Chore
 
 -   Refactor CLI into separate module ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
 -   Defer imports in CLI until they are actually needed to speed up CLI ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
 -   Make all modules explicitly private that are not part of the public API ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
+-   Relicense the package as LGPL-3.0-or-later, with a more permissive exception for the templates ([#76](https://github.com/Boehringer-Ingelheim/dso/pull/76))
 
 ## v0.10.1
 

@@ -5,7 +5,7 @@ from click.testing import CliRunner
 from PIL import Image
 
 from dso._watermark import PDFWatermarker, SVGWatermarker, Watermarker
-from dso.cli import watermark_cli
+from dso.cli import dso_watermark
 from tests.conftest import TESTDATA
 
 
@@ -67,6 +67,6 @@ def test_add_watermark_cli(tmp_path, params):
     test_image = _get_test_image(tmp_path, format="png", size=(500, 500))
     test_image_out = tmp_path / "test_image_out.png"
 
-    result = runner.invoke(watermark_cli, [str(test_image), str(test_image_out), "--text", "test text", *params])
+    result = runner.invoke(dso_watermark, [str(test_image), str(test_image_out), "--text", "test text", *params])
     assert result.exit_code == 0
     assert test_image_out.is_file()

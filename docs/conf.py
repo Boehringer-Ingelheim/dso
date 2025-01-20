@@ -9,6 +9,13 @@ import sys
 from datetime import datetime
 from importlib.metadata import metadata
 from pathlib import Path
+import os
+import rich_click as click
+
+# set maximum width for help pages
+click.rich_click.MAX_WIDTH = 96
+# Set force color for rich outputs shown in the docs
+os.environ["FORCE_COLOR"] = "1"
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE / "extensions"))
@@ -58,6 +65,7 @@ extensions = [
     "sphinx.ext.mathjax",
     "IPython.sphinxext.ipython_console_highlighting",
     "sphinxext.opengraph",
+    "click_extra.sphinx",
     *[p.stem for p in (HERE / "extensions").glob("*.py")],
 ]
 

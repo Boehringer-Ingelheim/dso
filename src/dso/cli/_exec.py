@@ -16,7 +16,7 @@ from dso._logging import log
     default=bool(int(os.environ.get("DSO_SKIP_COMPILE", 0))),
     is_flag=True,
 )
-def exec_quarto_cli(stage: str, skip_compile: bool = True):
+def dso_exec_quarto(stage: str, skip_compile: bool = True):
     """
     Render a quarto stage. Quarto parameters are inherited from params.yaml
 
@@ -84,9 +84,9 @@ def exec_quarto_cli(stage: str, skip_compile: bool = True):
 
 
 @click.group(name="exec")
-def exec_cli():
+def dso_exec():
     """Dso wrappers around various tools"""
     pass
 
 
-exec_cli.add_command(exec_quarto_cli)
+dso_exec.add_command(dso_exec_quarto)
