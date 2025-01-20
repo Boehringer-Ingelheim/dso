@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning][].
 
 ### New Features
 
+-   Paths in `params.in.yaml` files declared with `!path` can now be compiled to absolute instead of relative paths ([#78](https://github.com/Boehringer-Ingelheim/dso/pull/78)).
 -   Python API that mirrors `dso-r` functionality (e.g. to be used from Jupyter notebooks) ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
 
 ## Documentation
