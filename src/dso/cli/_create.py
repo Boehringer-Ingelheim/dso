@@ -33,7 +33,7 @@ CREATE_STAGE_HELP_TEXT = dedent(
 @click.option("--template", type=click.Choice(list(STAGE_TEMPLATES)))
 @click.argument("name", required=False)
 @click.command("stage", help=CREATE_STAGE_HELP_TEXT)
-def create_stage_cli(name: str | None = None, template: str | None = None, description: str | None = None):
+def dso_create_stage(name: str | None = None, template: str | None = None, description: str | None = None):
     """Create a new stage."""
     import questionary
 
@@ -71,7 +71,7 @@ def create_stage_cli(name: str | None = None, template: str | None = None, descr
 
 @click.argument("name", required=False)
 @click.command("folder")
-def create_folder_cli(name: str | None = None):
+def dso_create_folder(name: str | None = None):
     """Create a new folder. A folder can contain subfolders or stages.
 
     Technically, nothing prevents you from just using `mkdir`. This command additionally adds some default
@@ -102,10 +102,10 @@ def create_folder_cli(name: str | None = None):
 
 
 @click.group(name="create")
-def create_cli():
+def dso_create():
     """Create stage folder structure subcommand."""
     pass
 
 
-create_cli.add_command(create_stage_cli)
-create_cli.add_command(create_folder_cli)
+dso_create.add_command(dso_create_stage)
+dso_create.add_command(dso_create_folder)

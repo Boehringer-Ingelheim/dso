@@ -45,13 +45,13 @@ def stage_here(rel_path: str | Path | None = None) -> Path:
     """
     Get the absolute path to the current stage
 
-    The current stage is stored in `dso.CONFIG` and can be set using `dso.set_stage` or
-    `dso.read_params`.
+    The current stage is stored in `dso.CONFIG` and can be set using :func:`dso.set_stage` or
+    :func:`dso.read_params`.
 
     Parameters
     ----------
     rel_path
-        Relative path to be appended to the project root
+        Relative path to be appended to the stage root
     """
     if CONFIG.stage_here is None:
         raise RuntimeError("No stage has been set. Run `read_params` or `set_stage` first!")
@@ -89,6 +89,23 @@ def set_stage(stage: str | Path) -> None:
 
 
 def read_params(stage: str | Path) -> dict:
-    """Set stage dir and load parameters from params.yaml"""
+    """
+    Set stage dir and load parameters from the stage's params.yaml
+
+    It is required to provide the path of the current stage relative to the project root to ensure that
+    the correct config is loaded, no matter of the current working directory (as long as the working directory
+    is any subdirectory of the project root). The function recompiles params.in.yaml to params.yaml on-the-fly
+    to ensure that up-to-date params are always loaded.
+
+    Only parameters that are declared as `params`, `dep`, or `output` in dvc.yaml are loaded to
+    ensure that one does not forget to keep the `dvc.yaml` updated.
+
+    Calls :func:`~dso.set_stage` internally.
+
+    Parameters
+    ----------
+    stage
+        Path to stage, relative to the project root
+    """
     set_stage(stage)
     return get_config(str(stage), skip_compile=bool(int(os.environ.get("DSO_SKIP_COMPILE", 0))))

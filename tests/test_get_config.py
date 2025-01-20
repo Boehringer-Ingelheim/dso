@@ -5,7 +5,7 @@ import pytest
 from click.testing import CliRunner
 
 from dso._get_config import _filter_nested_dict, get_config
-from dso.cli import get_config_cli
+from dso.cli import dso_get_config
 
 
 @pytest.mark.parametrize(
@@ -200,6 +200,6 @@ def test_get_config_invalid_stage(dso_project):
 def test_get_config_cli(quarto_stage):
     runner = CliRunner()
     chdir(quarto_stage)
-    result = runner.invoke(get_config_cli, ["quarto_stage"])
+    result = runner.invoke(dso_get_config, ["quarto_stage"])
     assert result.exit_code == 0
     assert "quarto:" in result.output
