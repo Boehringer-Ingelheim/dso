@@ -36,5 +36,6 @@ python_api.md
 :maxdepth: 1
 :caption: DSO R API
 
-dso_r.md
+Usage <https://boehringer-ingelheim.github.io/dso-r/>
+API reference <https://boehringer-ingelheim.github.io/dso-r/reference/index.html>
 ```

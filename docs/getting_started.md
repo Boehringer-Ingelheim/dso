@@ -13,7 +13,6 @@ dso init test_project --description "This is a test project"
 
 It creates the root directory of your project with all the necessary configuration files for `git`, `dvc`, `uv` and `dso` itself.
 
-
 ## `dso create` -- Add folders or stages to your project
 
 We consider a _stage_ an individual step in your analysis, usually a script with defined inputs and outputs.
@@ -62,7 +61,8 @@ The following diagram displays the inheritance of configurations:
 ```
 
 ### Writing configuration files
-To define your configurations in the `params.in.yaml` files, please adhere to the yaml syntax. Due to the implemented configuration inheritance, relative paths need to be resolved within each __folder__ or __stage__. Therefore, relative paths need to be specified with `!path`.
+
+To define your configurations in the `params.in.yaml` files, please adhere to the yaml syntax. Due to the implemented configuration inheritance, relative paths need to be resolved within each **folder** or **stage**. Therefore, relative paths need to be specified with `!path`.
 
 An example `params.in.yaml` can look as follows:
 
@@ -105,10 +105,10 @@ A stage is a single step in your analysis and usually generates some kind of out
 
 The essential files of a stage are:
 
-* `dvc.yaml`: The DVC configuration file that defines your data pipelines, dependencies, and outputs.
-* `params.yaml`: Auto-generated configuration file.
-* `params.in.yaml`: Modifiable configuration file containing stage-specific configurations.
-* `src/<stage_name>.qmd`(optional): A Quarto file containing your script that runs the analysis for this stage.
+-   `dvc.yaml`: The DVC configuration file that defines your data pipelines, dependencies, and outputs.
+-   `params.yaml`: Auto-generated configuration file.
+-   `params.in.yaml`: Modifiable configuration file containing stage-specific configurations.
+-   `src/<stage_name>.qmd`(optional): A Quarto file containing your script that runs the analysis for this stage.
 
 ### dvc.yaml
 
@@ -141,8 +141,6 @@ stages:
 
 By default, a Quarto stage includes the following cmd in the `dvc.yaml` file:
 
-
-
 ```
     # Command to render the Quarto script and move the HTML report to the report folder
     cmd:
@@ -171,7 +169,11 @@ A convenient way of accessing files and configurations of your is to use the DSO
 
 For Python, refer to the [Python Usage Page](python_usage.md).
 
+<<<<<<< HEAD
 For R, refer to the [R Package Page](dso_r.md).
+=======
+For R, refer to the [R Package Page](https://boehringer-ingelheim.github.io/dso-r/).
+>>>>>>> e5487d80c1bc43c86516efec4e103931bef99e35
 
 ## `dso repro` -- Reproducing all stages
 
