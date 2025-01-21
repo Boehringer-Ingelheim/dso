@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=d1831edd"></script>
+    <script src="_static/documentation_options.js?v=c618979d"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <link rel="prev" title="DSO: data science operations" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+ge5487d8" />
+  <meta name="docsearch:version" content="0.1.dev1+g7217937" />
   </head>
   
   
@@ -353,7 +353,12 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro-reproducing-all-stages"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-changes-with-a-remote">Syncing changes with a remote</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-changes-with-remote">Syncing Changes with Remote</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-remote-data-storage">Add a Remote Data Storage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#track-data-with-dvc">Track Data with DVC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#push-changes-to-remote">Push Changes to Remote</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -533,13 +538,54 @@ dso<span class="w"> </span>repro<span class="w"> </span>subfolder/my_stage/dvc.y
 <span class="c1"># Reproducing a single stage without its dependency stages</span>
 dso<span class="w"> </span>repro<span class="w"> </span>-s<span class="w"> </span>subfolder/my_stage/dvc.yaml
 
-<span class="c1"># reproduce stage even if no changes were found</span>
+<span class="c1"># Reproduce stage even if no changes were found</span>
 dso<span class="w"> </span>repro<span class="w"> </span>-s<span class="w"> </span>-f<span class="w"> </span>subfolder/my_stage/dvc.yaml
 </pre></div>
 </div>
 </section>
-<section id="syncing-changes-with-a-remote">
-<h2>Syncing changes with a remote<a class="headerlink" href="#syncing-changes-with-a-remote" title="Link to this heading">#</a></h2>
+<section id="syncing-changes-with-remote">
+<h2>Syncing Changes with Remote<a class="headerlink" href="#syncing-changes-with-remote" title="Link to this heading">#</a></h2>
+<p>To ensure your data and code are synchronized with the remote storage and repository, follow these steps:</p>
+<section id="add-a-remote-data-storage">
+<h3>Add a Remote Data Storage<a class="headerlink" href="#add-a-remote-data-storage" title="Link to this heading">#</a></h3>
+<p>To ensure you can always revert to previous data versions, add a remote storage for your DVC-controlled data. Use the <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">remote</span> <span class="pre">add</span></code> command to specify a remote directory where the version-controlled files will be stored.</p>
+<p>We recommend creating a directory in a suitable long-term storage location. Use the <code class="docutils literal notranslate"><span class="pre">-d</span></code> (default) option of <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">remote</span> <span class="pre">add</span></code> to set this directory as the default remote storage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a directory for storing version-controlled files</span>
+mkdir<span class="w"> </span>/long/term/storage/project1/DVC_STORAGE
+
+<span class="c1"># Execute within the project directory to define the remote storage</span>
+dvc<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>-d<span class="w"> </span>&lt;remote_name&gt;<span class="w"> </span>/long/term/storage/project1/DVC_STORAGE
+</pre></div>
+</div>
+</section>
+<section id="track-data-with-dvc">
+<h3>Track Data with DVC<a class="headerlink" href="#track-data-with-dvc" title="Link to this heading">#</a></h3>
+<p>In your DSO project, all outputs are automatically controlled by DVC, ensuring that your data is versioned and managed efficiently. This setup helps maintain reproducibility and consistency across your analysis.</p>
+<p>When you have input data that was not generated within your pipeline, you need to add them to your DSO project. Use <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">add</span></code> to track such files with DVC. This command creates an associated <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> file and automatically appends the tracked file to <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>. The <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> file acts as a placeholder for the original file and should be tracked by Git.</p>
+<p>This command is particularly useful when data is generated outside of your DSO project but is used within your analysis, such as metadata or preprocessed data.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add a file to DVC</span>
+dvc<span class="w"> </span>add<span class="w"> </span>&lt;directoryname/filename&gt;
+
+<span class="c1"># Example Usage:</span>
+dvc<span class="w"> </span>add<span class="w"> </span>metadata/external_clinical_annotation.csv
+</pre></div>
+</div>
+</section>
+<section id="push-changes-to-remote">
+<h3>Push Changes to Remote<a class="headerlink" href="#push-changes-to-remote" title="Link to this heading">#</a></h3>
+<p>After tracking your data with DVC and committing your changes locally, you need to push these changes to both the remote storage and your Git repository. This ensures that your data and metadata are safely backed up and accessible to collaborators.</p>
+<p>Here’s how to do it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Push DVC-controlled data to the remote storage</span>
+dvc<span class="w"> </span>push
+
+<span class="c1"># Commit changes to the Git repository with a descriptive message</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Descriptive commit message&quot;</span>
+
+<span class="c1"># Push committed changes to the remote Git repository</span>
+git<span class="w"> </span>push
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -608,7 +654,12 @@ dso<span class="w"> </span>repro<span class="w"> </span>-s<span class="w"> </spa
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro-reproducing-all-stages"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-changes-with-a-remote">Syncing changes with a remote</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-changes-with-remote">Syncing Changes with Remote</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-remote-data-storage">Add a Remote Data Storage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#track-data-with-dvc">Track Data with DVC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#push-changes-to-remote">Push Changes to Remote</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
