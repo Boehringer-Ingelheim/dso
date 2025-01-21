@@ -190,8 +190,57 @@ dso repro subfolder/my_stage/dvc.yaml
 # Reproducing a single stage without its dependency stages
 dso repro -s subfolder/my_stage/dvc.yaml
 
-# reproduce stage even if no changes were found
+# Reproduce stage even if no changes were found
 dso repro -s -f subfolder/my_stage/dvc.yaml
 ```
 
-## Syncing changes with a remote
+## Syncing Changes with Remote
+
+To ensure your data and code are synchronized with the remote storage and repository, follow these steps:
+
+### Add a Remote Data Storage
+
+To ensure you can always revert to previous data versions, add a remote storage for your DVC-controlled data. Use the `dvc remote add` command to specify a remote directory where the version-controlled files will be stored.
+
+We recommend creating a directory in a suitable long-term storage location. Use the `-d` (default) option of `dvc remote add` to set this directory as the default remote storage:
+
+```bash
+# Create a directory for storing version-controlled files
+mkdir /long/term/storage/project1/DVC_STORAGE
+
+# Execute within the project directory to define the remote storage
+dvc remote add -d <remote_name> /long/term/storage/project1/DVC_STORAGE
+```
+
+### Track Data with DVC
+
+In your DSO project, all outputs are automatically controlled by DVC, ensuring that your data is versioned and managed efficiently. This setup helps maintain reproducibility and consistency across your analysis.
+
+When you have input data that was not generated within your pipeline, you need to add them to your DSO project. Use `dvc add` to track such files with DVC. This command creates an associated `.dvc` file and automatically appends the tracked file to `.gitignore`. The `.dvc` file acts as a placeholder for the original file and should be tracked by Git.
+
+This command is particularly useful when data is generated outside of your DSO project but is used within your analysis, such as metadata or preprocessed data.
+
+```bash
+# Add a file to DVC
+dvc add <directoryname/filename>
+
+# Example Usage:
+dvc add metadata/external_clinical_annotation.csv
+```
+
+### Push Changes to Remote
+
+After tracking your data with DVC and committing your changes locally, you need to push these changes to both the remote storage and your Git repository. This ensures that your data and metadata are safely backed up and accessible to collaborators.
+
+Here’s how to do it:
+
+```bash
+# Push DVC-controlled data to the remote storage
+dvc push
+
+# Commit changes to the Git repository with a descriptive message
+git commit -m "Descriptive commit message"
+
+# Push committed changes to the remote Git repository
+git push
+```
