@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="cli_installation.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="TODO" />
+<meta property="og:description" content="The DSO CLI is available from PyPI. The package is named dso-core You can think of it as the “core” package of DSO, while there is also a separate R package and there might be other “extension” pac..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_cli_installation_3db8bee7.png" />
-<meta property="og:image:alt" content="TODO" />
-<meta name="description" content="TODO" />
+<meta property="og:image" content="/_images/social_previews/summary_cli_installation_a6a36ff4.png" />
+<meta property="og:image:alt" content="The DSO CLI is available from PyPI. The package is named dso-core You can think of it as the “core” package of DSO, while there is also a separate R package..." />
+<meta name="description" content="The DSO CLI is available from PyPI. The package is named dso-core You can think of it as the “core” package of DSO, while there is also a separate R package and there might be other “extension” pac..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Installation &#8212; dso-core</title>
@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=ad09744a"></script>
+    <script src="_static/documentation_options.js?v=03dc2815"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <link rel="prev" title="Getting started" href="getting_started.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+ge464588" />
+  <meta name="docsearch:version" content="0.1.dev1+gb79814b" />
   </head>
   
   
@@ -174,6 +174,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">Usage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/reference/index.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso-r/blob/main/CHANGELOG.md">Changelog</a></li>
 </ul>
 
     </div>
@@ -311,7 +312,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -327,6 +330,14 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#freezing-the-dso-version-within-a-project">Freezing the dso version within a project</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -338,7 +349,51 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h1>
-<p>TODO</p>
+<p>The DSO CLI is available <a class="reference external" href="https://pypi.org/project/dso-core/">from PyPI</a>. The package is named <code class="docutils literal notranslate"><span class="pre">dso-core</span></code>
+You can think of it as the “core” package of DSO, while there is also a <a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso-r">separate R package</a>
+and there might be other “extension” packages in the future.</p>
+<p>We recommend installing the DSO CLI in an isolated environment using, e.g., <a class="reference external" href="https://docs.astral.sh/uv/">uv</a> or <a class="reference external" href="https://pipx.pypa.io/latest/installation/">pipx</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>dso-core
+</pre></div>
+</div>
+<p>This command installs the <code class="docutils literal notranslate"><span class="pre">dso</span></code> binary:</p>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>--version
+dso, version 0.1.dev1+gb79814b
+</pre></div>
+</div>
+<p>If you prefer to manage the Python environment yourself, you can use <code class="docutils literal notranslate"><span class="pre">pip</span></code> as usual:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>dso-core
+</pre></div>
+</div>
+<section id="freezing-the-dso-version-within-a-project">
+<h2>Freezing the dso version within a project<a class="headerlink" href="#freezing-the-dso-version-within-a-project" title="Link to this heading">#</a></h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This feature is still experimental. In particular, we are still working on the ergonomics,
+as remembering to type <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">dso</span></code> every time is not very user-friendly. Once this is
+worked out, it will very likely become the default for all dso projects.</p>
+<p>See also <a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso-mgr/issues/3">dso#3</a>.</p>
+</div>
+<p>To ensure consistent results between collaborators and that the porject can be reproduced in exactly the
+same way in the future, it is good practice to pin a specific version of dso within each project. Since
+each dso project is also a <a class="reference external" href="https://docs.astral.sh/uv/guides/projects/">uv project</a> with dependencies
+declared in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>, this makes it easy freeze the dso version.</p>
+<p>By using</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>dso
+</pre></div>
+</div>
+<p>instead of</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">uv</span></code> runs the specified version of <code class="docutils literal notranslate"><span class="pre">dso</span></code> and installes it automatically in the background, if necessary. Running
+this command for the first time will create a <a class="reference external" href="https://docs.astral.sh/uv/guides/projects/#uvlock"><code class="docutils literal notranslate"><span class="pre">uv.lock</span></code></a> file that
+contains the exact information about the project’s dependencies.</p>
+<p>To update the version of <code class="docutils literal notranslate"><span class="pre">dso</span></code> within the project, you can use</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>add<span class="w"> </span>-U<span class="w"> </span>dso_core
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -376,6 +431,22 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#freezing-the-dso-version-within-a-project">Freezing the dso version within a project</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

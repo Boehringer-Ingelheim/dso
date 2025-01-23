@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=ad09744a"></script>
+    <script src="_static/documentation_options.js?v=03dc2815"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <link rel="prev" title="Contributing guide" href="contributing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+ge464588" />
+  <meta name="docsearch:version" content="0.1.dev1+gb79814b" />
   </head>
   
   
@@ -174,6 +174,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">Usage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/reference/index.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso-r/blob/main/CHANGELOG.md">Changelog</a></li>
 </ul>
 
     </div>
@@ -366,7 +367,7 @@ ensure that one does not forget to keep the <code class="docutils literal notran
 <span class="n">params</span> <span class="o">=</span> <span class="n">read_params</span><span class="p">(</span><span class="s2">&quot;subfolder/my_stage&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>By default, DSO compiles paths in configuration files to paths relative to each stage (see <a class="reference internal" href="cli_configuration.html#pyproject-toml"><span class="std std-ref">configuration</span></a>).
+<p>By default, DSO compiles paths in configuration files to paths relative to each stage (see <a class="reference internal" href="cli_configuration.html#project-specific-settings-pyproject-toml"><span class="std std-ref">configuration</span></a>).
 From Python, you can use <a class="reference internal" href="python_api.html#dso.stage_here" title="dso.stage_here"><code class="xref py py-func docutils literal notranslate"><span class="pre">stage_here()</span></code></a> to resolve paths
 relative to the current stage independent of your current working directory, e.g.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>

@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="cli_configuration.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="This section provides and overview of dso settings and how to apply them. pyproject.toml: Project-specific dso settings can be set in the pyproject.toml file at the root of each project in the[tool..." />
+<meta property="og:description" content="This section provides and overview of dso settings and how to apply them. Please refer to DVC configuration for dvc settings. Environment variables: The following environment variables can be used ..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_cli_configuration_39de5a6b.png" />
-<meta property="og:image:alt" content="This section provides and overview of dso settings and how to apply them. pyproject.toml: Project-specific dso settings can be set in the pyproject.toml file..." />
-<meta name="description" content="This section provides and overview of dso settings and how to apply them. pyproject.toml: Project-specific dso settings can be set in the pyproject.toml file at the root of each project in the[tool..." />
+<meta property="og:image" content="/_images/social_previews/summary_cli_configuration_80bd1f0e.png" />
+<meta property="og:image:alt" content="This section provides and overview of dso settings and how to apply them. Please refer to DVC configuration for dvc settings. Environment variables: The foll..." />
+<meta name="description" content="This section provides and overview of dso settings and how to apply them. Please refer to DVC configuration for dvc settings. Environment variables: The following environment variables can be used ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Configuration &#8212; dso-core</title>
@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=ad09744a"></script>
+    <script src="_static/documentation_options.js?v=03dc2815"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <link rel="prev" title="Command reference" href="cli_command_reference.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+ge464588" />
+  <meta name="docsearch:version" content="0.1.dev1+gb79814b" />
   </head>
   
   
@@ -174,6 +174,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">Usage</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/reference/index.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso-r/blob/main/CHANGELOG.md">Changelog</a></li>
 </ul>
 
     </div>
@@ -334,7 +335,9 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyproject-toml">pyproject.toml</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-specific-settings-pyproject-toml">Project-specific settings – <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-and-user-specific-settings-dso-json">Project and user specific settings – <code class="docutils literal notranslate"><span class="pre">.dso.json</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -348,16 +351,63 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="configuration">
 <h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h1>
-<p>This section provides and overview of dso settings and how to apply them.</p>
-<section id="pyproject-toml">
-<h2>pyproject.toml<a class="headerlink" href="#pyproject-toml" title="Link to this heading">#</a></h2>
+<p>This section provides and overview of dso settings and how to apply them.
+Please refer to <a class="reference external" href="https://dvc.org/doc/user-guide/project-structure/configuration#dvc-configuration">DVC configuration</a> for dvc settings.</p>
+<section id="environment-variables">
+<h2>Environment variables<a class="headerlink" href="#environment-variables" title="Link to this heading">#</a></h2>
+<p>The following environment variables can be used to change certain dso behaviors, independent of the project.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>variable</p></th>
+<th class="head"><p>purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DSO_SKIP_CHECK_ASK_PRE_COMMIT</span></code></p></td>
+<td><p>If set to any non-empty value, dso does not ask whether to install the pre-commit hooks for in a project.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DSO_QUIET</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DSO_QUIET=1</span></code> disables info messages, <code class="docutils literal notranslate"><span class="pre">DSO_QUIET=2</span></code> disables warnings. This is equivalent to <code class="docutils literal notranslate"><span class="pre">-q</span></code> and <code class="docutils literal notranslate"><span class="pre">-qq</span></code>, respectively.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DSO_VERBOSE</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DSO_VERBOSE=1</span></code> enables debug logging. This is equivalent to <code class="docutils literal notranslate"><span class="pre">-v</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DSO_SKIP_COMPILE</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DSO_SKIP_COMPILE</span></code> disables automated internal calls to <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">compile-config</span></code> in commands that support it. This is equivalent to <code class="docutils literal notranslate"><span class="pre">--skip-compile</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="project-specific-settings-pyproject-toml">
+<h2>Project-specific settings – <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code><a class="headerlink" href="#project-specific-settings-pyproject-toml" title="Link to this heading">#</a></h2>
 <p>Project-specific dso settings can be set in the <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file at the root of each project in the
-<code class="docutils literal notranslate"><span class="pre">[tool.dso]</span></code> section:</p>
+<code class="docutils literal notranslate"><span class="pre">[tool.dso]</span></code> section. As the <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file is tracked by git, these changes affect all users who
+collaborate on the project.</p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[tool.dso]</span>
-<span class="c1"># whether to compile relative paths declared with `!path` into absolute paths or relative paths (relative to each stage).</span>
-<span class="c1"># default is `true`</span>
+<span class="c1"># whether to compile relative paths declared with `!path` into absolute paths or</span>
+<span class="c1"># relative paths (relative to each stage). Defaults to `true`.</span>
 <span class="n">use_relative_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
 </pre></div>
+</div>
+</section>
+<section id="project-and-user-specific-settings-dso-json">
+<h2>Project and user specific settings – <code class="docutils literal notranslate"><span class="pre">.dso.json</span></code><a class="headerlink" href="#project-and-user-specific-settings-dso-json" title="Link to this heading">#</a></h2>
+<p>For project-specific settings that are not intended to be shared across collaborators. This file is stored
+at the root of each project. It is not meant to be edited by hand, but will be created and modified by the <code class="docutils literal notranslate"><span class="pre">dso</span></code> CLI as appropriate.</p>
+<p>It currently tracks the following properties:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>variable</p></th>
+<th class="head"><p>purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">check_ask_pre_commit</span></code></p></td>
+<td><p>If the user answered “no” to the question if they want to install pre-commit hooks in this project, this will be tracked here.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </section>
 </section>
@@ -408,7 +458,9 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyproject-toml">pyproject.toml</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-specific-settings-pyproject-toml">Project-specific settings – <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-and-user-specific-settings-dso-json">Project and user specific settings – <code class="docutils literal notranslate"><span class="pre">.dso.json</span></code></a></li>
 </ul>
   </nav></div>
 
