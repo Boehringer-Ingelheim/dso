@@ -16,6 +16,13 @@ from rich.prompt import Confirm
 
 from dso._logging import console, log
 
+# compatibilty with python 3.10
+try:
+    import tomllib
+except ImportError:
+    import tomli as tomllib
+
+
 if TYPE_CHECKING:
     from importlib.resources.abc import Traversable
 
@@ -181,6 +188,23 @@ def git_list_files(dir: Path) -> list[Path]:
     if res.returncode:
         sys.exit(res.returncode)
     return [dir / Path(p) for p in res.stdout.decode("utf-8").strip().split("\n")]
+
+
+@cache
+def get_dso_config_from_pyproject_toml(dir: Path) -> dict:
+    """
+    Read the pyproject.toml file when within a project and return the [tool.dso] section as dict
+
+    If the pyproject.toml file doesn't exist, or it doesn't have a [tool.dso] section,
+    an empty dictionary is returned
+    """
+    project_root = get_project_root(dir)
+    pyproject_toml = project_root / "pyproject.toml"
+    if not pyproject_toml.exists():
+        return {}
+    with pyproject_toml.open("rb") as f:
+        data = tomllib.load(f)
+    return data.get("tool", {}).get("dso", {})
 
 
 def _read_dot_dso_json(dir: Path):

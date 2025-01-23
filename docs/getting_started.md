@@ -13,7 +13,6 @@ dso init test_project --description "This is a test project"
 
 It creates the root directory of your project with all the necessary configuration files for `git`, `dvc`, `uv` and `dso` itself.
 
-
 ## `dso create` -- Add folders or stages to your project
 
 We consider a _stage_ an individual step in your analysis, usually a script with defined inputs and outputs.
@@ -62,7 +61,8 @@ The following diagram displays the inheritance of configurations:
 ```
 
 ### Writing configuration files
-To define your configurations in the `params.in.yaml` files, please adhere to the yaml syntax. Due to the implemented configuration inheritance, relative paths need to be resolved within each __folder__ or __stage__. Therefore, relative paths need to be specified with `!path`.
+
+To define your configurations in the `params.in.yaml` files, please adhere to the yaml syntax. Due to the implemented configuration inheritance, relative paths need to be resolved within each **folder** or **stage**. Therefore, relative paths need to be specified with `!path`.
 
 An example `params.in.yaml` can look as follows:
 
@@ -105,10 +105,10 @@ A stage is a single step in your analysis and usually generates some kind of out
 
 The essential files of a stage are:
 
-* `dvc.yaml`: The DVC configuration file that defines your data pipelines, dependencies, and outputs.
-* `params.yaml`: Auto-generated configuration file.
-* `params.in.yaml`: Modifiable configuration file containing stage-specific configurations.
-* `src/<stage_name>.qmd`(optional): A Quarto file containing your script that runs the analysis for this stage.
+-   `dvc.yaml`: The DVC configuration file that defines your data pipelines, dependencies, and outputs.
+-   `params.yaml`: Auto-generated configuration file.
+-   `params.in.yaml`: Modifiable configuration file containing stage-specific configurations.
+-   `src/<stage_name>.qmd`(optional): A Quarto file containing your script that runs the analysis for this stage.
 
 ### dvc.yaml
 
@@ -141,8 +141,6 @@ stages:
 
 By default, a Quarto stage includes the following cmd in the `dvc.yaml` file:
 
-
-
 ```
     # Command to render the Quarto script and move the HTML report to the report folder
     cmd:
@@ -163,10 +161,86 @@ A Bash stage, by default, does not include an additional script. Bash code can b
         EOF
 ```
 
-### R
+### Accessing Files and Configurations with R and Python
 
-### Python
+You can easily access files and configurations using either the DSO R-package or the Python module.
+
+A convenient way of accessing files and configurations of your is to use the DSO R-package or the Python module.
+
+For Python, refer to the [Python Usage Page](python_usage.md).
+
+For R, refer to the [R Package Page](https://boehringer-ingelheim.github.io/dso-r/).
 
 ## `dso repro` -- Reproducing all stages
 
-## Syncing changes with a remote
+To execute or reproduce a stage, folder, or project use `dso repro`. `dso repro` is a wrapper around `dvc repro` and builds the config files before reproducing the complete or a part of the analyses pipeline.
+
+Several command options are available and are detailed in the [dvc repro documentation](https://dvc.org/doc/command-reference/repro). The most common usages are detailed below:
+
+```bash
+# Reproducing the whole project
+dso repro
+
+# Reproducing all stages within a specific directory
+dso repro -R <path>
+
+# Reproducing a single stage with its dependency stages
+dso repro subfolder/my_stage/dvc.yaml
+
+# Reproducing a single stage without its dependency stages
+dso repro -s subfolder/my_stage/dvc.yaml
+
+# Reproduce stage even if no changes were found
+dso repro -s -f subfolder/my_stage/dvc.yaml
+```
+
+## Syncing Changes with Remote
+
+To ensure your data and code are synchronized with the remote storage and repository, follow these steps:
+
+### Add a Remote Data Storage
+
+To ensure you can always revert to previous data versions, add a remote storage for your DVC-controlled data. Use the `dvc remote add` command to specify a remote directory where the version-controlled files will be stored.
+
+We recommend creating a directory in a suitable long-term storage location. Use the `-d` (default) option of `dvc remote add` to set this directory as the default remote storage:
+
+```bash
+# Create a directory for storing version-controlled files
+mkdir /long/term/storage/project1/DVC_STORAGE
+
+# Execute within the project directory to define the remote storage
+dvc remote add -d <remote_name> /long/term/storage/project1/DVC_STORAGE
+```
+
+### Track Data with DVC
+
+In your DSO project, all outputs are automatically controlled by DVC, ensuring that your data is versioned and managed efficiently. This setup helps maintain reproducibility and consistency across your analysis.
+
+When you have input data that was not generated within your pipeline, you need to add them to your DSO project. Use `dvc add` to track such files with DVC. This command creates an associated `.dvc` file and automatically appends the tracked file to `.gitignore`. The `.dvc` file acts as a placeholder for the original file and should be tracked by Git.
+
+This command is particularly useful when data is generated outside of your DSO project but is used within your analysis, such as metadata or preprocessed data.
+
+```bash
+# Add a file to DVC
+dvc add <directoryname/filename>
+
+# Example Usage:
+dvc add metadata/external_clinical_annotation.csv
+```
+
+### Push Changes to Remote
+
+After tracking your data with DVC and committing your changes locally, you need to push these changes to both the remote storage and your Git repository. This ensures that your data and metadata are safely backed up and accessible to collaborators.
+
+Here’s how to do it:
+
+```bash
+# Push DVC-controlled data to the remote storage
+dvc push
+
+# Commit changes to the Git repository with a descriptive message
+git commit -m "Descriptive commit message"
+
+# Push committed changes to the remote Git repository
+git push
+```

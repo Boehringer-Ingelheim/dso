@@ -12,7 +12,7 @@ import hiyapyco
 from ruamel.yaml import YAML, yaml_object
 
 from ._logging import log
-from ._util import check_project_roots, find_in_parent, get_project_root
+from ._util import check_project_roots, find_in_parent, get_dso_config_from_pyproject_toml, get_project_root
 
 PARAMS_YAML_DISCLAIMER = dedent(
     """\
@@ -32,6 +32,7 @@ def _load_yaml_with_auto_adjusting_paths(
     yaml_stream: TextIOWrapper,
     destination: Path,
     missing_path_warnings: set[tuple[Path, Path]],
+    relative: bool = True,
 ):
     """
     Load a yaml file and adjust paths for all !path objects based on a destination file
@@ -45,6 +46,8 @@ def _load_yaml_with_auto_adjusting_paths(
     missing_path_warnings
         set in which we keep track of warnings for missing paths to ensure we are
         not emitting the same warning twice.
+    relative
+        If True, compile to relative paths. Otherwise compile to absolute paths.
 
     Returns
     -------
@@ -82,9 +85,11 @@ def _load_yaml_with_auto_adjusting_paths(
                     missing_path_warnings.add((self.path, source))
 
         def get_adjusted(self):
-            # not possible with pathlib, because pathlib requires the paths to be subpaths of each other
-            diff = Path(os.path.relpath(source / self.path, destination))
-            return diff
+            if relative:
+                # not possible with pathlib, because pathlib requires the paths to be subpaths of each other
+                return Path(os.path.relpath(source / self.path, destination))
+            else:
+                return (source / self.path).absolute()
 
         @classmethod
         def to_yaml(cls, representer, node):
@@ -155,6 +160,10 @@ def compile_all_configs(paths: Sequence[Path]):
     all_configs = _get_list_of_configs_to_compile(paths, project_root)
     log.info(f"Compiling a total of {len(all_configs)} config files.")
 
+    dso_config = get_dso_config_from_pyproject_toml(project_root)
+    # by default, use relative paths
+    use_relative_paths = dso_config.get("use_relative_paths", True)
+
     # keep track of paths for which we emitted a warning that the path doesn't exist to ensure
     # we are only emitting one warning for each (file path, source yaml file path)
     missing_path_warnings: set[tuple[Path, Path]] = set()
@@ -172,6 +181,7 @@ def compile_all_configs(paths: Sequence[Path]):
                 _load_yaml_with_auto_adjusting_paths,
                 destination=config.parent,
                 missing_path_warnings=missing_path_warnings,
+                relative=use_relative_paths,
             ),
         )
         # an empty configuration should actually be an empty dictionary.
