@@ -22,8 +22,8 @@ collaborate on the project.
 
 ```toml
 [tool.dso]
-# whether to compile relative paths declared with `!path` into absolute paths or relative paths (relative to each stage).
-# default is `true`
+# whether to compile relative paths declared with `!path` into absolute paths or
+# relative paths (relative to each stage). Defaults to `true`.
 use_relative_path = true
 ```
 
@@ -32,8 +32,8 @@ use_relative_path = true
 For project-specific settings that are not intended to be shared across collaborators. This file is stored
 at the root of each project. It is not meant to be edited by hand, but will be created and modified by the `dso` CLI as appropriate.
 
-It currently tracks the following properties
+It currently tracks the following properties:
 
-| variable               | purpose                                                                                                                       |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `check_ask_pre_commit` | If the user answered "no" to the question if they want to install pre-commit hooks in this project, this will be tracked here |
+| variable               | purpose                                                                                                                        |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `check_ask_pre_commit` | If the user answered "no" to the question if they want to install pre-commit hooks in this project, this will be tracked here. |
