@@ -15,7 +15,7 @@ This command installs the `dso` binary:
 ```{eval-rst}
 .. click:run::
     from dso.cli import dso
-    invoke(dso, args=["--help"])
+    invoke(dso, args=["--version"])
 ```
 
 If you prefer to manage the Python environment yourself, you can use `pip` as usual:

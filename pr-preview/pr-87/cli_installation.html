@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=0ba07355"></script>
+    <script src="_static/documentation_options.js?v=686163e6"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <link rel="prev" title="Getting started" href="getting_started.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+gd6b7d6e" />
+  <meta name="docsearch:version" content="0.1.dev1+ge444324" />
   </head>
   
   
@@ -357,38 +357,8 @@ and there might be other “extension” packages in the future.</p>
 </pre></div>
 </div>
 <p>This command installs the <code class="docutils literal notranslate"><span class="pre">dso</span></code> binary:</p>
-<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>--help
-                                                                                
- <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">COMMAND</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">ARGS</span>]...                                         
-                                                                                
- Root command                                                                   
-                                                                                
-<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--quiet</span>    <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-q</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER RANGE</span>  Reduce verbosity. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">-q</span> disables info messages,   <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                               <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">-qq</span> disables warnings. Errors messages cannot  <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                               be disabled. The same can be achieved by       <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                               setting the env var <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_QUIET=1</span> or             <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                               <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_QUIET=2</span>, respectively.                     <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--verbose</span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-v</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">             </span>  Increase logging verbosity to include debug    <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                               messages. The same can be achieved by setting  <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                               the env var <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_VERBOSE=1</span>.                     <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--version</span>      <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">             </span>  Show the version and exit.                     <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>         <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">             </span>  Show this message and exit.                    <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
-<span class=" -Color -Color-Faint -C-Faint">╭─ Commands ───────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">compile-config </span> Compile params.in.yaml into params.yaml using Jinja2         <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> templating and resolving recursive templates.                <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">create         </span> Create stage folder structure subcommand.                    <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">exec           </span> Dso wrappers around various tools                            <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">get-config     </span> Get the configuration for a given stage and print it to      <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> STDOUT in yaml format.                                       <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">init           </span> Initialize a new project. A project can contain several      <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> stages organized in arbitrary subdirectories.                <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">lint           </span> Lint a dso project                                           <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">repro          </span> Wrapper around dvc repro, compiling configuration before     <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> running.                                                     <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">watermark      </span> Add a watermark to an image                                  <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>--version
+dso, version 0.1.dev1+ge444324
 </pre></div>
 </div>
 <p>If you prefer to manage the Python environment yourself, you can use <code class="docutils literal notranslate"><span class="pre">pip</span></code> as usual:</p>
