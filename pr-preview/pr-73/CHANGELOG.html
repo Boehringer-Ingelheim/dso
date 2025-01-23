@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=654b24ad"></script>
+    <script src="_static/documentation_options.js?v=1f828599"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <link rel="prev" title="Configuration" href="cli_configuration.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g3723ec2" />
+  <meta name="docsearch:version" content="0.1.dev1+g2faacca" />
   </head>
   
   
@@ -172,7 +172,8 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO R API</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="dso_r.html">DSO R package</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">Usage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/reference/index.html">API reference</a></li>
 </ul>
 
     </div>
@@ -416,7 +417,7 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <ul class="simple">
 <li><p>Single <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file per stage. Content of input/output/report folders is ignored. These folders
 do not contain a separate <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> anymore. This means empty folders won’t be tracked by git, but
-this solves issues with dvc refusing to track the output folder because it is already partly tracked by git.</p></li>
+this solves issues with dvc refusing to track the output folder because it is already partly tracked by git (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/73">#73</a>).</p></li>
 </ul>
 </section>
 <section id="fixes">
@@ -429,7 +430,10 @@ had side-effects on other libraries when importing <code class="docutils literal
 <section id="new-features">
 <h3>New Features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h3>
 <ul class="simple">
+<li><p>Paths in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files declared with <code class="docutils literal notranslate"><span class="pre">!path</span></code> can now be compiled to absolute instead of relative paths (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/78">#78</a>).</p></li>
 <li><p>Python API that mirrors <code class="docutils literal notranslate"><span class="pre">dso-r</span></code> functionality (e.g. to be used from Jupyter notebooks) (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/30">#30</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">exec</span> <span class="pre">quarto</span></code> automatically creates an <code class="docutils literal notranslate"><span class="pre">output</span></code> directory in the stage if it doesn’t exist. If it doesn’t contain any file,
+it will be removed again after completion (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/73">#73</a>).</p></li>
 </ul>
 </section>
 </section>
