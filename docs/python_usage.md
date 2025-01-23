@@ -19,7 +19,7 @@ from dso import read_params
 params = read_params("subfolder/my_stage")
 ```
 
-By default, DSO compiles paths in configuration files to paths relative to each stage (see [configuration](cli_configuration.md#project-specific-settings-pyproject-toml)).
+By default, DSO compiles paths in configuration files to paths relative to each stage (see [configuration](cli_configuration.md#project-specific-settings----pyprojecttoml)).
 From Python, you can use {func}`~dso.stage_here` to resolve paths
 relative to the current stage independent of your current working directory, e.g.
 
