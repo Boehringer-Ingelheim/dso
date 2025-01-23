@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning][].
 
 ## [Unreleased]
 
+### Template updates
+
+-   Single `.gitignore` file per stage. Content of input/output/report folders is ignored. These folders
+    do not contain a separate `.gitignore` anymore. This means empty folders won't be tracked by git, but
+    this solves issues with dvc refusing to track the output folder because it is already partly tracked by git ([#73](https://github.com/Boehringer-Ingelheim/dso/pull/73)).
+
 ### Fixes
 
 -   Do not change the configuration of the root logger, only the `dso` logger. Changing the root logger
@@ -19,6 +25,8 @@ and this project adheres to [Semantic Versioning][].
 
 -   Paths in `params.in.yaml` files declared with `!path` can now be compiled to absolute instead of relative paths ([#78](https://github.com/Boehringer-Ingelheim/dso/pull/78)).
 -   Python API that mirrors `dso-r` functionality (e.g. to be used from Jupyter notebooks) ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
+-   `dso exec quarto` automatically creates an `output` directory in the stage if it doesn't exist. If it doesn't contain any file,
+    it will be removed again after completion ([#73](https://github.com/Boehringer-Ingelheim/dso/pull/73)).
 
 ## Documentation
 

@@ -102,7 +102,10 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> 
         # We want to include parameters mentioned in either `params`, `deps`, `outs`.
         # The parameters in `deps`/`outs` are encapsulated in `${ <param> }`
         is_matrix_stage = "matrix" in dvc_stage_config
-        keep_params = set(dvc_stage_config.get("params", []))
+        if (params := dvc_stage_config.get("params", [])) is None:
+            keep_params = set()
+        else:
+            keep_params = set(params)
         dvc_param_pat = re.compile(r"\$\{\s*(.*?)\s*\}")
         for dep in dvc_stage_config.get("deps", []):
             if match := dvc_param_pat.findall(dep):

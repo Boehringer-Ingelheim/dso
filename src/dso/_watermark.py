@@ -75,7 +75,7 @@ class Watermarker(Generic[ImgType]):
         img = Image.new("RGBA", self.tile_size, color=(255, 255, 255, 0))
 
         d = ImageDraw.Draw(img)
-        with resources.path(assets, "open_sans.ttf") as watermark_font:
+        with resources.open_binary(assets, "open_sans.ttf") as watermark_font:
             font = ImageFont.truetype(watermark_font, self.font_size)
 
         # Add text in top left corner

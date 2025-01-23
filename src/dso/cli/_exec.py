@@ -5,6 +5,7 @@ import rich_click as click
 from ruamel.yaml import YAML
 
 from dso._logging import log
+from dso._util import add_directory
 
 
 @click.command("quarto")
@@ -73,14 +74,15 @@ def dso_exec_quarto(stage: str, skip_compile: bool = True):
         except KeyError:
             pass
 
-    with quarto_config_yml(quarto_config, stage_dir / "src"):
-        render_quarto(
-            stage_dir / "src",
-            report_dir=stage_dir / "report",
-            before_script=before_script,
-            cwd=stage_dir,
-            with_pandocfilter="watermark" in quarto_config or "disclaimer" in quarto_config,
-        )
+    with add_directory(stage_dir / "output"):
+        with quarto_config_yml(quarto_config, stage_dir / "src"):
+            render_quarto(
+                stage_dir / "src",
+                report_dir=stage_dir / "report",
+                before_script=before_script,
+                cwd=stage_dir,
+                with_pandocfilter="watermark" in quarto_config or "disclaimer" in quarto_config,
+            )
 
 
 @click.group(name="exec")
