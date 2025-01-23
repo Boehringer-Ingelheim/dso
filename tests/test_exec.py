@@ -24,6 +24,7 @@ def test_exec_quarto(quarto_stage, quiet, launch_dir):
     result = runner.invoke(dso_exec, ["quarto", stage_path])
     assert result.exit_code == 0
     assert (quarto_stage / "report" / "quarto_stage.html").is_file()
+    assert (quarto_stage / "output" / "hello.txt").is_file()
     assert "Hello World!" in (quarto_stage / "report" / "quarto_stage.html").read_text()
 
 

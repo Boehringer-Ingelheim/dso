@@ -38,6 +38,9 @@ def quarto_stage(dso_project) -> Path:
                 """\
                 ```{python}
                 print("Hello World!")
+                from dso import read_params, stage_here
+                read_params("quarto_stage")
+                (stage_here("output") / "hello.txt").touch()
                 ```
                 """
             )
@@ -55,6 +58,9 @@ def quarto_stage_empty_configs(quarto_stage) -> Path:
         f.write("\n")
     with (quarto_stage / "params.in.yaml").open("w") as f:
         f.write("\n")
+    # remove param from `dvc.yaml` because it's not in the empty config anymore
+    lines = [line for line in (quarto_stage / "dvc.yaml").read_text().splitlines() if "dso.quarto" not in line]
+    (quarto_stage / "dvc.yaml").write_text("\n".join(lines) + "\n")
     compile_all_configs([quarto_stage])
 
     return quarto_stage
