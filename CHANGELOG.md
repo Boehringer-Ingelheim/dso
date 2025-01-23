@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning][].
 
 ## [Unreleased]
 
+### Documentation
+
+-   Various documentation updates, working towards the first public version of the docs.
+
+## v0.11.0
+
 ### Template updates
 
 -   Single `.gitignore` file per stage. Content of input/output/report folders is ignored. These folders
@@ -28,7 +34,7 @@ and this project adheres to [Semantic Versioning][].
 -   `dso exec quarto` automatically creates an `output` directory in the stage if it doesn't exist. If it doesn't contain any file,
     it will be removed again after completion ([#73](https://github.com/Boehringer-Ingelheim/dso/pull/73)).
 
-## Documentation
+### Documentation
 
 -   Various documentation updates, working towards the first public version of the docs.
 

@@ -38,4 +38,5 @@ python_api.md
 
 Usage <https://boehringer-ingelheim.github.io/dso-r/>
 API reference <https://boehringer-ingelheim.github.io/dso-r/reference/index.html>
+Changelog <https://github.com/Boehringer-Ingelheim/dso-r/blob/main/CHANGELOG.md>
 ```
