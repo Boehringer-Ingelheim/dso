@@ -7,19 +7,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Configuration files" />
+<meta property="og:title" content="Accessing stage config" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="user_guide/config_files.html" />
+<meta property="og:url" content="user_guide/accessing_stage_configs.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="TODO Compiling params.yaml files: All params.yaml files are automatically generated using: Overwriting Parameters: When multiple params.in.yaml files (such as those at the project, folder, or stage..." />
+<meta property="og:description" content="In this section we describe the rationale of dso get-config/ read_params and detail how it works. TODO" />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_user_guide_config_files_92cee850.png" />
-<meta property="og:image:alt" content="TODO Compiling params.yaml files: All params.yaml files are automatically generated using: Overwriting Parameters: When multiple params.in.yaml files (such a..." />
-<meta name="description" content="TODO Compiling params.yaml files: All params.yaml files are automatically generated using: Overwriting Parameters: When multiple params.in.yaml files (such as those at the project, folder, or stage..." />
+<meta property="og:image" content="/_images/social_previews/summary_user_guide_accessing_stage_configs_f5e17be4.png" />
+<meta property="og:image:alt" content="In this section we describe the rationale of dso get-config/ read_params and detail how it works. TODO" />
+<meta name="description" content="In this section we describe the rationale of dso get-config/ read_params and detail how it works. TODO" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Configuration files &#8212; dso-core</title>
+    <title>Accessing stage config &#8212; dso-core</title>
   
   
   
@@ -53,20 +53,20 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=a2bc9c21"></script>
+    <script src="../_static/documentation_options.js?v=aac195d7"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/config_files';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/accessing_stage_configs';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Installation" href="../cli_installation.html" />
-    <link rel="prev" title="Getting started" href="../getting_started.html" />
+    <link rel="next" title="DVC integration" href="dvc.html" />
+    <link rel="prev" title="Params files" href="params_files.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g09eaf78" />
+  <meta name="docsearch:version" content="0.1.dev1+gf67c66b" />
   </head>
   
   
@@ -156,7 +156,15 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Configuration files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Project and stage templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="params_files.html">Params files</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Accessing stage config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dvc.html">DVC integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pre_commit.html">pre-commit integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uv.html"><code class="docutils literal notranslate"><span class="pre">uv</span></code> integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linting.html">Linting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quarto.html">Quarto integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
 <ul class="nav bd-sidenav">
@@ -250,7 +258,7 @@
       
       
       
-      <li><a href="../_sources/user_guide/config_files.md" target="_blank"
+      <li><a href="../_sources/user_guide/accessing_stage_configs.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -313,9 +321,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -326,20 +332,11 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Configuration files</h1>
+    <h1>Accessing stage config</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-params-yaml-files">Compiling <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overwriting-parameters">Overwriting Parameters</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -349,20 +346,10 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="configuration-files">
-<h1>Configuration files<a class="headerlink" href="#configuration-files" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="accessing-stage-config">
+<h1>Accessing stage config<a class="headerlink" href="#accessing-stage-config" title="Link to this heading">#</a></h1>
+<p>In this section we describe the rationale of <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code>/<code class="docutils literal notranslate"><span class="pre">read_params</span></code> and detail how it works.</p>
 <p>TODO</p>
-<section id="compiling-params-yaml-files">
-<h2>Compiling <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files<a class="headerlink" href="#compiling-params-yaml-files" title="Link to this heading">#</a></h2>
-<p>All <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files are automatically generated using:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>compile-config
-</pre></div>
-</div>
-</section>
-<section id="overwriting-parameters">
-<h2>Overwriting Parameters<a class="headerlink" href="#overwriting-parameters" title="Link to this heading">#</a></h2>
-<p>When multiple <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files (such as those at the project, folder, or stage level) contain the same configuration, the value specified at the more specific level (e.g., stage) takes precedence over the value set at the broader level (e.g., project). This makes the analysis adaptable and enhances modifiability across the project.</p>
-</section>
 </section>
 
 
@@ -377,20 +364,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../getting_started.html"
+       href="params_files.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Getting started</p>
+        <p class="prev-next-title">Params files</p>
       </div>
     </a>
     <a class="right-next"
-       href="../cli_installation.html"
+       href="dvc.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Installation</p>
+        <p class="prev-next-title">DVC integration</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -400,23 +387,6 @@
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-params-yaml-files">Compiling <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overwriting-parameters">Overwriting Parameters</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

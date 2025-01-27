@@ -1,4 +1,6 @@
-# Configuration files
+# Params files
+
+This section is the reference guide for configuration files. Explain inheritance, jinja 2 etc. in detail.
 
 TODO
 
