@@ -1,8 +1,11 @@
 # Getting started
 
+This section will guide you through the most important features of dso and show how to work with a dso project.
+
 ## `dso init` -- Initialize a project
 
-`dso init` initializes a new project in your current directory. In the context of DSO, a project is a structured environment where data science workflows are organized and managed.
+`dso init` initializes a new project in your current directory. In the context of DSO, a project is a structured
+folder where input files, scripts and output files are organized and managed.
 
 To initialize a project use the following command:
 
@@ -15,11 +18,11 @@ It creates the root directory of your project with all the necessary configurati
 
 ## `dso create` -- Add folders or stages to your project
 
-We consider a _stage_ an individual step in your analysis, usually a script with defined inputs and outputs.
+We consider a _stage_ an individual step in your analysis, usually a script/notebook with defined inputs and outputs.
 Stages can be organized in _folders_ with arbitrary structures. `dso create` initializes folders and stages
 from predefined templates. We recommend naming stages with a numeric prefix, e.g. `01_` to declare the
-order of scripts, but this is not a requirement. Currently, two stage templates have been implemented that
-use either a quarto document or bash script to conduct the analysis.
+order of scripts, but this is not a requirement. Currently, two stage templates are available that
+use either a quarto document or a bash script to conduct the analysis.
 
 ```bash
 cd test_project
@@ -47,22 +50,26 @@ stage
 
 ## Configuration files
 
-The config files in a _project_, _folder_, or _stage_ are the cornerstone of any reproducible analysis, serving as a single point of truth. Additionally, using config files reduces the modification time needed for making _project_/_folder_-wide changes.
+YAML-based config files in a _project_, _folder_, or _stage_ serve as a single point of truth for all input files, output files or parameters.
+For this purpose, configurations can be defined at each level of your project in a `params.in.yaml` file.
+Using `dso compile-config` the params.in.yaml files are compiled into `params.yaml` with two features:
 
-Config files are designed to contain all necessary parameters, input, and output files that should be consistent across the analyses. For this purpose, configurations can be defined at each level of your project in a `params.in.yaml` file. These configurations are then transferred into the `params.yaml` files when using `dso compile-config`.
+-   _inheritance_: All variables defined in `params.in.yaml` files in any parent directory will be included.
+-   _templating_: Variables can be composed using [jinja2 syntax](https://jinja.palletsprojects.com/en/stable/templates/#variables), e.g. `foo: "{{ bar }}_version2"`.
 
-A `params.yaml` file consolidates configurations from `params.in.yaml` files located in its parent directories, as well as from the `params.in.yaml` file in its own directory. For your analysis, reading in the `params.yaml` of the respective stage gives you then access to all the configurations.
+Therefore, you only need to read in a single `params.yaml` file in each stage.
 
 The following diagram displays the inheritance of configurations:
 
 ```{eval-rst}
 .. image:: ../img/dso-yaml-inherit.png
-   :width: 60%
+   :width: 80%
 ```
 
-### Writing configuration files
+Variables in defined in subfolders override those defined in a parent directory. To ensure that, despite inheritance,
+paths are always relative to each compiled `params.yaml` file, relative paths need to be preceded with `!path`.
 
-To define your configurations in the `params.in.yaml` files, please adhere to the yaml syntax. Due to the implemented configuration inheritance, relative paths need to be resolved within each **folder** or **stage**. Therefore, relative paths need to be specified with `!path`.
+### Example
 
 An example `params.in.yaml` can look as follows:
 
@@ -73,31 +80,16 @@ thresholds:
   p_adjusted: 0.1
 
 samplesheet: !path "01_preprocessing/input/samplesheet.txt"
-
 metadata_file: !path "metadata/metadata.csv"
-
 file_with_abs_path: "/data/home/user/typical_analysis_data_set.csv"
 
 remove_outliers: true
 
 exclude_samples:
   - sample_1
-  - sample_2
   - sample_6
   - sample_42
 ```
-
-### Compiling `params.yaml` files
-
-All `params.yaml` files are automatically generated using:
-
-```bash
-dso compile-config
-```
-
-### Overwriting Parameters
-
-When multiple `params.in.yaml` files (such as those at the project, folder, or stage level) contain the same configuration, the value specified at the more specific level (e.g., stage) takes precedence over the value set at the broader level (e.g., project). This makes the analysis adaptable and enhances modifiability across the project.
 
 ## Implementing a stage
 
