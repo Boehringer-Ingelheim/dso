@@ -8,6 +8,7 @@
 :caption: User Guide
 
 getting_started.md
+user_guide/config_files.md
 ```
 
 ```{toctree}
