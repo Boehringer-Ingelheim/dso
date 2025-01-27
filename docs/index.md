@@ -8,7 +8,15 @@
 :caption: User Guide
 
 getting_started.md
-user_guide/config_files.md
+user_guide/templates.md
+user_guide/params_files.md
+user_guide/accessing_stage_configs.md
+user_guide/dvc.md
+user_guide/pre_commit.md
+user_guide/uv.md
+user_guide/linting.md
+user_guide/quarto.md
+faq.md
 ```
 
 ```{toctree}
