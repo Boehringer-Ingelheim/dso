@@ -96,7 +96,7 @@ def dso_create_folder(name: str | None = None):
 
     target_dir.mkdir(exist_ok=True)
 
-    instantiate_template(get_template_path("folder", template), target_dir, stage_name=name)
+    instantiate_template(get_template_path("folder", template), target_dir, folder_name=name)
     log.info("[green]Folder created successfully.")
     compile_all_configs([target_dir])
 
