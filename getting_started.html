@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="getting_started.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="dso init – Initialize a project: dso init initializes a new project in your current directory. In the context of DSO, a project is a structured environment where data science workflows are organize..." />
+<meta property="og:description" content="This section will guide you through the most important features of dso and show how to work with a dso project. dso init – Initialize a project: dso init initializes a new project in your current d..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_getting_started_b58def23.png" />
-<meta property="og:image:alt" content="dso init – Initialize a project: dso init initializes a new project in your current directory. In the context of DSO, a project is a structured environment w..." />
-<meta name="description" content="dso init – Initialize a project: dso init initializes a new project in your current directory. In the context of DSO, a project is a structured environment where data science workflows are organize..." />
+<meta property="og:image" content="/_images/social_previews/summary_getting_started_64ac1b18.png" />
+<meta property="og:image:alt" content="This section will guide you through the most important features of dso and show how to work with a dso project. dso init – Initialize a project: dso init ini..." />
+<meta name="description" content="This section will guide you through the most important features of dso and show how to work with a dso project. dso init – Initialize a project: dso init initializes a new project in your current d..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Getting started &#8212; dso-core</title>
@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=03dc2815"></script>
+    <script src="_static/documentation_options.js?v=a2bc9c21"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -62,11 +62,11 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'getting_started';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation" href="cli_installation.html" />
+    <link rel="next" title="Configuration files" href="user_guide/config_files.html" />
     <link rel="prev" title="DSO: data science operations" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+gb79814b" />
+  <meta name="docsearch:version" content="0.1.dev1+g09eaf78" />
   </head>
   
   
@@ -156,6 +156,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/config_files.html">Configuration files</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
 <ul class="nav bd-sidenav">
@@ -338,26 +339,21 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init-initialize-a-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create-add-folders-or-stages-to-your-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-files">Configuration files</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-configuration-files">Writing configuration files</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-params-yaml-files">Compiling <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overwriting-parameters">Overwriting Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-a-stage">Implementing a stage</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dvc-yaml">dvc.yaml</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-the-dvc-yaml">Configuring the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quarto-stage">Quarto Stage</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bash-stage">Bash Stage</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quarto-stage">Quarto Stage</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bash-stage">Bash Stage</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-files-and-configurations-with-r-and-python">Accessing Files and Configurations with R and Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-files-and-parameters-from-r-or-python">Accessing files and parameters from R or Python</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro-reproducing-all-stages"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-changes-with-remote">Syncing Changes with Remote</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-remote-data-storage">Add a Remote Data Storage</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#track-data-with-dvc">Track Data with DVC</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#push-changes-to-remote">Push Changes to Remote</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tracking-and-syncing-files-with-dvc">Tracking and syncing files with DVC</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-data-with-a-remote">Syncing data with a remote</a></li>
 </ul>
 </li>
 </ul>
@@ -373,9 +369,11 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="getting-started">
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
+<p>This section will guide you through the most important features of dso and show how to work with a dso project.</p>
 <section id="dso-init-initialize-a-project">
 <h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project<a class="headerlink" href="#dso-init-initialize-a-project" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> initializes a new project in your current directory. In the context of DSO, a project is a structured environment where data science workflows are organized and managed.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> initializes a new project in your current directory. In the context of DSO, a project is a structured
+folder where input files, scripts and output files are organized and managed.</p>
 <p>To initialize a project use the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># To initialize a project called &quot;test_project&quot; use the following command</span>
 dso<span class="w"> </span>init<span class="w"> </span>test_project<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;This is a test project&quot;</span>
@@ -385,11 +383,11 @@ dso<span class="w"> </span>init<span class="w"> </span>test_project<span class="
 </section>
 <section id="dso-create-add-folders-or-stages-to-your-project">
 <h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project<a class="headerlink" href="#dso-create-add-folders-or-stages-to-your-project" title="Link to this heading">#</a></h2>
-<p>We consider a <em>stage</em> an individual step in your analysis, usually a script with defined inputs and outputs.
+<p>We consider a <em>stage</em> an individual step in your analysis, usually a script/notebook with defined inputs and outputs.
 Stages can be organized in <em>folders</em> with arbitrary structures. <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> initializes folders and stages
 from predefined templates. We recommend naming stages with a numeric prefix, e.g. <code class="docutils literal notranslate"><span class="pre">01_</span></code> to declare the
-order of scripts, but this is not a requirement. Currently, two stage templates have been implemented that
-use either a quarto document or bash script to conduct the analysis.</p>
+order of scripts, but this is not a requirement. Currently, two stage templates are available that
+use either a quarto document or a bash script to conduct the analysis.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>test_project
 
 <span class="c1"># Let&#39;s create a folder that we&#39;ll use to organize all analysis steps related to &quot;RNA-seq&quot;</span>
@@ -414,15 +412,22 @@ dso<span class="w"> </span>create<span class="w"> </span>stage<span class="w"> <
 </section>
 <section id="configuration-files">
 <h2>Configuration files<a class="headerlink" href="#configuration-files" title="Link to this heading">#</a></h2>
-<p>The config files in a <em>project</em>, <em>folder</em>, or <em>stage</em> are the cornerstone of any reproducible analysis, serving as a single point of truth. Additionally, using config files reduces the modification time needed for making <em>project</em>/<em>folder</em>-wide changes.</p>
-<p>Config files are designed to contain all necessary parameters, input, and output files that should be consistent across the analyses. For this purpose, configurations can be defined at each level of your project in a <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file. These configurations are then transferred into the <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files when using <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">compile-config</span></code>.</p>
-<p>A <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file consolidates configurations from <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files located in its parent directories, as well as from the <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file in its own directory. For your analysis, reading in the <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> of the respective stage gives you then access to all the configurations.</p>
+<p>YAML-based config files in a <em>project</em>, <em>folder</em>, or <em>stage</em> serve as a single point of truth for all input files, output files or parameters.
+For this purpose, configurations can be defined at each level of your project in a <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file.
+Using <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">compile-config</span></code> the params.in.yaml files are compiled into <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> with two features:</p>
+<ul class="simple">
+<li><p><em>inheritance</em>: All variables defined in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files in any parent directory will be included.</p></li>
+<li><p><em>templating</em>: Variables can be composed using <a class="reference external" href="https://jinja.palletsprojects.com/en/stable/templates/#variables">jinja2 syntax</a>, e.g. <code class="docutils literal notranslate"><span class="pre">foo:</span> <span class="pre">&quot;{{</span> <span class="pre">bar</span> <span class="pre">}}_version2&quot;</span></code>.</p></li>
+</ul>
+<p>Therefore, you only need to read in a single <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file in each stage.</p>
 <p>The following diagram displays the inheritance of configurations:</p>
-<a class="reference internal image-reference" href="_images/dso-yaml-inherit.png"><img alt="_images/dso-yaml-inherit.png" src="_images/dso-yaml-inherit.png" style="width: 60%;" />
+<a class="reference internal image-reference" href="_images/dso-yaml-inherit.png"><img alt="_images/dso-yaml-inherit.png" src="_images/dso-yaml-inherit.png" style="width: 80%;" />
 </a>
-<section id="writing-configuration-files">
-<h3>Writing configuration files<a class="headerlink" href="#writing-configuration-files" title="Link to this heading">#</a></h3>
-<p>To define your configurations in the <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files, please adhere to the yaml syntax. Due to the implemented configuration inheritance, relative paths need to be resolved within each <strong>folder</strong> or <strong>stage</strong>. Therefore, relative paths need to be specified with <code class="docutils literal notranslate"><span class="pre">!path</span></code>.</p>
+<p></p>
+Variables in defined in subfolders override those defined in a parent directory. To ensure that, despite inheritance,
+paths are always relative to each compiled `params.yaml` file, relative paths need to be preceded with `!path`.
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h3>
 <p>An example <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> can look as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>thresholds:
 <span class="w">  </span>fc:<span class="w"> </span><span class="m">2</span>
@@ -430,31 +435,17 @@ dso<span class="w"> </span>create<span class="w"> </span>stage<span class="w"> <
 <span class="w">  </span>p_adjusted:<span class="w"> </span><span class="m">0</span>.1
 
 samplesheet:<span class="w"> </span>!path<span class="w"> </span><span class="s2">&quot;01_preprocessing/input/samplesheet.txt&quot;</span>
-
 metadata_file:<span class="w"> </span>!path<span class="w"> </span><span class="s2">&quot;metadata/metadata.csv&quot;</span>
-
 file_with_abs_path:<span class="w"> </span><span class="s2">&quot;/data/home/user/typical_analysis_data_set.csv&quot;</span>
 
 remove_outliers:<span class="w"> </span><span class="nb">true</span>
 
 exclude_samples:
 <span class="w">  </span>-<span class="w"> </span>sample_1
-<span class="w">  </span>-<span class="w"> </span>sample_2
 <span class="w">  </span>-<span class="w"> </span>sample_6
 <span class="w">  </span>-<span class="w"> </span>sample_42
 </pre></div>
 </div>
-</section>
-<section id="compiling-params-yaml-files">
-<h3>Compiling <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files<a class="headerlink" href="#compiling-params-yaml-files" title="Link to this heading">#</a></h3>
-<p>All <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files are automatically generated using:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>compile-config
-</pre></div>
-</div>
-</section>
-<section id="overwriting-parameters">
-<h3>Overwriting Parameters<a class="headerlink" href="#overwriting-parameters" title="Link to this heading">#</a></h3>
-<p>When multiple <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files (such as those at the project, folder, or stage level) contain the same configuration, the value specified at the more specific level (e.g., stage) takes precedence over the value set at the broader level (e.g., project). This makes the analysis adaptable and enhances modifiability across the project.</p>
 </section>
 </section>
 <section id="implementing-a-stage">
@@ -463,39 +454,35 @@ exclude_samples:
 <p>The essential files of a stage are:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code>: The DVC configuration file that defines your data pipelines, dependencies, and outputs.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">params.yaml</span></code>: Auto-generated configuration file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">params.yaml</span></code>: Auto-generated configuration file (never modify this by hand!).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code>: Modifiable configuration file containing stage-specific configurations.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">src/&lt;stage_name&gt;.qmd</span></code>(optional): A Quarto file containing your script that runs the analysis for this stage.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src/&lt;stage_name&gt;.qmd</span></code> (when using <code class="docutils literal notranslate"><span class="pre">quarto</span></code> template): A Quarto file containing your script that runs the analysis for this stage.</p></li>
 </ul>
 <section id="dvc-yaml">
 <h3>dvc.yaml<a class="headerlink" href="#dvc-yaml" title="Link to this heading">#</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> file contains information about the parameters, inputs, outputs, and commands used and executes in your stage.</p>
-<section id="configuring-the-dvc-yaml">
-<h4>Configuring the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code><a class="headerlink" href="#configuring-the-dvc-yaml" title="Link to this heading">#</a></h4>
-<p>Configurations stored in the <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> of a stage can be directly used within the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code>:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> file contains information about the parameters, inputs, outputs, and commands used and executes in your stage.
+Variables stored in the <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> of a stage can be directly used within the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>stages:
 <span class="w">  </span>01_preprocessing:
-<span class="w">    </span><span class="c1"># Parameters used in this stage, defined in params.yaml</span>
+<span class="w">    </span><span class="c1"># Parameters used in this stage, defined in params.yaml (NO need for ${...}!!)</span>
 <span class="w">    </span>params:
 <span class="w">      </span>-<span class="w"> </span>dso
 <span class="w">      </span>-<span class="w"> </span>thresholds
-<span class="w">    </span><span class="c1"># Dependencies required for this stage, can be defined in the params.yaml (define with ${...})</span>
+<span class="w">    </span><span class="c1"># Dependencies required for this stage, can be defined in params.yaml (use with ${...})</span>
 <span class="w">    </span>deps:
 <span class="w">      </span>-<span class="w"> </span>src/01_preprocessing.qmd
-<span class="w">      </span>-<span class="w"> </span><span class="si">${</span><span class="nv">file_with_abs_path</span><span class="si">}</span>
-<span class="w">      </span>-<span class="w"> </span><span class="si">${</span><span class="nv">samplesheet</span><span class="si">}</span>
+<span class="w">      </span>-<span class="w"> </span><span class="si">${</span><span class="p"> file_with_abs_path </span><span class="si">}</span>
+<span class="w">      </span>-<span class="w"> </span><span class="si">${</span><span class="p"> samplesheet </span><span class="si">}</span>
 
-<span class="w">    </span><span class="c1"># Outputs generated by this stage</span>
+<span class="w">    </span><span class="c1"># Outputs generated by this stage, can be defined in params.yaml (use ${ ... })</span>
 <span class="w">    </span>outs:
 <span class="w">      </span>-<span class="w"> </span>output
 <span class="w">      </span>-<span class="w"> </span>report/01_preprocessing.html
 </pre></div>
 </div>
-</section>
-</section>
 <section id="quarto-stage">
-<h3>Quarto Stage<a class="headerlink" href="#quarto-stage" title="Link to this heading">#</a></h3>
-<p>By default, a Quarto stage includes the following cmd in the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> file:</p>
+<h4>Quarto Stage<a class="headerlink" href="#quarto-stage" title="Link to this heading">#</a></h4>
+<p>By default, a Quarto stage includes the following <code class="docutils literal notranslate"><span class="pre">cmd</span></code> section in the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># Command to render the Quarto script and move the HTML report to the report folder</span>
     <span class="n">cmd</span><span class="p">:</span>
       <span class="o">-</span> <span class="n">dso</span> <span class="n">exec</span> <span class="n">quarto</span> <span class="o">.</span>
@@ -503,7 +490,7 @@ exclude_samples:
 </div>
 </section>
 <section id="bash-stage">
-<h3>Bash Stage<a class="headerlink" href="#bash-stage" title="Link to this heading">#</a></h3>
+<h4>Bash Stage<a class="headerlink" href="#bash-stage" title="Link to this heading">#</a></h4>
 <p>A Bash stage, by default, does not include an additional script. Bash code can be directly embedded in the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">cmd</span><span class="p">:</span>
       <span class="o">-</span> <span class="o">|</span>
@@ -515,17 +502,26 @@ exclude_samples:
 </pre></div>
 </div>
 </section>
-<section id="accessing-files-and-configurations-with-r-and-python">
-<h3>Accessing Files and Configurations with R and Python<a class="headerlink" href="#accessing-files-and-configurations-with-r-and-python" title="Link to this heading">#</a></h3>
-<p>You can easily access files and configurations using either the DSO R-package or the Python module.</p>
-<p>A convenient way of accessing files and configurations of your is to use the DSO R-package or the Python module.</p>
-<p>For Python, refer to the <a class="reference internal" href="python_usage.html"><span class="std std-doc">Python Usage Page</span></a>.</p>
-<p>For R, refer to the <a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">R Package Page</a>.</p>
+</section>
+<section id="accessing-files-and-parameters-from-r-or-python">
+<h3>Accessing files and parameters from R or Python<a class="headerlink" href="#accessing-files-and-parameters-from-r-or-python" title="Link to this heading">#</a></h3>
+<p>You can easily access files and configurations using either the DSO R-package or the Python module:</p>
+<ul class="simple">
+<li><p>For Python, refer to the <a class="reference internal" href="python_usage.html"><span class="std std-doc">Python Usage Page</span></a>.</p></li>
+<li><p>For R, refer to the <a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">R Package Page</a>.</p></li>
+</ul>
 </section>
 </section>
 <section id="dso-repro-reproducing-all-stages">
 <h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages<a class="headerlink" href="#dso-repro-reproducing-all-stages" title="Link to this heading">#</a></h2>
-<p>To execute or reproduce a stage, folder, or project use <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code>. <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> is a wrapper around <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">repro</span></code> and builds the config files before reproducing the complete or a part of the analyses pipeline.</p>
+<p>To execute (or <em>reproduce</em>, in dvc-speak) all scripts in a project, use <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code>.
+<code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> is a wrapper around <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">repro</span></code> that</p>
+<ul class="simple">
+<li><p>compiles all configuration files</p></li>
+<li><p>computes the checkums of all input files and compares them against the previously executed version</p></li>
+<li><p>executes all stages with modified inputs</p></li>
+<li><p>generates <code class="docutils literal notranslate"><span class="pre">dvc.lock</span></code> files that document all input files, output files and their versions.</p></li>
+</ul>
 <p>Several command options are available and are detailed in the <a class="reference external" href="https://dvc.org/doc/command-reference/repro">dvc repro documentation</a>. The most common usages are detailed below:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproducing the whole project</span>
 dso<span class="w"> </span>repro
@@ -544,25 +540,17 @@ dso<span class="w"> </span>repro<span class="w"> </span>-s<span class="w"> </spa
 </pre></div>
 </div>
 </section>
-<section id="syncing-changes-with-remote">
-<h2>Syncing Changes with Remote<a class="headerlink" href="#syncing-changes-with-remote" title="Link to this heading">#</a></h2>
-<p>To ensure your data and code are synchronized with the remote storage and repository, follow these steps:</p>
-<section id="add-a-remote-data-storage">
-<h3>Add a Remote Data Storage<a class="headerlink" href="#add-a-remote-data-storage" title="Link to this heading">#</a></h3>
-<p>To ensure you can always revert to previous data versions, add a remote storage for your DVC-controlled data. Use the <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">remote</span> <span class="pre">add</span></code> command to specify a remote directory where the version-controlled files will be stored.</p>
-<p>We recommend creating a directory in a suitable long-term storage location. Use the <code class="docutils literal notranslate"><span class="pre">-d</span></code> (default) option of <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">remote</span> <span class="pre">add</span></code> to set this directory as the default remote storage:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a directory for storing version-controlled files</span>
-mkdir<span class="w"> </span>/long/term/storage/project1/DVC_STORAGE
-
-<span class="c1"># Execute within the project directory to define the remote storage</span>
-dvc<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>-d<span class="w"> </span>&lt;remote_name&gt;<span class="w"> </span>/long/term/storage/project1/DVC_STORAGE
-</pre></div>
-</div>
-</section>
-<section id="track-data-with-dvc">
-<h3>Track Data with DVC<a class="headerlink" href="#track-data-with-dvc" title="Link to this heading">#</a></h3>
-<p>In your DSO project, all outputs are automatically controlled by DVC, ensuring that your data is versioned and managed efficiently. This setup helps maintain reproducibility and consistency across your analysis.</p>
-<p>When you have input data that was not generated within your pipeline, you need to add them to your DSO project. Use <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">add</span></code> to track such files with DVC. This command creates an associated <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> file and automatically appends the tracked file to <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>. The <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> file acts as a placeholder for the original file and should be tracked by Git.</p>
+<section id="tracking-and-syncing-files-with-dvc">
+<h2>Tracking and syncing files with DVC<a class="headerlink" href="#tracking-and-syncing-files-with-dvc" title="Link to this heading">#</a></h2>
+<p>Code is tracked with git as with any other project, while data is tracked by <code class="docutils literal notranslate"><span class="pre">dvc</span></code> and synced with a <a class="reference external" href="https://dvc.org/doc/user-guide/data-management/remote-storage#remote-storage">dvc remote</a>. DVC stores <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> or <code class="docutils literal notranslate"><span class="pre">dvc.lock</span></code> files in the git repository
+that reference file versions associated with each commit.</p>
+<a class="reference internal image-reference" href="_images/dso-dvc-remotes.png"><img alt="_images/dso-dvc-remotes.png" src="_images/dso-dvc-remotes.png" style="width: 80%;" />
+</a>
+<p></p>
+<p>In your DSO project, all outputs are automatically controlled by DVC, ensuring that your data is versioned.
+When you have input data that was not generated within your pipeline, you need to add them to your DSO project.
+Use <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">add</span></code> to track such files with DVC. This command creates an associated <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> file and automatically appends
+the tracked file to <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>. The <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> file acts as a placeholder for the original file and should be tracked by git.</p>
 <p>This command is particularly useful when data is generated outside of your DSO project but is used within your analysis, such as metadata or preprocessed data.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add a file to DVC</span>
 dvc<span class="w"> </span>add<span class="w"> </span>&lt;directoryname/filename&gt;
@@ -571,10 +559,22 @@ dvc<span class="w"> </span>add<span class="w"> </span>&lt;directoryname/filename
 dvc<span class="w"> </span>add<span class="w"> </span>metadata/external_clinical_annotation.csv
 </pre></div>
 </div>
-</section>
-<section id="push-changes-to-remote">
-<h3>Push Changes to Remote<a class="headerlink" href="#push-changes-to-remote" title="Link to this heading">#</a></h3>
-<p>After tracking your data with DVC and committing your changes locally, you need to push these changes to both the remote storage and your Git repository. This ensures that your data and metadata are safely backed up and accessible to collaborators.</p>
+<section id="syncing-data-with-a-remote">
+<h3>Syncing data with a remote<a class="headerlink" href="#syncing-data-with-a-remote" title="Link to this heading">#</a></h3>
+<p>To ensure your collaborators can access files you added or results you generated, you need to sync
+data with a <a class="reference external" href="https://dvc.org/doc/user-guide/data-management/remote-storage#remote-storage">dvc remote</a>. DVC supports
+many backends, for instance S3 buckets, or a folder on a shared file system.</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">remote</span> <span class="pre">add</span></code> command to specify a remote directory where the version-controlled files will be stored.
+By adding the <code class="docutils literal notranslate"><span class="pre">-d</span></code> (default) option, dvc sets this directory as the default remote storage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a directory for storing version-controlled files</span>
+mkdir<span class="w"> </span>/path/on/shared/filesystem/project1/DVC_STORAGE
+
+<span class="c1"># Execute within the project directory to define the remote storage</span>
+dvc<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>-d<span class="w"> </span>&lt;remote_name&gt;<span class="w"> </span>/path/on/shared/filesystem/project1/DVC_STORAGE
+</pre></div>
+</div>
+<p>After tracking your data with DVC and committing your changes locally, you need to push these changes to both
+the remote storage and your Git repository.</p>
 <p>Here’s how to do it:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Push DVC-controlled data to the remote storage</span>
 dvc<span class="w"> </span>push
@@ -611,11 +611,11 @@ git<span class="w"> </span>push
       </div>
     </a>
     <a class="right-next"
-       href="cli_installation.html"
+       href="user_guide/config_files.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Installation</p>
+        <p class="prev-next-title">Configuration files</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -639,26 +639,21 @@ git<span class="w"> </span>push
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init-initialize-a-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create-add-folders-or-stages-to-your-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-files">Configuration files</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-configuration-files">Writing configuration files</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-params-yaml-files">Compiling <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overwriting-parameters">Overwriting Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-a-stage">Implementing a stage</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dvc-yaml">dvc.yaml</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-the-dvc-yaml">Configuring the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quarto-stage">Quarto Stage</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bash-stage">Bash Stage</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quarto-stage">Quarto Stage</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bash-stage">Bash Stage</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-files-and-configurations-with-r-and-python">Accessing Files and Configurations with R and Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-files-and-parameters-from-r-or-python">Accessing files and parameters from R or Python</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro-reproducing-all-stages"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-changes-with-remote">Syncing Changes with Remote</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-remote-data-storage">Add a Remote Data Storage</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#track-data-with-dvc">Track Data with DVC</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#push-changes-to-remote">Push Changes to Remote</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tracking-and-syncing-files-with-dvc">Tracking and syncing files with DVC</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-data-with-a-remote">Syncing data with a remote</a></li>
 </ul>
 </li>
 </ul>
