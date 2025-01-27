@@ -1,3 +1,0 @@
-# `uv` integration
-
-TODO
