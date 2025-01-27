@@ -164,7 +164,7 @@ You can easily access files and configurations using either the DSO R-package or
 To execute (or _reproduce_, in dvc-speak) all scripts in a project, use `dso repro`.
 `dso repro` is a wrapper around `dvc repro` that
 
--   compiles all ocnfiguration files
+-   compiles all configuration files
 -   computes the checkums of all input files and compares them against the previously executed version
 -   executes all stages with modified inputs
 -   generates `dvc.lock` files that document all input files, output files and their versions.
@@ -188,9 +188,10 @@ dso repro -s subfolder/my_stage/dvc.yaml
 dso repro -s -f subfolder/my_stage/dvc.yaml
 ```
 
-## Syncing Changes with Remote
+## Tracking and syncing files with DVC
 
-Code is tracked with git as with any other project
+Code is tracked with git as with any other project, while data is tracked by `dvc` and synced with a [dvc remote](https://dvc.org/doc/user-guide/data-management/remote-storage#remote-storage). DVC stores `.dvc` or `dvc.lock` files in the git repository
+that reference file versions associated with each commit.
 
 ```{eval-rst}
 .. image:: ../img/dso-dvc-remotes.png
@@ -198,27 +199,12 @@ Code is tracked with git as with any other project
 
 ```
 
-To ensure your data and code are synchronized with the remote storage and repository, follow these steps:
+<p></p>
 
-### Add a Remote Data Storage
-
-To ensure you can always revert to previous data versions, add a remote storage for your DVC-controlled data. Use the `dvc remote add` command to specify a remote directory where the version-controlled files will be stored.
-
-We recommend creating a directory in a suitable long-term storage location. Use the `-d` (default) option of `dvc remote add` to set this directory as the default remote storage:
-
-```bash
-# Create a directory for storing version-controlled files
-mkdir /long/term/storage/project1/DVC_STORAGE
-
-# Execute within the project directory to define the remote storage
-dvc remote add -d <remote_name> /long/term/storage/project1/DVC_STORAGE
-```
-
-### Track Data with DVC
-
-In your DSO project, all outputs are automatically controlled by DVC, ensuring that your data is versioned and managed efficiently. This setup helps maintain reproducibility and consistency across your analysis.
-
-When you have input data that was not generated within your pipeline, you need to add them to your DSO project. Use `dvc add` to track such files with DVC. This command creates an associated `.dvc` file and automatically appends the tracked file to `.gitignore`. The `.dvc` file acts as a placeholder for the original file and should be tracked by Git.
+In your DSO project, all outputs are automatically controlled by DVC, ensuring that your data is versioned.
+When you have input data that was not generated within your pipeline, you need to add them to your DSO project.
+Use `dvc add` to track such files with DVC. This command creates an associated `.dvc` file and automatically appends
+the tracked file to `.gitignore`. The `.dvc` file acts as a placeholder for the original file and should be tracked by git.
 
 This command is particularly useful when data is generated outside of your DSO project but is used within your analysis, such as metadata or preprocessed data.
 
@@ -230,9 +216,25 @@ dvc add <directoryname/filename>
 dvc add metadata/external_clinical_annotation.csv
 ```
 
-### Push Changes to Remote
+### Syncing data with a remote
 
-After tracking your data with DVC and committing your changes locally, you need to push these changes to both the remote storage and your Git repository. This ensures that your data and metadata are safely backed up and accessible to collaborators.
+To ensure your collaborators can access files you added or results you generated, you need to sync
+data with a [dvc remote](https://dvc.org/doc/user-guide/data-management/remote-storage#remote-storage). DVC supports
+many backends, for instance S3 buckets, or a folder on a shared file system.
+
+Use the `dvc remote add` command to specify a remote directory where the version-controlled files will be stored.
+By adding the `-d` (default) option, dvc sets this directory as the default remote storage:
+
+```bash
+# Create a directory for storing version-controlled files
+mkdir /path/on/shared/filesystem/project1/DVC_STORAGE
+
+# Execute within the project directory to define the remote storage
+dvc remote add -d <remote_name> /path/on/shared/filesystem/project1/DVC_STORAGE
+```
+
+After tracking your data with DVC and committing your changes locally, you need to push these changes to both
+the remote storage and your Git repository.
 
 Here’s how to do it:
 
