@@ -28,7 +28,7 @@ Universal license.
 ## Using custom template libraries
 
 Currently, dso only supports the internal templates mentioned above. However, we plan to add support to custom
-stage templates soon. This enables some interesting use-cases:
+stage templates soon ([#9](https://github.com/Boehringer-Ingelheim/dso/issues/9)). This enables some interesting use-cases:
 
 -   Organization-specific templates: Use templates that make it easier to comply with internal processes or apply
     corporate design.
