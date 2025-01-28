@@ -48,11 +48,12 @@ optional-dependencies.doc = [
   "ipykernel",
   "ipython",
   "matplotlib",
-  "myst-nb>=1.1",
+  "myst-parser",
   "sphinx>=4",
   "sphinx-autodoc-typehints",
   "sphinx-book-theme>=1",
   "sphinx-copybutton",
+  "sphinx-design",
   "sphinxcontrib-bibtex>=1",
   "sphinxext-opengraph",
 ]
