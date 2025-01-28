@@ -7,7 +7,7 @@ documentation.
 Integration with `uv` serves two main purposes:
 
 -   freeze the version of `dso` per project to ensure reproducibility in the future, even if dso behavior changes.
-    This features is a work-in-progress, see also [installation](cli_installation.md#freezing-the-dso-version-within-a-project).
+    This features is a work-in-progress, see also [installation](../cli_installation.md#freezing-the-dso-version-within-a-project).
 -   Provide a python virtual environment for all python stages in the project.
 
 Using a separate virtual environment for each project is considered good practice to ensure reproducibility and
