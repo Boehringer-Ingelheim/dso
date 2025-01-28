@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="user_guide/quarto.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="Here we describe how DSO integrates with quarto ( dso exec quarto, watermarking, …) TODO" />
+<meta property="og:description" content="DSO integrates with quarto for authoring reproducible analysis reports. Quarto supports both Python and R through Jupyter notebooks ( ipynb) or quarto markdown ( qmd) files. DSO provides a wrapper ..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_user_guide_quarto_0ac4d104.png" />
-<meta property="og:image:alt" content="Here we describe how DSO integrates with quarto ( dso exec quarto, watermarking, …) TODO" />
-<meta name="description" content="Here we describe how DSO integrates with quarto ( dso exec quarto, watermarking, …) TODO" />
+<meta property="og:image" content="/_images/social_previews/summary_user_guide_quarto_2f4d4872.png" />
+<meta property="og:image:alt" content="DSO integrates with quarto for authoring reproducible analysis reports. Quarto supports both Python and R through Jupyter notebooks ( ipynb) or quarto markdo..." />
+<meta name="description" content="DSO integrates with quarto for authoring reproducible analysis reports. Quarto supports both Python and R through Jupyter notebooks ( ipynb) or quarto markdown ( qmd) files. DSO provides a wrapper ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Quarto integration &#8212; dso-core</title>
@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=a2eea54d"></script>
+    <script src="../_static/documentation_options.js?v=974b7fd0"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +67,7 @@
     <link rel="prev" title="dso._lint.DSO001" href="../generated/dso._lint.DSO001.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g8c1d840" />
+  <meta name="docsearch:version" content="0.1.dev1+gadd568c" />
   </head>
   
   
@@ -159,7 +159,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="templates.html">Project and stage templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="params_files.html">Configuration files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dvc.html">DVC integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pre_commit.html">pre-commit integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="uv.html"><code class="docutils literal notranslate"><span class="pre">uv</span></code> integration</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="linting.html">Linting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -324,7 +323,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -340,6 +341,17 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quarto-configuration">Quarto configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-run-script">Pre-run script</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#disclaimer">Disclaimer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#watermarking">Watermarking</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -351,8 +363,106 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="quarto-integration">
 <h1>Quarto integration<a class="headerlink" href="#quarto-integration" title="Link to this heading">#</a></h1>
-<p>Here we describe how DSO integrates with quarto (<code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">exec</span> <span class="pre">quarto</span></code>, watermarking, …)</p>
-<p>TODO</p>
+<p>DSO integrates with <a class="reference external" href="https://quarto.org/">quarto</a> for authoring reproducible analysis reports.
+Quarto supports both Python and R through Jupyter notebooks (<code class="docutils literal notranslate"><span class="pre">ipynb</span></code>) or quarto markdown (<code class="docutils literal notranslate"><span class="pre">qmd</span></code>) files.</p>
+<p>DSO provides a wrapper script</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>quarto
+</pre></div>
+</div>
+<p>to render a quarto stage that provides additional convenience features:</p>
+<ul class="simple">
+<li><p>specify quarto configuration in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> (and benefit from <a class="reference internal" href="params_files.html#inheritance"><span class="std std-ref">templating and inheritance</span></a>).</p></li>
+<li><p>automatically place HTML report in the <code class="docutils literal notranslate"><span class="pre">resport</span></code> directory of the stage</p></li>
+<li><p>automatically create an <code class="docutils literal notranslate"><span class="pre">output</span></code> directory before running the quarto script</p></li>
+<li><p>execute a pre-run script to setup the environment</p></li>
+<li><p>possibility to add a disclaimer text at the top of each report</p></li>
+<li><p>possibility to add watermarks to all plots</p></li>
+</ul>
+<p>To benefit from the seamless quarto integration, simply start off with one of the <a class="reference internal" href="templates.html#available-templates"><span class="std std-ref">quarto templates</span></a> provided by <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">stage</span></code>.</p>
+<section id="quarto-configuration">
+<h2>Quarto configuration<a class="headerlink" href="#quarto-configuration" title="Link to this heading">#</a></h2>
+<p>Quarto projects can be <a class="reference external" href="https://quarto.org/docs/projects/quarto-projects.html#project-metadata">configured using a <code class="docutils literal notranslate"><span class="pre">_quarto.yml</span></code> file</a>.
+To consolidate all configuration in a single place and to benefit from dso’s <a class="reference internal" href="params_files.html#inheritance"><span class="std std-ref">hierarchical configuration system</span></a>, we support that quarto configuration can instead be specified in the <code class="docutils literal notranslate"><span class="pre">dso.quarto</span></code> field of a
+<code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file. When running <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">exec</span> <span class="pre">quarto</span></code>, the corresponding <code class="docutils literal notranslate"><span class="pre">_quarto.yml</span></code> file is dynamically generated
+and removed again after completion.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code></strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">dso</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">quarto</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">before_script</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="c1"># bash snippet to execute before running `dso exec quarto`, use this to setup environment modules etc.</span>
+<span class="w">        </span><span class="nt">author</span><span class="p">:</span>
+<span class="w">            </span><span class="c1"># please add a complete list of authors. If some authors only contributed to a certain workpackage/stage</span>
+<span class="w">            </span><span class="c1"># you can add the dso.quarto.author section in the respective params.in.yaml and they will be merged.</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Jane Doe</span>
+<span class="w">              </span><span class="nt">affiliations</span><span class="p">:</span>
+<span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Example Department</span>
+<span class="w">        </span><span class="nt">format</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">html</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">fig-format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">svg</span>
+<span class="w">                </span><span class="nt">toc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">                </span><span class="nt">code-fold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">                </span><span class="nt">embed-resources</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">page-layout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">full</span>
+<span class="w">        </span><span class="nt">execute</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">warning</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">            </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">        </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">now</span>
+<span class="w">        </span><span class="nt">date-format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">YYYY-MMM-DD</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">dso.quarto</span></code> section supports any configuration specified in the <a class="reference external" href="https://quarto.org/docs/projects/quarto-projects.html#project-metadata">quarto documentation</a>. Additionally, there are DSO-specific configuration fields that are detailled
+in the next sections:</p>
+</section>
+<section id="pre-run-script">
+<h2>Pre-run script<a class="headerlink" href="#pre-run-script" title="Link to this heading">#</a></h2>
+<p>Sometimes it may be required to run a script or bash snippet to setup the environment before running quarto.
+This can be achieved by adding a <code class="docutils literal notranslate"><span class="pre">dso.quarto.before_script</span></code> field to the <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file.</p>
+<p>For instance, you could use the following snippet to load an <a class="reference external" href="https://modules.readthedocs.io/en/latest/">enviornment module</a>
+if required on your system:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">before_script</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;module</span><span class="nv"> </span><span class="s">load</span><span class="nv"> </span><span class="s">quarto/1.4.549&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="disclaimer">
+<h2>Disclaimer<a class="headerlink" href="#disclaimer" title="Link to this heading">#</a></h2>
+<p>If you want to add disclaimer box at the top of every quarto document (for instance, to mark the report as preliminary),
+you can do so using the <code class="docutils literal notranslate"><span class="pre">dso.quarto.disclaimer</span></code> option. For instance, the following configuration…</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">dso</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">quarto</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">disclaimer</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">This is a preliminary document</span>
+<span class="w">            </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">                </span><span class="no">The results presented in this report have not been reviewed for correctness.</span>
+<span class="w">                </span><span class="no">Please be careful when interpreting the results.</span>
+</pre></div>
+</div>
+<p>…would result in the following header of the document:</p>
+<p><img alt="quarto disclaimer" src="../_images/dso-quarto-disclaimer.png" /></p>
+</section>
+<section id="watermarking">
+<h2>Watermarking<a class="headerlink" href="#watermarking" title="Link to this heading">#</a></h2>
+<p>DSO can automatically add watermarks to all plots in a quarto document. Again, this might be useful for
+marking figures as preliminary. The following configuration</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">dso</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">quarto</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">watermark</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preliminary</span>
+</pre></div>
+</div>
+<p>… would result in a watermark as shown here:</p>
+<p><img alt="quarto watermark" src="../_images/dso-quarto-watermark.png" /></p>
+<p>The watermark can be further customized using the following options:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">watermark</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DRAFT!!!111elf</span>
+<span class="w">    </span><span class="nt">tile_size</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">100</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">100</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># in pixel. There will always be an instance of the text in the top left and bottom right corner of the tile</span>
+<span class="w">    </span><span class="nt">font_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">48</span>
+<span class="w">    </span><span class="nt">font_color</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">red</span>
+<span class="w">    </span><span class="nt">font_outline_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">font_outline_color</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#00FF0099&quot;</span>
+</pre></div>
+</div>
+<p>On a technical level, watermarking is implemented as a <a class="reference external" href="https://pandoc.org/filters.html">pandoc filter</a> using <a class="reference external" href="https://scorreia.com/software/panflute/">panflute</a>. After quarto created an intermediate markdown file, pandoc parses it into an abstract syntax tree (AST).
+The pandoc filter traverses the AST and manipulates each image before pandoc continues conversion into the destination format (usually HTML).</p>
+</section>
 </section>
 
 
@@ -390,6 +500,25 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quarto-configuration">Quarto configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-run-script">Pre-run script</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#disclaimer">Disclaimer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#watermarking">Watermarking</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
