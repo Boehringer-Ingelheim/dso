@@ -2,10 +2,11 @@
 
 YAML-based config files in a _project_, _folder_, or _stage_ serve as a single point of truth for all input files, output files or parameters.
 For this purpose, configurations can be defined at each level of your project in a `params.in.yaml` file.
-Using `dso compile-config` the `params.in.yaml` files are compiled into `params.yaml` with two features:
+Using `dso compile-config` the `params.in.yaml` files are compiled into `params.yaml` with the following features:
 
 -   _inheritance_: All variables defined in `params.in.yaml` files in any parent directory will be included.
 -   _templating_: Variables can be composed using [jinja2 syntax](https://jinja.palletsprojects.com/en/stable/templates/#variables), e.g. `foo: "{{ bar }}_version2"`.
+-   _path resolving_: Paths will be always relative to each compiled `params.yaml` file, no matter where they were defined.
 
 Therefore, you only need to [read in](#accessing-stage-config) a single `params.yaml` file in each stage.
 
@@ -49,7 +50,7 @@ This allows variable to be composed using [jinja2 syntax](https://jinja.palletsp
 
 To ensure that, despite inheritance, paths are always relative to each compiled `params.yaml` file, relative paths need to be preceded with `!path`, e.g.:
 
-```
+```yaml
 samplesheet: !path "01_preprocessing/input/samplesheet.txt"
 ```
 
@@ -63,13 +64,9 @@ how to work with relative paths in Python/R scripts see [python usage](../python
 Let's consider a project which has the following two `params.in.yaml` files at the project root
 and in a stage subfolder.
 
-<table>
-<tr>
-    <th width="50%">/params.in.yaml</th>
-    <th>/stage/params.in.yaml</th>
-</tr>
-<tr>
-<td>
+::::{grid} 1 1 2 2
+
+:::{grid-item-card} `/params.in.yaml`
 
 ```yaml
 thresholds:
@@ -87,8 +84,9 @@ exclude_samples:
     - sample_6
 ```
 
-</td>
-<td>
+:::
+
+:::{grid-item-card} `/stage/params.in.yaml`
 
 ```yaml
 thresholds:
@@ -103,19 +101,14 @@ exclude_samples:
     - sample_42
 ```
 
-</td>
-</tr>
-</table>
+:::
+::::
 
 This results in the following **compiled `params.yaml` files**:
 
-<table>
-<tr>
-    <th width="50%">/params.yaml</th>
-    <th>/stage/params.yaml</th>
-</tr>
-<tr>
-<td>
+::::{grid} 1 1 2 2
+
+:::{grid-item-card} `/params.yaml`
 
 ```yaml
 thresholds:
@@ -133,8 +126,8 @@ exclude_samples:
     - sample_6
 ```
 
-</td>
-<td>
+:::
+:::{grid-item-card} `/stage/params.yaml`
 
 ```yaml
 thresholds:
@@ -155,9 +148,8 @@ exclude_samples:
 samplesheet: 01_preprocessing/input/samplesheet.txt
 ```
 
-</td>
-</tr>
-</table>
+:::
+::::
 
 ## Accessing stage config
 

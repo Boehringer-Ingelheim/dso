@@ -52,6 +52,31 @@ For more information about project and stage templates, click [here](user_guide/
 
 ## Configuration files
 
+DSO proposes to put all parameters for your analysis (e.g. paths to input or output files, thresholds, etc)
+in YAML-base configuration files. You can add a `params.in.yaml` at any level of a dso project (_project_, _folder_ or _stage_).
+
+By running
+
+```bash
+dso compile-config
+```
+
+`params.in.yaml` files will be _compiled_ into `params.yaml` files. Compilation offers the following advantages:
+
+-   _inheritance_: All variables defined in `params.in.yaml` files in any parent directory will be included.
+-   _templating_: Variables can be composed using [jinja2 syntax](https://jinja.palletsprojects.com/en/stable/templates/#variables), e.g. `foo: "{{ bar }}_version2"`.
+-   _path resolving_: Paths will be always relative to each compiled `params.yaml` file, no matter where they were defined.
+
+```{eval-rst}
+.. image:: img/dso-yaml-inherit.png
+   :width: 80%
+
+```
+
+<p></p>
+
+For more details, please refer to [Configuration files](user_guide/params_files.md).
+
 ## Implementing a stage
 
 A stage is a single step in your analysis and usually generates some kind of output data from input data. The input data can also be supplied by previous stages. To create a stage, use the `dso create stage` command and select either the _bash_ or _quarto_ template as a starting-point.
