@@ -1,6 +1,7 @@
 # Project and stage templates
 
-DSO provides a templating engine that allows to quickly bootrstap a project (`dso init`), folder, or stages (`dso create`).
+DSO provides a templating engine that allows to [quickly boostrap a project](../getting_started.md#dso-init----initialize-a-project)
+(`dso init`), folder, or stages (`dso create`).
 Templates are based on [jinja2](https://jinja.palletsprojects.com/en/stable/templates/).
 
 ## Available templates
@@ -28,7 +29,7 @@ Universal license.
 ## Using custom template libraries
 
 Currently, dso only supports the internal templates mentioned above. However, we plan to add support to custom
-stage templates soon. This enables some interesting use-cases:
+stage templates soon ([#9](https://github.com/Boehringer-Ingelheim/dso/issues/9)). This enables some interesting use-cases:
 
 -   Organization-specific templates: Use templates that make it easier to comply with internal processes or apply
     corporate design.

@@ -7,19 +7,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Accessing stage config" />
+<meta property="og:title" content="dso._lint.DSO001" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="user_guide/accessing_stage_configs.html" />
+<meta property="og:url" content="generated/dso._lint.DSO001.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="In this section we describe the rationale of dso get-config/ read_params and detail how it works. TODO" />
+<meta property="og:description" content="Attributes table: Methods table: Attributes: Methods:" />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_user_guide_accessing_stage_configs_f5e17be4.png" />
-<meta property="og:image:alt" content="In this section we describe the rationale of dso get-config/ read_params and detail how it works. TODO" />
-<meta name="description" content="In this section we describe the rationale of dso get-config/ read_params and detail how it works. TODO" />
+<meta property="og:image" content="/_images/social_previews/summary_generated_dso._lint.DSO001_a53a8d3a.png" />
+<meta property="og:image:alt" content="Attributes table: Methods table: Attributes: Methods:" />
+<meta name="description" content="Attributes table: Methods table: Attributes: Methods:" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Accessing stage config &#8212; dso-core</title>
+    <title>dso._lint.DSO001 &#8212; dso-core</title>
   
   
   
@@ -43,8 +43,8 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=42210275" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=366103d0" />
   
   <!-- So that users can add custom icons -->
@@ -53,20 +53,21 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=282d51b6"></script>
+    <script src="../_static/documentation_options.js?v=a2eea54d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/accessing_stage_configs';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/dso._lint.DSO001';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="DVC integration" href="dvc.html" />
-    <link rel="prev" title="Params files" href="params_files.html" />
+    <link rel="next" title="Quarto integration" href="../user_guide/quarto.html" />
+    <link rel="prev" title="Linting" href="../user_guide/linting.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g92ce961" />
+  <meta name="docsearch:version" content="0.1.dev1+g8c1d840" />
   </head>
   
   
@@ -156,14 +157,16 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="templates.html">Project and stage templates</a></li>
-<li class="toctree-l1"><a class="reference internal" href="params_files.html">Params files</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Accessing stage config</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dvc.html">DVC integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pre_commit.html">pre-commit integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="uv.html"><code class="docutils literal notranslate"><span class="pre">uv</span></code> integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="linting.html">Linting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quarto.html">Quarto integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/templates.html">Project and stage templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/params_files.html">Configuration files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dvc.html">DVC integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/pre_commit.html">pre-commit integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/uv.html"><code class="docutils literal notranslate"><span class="pre">uv</span></code> integration</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../user_guide/linting.html">Linting</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">dso._lint.DSO001</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/quarto.html">Quarto integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
@@ -258,7 +261,7 @@
       
       
       
-      <li><a href="../_sources/user_guide/accessing_stage_configs.md" target="_blank"
+      <li><a href="../_sources/generated/dso._lint.DSO001.rst" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -268,7 +271,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.rst</span>
 </a>
 </li>
       
@@ -321,7 +324,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -332,11 +337,30 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Accessing stage config</h1>
+    <h1>dso._lint.DSO001</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso._lint.DSO001"><code class="docutils literal notranslate"><span class="pre">DSO001</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes-table">Attributes table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods-table">Methods table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dso._lint.DSO001.PATTERN"><code class="docutils literal notranslate"><span class="pre">DSO001.PATTERN</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dso._lint.DSO001.check"><code class="docutils literal notranslate"><span class="pre">DSO001.check()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dso._lint.DSO001.is_applicable"><code class="docutils literal notranslate"><span class="pre">DSO001.is_applicable()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -346,10 +370,69 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="accessing-stage-config">
-<h1>Accessing stage config<a class="headerlink" href="#accessing-stage-config" title="Link to this heading">#</a></h1>
-<p>In this section we describe the rationale of <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code>/<code class="docutils literal notranslate"><span class="pre">read_params</span></code> and detail how it works.</p>
-<p>TODO</p>
+  <section id="dso-lint-dso001">
+<h1>dso._lint.DSO001<a class="headerlink" href="#dso-lint-dso001" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="dso._lint.DSO001">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dso._lint.</span></span><span class="sig-name descname"><span class="pre">DSO001</span></span><a class="headerlink" href="#dso._lint.DSO001" title="Link to this definition">#</a></dt>
+<dd><p>In a quarto stage, ensure <code class="docutils literal notranslate"><span class="pre">dso::read_params</span></code> is called and stage name is correct</p>
+</dd></dl>
+
+<section id="attributes-table">
+<h2>Attributes table<a class="headerlink" href="#attributes-table" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dso._lint.DSO001.PATTERN" title="dso._lint.DSO001.PATTERN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PATTERN</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="methods-table">
+<h2>Methods table<a class="headerlink" href="#methods-table" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dso._lint.DSO001.check" title="dso._lint.DSO001.check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check</span></code></a>(file)</p></td>
+<td><p>Check that the file passes the linting step.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dso._lint.DSO001.is_applicable" title="dso._lint.DSO001.is_applicable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_applicable</span></code></a>(file)</p></td>
+<td><p>Check if the rule is applicable to <code class="docutils literal notranslate"><span class="pre">file</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h2>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dso._lint.DSO001.PATTERN">
+<span class="sig-prename descclassname"><span class="pre">DSO001.</span></span><span class="sig-name descname"><span class="pre">PATTERN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'.*\\.qmd'</span></em><a class="headerlink" href="#dso._lint.DSO001.PATTERN" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading">#</a></h2>
+<dl class="py method">
+<dt class="sig sig-object py" id="dso._lint.DSO001.check">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">DSO001.</span></span><span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dso._lint.DSO001.check" title="Link to this definition">#</a></dt>
+<dd><p>Check that the file passes the linting step.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dso._lint.DSO001.is_applicable">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">DSO001.</span></span><span class="sig-name descname"><span class="pre">is_applicable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dso._lint.DSO001.is_applicable" title="Link to this definition">#</a></dt>
+<dd><p>Check if the rule is applicable to <code class="docutils literal notranslate"><span class="pre">file</span></code>.</p>
+<p>Return true, if “dso exec quarto” is found in the dvc.yaml associated with this stage AND
+the file matches the pattern</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -364,20 +447,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="params_files.html"
+       href="../user_guide/linting.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Params files</p>
+        <p class="prev-next-title">Linting</p>
       </div>
     </a>
     <a class="right-next"
-       href="dvc.html"
+       href="../user_guide/quarto.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">DVC integration</p>
+        <p class="prev-next-title">Quarto integration</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -387,6 +470,33 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso._lint.DSO001"><code class="docutils literal notranslate"><span class="pre">DSO001</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes-table">Attributes table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods-table">Methods table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dso._lint.DSO001.PATTERN"><code class="docutils literal notranslate"><span class="pre">DSO001.PATTERN</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dso._lint.DSO001.check"><code class="docutils literal notranslate"><span class="pre">DSO001.check()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dso._lint.DSO001.is_applicable"><code class="docutils literal notranslate"><span class="pre">DSO001.is_applicable()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
