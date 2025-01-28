@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning][].
 
 ### Documentation
 
--   Various documentation updates, working towards the first public version of the docs.
+-   Update documentation, finalizing the most important sections of the user guide.
 
 ## v0.11.0
 

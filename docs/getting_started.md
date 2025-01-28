@@ -122,6 +122,8 @@ By default, a Quarto stage includes the following `cmd` section in the `dvc.yaml
       - dso exec quarto .
 ```
 
+`dso exec quarto` provides additional features such as pre-run scripts and watermarking. For more information see [here](user_guide/quarto.md).
+
 #### Bash Stage
 
 A Bash stage, by default, does not include an additional script. Bash code can be directly embedded in the `dvc.yaml` file:
