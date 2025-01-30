@@ -14,7 +14,9 @@ from dso._util import get_project_root, get_template_path, instantiate_template
 # list of stage template with description - can be later populated also from external directories
 STAGE_TEMPLATES = {
     "bash": "Execute a simple bash snippet or call an external script (e.g. nextflow)",
-    "quarto": "Generate a report using quarto",
+    "quarto_r": "Generate a quarto report using R (qmd file)",
+    "quarto_py": "Generate a quarto report using Python (qmd file)",
+    "quarto_ipynb": "Generate a quarto report using Python (ipynb file)",
 }
 # Create help text for CLI listing all templates
 STAGE_TEMPLATE_TEXT = "\n".join(f" * __{name}__: {description}" for name, description in STAGE_TEMPLATES.items())

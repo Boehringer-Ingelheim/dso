@@ -79,7 +79,8 @@ For more details, please refer to [Configuration files](user_guide/params_files.
 
 ## Implementing a stage
 
-A stage is a single step in your analysis and usually generates some kind of output data from input data. The input data can also be supplied by previous stages. To create a stage, use the `dso create stage` command and select either the _bash_ or _quarto_ template as a starting-point.
+A stage is a single step in your analysis and usually generates some kind of output data from input data. The input data can also be supplied by previous stages. To create a stage, use the `dso create stage` command and select either the _bash_ or one of the _quarto_
+[templates](user_guide/templates.md) as a starting-point.
 
 The essential files of a stage are:
 

@@ -24,6 +24,13 @@ repos:
   #       args: [--fix, --exit-non-zero-on-fix]
   #     - id: ruff-format
   #       types_or: [python, pyi, jupyter]
+
+  # for ipynb files in `src` directories: we never want to commit any output as rendered output files
+  # are tracked by dvc
+  - repo: https://github.com/kynan/nbstripout
+    rev: "0.8.1"
+    hooks:
+      - id: nbstripout
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:

@@ -69,7 +69,7 @@ def render_quarto(quarto_dir: Path, report_dir: Path, before_script: str, cwd: P
 
         {before_script}
 
-        quarto render "{quarto_dir}" --output-dir "{report_dir}" {quiet} {pandocfilter}
+        quarto render "{quarto_dir}" --execute --output-dir "{report_dir}" {quiet} {pandocfilter}
         """
     )
     res = subprocess.run(script, shell=True, executable="/bin/bash", cwd=cwd)

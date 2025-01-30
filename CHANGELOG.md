@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning][].
 
 ## [Unreleased]
 
+### New features
+
+-   Add templates for Python stages (`quarto_py`, `quarto_ipynb`) ([#98](https://github.com/Boehringer-Ingelheim/dso/pull/98)).
+
 ### Documentation
 
 -   Update documentation, finalizing the most important sections of the user guide.
@@ -27,7 +31,7 @@ and this project adheres to [Semantic Versioning][].
 -   Do not change the configuration of the root logger, only the `dso` logger. Changing the root logger
     had side-effects on other libraries when importing `dso` in Python ([#80](https://github.com/Boehringer-Ingelheim/dso/pull/80)).
 
-### New Features
+### New features
 
 -   Paths in `params.in.yaml` files declared with `!path` can now be compiled to absolute instead of relative paths ([#78](https://github.com/Boehringer-Ingelheim/dso/pull/78)).
 -   Python API that mirrors `dso-r` functionality (e.g. to be used from Jupyter notebooks) ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))

@@ -31,7 +31,7 @@ def quarto_stage(dso_project) -> Path:
     runner = CliRunner()
     stage_name = "quarto_stage"
     chdir(dso_project)
-    runner.invoke(dso_create, ["stage", stage_name, "--template", "quarto", "--description", "a quarto stage"])
+    runner.invoke(dso_create, ["stage", stage_name, "--template", "quarto_r", "--description", "a quarto stage"])
     with (Path(stage_name) / "src" / f"{stage_name}.qmd").open("w") as f:
         f.write(
             dedent(
