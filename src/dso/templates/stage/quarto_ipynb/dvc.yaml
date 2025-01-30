@@ -1,9 +1,9 @@
 stages:
-  {{ stage_name }}:
+  { { stage_name } }:
     params:
       - dso.quarto
     deps:
-      - src/{{ stage_name }}.qmd
+      - src/{{ stage_name }}.ipynb
     outs:
       - output
       - report/{{ stage_name }}.html
