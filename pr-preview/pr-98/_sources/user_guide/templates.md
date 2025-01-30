@@ -19,7 +19,9 @@ Folder templates:
 
 Stage templates:
 
--   [quarto](https://github.com/Boehringer-Ingelheim/dso/tree/main/src/dso/templates/stage/quarto) - Template for quarto notebook in R
+-   [quarto_r](https://github.com/Boehringer-Ingelheim/dso/tree/main/src/dso/templates/stage/quarto) - Template for quarto notebook in R
+-   [quarto_py](https://github.com/Boehringer-Ingelheim/dso/tree/main/src/dso/templates/stage/quarto) - Template for quarto notebook in Python (quarto markdown (`.qmd`) format)
+-   [quarto_r](https://github.com/Boehringer-Ingelheim/dso/tree/main/src/dso/templates/stage/quarto) - Template for quarto notebook in Python (jupyter notebook (`.ipynb`) format)
 -   [bash](https://github.com/Boehringer-Ingelheim/dso/tree/main/src/dso/templates/stage/bash) - Template for executing a bash snippet
 
 The source code of the templates can be [inspected on GitHub](https://github.com/Boehringer-Ingelheim/dso/tree/main/src/dso/templates).
