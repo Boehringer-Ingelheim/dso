@@ -1,5 +1,5 @@
 stages:
-  { { stage_name } }:
+  {{ stage_name }}:
     params:
       - dso.quarto
     deps:
