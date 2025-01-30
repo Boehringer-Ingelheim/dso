@@ -38,6 +38,7 @@ dependencies = [
   "ruamel-yaml",
   "svgutils",
   "tomli; python_version<='3.10'",
+  "uv",
 ]
 
 optional-dependencies.dev = [ "hatch", "pre-commit" ]

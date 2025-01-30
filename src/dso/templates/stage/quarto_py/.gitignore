@@ -1,0 +1,7 @@
+/log
+/tmp
+/temp
+/input/*
+!/input/*.dvc
+/output/*
+/report/*
