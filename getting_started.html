@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=974b7fd0"></script>
+    <script src="_static/documentation_options.js?v=1d161cd3"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +67,7 @@
     <link rel="prev" title="DSO: data science operations" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+gadd568c" />
+  <meta name="docsearch:version" content="0.1.dev1+gcd3edb9" />
   </head>
   
   
@@ -439,7 +439,8 @@ in YAML-base configuration files. You can add a <code class="docutils literal no
 </section>
 <section id="implementing-a-stage">
 <h2>Implementing a stage<a class="headerlink" href="#implementing-a-stage" title="Link to this heading">#</a></h2>
-<p>A stage is a single step in your analysis and usually generates some kind of output data from input data. The input data can also be supplied by previous stages. To create a stage, use the <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">stage</span></code> command and select either the <em>bash</em> or <em>quarto</em> template as a starting-point.</p>
+<p>A stage is a single step in your analysis and usually generates some kind of output data from input data. The input data can also be supplied by previous stages. To create a stage, use the <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">stage</span></code> command and select either the <em>bash</em> or one of the <em>quarto</em>
+<a class="reference internal" href="user_guide/templates.html"><span class="std std-doc">templates</span></a> as a starting-point.</p>
 <p>The essential files of a stage are:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code>: The DVC configuration file that defines your data pipelines, dependencies, and outputs.</p></li>

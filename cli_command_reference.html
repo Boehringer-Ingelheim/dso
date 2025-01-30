@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=974b7fd0"></script>
+    <script src="_static/documentation_options.js?v=1d161cd3"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +67,7 @@
     <link rel="prev" title="Installation" href="cli_installation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+gadd568c" />
+  <meta name="docsearch:version" content="0.1.dev1+gcd3edb9" />
   </head>
   
   
@@ -482,12 +482,15 @@
                                                                                 
  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">bash</span><span class=" -Color -Color-Faint -C-Faint">: Execute a simple bash snippet or call an external script (e.g.       </span> 
  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">   </span><span class=" -Color -Color-Faint -C-Faint">nextflow)                                                                  </span> 
- <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">quarto</span><span class=" -Color -Color-Faint -C-Faint">: Generate a report using quarto                                     </span> 
+ <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">quarto_r</span><span class=" -Color -Color-Faint -C-Faint">: Generate a quarto report using R (qmd file)                      </span> 
+ <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">quarto_py</span><span class=" -Color -Color-Faint -C-Faint">: Generate a quarto report using Python (qmd file)                </span> 
+ <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">quarto_ipynb</span><span class=" -Color -Color-Faint -C-Faint">: Generate a quarto report using Python (ipynb file)           </span> 
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--template</span>       <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">[</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">bash</span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">|</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">quarto</span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">]</span>                                               <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--description</span>    <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT         </span>                                               <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>           <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">             </span>  Show this message and exit.                  <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--template</span>       <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">[</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">bash</span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">|</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">quarto_r</span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">|</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">quarto_py</span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">|</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">qua</span>                                <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">rto_ipynb</span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">]</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">                  </span>                                <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--description</span>    <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT                        </span>                                <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>           <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">                            </span>  Show this message and exit.   <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
