@@ -39,8 +39,11 @@ repos:
         stages: [pre-commit]
       - id: push
         name: Run dvc push
-        entry: dvc push
+        entry: dvc git-hook pre-push
+        require_serial: true
         language: system
+        verbose: true
+        always_run: true
         stages: [pre-push]
 
   # These are hooks for automated formatting - we recommend them but don't enable them by default.
