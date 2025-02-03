@@ -40,6 +40,7 @@ repos:
       - id: push
         name: Run dvc push
         entry: dvc push
+        language: system
         stages: [pre-push]
 
   # These are hooks for automated formatting - we recommend them but don't enable them by default.
