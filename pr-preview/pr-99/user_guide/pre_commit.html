@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="user_guide/pre_commit.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="Pre-commit hooks are small scripts that perform consistency checks on files in the repository before actually performing a git commit (or push). If the checks fail, the commit will be aborted and r..." />
+<meta property="og:description" content="Pre-commit hooks are small scripts that perform consistency checks on files in the repository before actually performing a git commit (or push). If the checks fail, the commit will be aborted and n..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
 <meta property="og:image" content="/_images/social_previews/summary_user_guide_pre_commit_02548bb8.png" />
 <meta property="og:image:alt" content="Pre-commit hooks are small scripts that perform consistency checks on files in the repository before actually performing a git commit (or push). If the check..." />
-<meta name="description" content="Pre-commit hooks are small scripts that perform consistency checks on files in the repository before actually performing a git commit (or push). If the checks fail, the commit will be aborted and r..." />
+<meta name="description" content="Pre-commit hooks are small scripts that perform consistency checks on files in the repository before actually performing a git commit (or push). If the checks fail, the commit will be aborted and n..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>pre-commit integration &#8212; dso-core</title>
@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=348ee418"></script>
+    <script src="../_static/documentation_options.js?v=947e4c3d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +67,7 @@
     <link rel="prev" title="Configuration files" href="params_files.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g489877a" />
+  <meta name="docsearch:version" content="0.1.dev1+ge649439" />
   </head>
   
   
@@ -364,7 +364,7 @@
 <h1>pre-commit integration<a class="headerlink" href="#pre-commit-integration" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://pre-commit.com/">Pre-commit</a> hooks are small scripts that perform consistency checks on
 files in the repository before actually performing a git commit (or push).
-If the checks fail, the commit will be aborted and retried once the problems have been
+If the checks fail, the commit will be aborted and needs to be retried once the problems have been
 fixed. Some issues can automatically be fixed by the hooks.</p>
 <p>Pre-commit hooks are defined in a <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> file at the root
 of a repository. The <a class="reference internal" href="templates.html"><span class="std std-doc">DSO project template</span></a> comes with a default configuration that is detailled below.</p>
@@ -373,7 +373,7 @@ will ask the user whether to do so. You can also install the hooks manually by r
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pre-commit<span class="w"> </span>install
 </pre></div>
 </div>
-<p>This will write the hooks in the <code class="docutils literal notranslate"><span class="pre">.git</span></code> directory.</p>
+<p>This will write the hooks into the <code class="docutils literal notranslate"><span class="pre">.git</span></code> directory.</p>
 <section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Let’s assume we made some changes that are already in the git staging area (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code>) and are about
@@ -396,7 +396,7 @@ to be committed.</p>
 <span class="go">Run dso lint.............................................................Passed</span>
 </pre></div>
 </div>
-<p>The check failed, because on “end of file” has been fixed. This now shows as “unstaged”
+<p>The check failed, because the “end of file” has been fixed in one file. This now shows as “unstaged”
 file in <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>&gt;<span class="w"> </span>git<span class="w"> </span>status
 <span class="go">[...]</span>
@@ -451,7 +451,7 @@ file in <code class="docutils literal notranslate"><span class="pre">git</span> 
 configuration file:</p>
 <ul class="simple">
 <li><p>dvc push: Run <a class="reference external" href="https://dvc.org/doc/command-reference/push#push">dvc push</a> to ensure all data files are
-synced to the remote at the same time the code changes are pushed to git.</p></li>
+synced to the remote at the same time the code changes are pushed to the git remote.</p></li>
 </ul>
 </section>
 </section>
