@@ -2,7 +2,7 @@
 
 [Pre-commit](https://pre-commit.com/) hooks are small scripts that perform consistency checks on
 files in the repository before actually performing a git commit (or push).
-If the checks fail, the commit will be aborted and retried once the problems have been
+If the checks fail, the commit will be aborted and needs to be retried once the problems have been
 fixed. Some issues can automatically be fixed by the hooks.
 
 Pre-commit hooks are defined in a `.pre-commit-config.yaml` file at the root
@@ -15,7 +15,7 @@ will ask the user whether to do so. You can also install the hooks manually by r
 pre-commit install
 ```
 
-This will write the hooks in the `.git` directory.
+This will write the hooks into the `.git` directory.
 
 ## Example
 
@@ -41,7 +41,7 @@ nbstripout...........................................(no files to check)Skipped
 Run dso lint.............................................................Passed
 ```
 
-The check failed, because on "end of file" has been fixed. This now shows as "unstaged"
+The check failed, because the "end of file" has been fixed in one file. This now shows as "unstaged"
 file in `git status`:
 
 ```console
@@ -99,4 +99,4 @@ As the name suggests, `pre-push` hooks run before `git push`. The following hook
 configuration file:
 
 -   dvc push: Run [dvc push](https://dvc.org/doc/command-reference/push#push) to ensure all data files are
-    synced to the remote at the same time the code changes are pushed to git.
+    synced to the remote at the same time the code changes are pushed to the git remote.
