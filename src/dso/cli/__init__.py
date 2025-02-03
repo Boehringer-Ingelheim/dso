@@ -220,7 +220,8 @@ def _dvc_wrapper(command: str):
         check_ask_pre_commit(Path.cwd())
         compile_all_configs([get_project_root(Path.cwd())])
         os.environ["DSO_SKIP_COMPILE"] = "1"
-        cmd = ["dvc", command, *args]
+        # use `python -m dvc`` syntax to ensure we are using dvc from the same venv
+        cmd = [sys.executable, "-m", "dvc", command, *args]
         log.debug(f"Running `{' '.join(cmd)}`")
         res = subprocess.run(cmd)
         sys.exit(res.returncode)
