@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=4706f9c9"></script>
+    <script src="_static/documentation_options.js?v=348ee418"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +67,7 @@
     <link rel="prev" title="DSO: data science operations" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g1eb1202" />
+  <meta name="docsearch:version" content="0.1.dev1+g489877a" />
   </head>
   
   
@@ -360,7 +360,8 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro-reproducing-all-stages"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tracking-and-syncing-files-with-dvc">Tracking and syncing files with DVC</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-data-with-a-remote">Syncing data with a remote</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pushing-data-data-to-a-remote">Pushing data data to a remote</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pulling-changes-from-remote">Pulling changes from remote</a></li>
 </ul>
 </li>
 </ul>
@@ -550,8 +551,8 @@ dvc<span class="w"> </span>add<span class="w"> </span>&lt;directoryname/filename
 dvc<span class="w"> </span>add<span class="w"> </span>metadata/external_clinical_annotation.csv
 </pre></div>
 </div>
-<section id="syncing-data-with-a-remote">
-<h3>Syncing data with a remote<a class="headerlink" href="#syncing-data-with-a-remote" title="Link to this heading">#</a></h3>
+<section id="pushing-data-data-to-a-remote">
+<h3>Pushing data data to a remote<a class="headerlink" href="#pushing-data-data-to-a-remote" title="Link to this heading">#</a></h3>
 <p>To ensure your collaborators can access files you added or results you generated, you need to sync
 data with a <a class="reference external" href="https://dvc.org/doc/user-guide/data-management/remote-storage#remote-storage">dvc remote</a>. DVC supports
 many backends, for instance S3 buckets, or a folder on a shared file system.</p>
@@ -577,6 +578,19 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 git<span class="w"> </span>push
 </pre></div>
 </div>
+<p>Pushing to the dvc remote can be automated using the <a class="reference internal" href="user_guide/pre_commit.html"><span class="std std-doc">pre-commit integration</span></a>.</p>
+</section>
+<section id="pulling-changes-from-remote">
+<h3>Pulling changes from remote<a class="headerlink" href="#pulling-changes-from-remote" title="Link to this heading">#</a></h3>
+<p>Whenever you switch into a new stage of your git repository (e.g. by using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> to retreive changes
+from a collaborator, or by using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">switch</span></code> to move to another branch) you need to make sure the
+corresponding data tracked by <code class="docutils literal notranslate"><span class="pre">dvc</span></code> is checked out as well.</p>
+<p>The most convenient way to do so is by using</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>pull
+</pre></div>
+</div>
+<p>This first compiles the configuration and then calls <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">pull</span></code> internally. Running <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">pull</span></code> without
+compiling the configuration files first may fail.</p>
 </section>
 </section>
 </section>
@@ -641,7 +655,8 @@ git<span class="w"> </span>push
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro-reproducing-all-stages"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tracking-and-syncing-files-with-dvc">Tracking and syncing files with DVC</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#syncing-data-with-a-remote">Syncing data with a remote</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pushing-data-data-to-a-remote">Pushing data data to a remote</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pulling-changes-from-remote">Pulling changes from remote</a></li>
 </ul>
 </li>
 </ul>

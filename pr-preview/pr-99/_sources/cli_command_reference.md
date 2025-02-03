@@ -80,6 +80,14 @@
     invoke(dso, args=["lint", "--help"])
 ```
 
+## dso pull
+
+```{eval-rst}
+.. click:run::
+    from dso.cli import dso
+    invoke(dso, args=["pull", "--help"])
+```
+
 ## dso repro
 
 ```{eval-rst}
