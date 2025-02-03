@@ -203,7 +203,7 @@ dvc add <directoryname/filename>
 dvc add metadata/external_clinical_annotation.csv
 ```
 
-### Syncing data with a remote
+### Pushing data data to a remote
 
 To ensure your collaborators can access files you added or results you generated, you need to sync
 data with a [dvc remote](https://dvc.org/doc/user-guide/data-management/remote-storage#remote-storage). DVC supports
@@ -235,3 +235,20 @@ git commit -m "Descriptive commit message"
 # Push committed changes to the remote Git repository
 git push
 ```
+
+Pushing to the dvc remote can be automated using the [pre-commit integration](user_guide/pre_commit.md).
+
+### Pulling changes from remote
+
+Whenever you switch into a new stage of your git repository (e.g. by using `git pull` to retreive changes
+from a collaborator, or by using `git switch` to move to another branch) you need to make sure the
+corresponding data tracked by `dvc` is checked out as well.
+
+The most convenient way to do so is by using
+
+```bash
+dso pull
+```
+
+This first compiles the configuration and then calls `dvc pull` internally. Running `dvc pull` without
+compiling the configuration files first may fail.

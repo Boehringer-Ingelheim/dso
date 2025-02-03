@@ -8,10 +8,26 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
-## [Unreleased]
+## v0.12.0
+
+### Migration advice
+
+The default pre-commit configuration has been reworked. To update it, navigate to the root of your project. Then run
+
+```bash
+rm .pre-commit-config.yaml
+dso init .
+```
+
+dso init will re-add all files from the project template that are missing from your project. Existing files will not be touched.
+
+### Template updates
+
+-   Update `.pre-commit-config.yaml`, removing unnecessary hooks ([#99](https://github.com/Boehringer-Ingelheim/dso/pull/99)).
 
 ### New features
 
+-   Add `dso pull` command, a wrapper around `dso compile-config` + `dvc pull` ([#99](https://github.com/Boehringer-Ingelheim/dso/pull/99))
 -   Add templates for Python stages (`quarto_py`, `quarto_ipynb`) ([#98](https://github.com/Boehringer-Ingelheim/dso/pull/98)).
 
 ### Documentation
