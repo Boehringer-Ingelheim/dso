@@ -4,13 +4,13 @@ import tempfile
 from abc import abstractmethod
 from importlib import resources
 from pathlib import Path
-from typing import Generic, TypeVar
 
 from PIL import Image, ImageDraw, ImageFont
 from pypdf import PdfReader, PdfWriter
 from svgutils import compose
 
 from dso import assets
+
 
 class Watermarker:
     """
