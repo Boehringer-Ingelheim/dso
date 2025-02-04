@@ -12,10 +12,7 @@ from svgutils import compose
 
 from dso import assets
 
-ImgType = TypeVar("ImgType")
-
-
-class Watermarker(Generic[ImgType]):
+class Watermarker:
     """
     Add watermarks to images
 
