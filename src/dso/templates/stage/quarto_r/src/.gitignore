@@ -4,3 +4,4 @@
 *.rmarkdown
 /_quarto.yml
 /*_files/
+/*_cache/
