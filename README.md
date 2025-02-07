@@ -7,16 +7,18 @@ templates, dependency management via [uv](https://docs.astral.sh/uv), linting ch
 At Boehringer Ingelheim, we introduced DSO to meet the high quality standards required for biomarker analysis
 in clinical trials. DSO is under active development and we value community feedback.
 
-| <img src="img/dso_kraken.jpg" alt="DSO Kraken" width="700"> | <img src="img/dso_tools.png" alt="tools used by DSO"> |
-| ----------------------------------------------------------- | ----------------------------------------------------- |
+<!-- use absolute URL to make this work also on PyPI -->
+
+| <img src="https://raw.githubusercontent.com/Boehringer-Ingelheim/dso/refs/heads/main/img/dso_kraken.jpg" alt="DSO Kraken" width="700"> | <img src="https://raw.githubusercontent.com/Boehringer-Ingelheim/dso/refs/heads/main/img/dso_tools.png" alt="tools used by DSO"> |
+| -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 
 ## Getting started
 
-Please refer to the documentation, in particular ...
+Please refer to the [documentation](https://boehringer-ingelheim.github.io/dso), in particular the [getting started](https://boehringer-ingelheim.github.io/dso/getting_started.html) section.
 
 ## Installation
 
-TODO
+See [installation](https://boehringer-ingelheim.github.io/dso/cli_installation.html).
 
 ## Contact
 

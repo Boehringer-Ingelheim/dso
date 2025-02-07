@@ -144,25 +144,6 @@ def dso_lint(args, skip_compile: bool = False):
     lint(paths)
 
 
-@click.command(
-    name="repro",
-    context_settings={"ignore_unknown_options": True},
-)
-@click.argument("args", nargs=-1, type=click.UNPROCESSED)
-def dso_repro(args):
-    """Wrapper around dvc repro, compiling configuration before running."""
-    from dso._compile_config import compile_all_configs
-    from dso._util import check_ask_pre_commit
-
-    check_ask_pre_commit(Path.cwd())
-    compile_all_configs([get_project_root(Path.cwd())])
-    os.environ["DSO_SKIP_COMPILE"] = "1"
-    cmd = ["dvc", "repro", *args]
-    log.info(f"Running `{' '.join(cmd)}`")
-    res = subprocess.run(cmd)
-    sys.exit(res.returncode)
-
-
 @click.command(name="watermark")
 @click.argument("input_image", type=Path)
 @click.argument("output_image", type=Path)
@@ -189,7 +170,7 @@ def dso_watermark(input_image, output_image, text, **kwargs):
     Watermarker.add_watermark(input_image, output_image, text=text, **kwargs)
 
 
-@click.group()
+@click.group(invoke_without_command=True)
 @click.option(
     "-q",
     "--quiet",
@@ -224,11 +205,37 @@ def dso(quiet: int, verbose: bool):
         os.environ["DSO_VERBOSE"] = "1"
 
 
+def _dvc_wrapper(command: str):
+    @click.command(
+        name=command,
+        help=f"Wrapper around `dvc {command}`, compiling configuration before running.",
+        context_settings={"ignore_unknown_options": True},
+    )
+    @click.argument("args", nargs=-1, type=click.UNPROCESSED)
+    def command_wrapper(args):
+        """Wrapper around any dvc command, compiling configuration before running."""
+        from dso._compile_config import compile_all_configs
+        from dso._util import check_ask_pre_commit
+
+        check_ask_pre_commit(Path.cwd())
+        compile_all_configs([get_project_root(Path.cwd())])
+        os.environ["DSO_SKIP_COMPILE"] = "1"
+        # use `python -m dvc`` syntax to ensure we are using dvc from the same venv
+        cmd = [sys.executable, "-m", "dvc", command, *args]
+        log.debug(f"Running `{' '.join(cmd)}`")
+        res = subprocess.run(cmd)
+        sys.exit(res.returncode)
+
+    return command_wrapper
+
+
 dso.add_command(dso_create)
 dso.add_command(dso_init)
 dso.add_command(dso_compile_config)
-dso.add_command(dso_repro)
 dso.add_command(dso_exec)
 dso.add_command(dso_lint)
 dso.add_command(dso_get_config)
 dso.add_command(dso_watermark)
+
+for command in ["repro", "pull"]:
+    dso.add_command(_dvc_wrapper(command))

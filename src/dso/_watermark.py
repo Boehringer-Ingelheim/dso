@@ -4,7 +4,6 @@ import tempfile
 from abc import abstractmethod
 from importlib import resources
 from pathlib import Path
-from typing import Generic, TypeVar
 
 from PIL import Image, ImageDraw, ImageFont
 from pypdf import PdfReader, PdfWriter
@@ -12,10 +11,8 @@ from svgutils import compose
 
 from dso import assets
 
-ImgType = TypeVar("ImgType")
 
-
-class Watermarker(Generic[ImgType]):
+class Watermarker:
     """
     Add watermarks to images
 
@@ -75,7 +72,7 @@ class Watermarker(Generic[ImgType]):
         img = Image.new("RGBA", self.tile_size, color=(255, 255, 255, 0))
 
         d = ImageDraw.Draw(img)
-        with resources.path(assets, "open_sans.ttf") as watermark_font:
+        with resources.open_binary(assets, "open_sans.ttf") as watermark_font:
             font = ImageFont.truetype(watermark_font, self.font_size)
 
         # Add text in top left corner

@@ -31,13 +31,16 @@ def quarto_stage(dso_project) -> Path:
     runner = CliRunner()
     stage_name = "quarto_stage"
     chdir(dso_project)
-    runner.invoke(dso_create, ["stage", stage_name, "--template", "quarto", "--description", "a quarto stage"])
+    runner.invoke(dso_create, ["stage", stage_name, "--template", "quarto_r", "--description", "a quarto stage"])
     with (Path(stage_name) / "src" / f"{stage_name}.qmd").open("w") as f:
         f.write(
             dedent(
                 """\
                 ```{python}
                 print("Hello World!")
+                from dso import read_params, stage_here
+                read_params("quarto_stage")
+                (stage_here("output") / "hello.txt").touch()
                 ```
                 """
             )
@@ -55,6 +58,9 @@ def quarto_stage_empty_configs(quarto_stage) -> Path:
         f.write("\n")
     with (quarto_stage / "params.in.yaml").open("w") as f:
         f.write("\n")
+    # remove param from `dvc.yaml` because it's not in the empty config anymore
+    lines = [line for line in (quarto_stage / "dvc.yaml").read_text().splitlines() if "dso.quarto" not in line]
+    (quarto_stage / "dvc.yaml").write_text("\n".join(lines) + "\n")
     compile_all_configs([quarto_stage])
 
     return quarto_stage

@@ -7,7 +7,7 @@ from click.testing import CliRunner
 from dso.cli import dso_create
 
 
-@pytest.mark.parametrize("template", ["bash", "quarto"])
+@pytest.mark.parametrize("template", ["bash", "quarto_r", "quarto_py", "quarto_ipynb"])
 def test_create_stage(dso_project, template):
     runner = CliRunner()
     chdir(dso_project)

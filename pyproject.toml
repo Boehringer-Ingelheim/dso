@@ -38,6 +38,7 @@ dependencies = [
   "ruamel-yaml",
   "svgutils",
   "tomli; python_version<='3.10'",
+  "uv",
 ]
 
 optional-dependencies.dev = [ "hatch", "pre-commit" ]
@@ -48,11 +49,12 @@ optional-dependencies.doc = [
   "ipykernel",
   "ipython",
   "matplotlib",
-  "myst-nb>=1.1",
+  "myst-parser",
   "sphinx>=4",
   "sphinx-autodoc-typehints",
   "sphinx-book-theme>=1",
   "sphinx-copybutton",
+  "sphinx-design",
   "sphinxcontrib-bibtex>=1",
   "sphinxext-opengraph",
 ]

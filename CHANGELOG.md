@@ -8,19 +8,53 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
-## [Unreleased]
+## v0.12.0
+
+### Migration advice
+
+The default pre-commit configuration has been reworked. To update it, navigate to the root of your project. Then run
+
+```bash
+rm .pre-commit-config.yaml
+dso init .
+```
+
+dso init will re-add all files from the project template that are missing from your project. Existing files will not be touched.
+
+### Template updates
+
+-   Update `.pre-commit-config.yaml`, removing unnecessary hooks ([#99](https://github.com/Boehringer-Ingelheim/dso/pull/99)).
+
+### New features
+
+-   Add `dso pull` command, a wrapper around `dso compile-config` + `dvc pull` ([#99](https://github.com/Boehringer-Ingelheim/dso/pull/99))
+-   Add templates for Python stages (`quarto_py`, `quarto_ipynb`) ([#98](https://github.com/Boehringer-Ingelheim/dso/pull/98)).
+
+### Documentation
+
+-   Update documentation, finalizing the most important sections of the user guide.
+
+## v0.11.0
+
+### Template updates
+
+-   Single `.gitignore` file per stage. Content of input/output/report folders is ignored. These folders
+    do not contain a separate `.gitignore` anymore. This means empty folders won't be tracked by git, but
+    this solves issues with dvc refusing to track the output folder because it is already partly tracked by git ([#73](https://github.com/Boehringer-Ingelheim/dso/pull/73)).
 
 ### Fixes
 
 -   Do not change the configuration of the root logger, only the `dso` logger. Changing the root logger
     had side-effects on other libraries when importing `dso` in Python ([#80](https://github.com/Boehringer-Ingelheim/dso/pull/80)).
 
-### New Features
+### New features
 
 -   Paths in `params.in.yaml` files declared with `!path` can now be compiled to absolute instead of relative paths ([#78](https://github.com/Boehringer-Ingelheim/dso/pull/78)).
 -   Python API that mirrors `dso-r` functionality (e.g. to be used from Jupyter notebooks) ([#30](https://github.com/Boehringer-Ingelheim/dso/pull/30))
+-   `dso exec quarto` automatically creates an `output` directory in the stage if it doesn't exist. If it doesn't contain any file,
+    it will be removed again after completion ([#73](https://github.com/Boehringer-Ingelheim/dso/pull/73)).
 
-## Documentation
+### Documentation
 
 -   Various documentation updates, working towards the first public version of the docs.
 

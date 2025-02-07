@@ -5,6 +5,7 @@ import json
 import subprocess
 import sys
 from collections.abc import Sequence
+from contextlib import contextmanager
 from functools import cache
 from importlib import resources
 from os import environ
@@ -135,9 +136,11 @@ def instantiate_template(template_path: Traversable, target_dir: Path | str, **p
         for p in curr_path.iterdir():
             if p.is_file():
                 name_rendered = Template(p.name).render(params)
-                target_file = target_dir / subdir / name_rendered
-                if not target_file.exists():
-                    _copy_with_render(p, target_file, params)
+                # this file is used for checking in empty folders in git.
+                if name_rendered != ".gitkeeptemplate":
+                    target_file = target_dir / subdir / name_rendered
+                    if not target_file.exists():
+                        _copy_with_render(p, target_file, params)
             else:
                 (target_dir / subdir / p.name).mkdir(exist_ok=True)
                 _traverse_template(p, subdir / p.name)
@@ -235,6 +238,20 @@ def _update_dot_dso_json(dir: Path, update_dict: dict):
 
     with dot_dso_json.open("w") as f:
         json.dump(config, f)
+
+
+@contextmanager
+def add_directory(dir: Path):
+    """Context manager that temporarily creates a directory and removes it again if it's empty"""
+    dir.mkdir(exist_ok=True)
+    try:
+        yield
+    finally:
+        try:
+            dir.rmdir()
+        except OSError:
+            # directory not empty
+            pass
 
 
 def check_ask_pre_commit(dir: Path):
