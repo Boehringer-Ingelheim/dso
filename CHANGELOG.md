@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## v0.12.1
+
+### Fixes
+
+-   Temporarily disable linting, because of its slow speed with only one rule implemented. See #70, #5, and #66
+    on GitHub for more information.
+
 ## v0.12.0
 
 ### Migration advice
