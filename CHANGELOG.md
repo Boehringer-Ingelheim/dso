@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning][].
 ### Fixes
 
 -   Temporarily disable linting, because of its slow speed with only one rule implemented. See #70, #5, and #66
-    on GitHub for more information.
+    on GitHub for more information ([#103](https://github.com/Boehringer-Ingelheim/dso/pull/103)).
 
 ## v0.12.0
 
