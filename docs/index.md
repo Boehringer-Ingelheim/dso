@@ -10,6 +10,8 @@
 getting_started.md
 user_guide/templates.md
 user_guide/params_files.md
+user_guide/transform_project.md
+user_guide/work_on_existing_project.md
 user_guide/pre_commit.md
 user_guide/uv.md
 user_guide/linting.md
