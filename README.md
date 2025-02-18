@@ -14,7 +14,7 @@ in clinical trials. DSO is under active development and we value community feedb
 
 ## Getting started
 
-Please refer to the [documentation](https://boehringer-ingelheim.github.io/dso), in particular the [getting started](https://boehringer-ingelheim.github.io/dso/getting_started.html) section.
+Please refer to the [documentation](https://boehringer-ingelheim.github.io/dso), in particular the [getting started](https://boehringer-ingelheim.github.io/dso/tutorials/getting_started.html) section.
 
 ## Installation
 

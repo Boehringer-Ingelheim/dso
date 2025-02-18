@@ -1,6 +1,6 @@
-# Collaborating on an Existing DevOps / DSO / DVC Project
+# Collaborating on an existing DSO/DVC Project
 
-If a DSO project is already set up and you want to collaborate or extend it, follow these guidelines. For general information about DSO or DVC, please check out the [DSO getting-started page](../getting_started.md) or the [DVC documentation](https://dvc.org/doc).
+If a DSO project is already set up and you want to collaborate or extend it, follow these guidelines. For general information about DSO or DVC, please check out the [DSO getting-started page](../tutorials/getting_started.md) and the [DVC documentation](https://dvc.org/doc).
 
 ## Requirements
 

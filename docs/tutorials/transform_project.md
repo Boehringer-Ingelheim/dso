@@ -1,10 +1,11 @@
-# Transforming a Project into DSO Format
+# Transforming an existing project into DSO format
 
-Transforming a project into the DSO format is best done in an individual Git branch to ensure the integrity of the original analysis. Additionally, the transformation can be done step-by-step, transforming single analysis stages at a time.
+Transforming a project into the DSO format is best done in a separate Git branch to ensure the integrity of the original analysis. Additionally, the transformation can be done step-by-step, transforming single analysis stages at a time.
 
 ## Initializing DSO in your project and folders
 
 The easiest way to obtain all essential DSO files for your project is to use the DSO command `dso init` on project root level. Without specifying any additional path, `dso init` will ask whether you want to initialize the DSO folder structure in the current directory.
+When applied to an existing directory, `dso init` will add missing files, but never change or replace any existing file.
 
 Usage:
 
@@ -24,7 +25,7 @@ dso create folder
 
 ## Set-up the DVC remote storage
 
-DVC needs a remote storage where your DVC-controlled input and output files are stored. Preferentially, this storage is created on a long-term storage to reduce the risk of data loss.
+DVC needs a remote storage where your DVC-controlled input and output files are stored.
 
 ```bash
 # Create a directory for storing version-controlled files

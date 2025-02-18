@@ -1,4 +1,4 @@
-# Configuration
+# DSO Configuration
 
 This section provides and overview of dso settings and how to apply them.
 Please refer to [DVC configuration](https://dvc.org/doc/user-guide/project-structure/configuration#dvc-configuration) for dvc settings.
