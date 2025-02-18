@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=25b5ab98"></script>
+    <script src="../_static/documentation_options.js?v=080515a0"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +67,7 @@
     <link rel="prev" title="Project and stage templates" href="templates.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+ge304448" />
+  <meta name="docsearch:version" content="0.1.dev1+g8205977" />
   </head>
   
   
@@ -154,9 +154,14 @@
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/work_on_existing_project.html">Collaborating on an existing DSO/DVC Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/transform_project.html">Transforming an existing project into DSO format</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="templates.html">Project and stage templates</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Configuration files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pre_commit.html">pre-commit integration</a></li>
@@ -166,13 +171,13 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="quarto.html">Quarto integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_configuration.html">DSO Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../cli_installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli_command_reference.html">Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cli_configuration.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing guide</a></li>
 </ul>
@@ -411,7 +416,7 @@ This allows variable to be composed using <a class="reference external" href="ht
 </div>
 <p>DSO supports compiling paths into absolute and relative paths. Relative paths are relative to the location of
 each compiled <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file. By default, DSO uses relative paths. To enable absolute paths, see
-<a class="reference internal" href="../cli_configuration.html#project-specific-settings-pyproject-toml"><span class="std std-ref">configuration</span></a>. To learn
+<a class="reference internal" href="cli_configuration.html#project-specific-settings-pyproject-toml"><span class="std std-ref">configuration</span></a>. To learn
 how to work with relative paths in Python/R scripts see <a class="reference internal" href="../python_usage.html"><span class="std std-doc">python usage</span></a> and <a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">R usage</a>.</p>
 </section>
 <section id="example">
