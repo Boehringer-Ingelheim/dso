@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning][].
 
 ## v0.12.2
 
+### Fixes
+
+-   Empty folders were not created as expected in stage templates ([#105](https://github.com/Boehringer-Ingelheim/dso/pull/105))
+
 ### Documentation
 
 -   Restructure into user guides and tutorials section ([#104](https://github.com/Boehringer-Ingelheim/dso/pull/104))
