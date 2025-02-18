@@ -1,6 +1,6 @@
 # Project and stage templates
 
-DSO provides a templating engine that allows to [quickly boostrap a project](../getting_started.md#dso-init----initialize-a-project)
+DSO provides a templating engine that allows to [quickly boostrap a project](../tutorials/getting_started.md#dso-init----initialize-a-project)
 (`dso init`), folder, or stages (`dso create`).
 Templates are based on [jinja2](https://jinja.palletsprojects.com/en/stable/templates/).
 

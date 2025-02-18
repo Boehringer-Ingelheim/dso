@@ -56,7 +56,7 @@ samplesheet: !path "01_preprocessing/input/samplesheet.txt"
 
 DSO supports compiling paths into absolute and relative paths. Relative paths are relative to the location of
 each compiled `params.yaml` file. By default, DSO uses relative paths. To enable absolute paths, see
-[configuration](../cli_configuration.md#project-specific-settings----pyprojecttoml). To learn
+[configuration](cli_configuration.md#project-specific-settings----pyprojecttoml). To learn
 how to work with relative paths in Python/R scripts see [python usage](../python_usage.md) and [R usage](https://boehringer-ingelheim.github.io/dso-r/).
 
 ## Example
