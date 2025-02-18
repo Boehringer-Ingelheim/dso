@@ -1,8 +1,8 @@
-# Transforming a Project into the DSO Format
+# Transforming a Project into DSO Format
 
 Transforming a project into the DSO format is best done in an individual Git branch to ensure the integrity of the original analysis. Additionally, the transformation can be done step-by-step, transforming single analysis stages at a time.
 
-## Initializing DSO in Your Project and Folders
+## Initializing DSO in your project and folders
 
 The easiest way to obtain all essential DSO files for your project is to use the DSO command `dso init` on project root level. Without specifying any additional path, `dso init` will ask whether you want to initialize the DSO folder structure in the current directory.
 
@@ -22,7 +22,7 @@ dso create folder
 # Directory already exists. Do you want to copy template files to existing folder? [y/n]: y
 ```
 
-## Set-up the DVC Remote Storage
+## Set-up the DVC remote storage
 
 DVC needs a remote storage where your DVC-controlled input and output files are stored. Preferentially, this storage is created on a long-term storage to reduce the risk of data loss.
 
@@ -34,7 +34,7 @@ mkdir /path/on/shared/filesystem/project1/DVC_STORAGE
 dvc remote add -d <remote_name> /path/on/shared/filesystem/project1/DVC_STORAGE
 ```
 
-## Transforming Analysis Scripts to Stages
+## Transforming analysis scripts to stages
 
 The last step is to transform the written analysis scripts into stages. To create a stage, use:
 
@@ -42,17 +42,17 @@ The last step is to transform the written analysis scripts into stages. To creat
 dso create stage <stage_name> # e.g. 01_preprocessing
 ```
 
-How-to set-up a stage and the configuration files can be found on the [dso getting-started page](../getting_started.md).
+How-to set-up a stage and the configuration files can be found on the [dso getting-started page](../tutorials/getting_started.md).
 The following list describes the most important tasks in transforming your analysis scripts to stages.
 
-- Define all parameters and stage input files/folders in a params.in.yaml.
-- Avoid duplicate entries and use parameter inheritance to your advantage.
-- If multiple stages use an input file or a parameter, define it in the `params.in.yaml` of a higher level folder.
-- Define all parameters and dependencies in the dvc.yaml that are used within the stage.
-- Use absolute paths when data is not DVC-controlled and stored within your repository.
-- Use relative paths for stage outputs and DVC-controlled inputs.
-- Use `!path` in your `params.in.yaml` when using relative paths to files/folders - `!path` resolves the relative path regardless of the current folder or stage.
-- To track files/folders using DVC, use `dvc add <filename/foldername>`.
-- Use the `read_params()` function implemented in the DSO R-package and the DSO Python API to read configuration files in your analysis scripts.
-- Use `stage_here()` to resolve relative paths from your `params.yaml`.
-- Write all output files generated within a stage into the output directory.
+-   Define all parameters and stage input files/folders in a params.in.yaml.
+-   Avoid duplicate entries and use parameter inheritance to your advantage.
+-   If multiple stages use an input file or a parameter, define it in the `params.in.yaml` of a higher level folder.
+-   Define all parameters and dependencies in the dvc.yaml that are used within the stage.
+-   Use absolute paths when data is not DVC-controlled and stored within your repository.
+-   Use relative paths for stage outputs and DVC-controlled inputs.
+-   Use `!path` in your `params.in.yaml` when using relative paths to files/folders - `!path` resolves the relative path regardless of the current folder or stage.
+-   To track files/folders using DVC, use `dvc add <filename/foldername>`.
+-   Use the `read_params()` function implemented in the DSO R-package and the DSO Python API to read configuration files in your analysis scripts.
+-   Use `stage_here()` to resolve relative paths from your `params.yaml`.
+-   Write all output files generated within a stage into the output directory.
