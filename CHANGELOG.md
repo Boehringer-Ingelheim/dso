@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## v0.12.2
+
+### Documentation
+
+-   Restructure into user guides and tutorials section ([#104](https://github.com/Boehringer-Ingelheim/dso/pull/104))
+-   Add tutorial on "how to work on existing DSO project" ([#104](https://github.com/Boehringer-Ingelheim/dso/pull/104))
+-   Add tutorial on "how to convert an existing project into DSO format" ([#104](https://github.com/Boehringer-Ingelheim/dso/pull/104))
+
 ## v0.12.1
 
 ### Fixes
