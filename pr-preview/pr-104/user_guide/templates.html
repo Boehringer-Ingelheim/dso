@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=aa5e40af"></script>
+    <script src="../_static/documentation_options.js?v=7d519c88"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -64,10 +64,10 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Configuration files" href="params_files.html" />
-    <link rel="prev" title="Getting started" href="../getting_started.html" />
+    <link rel="prev" title="Transforming an existing project into DSO format" href="../tutorials/transform_project.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+gccbe7b4" />
+  <meta name="docsearch:version" content="0.1.dev1+g42adf16" />
   </head>
   
   
@@ -154,13 +154,16 @@
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/work_on_existing_project.html">Collaborating on an existing DSO/DVC Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/transform_project.html">Transforming an existing project into DSO format</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Project and stage templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="params_files.html">Configuration files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="transform_project.html">Transforming a Project into the DSO Format</a></li>
-<li class="toctree-l1"><a class="reference internal" href="work_on_existing_project.html">Collaborating on an Existing DevOps / DSO / DVC Project</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pre_commit.html">pre-commit integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="uv.html"><code class="docutils literal notranslate"><span class="pre">uv</span></code> integration</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="linting.html">Linting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -168,13 +171,13 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="quarto.html">Quarto integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_configuration.html">DSO Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../cli_installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli_command_reference.html">Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cli_configuration.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing guide</a></li>
 </ul>
@@ -364,7 +367,7 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="project-and-stage-templates">
 <h1>Project and stage templates<a class="headerlink" href="#project-and-stage-templates" title="Link to this heading">#</a></h1>
-<p>DSO provides a templating engine that allows to <a class="reference internal" href="../getting_started.html#dso-init-initialize-a-project"><span class="std std-ref">quickly boostrap a project</span></a>
+<p>DSO provides a templating engine that allows to <a class="reference internal" href="../tutorials/getting_started.html#dso-init-initialize-a-project"><span class="std std-ref">quickly boostrap a project</span></a>
 (<code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code>), folder, or stages (<code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code>).
 Templates are based on <a class="reference external" href="https://jinja.palletsprojects.com/en/stable/templates/">jinja2</a>.</p>
 <section id="available-templates">
@@ -473,12 +476,12 @@ following variables:</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../getting_started.html"
+       href="../tutorials/transform_project.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Getting started</p>
+        <p class="prev-next-title">Transforming an existing project into DSO format</p>
       </div>
     </a>
     <a class="right-next"

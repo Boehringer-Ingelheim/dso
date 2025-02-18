@@ -1,4 +1,4 @@
-# Configuration
+# DSO Configuration
 
 This section provides and overview of dso settings and how to apply them.
 Please refer to [DVC configuration](https://dvc.org/doc/user-guide/project-structure/configuration#dvc-configuration) for dvc settings.
@@ -24,7 +24,7 @@ collaborate on the project.
 [tool.dso]
 # whether to compile relative paths declared with `!path` into absolute paths or
 # relative paths (relative to each stage). Defaults to `true`.
-use_relative_path = true
+use_relative_paths = true
 ```
 
 ## Project and user specific settings -- `.dso.json`

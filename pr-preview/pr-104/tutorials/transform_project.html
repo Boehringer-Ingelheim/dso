@@ -7,19 +7,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Collaborating on an Existing DevOps / DSO / DVC Project" />
+<meta property="og:title" content="Transforming an existing project into DSO format" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="user_guide/work_on_existing_project.html" />
+<meta property="og:url" content="tutorials/transform_project.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="If a DSO project is already set up and you want to collaborate or extend it, follow these guidelines. For general information about DSO or DVC, please check out the DSO getting-started page or the ..." />
+<meta property="og:description" content="Transforming a project into the DSO format is best done in a separate Git branch to ensure the integrity of the original analysis. Additionally, the transformation can be done step-by-step, transfo..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_user_guide_work_on_existing_project_8f9dcd8f.png" />
-<meta property="og:image:alt" content="If a DSO project is already set up and you want to collaborate or extend it, follow these guidelines. For general information about DSO or DVC, please check..." />
-<meta name="description" content="If a DSO project is already set up and you want to collaborate or extend it, follow these guidelines. For general information about DSO or DVC, please check out the DSO getting-started page or the ..." />
+<meta property="og:image" content="/_images/social_previews/summary_tutorials_transform_project_3d736403.png" />
+<meta property="og:image:alt" content="Transforming a project into the DSO format is best done in a separate Git branch to ensure the integrity of the original analysis. Additionally, the transfor..." />
+<meta name="description" content="Transforming a project into the DSO format is best done in a separate Git branch to ensure the integrity of the original analysis. Additionally, the transformation can be done step-by-step, transfo..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Collaborating on an Existing DevOps / DSO / DVC Project &#8212; dso-core</title>
+    <title>Transforming an existing project into DSO format &#8212; dso-core</title>
   
   
   
@@ -53,21 +53,21 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=aa5e40af"></script>
+    <script src="../_static/documentation_options.js?v=7d519c88"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/work_on_existing_project';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/transform_project';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="pre-commit integration" href="pre_commit.html" />
-    <link rel="prev" title="Transforming a Project into the DSO Format" href="transform_project.html" />
+    <link rel="next" title="Project and stage templates" href="../user_guide/templates.html" />
+    <link rel="prev" title="Collaborating on an existing DSO/DVC Project" href="work_on_existing_project.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+gccbe7b4" />
+  <meta name="docsearch:version" content="0.1.dev1+g42adf16" />
   </head>
   
   
@@ -154,27 +154,30 @@
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="templates.html">Project and stage templates</a></li>
-<li class="toctree-l1"><a class="reference internal" href="params_files.html">Configuration files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="transform_project.html">Transforming a Project into the DSO Format</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Collaborating on an Existing DevOps / DSO / DVC Project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pre_commit.html">pre-commit integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="uv.html"><code class="docutils literal notranslate"><span class="pre">uv</span></code> integration</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="linting.html">Linting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="work_on_existing_project.html">Collaborating on an existing DSO/DVC Project</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Transforming an existing project into DSO format</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/templates.html">Project and stage templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/params_files.html">Configuration files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/pre_commit.html">pre-commit integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/uv.html"><code class="docutils literal notranslate"><span class="pre">uv</span></code> integration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide/linting.html">Linting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../generated/dso._lint.DSO001.html">dso._lint.DSO001</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="quarto.html">Quarto integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/quarto.html">Quarto integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/cli_configuration.html">DSO Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../cli_installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli_command_reference.html">Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cli_configuration.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing guide</a></li>
 </ul>
@@ -262,7 +265,7 @@
       
       
       
-      <li><a href="../_sources/user_guide/work_on_existing_project.md" target="_blank"
+      <li><a href="../_sources/tutorials/transform_project.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -338,7 +341,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Collaborating on an Existing DevOps / DSO / DVC Project</h1>
+    <h1>Transforming an existing project into DSO format</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -348,13 +351,9 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to">How-To</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clone-the-git-repository">Clone the Git Repository</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pull-the-data-from-the-remote-repository">Pull the Data from the Remote Repository</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-changes-to-dso-project">Make changes to DSO Project</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-dso-in-your-project-and-folders">Initializing DSO in your project and folders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-dvc-remote-storage">Set-up the DVC remote storage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-analysis-scripts-to-stages">Transforming analysis scripts to stages</a></li>
 </ul>
             </nav>
         </div>
@@ -366,38 +365,58 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="collaborating-on-an-existing-devops-dso-dvc-project">
-<h1>Collaborating on an Existing DevOps / DSO / DVC Project<a class="headerlink" href="#collaborating-on-an-existing-devops-dso-dvc-project" title="Link to this heading">#</a></h1>
-<p>If a DSO project is already set up and you want to collaborate or extend it, follow these guidelines. For general information about DSO or DVC, please check out the <a class="reference internal" href="../getting_started.html"><span class="std std-doc">DSO getting-started page</span></a> or the <a class="reference external" href="https://dvc.org/doc">DVC documentation</a>.</p>
-<section id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="transforming-an-existing-project-into-dso-format">
+<h1>Transforming an existing project into DSO format<a class="headerlink" href="#transforming-an-existing-project-into-dso-format" title="Link to this heading">#</a></h1>
+<p>Transforming a project into the DSO format is best done in a separate Git branch to ensure the integrity of the original analysis. Additionally, the transformation can be done step-by-step, transforming single analysis stages at a time.</p>
+<section id="initializing-dso-in-your-project-and-folders">
+<h2>Initializing DSO in your project and folders<a class="headerlink" href="#initializing-dso-in-your-project-and-folders" title="Link to this heading">#</a></h2>
+<p>The easiest way to obtain all essential DSO files for your project is to use the DSO command <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> on project root level. Without specifying any additional path, <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> will ask whether you want to initialize the DSO folder structure in the current directory.
+When applied to an existing directory, <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> will add missing files, but never change or replace any existing file.</p>
+<p>Usage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>init
+<span class="c1"># Please enter the name of the project, e.g., &quot;single_cell_lung_atlas&quot;:</span>
+<span class="c1"># Directory already exists. Do you want to initialize DSO in an existing project? [y/n]: y</span>
+</pre></div>
+</div>
+<p>This also applies to folders that organize your project. To transform folders to be usable in the DSO/DVC environment use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>create<span class="w"> </span>folder
+<span class="c1"># Please enter the name of the folder, e.g., &quot;RNAseq&quot;:</span>
+<span class="c1"># Directory already exists. Do you want to copy template files to existing folder? [y/n]: y</span>
+</pre></div>
+</div>
+</section>
+<section id="set-up-the-dvc-remote-storage">
+<h2>Set-up the DVC remote storage<a class="headerlink" href="#set-up-the-dvc-remote-storage" title="Link to this heading">#</a></h2>
+<p>DVC needs a remote storage where your DVC-controlled input and output files are stored.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a directory for storing version-controlled files</span>
+mkdir<span class="w"> </span>/path/on/shared/filesystem/project1/DVC_STORAGE
+
+<span class="c1"># Execute within the project directory to define the remote storage</span>
+dvc<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>-d<span class="w"> </span>&lt;remote_name&gt;<span class="w"> </span>/path/on/shared/filesystem/project1/DVC_STORAGE
+</pre></div>
+</div>
+</section>
+<section id="transforming-analysis-scripts-to-stages">
+<h2>Transforming analysis scripts to stages<a class="headerlink" href="#transforming-analysis-scripts-to-stages" title="Link to this heading">#</a></h2>
+<p>The last step is to transform the written analysis scripts into stages. To create a stage, use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>create<span class="w"> </span>stage<span class="w"> </span>&lt;stage_name&gt;<span class="w"> </span><span class="c1"># e.g. 01_preprocessing</span>
+</pre></div>
+</div>
+<p>How-to set-up a stage and the configuration files can be found on the <a class="reference internal" href="getting_started.html"><span class="std std-doc">dso getting-started page</span></a>.
+The following list describes the most important tasks in transforming your analysis scripts to stages.</p>
 <ul class="simple">
-<li><p>The original project was initialized with <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> and contains all essential files.</p></li>
-<li><p>A DVC remote storage is set up where all DVC-controlled data is stored.</p></li>
-<li><p>A Git repository exists and can be cloned.</p></li>
+<li><p>Define all parameters and stage input files/folders in a params.in.yaml.</p></li>
+<li><p>Avoid duplicate entries and use parameter inheritance to your advantage.</p></li>
+<li><p>If multiple stages use an input file or a parameter, define it in the <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> of a higher level folder.</p></li>
+<li><p>Define all parameters and dependencies in the dvc.yaml that are used within the stage.</p></li>
+<li><p>Use absolute paths when data is not DVC-controlled and stored within your repository.</p></li>
+<li><p>Use relative paths for stage outputs and DVC-controlled inputs.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">!path</span></code> in your <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> when using relative paths to files/folders - <code class="docutils literal notranslate"><span class="pre">!path</span></code> resolves the relative path regardless of the current folder or stage.</p></li>
+<li><p>To track files/folders using DVC, use <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">add</span> <span class="pre">&lt;filename/foldername&gt;</span></code>.</p></li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">read_params()</span></code> function implemented in the DSO R-package and the DSO Python API to read configuration files in your analysis scripts.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">stage_here()</span></code> to resolve relative paths from your <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code>.</p></li>
+<li><p>Write all output files generated within a stage into the output directory.</p></li>
 </ul>
-</section>
-<section id="how-to">
-<h2>How-To<a class="headerlink" href="#how-to" title="Link to this heading">#</a></h2>
-<section id="clone-the-git-repository">
-<h3>Clone the Git Repository<a class="headerlink" href="#clone-the-git-repository" title="Link to this heading">#</a></h3>
-<p>First, clone the existing git repository of the project.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>&lt;git_repository&gt;
-</pre></div>
-</div>
-</section>
-<section id="pull-the-data-from-the-remote-repository">
-<h3>Pull the Data from the Remote Repository<a class="headerlink" href="#pull-the-data-from-the-remote-repository" title="Link to this heading">#</a></h3>
-<p>After cloning, no DVC-controlled input or output data is locally available. Therefore, it is required to pull the data associated with the repository from the DVC remote storage. Use:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compiles all params.in.yaml into params.yaml files and pulls the DVC-controlled data</span>
-dso<span class="w"> </span>pull
-</pre></div>
-</div>
-</section>
-<section id="make-changes-to-dso-project">
-<h3>Make changes to DSO Project<a class="headerlink" href="#make-changes-to-dso-project" title="Link to this heading">#</a></h3>
-<p>After pulling the source code from the git repository and the respective data from the DVC remote storage, everything is set-up to make changes and expand on the dso project. Please follow the instructions on how-to set-up folders, stages, or configuration files described in the <a class="reference internal" href="../getting_started.html"><span class="std std-doc">dso getting-started page</span></a>.</p>
-</section>
 </section>
 </section>
 
@@ -413,20 +432,20 @@ dso<span class="w"> </span>pull
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="transform_project.html"
+       href="work_on_existing_project.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Transforming a Project into the DSO Format</p>
+        <p class="prev-next-title">Collaborating on an existing DSO/DVC Project</p>
       </div>
     </a>
     <a class="right-next"
-       href="pre_commit.html"
+       href="../user_guide/templates.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">pre-commit integration</p>
+        <p class="prev-next-title">Project and stage templates</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -447,13 +466,9 @@ dso<span class="w"> </span>pull
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to">How-To</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clone-the-git-repository">Clone the Git Repository</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pull-the-data-from-the-remote-repository">Pull the Data from the Remote Repository</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-changes-to-dso-project">Make changes to DSO Project</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-dso-in-your-project-and-folders">Initializing DSO in your project and folders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-dvc-remote-storage">Set-up the DVC remote storage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-analysis-scripts-to-stages">Transforming analysis scripts to stages</a></li>
 </ul>
   </nav></div>
 
