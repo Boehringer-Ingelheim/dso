@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning][].
 
 ### Fixes
 
--   Empty folders were not created as expected in stage templates ([#105](https://github.com/Boehringer-Ingelheim/dso/pull/105))
+-   Empty folders were not created as expected in stage templates ([#107](https://github.com/Boehringer-Ingelheim/dso/pull/107))
 
 ### Documentation
 
