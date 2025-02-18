@@ -125,6 +125,9 @@ def dso_init(name: str | None = None, description: str | None = None):
 def dso_lint(args, skip_compile: bool = False):
     """Lint a dso project
 
+    TODO: Linting is currently disabled because of its slow speed with only one rule implemented. See #70, #5, and #66
+    on GitHub for more information.
+
     Performs consistency checks according to a set of rules.
 
     If passing no arguments, linting will be performed for the current working directory. Alternatively a list of paths
@@ -132,16 +135,19 @@ def dso_lint(args, skip_compile: bool = False):
 
     Configurations are compiled before linting.
     """
-    from dso._compile_config import compile_all_configs
-    from dso._lint import lint
+    # TODO linting is temporarily disabled because it's slow and basically no checks are implemented
+    # See #70, #5 and #66
+    pass
+    # from dso._compile_config import compile_all_configs
+    # from dso._lint import lint
 
-    if not len(args):
-        paths = [Path.cwd()]
-    else:
-        paths = [Path(x) for x in args]
-    if not skip_compile:
-        compile_all_configs(paths)
-    lint(paths)
+    # if not len(args):
+    #     paths = [Path.cwd()]
+    # else:
+    #     paths = [Path(x) for x in args]
+    # if not skip_compile:
+    #     compile_all_configs(paths)
+    # lint(paths)
 
 
 @click.command(name="watermark")

@@ -24,7 +24,7 @@ collaborate on the project.
 [tool.dso]
 # whether to compile relative paths declared with `!path` into absolute paths or
 # relative paths (relative to each stage). Defaults to `true`.
-use_relative_path = true
+use_relative_paths = true
 ```
 
 ## Project and user specific settings -- `.dso.json`
