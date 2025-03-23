@@ -1,28 +1,42 @@
 {
   "template": "https://github.com/scverse/cookiecutter-scverse",
-  "commit": "66a3c30e185cf0deb57a95329b5f3fec7b9f1352",
-  "checkout": null,
+  "commit": "50944ecb0cd73d4c142345be0624d44fce9c463c",
+  "checkout": "test3",
   "context": {
     "cookiecutter": {
-      "project_name": "dso",
+      "project_name": "dso-core",
       "package_name": "dso",
       "project_description": "data science operations",
       "author_full_name": "Gregor Sturm",
       "author_email": "gregor.sturm@boehringer-ingelheim.com",
       "github_user": "sturmgre",
-      "project_repo": "ssh://git@bitbucket.biscrum.com:7999/binfdevops/dso.git",
+      "github_repo": "dso",
       "license": "MIT License",
+      "ide_integration": true,
       "_copy_without_render": [
         ".github/workflows/build.yaml",
         ".github/workflows/test.yaml",
         "docs/_templates/autosummary/**.rst"
+      ],
+      "_exclude_on_template_update": [
+        "CHANGELOG.md",
+        "LICENSE",
+        "README.md",
+        "docs/api.md",
+        "docs/index.md",
+        "docs/notebooks/example.ipynb",
+        "docs/references.bib",
+        "docs/references.md",
+        "src/**",
+        "tests/**"
       ],
       "_render_devdocs": false,
       "_jinja2_env_vars": {
         "lstrip_blocks": true,
         "trim_blocks": true
       },
-      "_template": "https://github.com/scverse/cookiecutter-scverse"
+      "_template": "https://github.com/scverse/cookiecutter-scverse",
+      "_commit": "50944ecb0cd73d4c142345be0624d44fce9c463c"
     }
   },
   "directory": null
