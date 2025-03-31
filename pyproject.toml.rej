@@ -1,0 +1,33 @@
+diff a/pyproject.toml b/pyproject.toml	(rejected hunks)
+@@ -20,11 +20,12 @@ classifiers = [
+   "Programming Language :: Python :: 3.10",
+   "Programming Language :: Python :: 3.11",
+   "Programming Language :: Python :: 3.12",
++  "Programming Language :: Python :: 3.13",
+ ]
+ dependencies = [
+   "anndata",
+   # for debug logging (referenced from the issue template)
+-  "session-info",
++  "session-info2",
+ ]
+ optional-dependencies.dev = [
+   "pre-commit",
+@@ -36,7 +37,7 @@ optional-dependencies.doc = [
+   "ipython",
+   "myst-nb>=1.1",
+   "pandas",
+-  # Until pybtex >0.23.0 releases: https://bitbucket.org/pybtex-devs/pybtex/issues/169/
++  # Until pybtex >0.24.0 releases: https://bitbucket.org/pybtex-devs/pybtex/issues/169/
+   "setuptools",
+   "sphinx>=4",
+   "sphinx-autodoc-typehints",
+@@ -63,7 +64,7 @@ installer = "uv"
+ features = [ "dev" ]
+ 
+ [tool.hatch.envs.docs]
+-extra-features = [ "doc" ]
++features = [ "doc" ]
+ scripts.build = "sphinx-build -M html docs docs/_build {args}"
+ scripts.open = "python -m webbrowser -t docs/_build/html/index.html"
+ scripts.clean = "git clean -fdX -- {args:docs}"
