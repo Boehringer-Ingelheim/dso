@@ -6,8 +6,20 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Python Module Index &#8212; dso-core</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Shell completion" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="cli_shell_completion.html" />
+<meta property="og:site_name" content="Project name not set" />
+<meta property="og:description" content="dso supports shell-completion through click. To enable shell-completion, add the corresponding line to your.bashrc/.zshrc:" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_cli_shell_completion_fadbc9b6.png" />
+<meta property="og:image:alt" content="dso supports shell-completion through click. To enable shell-completion, add the corresponding line to your.bashrc/.zshrc:" />
+<meta name="description" content="dso supports shell-completion through click. To enable shell-completion, add the corresponding line to your.bashrc/.zshrc:" />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Shell completion &#8212; dso-core</title>
   
   
   
@@ -45,14 +57,13 @@
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'py-modindex';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'cli_shell_completion';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-
+    <link rel="next" title="Changelog" href="CHANGELOG.html" />
+    <link rel="prev" title="Command reference" href="cli_command_reference.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-
-
   </head>
   
   
@@ -112,8 +123,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -177,10 +186,10 @@
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="cli_installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli_command_reference.html">Command reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cli_shell_completion.html">Shell completion</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Shell completion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing guide</a></li>
 </ul>
@@ -253,6 +262,54 @@
 
 
 
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/cli_shell_completion.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
 <button onclick="toggleFullScreen()"
   class="btn btn-sm btn-fullscreen-button"
   title="Fullscreen mode"
@@ -297,7 +354,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1></h1>
+    <h1>Shell completion</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -311,29 +368,18 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
+  <section class="tex2jax_ignore mathjax_ignore" id="shell-completion">
+<h1>Shell completion<a class="headerlink" href="#shell-completion" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">dso</span></code> supports shell-completion through <a class="reference external" href="https://click.palletsprojects.com/en/stable/shell-completion/#enabling-completion">click</a>.</p>
+<p>To enable shell-completion, add the corresponding line to your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>/<code class="docutils literal notranslate"><span class="pre">.zshrc</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># bash</span>
+<span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nv">_DSO_COMPLETE</span><span class="o">=</span>bash_source<span class="w"> </span>dso<span class="k">)</span><span class="s2">&quot;</span>
 
-   <h1>Python Module Index</h1>
-
-   <div class="modindex-jumpbox">
-   <a href="#cap-d"><strong>d</strong></a>
-   </div>
-
-   <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-d"><td></td><td>
-       <strong>d</strong></td><td></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <a href="python_api.html#module-dso"><code class="xref">dso</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="user_guide/linting.html#module-dso._lint"><code class="xref">dso._lint</code></a></td><td>
-       <em></em></td></tr>
-   </table>
+<span class="c1"># zsh</span>
+<span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nv">_DSO_COMPLETE</span><span class="o">=</span>zsh_source<span class="w"> </span>dso<span class="k">)</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
 
 
                 </article>
@@ -346,6 +392,24 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="cli_command_reference.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Command reference</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="CHANGELOG.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Changelog</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
