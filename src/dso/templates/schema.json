@@ -1,0 +1,118 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Universal Meta YAML Schema",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "init": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/templateItem"
+            }
+        },
+        "folder": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/templateItem"
+            }
+        },
+        "stage": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/templateItem"
+            }
+        }
+    },
+    "definitions": {
+        "templateItem": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "usage": {
+                    "type": "string"
+                },
+                "params": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "description": {
+                                "type": "string"
+                            },
+                            "example": {
+                                "type": ["integer", "number", "string"]
+                            }
+                        },
+                        "required": ["description", "example"]
+                    },
+                    "minItems": 0
+                },
+                "deps": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "description": {
+                                "type": "string"
+                            },
+                            "example": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["description"]
+                    },
+                    "minItems": 0
+                },
+                "outs": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["file", "folder"]
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "example": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["type", "description"]
+                    },
+                    "minItems": 0
+                },
+                "authors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "maintainers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "required_adjustments",
+                "description",
+                "authors",
+                "maintainers"
+            ]
+        }
+    }
+}

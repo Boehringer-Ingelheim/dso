@@ -1,5 +1,6 @@
 """Creates a project folder structure"""
 
+import os
 import sys
 from os import getcwd
 from pathlib import Path
@@ -29,6 +30,20 @@ CREATE_STAGE_HELP_TEXT = dedent(
     Available templates: \n{indent(STAGE_TEMPLATE_TEXT, " " * 6)}
     """
 )
+
+
+def _get_stages():
+    """Get a list of stages from template library(s)
+
+    Paths to template libraries are obtained from `DSO_TEMPLATE_LIBRARIES` env variable.
+    """
+    lib_paths = set(os.environ.get("DSO_TEMPLATE_LIBRARIES", "DEFAULT").split(":"))
+    if "DEFAULT" in lib_paths:
+        lib_paths.remove("DEFAULT")
+        lib_paths.add("xxx")
+
+    # Get metadata from an `index.json` file.
+    pass
 
 
 @click.option("--description")
