@@ -1,4 +1,4 @@
-# Shell Completion
+# Shell completion
 
 `dso` supports shell-completion through [click](https://click.palletsprojects.com/en/stable/shell-completion/#enabling-completion).
 
