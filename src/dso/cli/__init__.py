@@ -243,5 +243,5 @@ dso.add_command(dso_lint)
 dso.add_command(dso_get_config)
 dso.add_command(dso_watermark)
 
-for command in ["repro", "pull"]:
+for command in ["repro", "pull", "status", "push"]:
     dso.add_command(_dvc_wrapper(command))

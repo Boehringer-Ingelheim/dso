@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## v0.13.0
+
+### Additions
+
+-   Add `dso status` and `dso push` as a wrappers for the respective `dvc` commands ([#114](https://github.com/Boehringer-Ingelheim/dso/pull/112)).
+
+### Chore
+
+-   Update repository template to cookiecutter-scverse v0.5.0 ([#111](https://github.com/Boehringer-Ingelheim/dso/pull/111)).
+
 ## v0.12.2
 
 ### Fixes

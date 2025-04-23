@@ -18,9 +18,9 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - uses: pre-commit/action@v2.0.3
+      - uses: pre-commit/action@v3.0.1
 
       - uses: stefanzweifel/git-auto-commit-action@v5
-        if: '!cancelled()'
+        if: "!cancelled()"
         with:
           commit_message: pre-commit autofixes
