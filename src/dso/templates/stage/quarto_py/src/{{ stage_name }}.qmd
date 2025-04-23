@@ -1,0 +1,25 @@
+```{python}
+# | label: load_libraries
+
+from dso import read_params, stage_here
+import pandas as pd
+```
+
+Load the stage-specific 'params.yaml' config using the `read_params(..)` function. This function specifically loads
+only the stage-dependent parameters that are defined in the 'params' section of the 'dvc.yaml' file.
+
+```{python}
+#| label: read_params
+
+params = read_params("{{ stage_path }}")
+```
+
+
+To locate your files relative to the stage path use `stage_here(..)`.
+
+```{python}
+# | label: obtain_files_relative_to_stage_dir
+
+# e.g.
+samplesheet = pd.read_csv(stage_here(params["samplesheet"]))
+```

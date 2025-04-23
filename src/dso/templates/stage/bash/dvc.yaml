@@ -6,8 +6,9 @@ stages:
       - output
     cmd:
       - |
-        bash << EOF
+        bash -euo pipefail << EOF
 
         # add bash code here
+        mkdir -p output && echo "Hello World" > output/hello.txt
 
         EOF

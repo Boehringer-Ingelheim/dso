@@ -4,13 +4,13 @@ from subprocess import check_call
 
 from click.testing import CliRunner
 
-from dso.init import cli
+from dso.cli import dso_init
 
 
 def test_init(tmp_path):
     runner = CliRunner()
     with runner.isolated_filesystem(temp_dir=tmp_path) as td:
-        result = runner.invoke(cli, ["testproject", "--description", "testdescription"])
+        result = runner.invoke(dso_init, ["testproject", "--description", "testdescription"])
         print(result.output)
         td = Path(td)
         assert result.exit_code == 0
@@ -29,7 +29,7 @@ def test_init_existing_dir(dso_project):
     (dso_project / "README.md").unlink()
     rmtree(dso_project / ".git")
 
-    result = runner.invoke(cli, [str(dso_project), "--description", "testdescription"], input="y")
+    result = runner.invoke(dso_init, [str(dso_project), "--description", "testdescription"], input="y")
     assert result.exit_code == 0
     assert (dso_project).is_dir()
     assert (dso_project / ".git").is_dir()

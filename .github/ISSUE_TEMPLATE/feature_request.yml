@@ -1,6 +1,5 @@
 name: Feature request
-description: Propose a new feature for dso-core
-labels: enhancement
+description: Suggest an idea for DSO
 body:
   - type: textarea
     id: description

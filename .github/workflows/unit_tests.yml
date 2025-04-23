@@ -1,0 +1,53 @@
+name: "Unit tests for DSO"
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "docs/**"
+  pull_request:
+    paths-ignore:
+      - "docs/**"
+
+jobs:
+  unit_tests_linux:
+    name: ${{ matrix.name }} Python ${{ matrix.python }}
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python-version: "3.10"
+          - os: ubuntu-latest
+            python-version: "3.13"
+          - os: ubuntu-latest
+            python-version: "3.13"
+            pip-flags: "--pre"
+            name: PRE-RELEASE DEPENDENCIES
+
+    env:
+      # GitHub currently has 4 cores available for Linux runners
+      # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
+      worker_cores: 4
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Set up Python ${{ matrix.python-version }}"
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install libgit2 header files for libgit2 & pandoc for testing purposes
+        run: sudo apt-get install -y libgit2-dev pandoc
+
+      - name: "Install DSO"
+        run: pip install  ${{ matrix.pip-flags }} '.[test]'
+
+      - name: "Run unit tests"
+        run: pytest -vv tests -n ${{ env.worker_cores }} --cov=dso --cov-report=xml

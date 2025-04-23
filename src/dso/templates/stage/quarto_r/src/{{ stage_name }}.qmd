@@ -1,0 +1,33 @@
+```{r}
+#| label: load_libraries
+
+require(conflicted)
+require(dso)
+```
+
+Load the stage-specific 'params.yaml' config using the `read_params(..)` function. This function specifically loads
+only the stage-dependent parameters that are defined in the 'params' section of the 'dvc.yaml' file.
+
+```{r}
+#| label: read_params
+
+params <- read_params("{{ stage_path }}")
+```
+
+When modifying the 'dvc.yaml', 'params.in.yaml', or 'params.yaml' files during development, use the 'reload(params)'
+function to ensure proper application of the changes by rebuilding and reloading the configuration.
+
+```{r}
+#| label: reload_params
+
+reload(params)
+```
+
+To locate your files relative to the stage path use `stage_here(..)`.
+
+```{r}
+#| label: obtain_files_relative_to_stage_dir
+
+# e.g.
+samplesheet <- readr::read_csv(stage_here(params$samplesheet))
+```
