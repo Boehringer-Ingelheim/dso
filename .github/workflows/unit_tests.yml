@@ -12,7 +12,7 @@ on:
 jobs:
   unit_tests_linux:
     name: ${{ matrix.name }} Python ${{ matrix.python }}
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
