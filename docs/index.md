@@ -34,6 +34,7 @@ faq.md
 
 cli_installation.md
 cli_command_reference.md
+cli_shell_completion.md
 CHANGELOG.md
 contributing.md
 ```
