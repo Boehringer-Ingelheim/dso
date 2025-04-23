@@ -25,6 +25,7 @@ __pycache__
 ## Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+_quarto.yml
 
 # Slurm
 *.out

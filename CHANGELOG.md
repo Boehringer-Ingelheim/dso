@@ -12,7 +12,11 @@ and this project adheres to [Semantic Versioning][].
 
 ### Additions
 
--   Add `dso status` and `dso push` as a wrappers for the respective `dvc` commands ([#114](https://github.com/Boehringer-Ingelheim/dso/pull/112)).
+-   Add `dso status` and `dso push` as a wrappers for the respective `dvc` commands ([#114](https://github.com/Boehringer-Ingelheim/dso/pull/114)).
+
+### Template updates
+
+-   Add `_quarto.yml` to "init" template ([#115](https://github.com/Boehringer-Ingelheim/dso/pull/115))
 
 ### Chore
 
