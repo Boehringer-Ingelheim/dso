@@ -22,6 +22,10 @@ and this project adheres to [Semantic Versioning][].
 
 -   Update repository template to cookiecutter-scverse v0.5.0 ([#111](https://github.com/Boehringer-Ingelheim/dso/pull/111)).
 
+### Documentation
+
+-   Show how to enable shell-completion for `dso` ([#116](https://github.com/Boehringer-Ingelheim/dso/pull/116))
+
 ## v0.12.2
 
 ### Fixes
