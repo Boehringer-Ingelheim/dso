@@ -1,0 +1,666 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Configuration files" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="user_guide/params_files.html" />
+<meta property="og:site_name" content="Project name not set" />
+<meta property="og:description" content="YAML-based config files in a project, folder, or stage serve as a single point of truth for all input files, output files or parameters. For this purpose, configurations can be defined at each leve..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_user_guide_params_files_16b4dfc4.png" />
+<meta property="og:image:alt" content="YAML-based config files in a project, folder, or stage serve as a single point of truth for all input files, output files or parameters. For this purpose, configurations can be defined at each leve..." />
+<meta name="description" content="YAML-based config files in a project, folder, or stage serve as a single point of truth for all input files, output files or parameters. For this purpose, configurations can be defined at each leve..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Configuration files &#8212; dso-core</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=42210275" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=366103d0" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=c98b59eb"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/params_files';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pre-commit integration" href="pre_commit.html" />
+    <link rel="prev" title="Project and stage templates" href="templates.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">dso-core</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/work_on_existing_project.html">Collaborating on an existing DSO/DVC Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/transform_project.html">Transforming an existing project into DSO format</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Project and stage templates</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Configuration files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pre_commit.html">pre-commit integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uv.html"><code class="docutils literal notranslate"><span class="pre">uv</span></code> integration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="linting.html">Linting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../generated/dso._lint.DSO001.html">dso._lint.DSO001</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="quarto.html">Quarto integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_configuration.html">DSO Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../cli_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli_command_reference.html">Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO Python API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../python_usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_api.html">API reference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO R API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">Usage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/reference/index.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso-r/blob/main/CHANGELOG.md">Changelog</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/Boehringer-Ingelheim/dso" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/user_guide/params_files.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Configuration files</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-configuration-files">Compiling configuration files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inheritance">Inheritance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#templating">Templating</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-paths">Defining paths</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-stage-config">Accessing stage config</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="configuration-files">
+<h1>Configuration files<a class="headerlink" href="#configuration-files" title="Link to this heading">#</a></h1>
+<p>YAML-based config files in a <em>project</em>, <em>folder</em>, or <em>stage</em> serve as a single point of truth for all input files, output files or parameters.
+For this purpose, configurations can be defined at each level of your project in a <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file.
+Using <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">compile-config</span></code> the <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files are compiled into <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> with the following features:</p>
+<ul class="simple">
+<li><p><em>inheritance</em>: All variables defined in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files in any parent directory will be included.</p></li>
+<li><p><em>templating</em>: Variables can be composed using <a class="reference external" href="https://jinja.palletsprojects.com/en/stable/templates/#variables">jinja2 syntax</a>, e.g. <code class="docutils literal notranslate"><span class="pre">foo:</span> <span class="pre">&quot;{{</span> <span class="pre">bar</span> <span class="pre">}}_version2&quot;</span></code>.</p></li>
+<li><p><em>path resolving</em>: Paths will be always relative to each compiled <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file, no matter where they were defined.</p></li>
+</ul>
+<p>Therefore, you only need to <a class="reference internal" href="#accessing-stage-config">read in</a> a single <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file in each stage.</p>
+<section id="compiling-configuration-files">
+<h2>Compiling configuration files<a class="headerlink" href="#compiling-configuration-files" title="Link to this heading">#</a></h2>
+<p>To generate a <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file for each <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file, use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>compile-config
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files are not tracked by git. Never modify a <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file by hand, it will be overwritten.
+In folders without a <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file, no <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file will be generated.</p>
+</section>
+<section id="inheritance">
+<h2>Inheritance<a class="headerlink" href="#inheritance" title="Link to this heading">#</a></h2>
+<p>The following diagram displays the inheritance of configurations:</p>
+<a class="reference internal image-reference" href="../_images/dso-yaml-inherit.png"><img alt="../_images/dso-yaml-inherit.png" src="../_images/dso-yaml-inherit.png" style="width: 80%;" />
+</a>
+<p></p>
+<p>DSO leverages <a class="reference external" href="https://github.com/zerwes/hiyapyco">hiyapyco</a> with <code class="docutils literal notranslate"><span class="pre">method=METHOD_MERGE</span></code> and <code class="docutils literal notranslate"><span class="pre">none_behavior=NONE_BEHAVIOR_OVERRIDE</span></code>
+to implement inheritance. This means</p>
+<ul class="simple">
+<li><p>Values in a <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> file at a deeper level (e.g. stage) take precedence over values in a parent folder.</p></li>
+<li><p>Values are added existing lists</p></li>
+<li><p>Dictionary entried are added to existing dictionaries</p></li>
+<li><p>To exclude an inherited parameter, set the variable to <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p></li>
+</ul>
+</section>
+<section id="templating">
+<h2>Templating<a class="headerlink" href="#templating" title="Link to this heading">#</a></h2>
+<p>Templating is again implemented in <a class="reference external" href="https://github.com/zerwes/hiyapyco">hiyapyco</a> using the <code class="docutils literal notranslate"><span class="pre">interpolate=True</span></code> flag.
+This allows variable to be composed using <a class="reference external" href="https://jinja.palletsprojects.com/en/stable/templates/#variables">jinja2 syntax</a>, e.g. <code class="docutils literal notranslate"><span class="pre">foo:</span> <span class="pre">&quot;{{</span> <span class="pre">bar</span> <span class="pre">}}_version2&quot;</span></code>.</p>
+</section>
+<section id="defining-paths">
+<h2>Defining paths<a class="headerlink" href="#defining-paths" title="Link to this heading">#</a></h2>
+<p>To ensure that, despite inheritance, paths are always relative to each compiled <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file, relative paths need to be preceded with <code class="docutils literal notranslate"><span class="pre">!path</span></code>, e.g.:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">samplesheet</span><span class="p">:</span><span class="w"> </span><span class="kt">!path</span><span class="w"> </span><span class="s">&quot;01_preprocessing/input/samplesheet.txt&quot;</span>
+</pre></div>
+</div>
+<p>DSO supports compiling paths into absolute and relative paths. Relative paths are relative to the location of
+each compiled <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file. By default, DSO uses relative paths. To enable absolute paths, see
+<a class="reference internal" href="cli_configuration.html#project-specific-settings-pyproject-toml"><span class="std std-ref">configuration</span></a>. To learn
+how to work with relative paths in Python/R scripts see <a class="reference internal" href="../python_usage.html"><span class="std std-doc">python usage</span></a> and <a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">R usage</a>.</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<p>Let’s consider a project which has the following two <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files at the project root
+and in a stage subfolder.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<code class="docutils literal notranslate"><span class="pre">/params.in.yaml</span></code></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">thresholds</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">fc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">p_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+
+<span class="nt">metadata_file</span><span class="p">:</span><span class="w"> </span><span class="kt">!path</span><span class="w"> </span><span class="s">&quot;metadata/metadata.csv&quot;</span>
+<span class="nt">dataset_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">typical_analysis</span>
+<span class="nt">file_with_abs_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/data/home/user/{{</span><span class="nv"> </span><span class="s">dataset_name</span><span class="nv"> </span><span class="s">}}_data_set.csv&quot;</span>
+
+<span class="nt">remove_outliers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="nt">exclude_samples</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sample_1</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sample_6</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<code class="docutils literal notranslate"><span class="pre">/stage/params.in.yaml</span></code></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">thresholds</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">fc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">    </span><span class="nt">p_adjusted</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+
+<span class="nt">samplesheet</span><span class="p">:</span><span class="w"> </span><span class="kt">!path</span><span class="w"> </span><span class="s">&quot;01_preprocessing/input/samplesheet.txt&quot;</span>
+
+<span class="nt">remove_outliers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+
+<span class="nt">exclude_samples</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sample_42</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>This results in the following <strong>compiled <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files</strong>:</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<code class="docutils literal notranslate"><span class="pre">/params.yaml</span></code></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">thresholds</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">fc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">p_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+
+<span class="nt">metadata_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">metadata/metadata.csv</span>
+<span class="nt">dataset_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">typical_analysis</span>
+<span class="nt">file_with_abs_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data/home/user/typical_analysis_data_set.csv</span>
+
+<span class="nt">remove_outliers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="nt">exclude_samples</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sample_1</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sample_6</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<code class="docutils literal notranslate"><span class="pre">/stage/params.yaml</span></code></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">thresholds</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">fc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">    </span><span class="nt">p_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+<span class="w">    </span><span class="nt">p_adjusted</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+
+<span class="nt">metadata_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../metadata/metadata.csv</span>
+<span class="nt">dataset_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">typical_analysis</span>
+<span class="nt">file_with_abs_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data/home/user/typical_analysis_data_set.csv</span>
+
+<span class="nt">remove_outliers</span><span class="p">:</span>
+
+<span class="nt">exclude_samples</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sample_1</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sample_6</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sample_42</span>
+<span class="nt">samplesheet</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">01_preprocessing/input/samplesheet.txt</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="accessing-stage-config">
+<h2>Accessing stage config<a class="headerlink" href="#accessing-stage-config" title="Link to this heading">#</a></h2>
+<p>To ensure that <code class="docutils literal notranslate"><span class="pre">dso</span></code> correctly reruns stages when dependencies have changed, it is really important
+to declare all input files/params in <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code>. <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">compile-config</span></code> generates <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files that,
+in principle, you can read in with a YAML parser in a programming language of your choice.
+However, we <strong>recommend that you use one of the following interfaces to access the stage configuration</strong>.
+These interfaces ensure that you will have access only to the parameters declared in the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> file as
+either input, parameter, or output. This ensure that you cannot forget to declare a parameter that you actually
+use in your analysis.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read_params</span></code> <a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">in R</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_params</span></code> <a class="reference internal" href="../python_usage.html"><span class="std std-doc">in Python</span></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code> from the terminal.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code> prints the filtered params file for a given stage to STDOUT. This makes it really easy to
+call it from other languages as a system call. In fact, this is what <code class="docutils literal notranslate"><span class="pre">read_params</span></code> in R and Python are doing under the hood.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="templates.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Project and stage templates</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pre_commit.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">pre-commit integration</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-configuration-files">Compiling configuration files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inheritance">Inheritance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#templating">Templating</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-paths">Defining paths</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-stage-config">Accessing stage config</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gregor Sturm, Thomas Schwarzl, Alexander Peltzer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Gregor Sturm, Thomas Schwarzl, Alexander Peltzer..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
