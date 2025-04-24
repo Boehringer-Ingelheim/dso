@@ -1,16 +1,14 @@
 from __future__ import annotations
 
-import importlib
 import json
 import subprocess
 import sys
 from collections.abc import Sequence
 from contextlib import contextmanager
 from functools import cache
-from importlib import resources
 from os import environ
 from pathlib import Path
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING
 
 from rich.prompt import Confirm
 
@@ -107,9 +105,9 @@ def get_project_root(start_directory: Path) -> Path:
         return proj_root.parent
 
 
-def get_template_path(template_type: Literal["init", "folder", "stage"], template_name: str) -> Traversable:
-    template_module = importlib.import_module(f"dso.templates.{template_type}")
-    return resources.files(template_module) / template_name
+def get_template_path():
+    # TODO remove
+    raise NotImplementedError
 
 
 def _copy_with_render(source: Traversable, destination: Path, params: dict):

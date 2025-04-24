@@ -1,7 +1,10 @@
 """Creates a project folder structure"""
 
+import importlib
+import json
 import os
 import sys
+from importlib import resources
 from os import getcwd
 from pathlib import Path
 from textwrap import dedent, indent
@@ -32,32 +35,55 @@ CREATE_STAGE_HELP_TEXT = dedent(
 )
 
 
-def _get_stages():
+def _get_templates() -> dict[str, dict]:
     """Get a list of stages from template library(s)
 
     Paths to template libraries are obtained from `DSO_TEMPLATE_LIBRARIES` env variable.
+    The paths can either be a python module, or a path to directory in the file system.
     """
-    lib_paths = set(os.environ.get("DSO_TEMPLATE_LIBRARIES", "DEFAULT").split(":"))
-    if "DEFAULT" in lib_paths:
-        lib_paths.remove("DEFAULT")
-        lib_paths.add("xxx")
+    lib_paths = set(os.environ.get("DSO_TEMPLATE_LIBRARIES", "dso.templates").split(":"))
 
-    # Get metadata from an `index.json` file.
-    pass
+    templates = {}
+    for lib_path in lib_paths:
+        try:
+            template_module = importlib.import_module(lib_path)
+            tmp_dir = resources.files(template_module)
+        except ImportError:
+            raise NotImplementedError from None
+
+        with (tmp_dir / "index.json").open("rb") as f:
+            index = json.load(f)
+            id_ = index["id"]
+            if id_ in templates:
+                raise ValueError(f"ID {id_} is not unique for {lib_path}.")
+            templates[id_] = index
+            templates[id_]["path"] = lib_path
+    return templates
 
 
 @click.option("--description")
 @click.option("--template", type=click.Choice(list(STAGE_TEMPLATES)))
+@click.option("--library", help="Choose the template library to use")
 @click.argument("name", required=False)
 @click.command("stage", help=CREATE_STAGE_HELP_TEXT)
-def dso_create_stage(name: str | None = None, template: str | None = None, description: str | None = None):
+def dso_create_stage(
+    name: str | None = None, template: str | None = None, library: str | None = None, description: str | None = None
+):
     """Create a new stage."""
     import questionary
 
     from dso._compile_config import compile_all_configs
 
+    templates = _get_templates()
+
+    if len(templates) == 1:
+        library = next(iter(templates))
+    if library is None:
+        library = str(questionary.select("Choose a template library:", choices=list(templates)).ask())
+
     if template is None:
-        template = str(questionary.select("Choose a template:", choices=list(STAGE_TEMPLATES)).ask())
+        stage_template_ids = [x["id"] for x in templates[library]["stage"]]
+        template = str(questionary.select("Choose a template:", choices=list(stage_template_ids)).ask())
 
     if name is None:
         name = Prompt.ask('[bold]Please enter the name of the stage, e.g. "01_preprocessing"')
@@ -76,7 +102,7 @@ def dso_create_stage(name: str | None = None, template: str | None = None, descr
     stage_path = target_dir.relative_to(project_root)
 
     instantiate_template(
-        get_template_path("stage", template),
+        templates[library]["path"],
         target_dir,
         stage_name=name,
         stage_description=description,
