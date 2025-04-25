@@ -6,14 +6,16 @@ import subprocess
 import sys
 from os import getcwd
 from pathlib import Path
+from textwrap import dedent
 
 import rich_click as click
-from rich.prompt import Confirm, Prompt
+from rich.prompt import Confirm
 from ruamel.yaml import YAML
 
 from dso._logging import log
 from dso._metadata import __version__
-from dso._util import get_project_root, get_template_path, instantiate_with_repo
+from dso._templates import get_instantiate_template_help_text, instantiate_with_repo, prompt_for_template_params
+from dso._util import get_project_root
 
 from ._create import dso_create
 from ._exec import dso_exec
@@ -80,35 +82,41 @@ def dso_get_config(stage, all, skip_compile):
         sys.exit(1)
 
 
-@click.option("--description")
 @click.argument("name", required=False)
+@click.option("--library", "-l", "library_id", help="Choose the template library to use")
+@click.option(
+    "--template", "-t", "template_id", help="Specify the id of a template to use from the specified template library"
+)
 @click.command(
     "init",
-)
-def dso_init(name: str | None = None, description: str | None = None):
-    """
-    Initialize a new project. A project can contain several stages organized in arbitrary subdirectories.
-
+    help=dedent("""\
     If you wish to initialize DSO in an existing project, you can specify an existing directory. In
-    this case, it will initialize files from the template that do not exist yet, but never overwrite existing files.
-    """
+    this case, it will initialize files from the template that do not exist yet, but never overwrite existing files.\n
+    """)
+    + get_instantiate_template_help_text("project"),
+    context_settings={
+        "ignore_unknown_options": True,
+        "allow_extra_args": True,
+    },
+)
+@click.pass_context
+def dso_init(ctx, name: str | None, *, template_id: str | None = None, library_id: str | None = None):
+    """Initialize a new project. A project can contain several stages organized in arbitrary subdirectories."""
     from dso._compile_config import compile_all_configs
 
-    if name is None:
-        name = Prompt.ask('[bold]Please enter the name of the project, e.g. "single_cell_lung_atlas"')
+    # get extra arguments, see https://stackoverflow.com/questions/32944131/add-unspecified-options-to-cli-command-using-python-click
+    params = {ctx.args[i][2:]: ctx.args[i + 1] for i in range(0, len(ctx.args), 2)}
+    params["name"] = name
 
-    target_dir = Path(getcwd()) / name
+    template, params = prompt_for_template_params("stage", library_id, template_id, **params)
+
+    target_dir = Path(getcwd()) / params["name"]
 
     if target_dir.exists():
         if not Confirm.ask("[bold]Directory already exists. Do you want to initialize DSO in an existing project?"):
             sys.exit(1)
 
-    if description is None:
-        description = Prompt.ask("[bold]Please add a short description of the project")
-
-    instantiate_with_repo(
-        get_template_path("init", "default"), target_dir, project_name=name, project_description=description
-    )
+    instantiate_with_repo(template["path"], target_dir, **params)
     log.info("[green]Project initalized successfully.")
     compile_all_configs([target_dir])
 
