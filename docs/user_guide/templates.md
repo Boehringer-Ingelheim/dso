@@ -40,6 +40,11 @@ This enables the following use-cases:
     require more flexibility than predefined worflows such as nf-core, but can still benefit from a structured
     "base" document to get started with.
 
+Template libraries can be provided as:
+
+-   A python module (for instance, the default library is `dso.templates`)
+-   A path on the file system (e.g. `/data/share/dso_templates`)
+
 A template library is structured as follows:
 
 ```
