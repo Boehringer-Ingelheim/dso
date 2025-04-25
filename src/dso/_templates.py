@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib
 import json
 import os
+import sys
 from importlib import resources
 from pathlib import Path
 from textwrap import dedent
@@ -102,34 +103,43 @@ def prompt_for_template_params(
 
     libraries = _get_template_libraries()
 
-    if len(libraries) == 1:
-        library_id = next(iter(libraries))
     if library_id is None:
-        library_id = str(questionary.select("Choose a template library:", choices=list(libraries)).ask())
+        if len(libraries) == 1:
+            library_id = next(iter(libraries))
+        else:
+            library_id = str(questionary.select("Choose a template library:", choices=list(libraries)).ask())
+            if library_id is None:
+                sys.exit(1)  # user aborted prompt
 
     library = libraries[library_id]
     templates = _get_templates(library, type_)
 
-    if len(templates) == 1:
-        template_id = next(iter(templates))
     if template_id is None:
-        choices = [Choice(t["id"], value=t["id"], description=t["description"]) for t in templates.values()]
-        template_id = str(
-            questionary.select(
-                "Choose a template:",
-                choices=choices,
-                use_jk_keys=False,
-                use_search_filter=True,
-                show_selected=True,
-                show_description=True,
-            ).ask()
-        )
+        if len(templates) == 1:
+            template_id = next(iter(templates))
+        else:
+            choices = [Choice(t["id"], value=t["id"], description=t["description"]) for t in templates.values()]
+            template_id = str(
+                questionary.select(
+                    "Choose a template:",
+                    choices=choices,
+                    use_jk_keys=False,
+                    use_search_filter=True,
+                    show_selected=True,
+                    show_description=True,
+                ).ask()
+            )
+            if template_id is None:
+                sys.exit(1)
     template = templates[template_id]
 
     for p in template["params"]:
         name = p["name"]
         if name not in kwargs:
-            kwargs[name] = questionary.text(p["description"]).ask()
+            res = questionary.text(p["description"]).ask()
+            if res is None:
+                sys.exit(1)
+            kwargs[name] = res
 
     return template, kwargs
 
