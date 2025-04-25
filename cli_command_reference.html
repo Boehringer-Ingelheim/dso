@@ -50,7 +50,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=f39e5986"></script>
+    <script src="_static/documentation_options.js?v=0a10c998"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -423,8 +423,10 @@ document.write(`
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">exec           </span> Dso wrappers around various tools                            <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">get-config     </span> Get the configuration for a given stage and print it to      <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> STDOUT in yaml format.                                       <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">init           </span> Initialize a new project. A project can contain several      <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> stages organized in arbitrary subdirectories.                <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">init           </span> If you wish to initialize DSO in an existing project, you    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> can specify an existing directory. In this case, it will     <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> initialize files from the template that do not exist yet,    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> but never overwrite existing files.                          <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">lint           </span> Lint a dso project                                           <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">pull           </span> Wrapper around <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">dvc pull</span>, compiling configuration before      <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> running.                                                     <span class=" -Color -Color-Faint -C-Faint">│</span>
@@ -490,8 +492,26 @@ document.write(`
  <span class=" -Color -Color-Faint -C-Faint">that do not exist will be copied to the folder. Existing files will never be </span>  
  <span class=" -Color -Color-Faint -C-Faint">overwritten.</span>                                                                   
                                                                                 
+ <span class=" -Color -Color-Faint -C-Faint">Template libraries can be configured via the </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">DSO_TEMPLATE_LIBRARIES</span><span class=" -Color -Color-Faint -C-Faint"> </span>           
+ <span class=" -Color -Color-Faint -C-Faint">environment variable. Please refer to the documentation for more details. If </span>  
+ <span class=" -Color -Color-Faint -C-Faint">the environment variable is not set, the default template library is used. If </span> 
+ <span class=" -Color -Color-Faint -C-Faint">only one template library is configured, it is not necessary to specify </span>       
+ <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--library</span><span class=" -Color -Color-Faint -C-Faint">.</span>                                                                     
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">Templates are obtained from the specified template library and selected based </span> 
+ <span class=" -Color -Color-Faint -C-Faint">on the template&#39;s unique identifier. If only a single folder template is </span>      
+ <span class=" -Color -Color-Faint -C-Faint">available from the template library, it is not necessary to specify </span>           
+ <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--template</span><span class=" -Color -Color-Faint -C-Faint">.</span>                                                                    
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">Templates can define an arbitrary number of parameters. These parameters are </span>  
+ <span class=" -Color -Color-Faint -C-Faint">prompted for interactively. If you prefer, you can specify them as additional </span> 
+ <span class=" -Color -Color-Faint -C-Faint">command line parameters, e.g. </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--description</span><span class=" -Color -Color-Faint -C-Faint">.</span>                                   
+                                                                                
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--template</span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-t</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Specify the id of a template to use from the specified <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                       template library                                       <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--library</span>   <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-l</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Specify the id of a template library                   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>          <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">    </span>  Show this message and exit.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
@@ -505,19 +525,26 @@ document.write(`
  Create a new stage.                                                            
  <span class=" -Color -Color-Faint -C-Faint">A stage can be in any subfolder of the projects. Stages shall not be nested.</span>   
                                                                                 
- <span class=" -Color -Color-Faint -C-Faint">Available templates:</span>                                                           
+ <span class=" -Color -Color-Faint -C-Faint">Template libraries can be configured via the </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">DSO_TEMPLATE_LIBRARIES</span><span class=" -Color -Color-Faint -C-Faint"> </span>           
+ <span class=" -Color -Color-Faint -C-Faint">environment variable. Please refer to the documentation for more details. If </span>  
+ <span class=" -Color -Color-Faint -C-Faint">the environment variable is not set, the default template library is used. If </span> 
+ <span class=" -Color -Color-Faint -C-Faint">only one template library is configured, it is not necessary to specify </span>       
+ <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--library</span><span class=" -Color -Color-Faint -C-Faint">.</span>                                                                     
                                                                                 
- <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">bash</span><span class=" -Color -Color-Faint -C-Faint">: Execute a simple bash snippet or call an external script (e.g.       </span> 
- <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">   </span><span class=" -Color -Color-Faint -C-Faint">nextflow)                                                                  </span> 
- <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">quarto_r</span><span class=" -Color -Color-Faint -C-Faint">: Generate a quarto report using R (qmd file)                      </span> 
- <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">quarto_py</span><span class=" -Color -Color-Faint -C-Faint">: Generate a quarto report using Python (qmd file)                </span> 
- <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">quarto_ipynb</span><span class=" -Color -Color-Faint -C-Faint">: Generate a quarto report using Python (ipynb file)           </span> 
+ <span class=" -Color -Color-Faint -C-Faint">Templates are obtained from the specified template library and selected based </span> 
+ <span class=" -Color -Color-Faint -C-Faint">on the template&#39;s unique identifier. If only a single stage template is </span>       
+ <span class=" -Color -Color-Faint -C-Faint">available from the template library, it is not necessary to specify </span>           
+ <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--template</span><span class=" -Color -Color-Faint -C-Faint">.</span>                                                                    
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">Templates can define an arbitrary number of parameters. These parameters are </span>  
+ <span class=" -Color -Color-Faint -C-Faint">prompted for interactively. If you prefer, you can specify them as additional </span> 
+ <span class=" -Color -Color-Faint -C-Faint">command line parameters, e.g. </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--description</span><span class=" -Color -Color-Faint -C-Faint">.</span>                                   
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--template</span>       <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">[</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">bash</span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">|</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">quarto_r</span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">|</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">quarto_py</span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">|</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">qua</span>                                <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">rto_ipynb</span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">]</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">                  </span>                                <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--description</span>    <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT                        </span>                                <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>           <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">                            </span>  Show this message and exit.   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--template</span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-t</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Specify the id of a template to use from the specified <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                       template library                                       <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--library</span>   <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-l</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Specify the id of a template library                   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>          <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">    </span>  Show this message and exit.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
@@ -601,15 +628,29 @@ document.write(`
                                                                                 
  <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso init</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">NAME</span>]                                               
                                                                                 
- Initialize a new project. A project can contain several stages organized in    
- arbitrary subdirectories.                                                      
- <span class=" -Color -Color-Faint -C-Faint">If you wish to initialize DSO in an existing project, you can specify an </span>      
- <span class=" -Color -Color-Faint -C-Faint">existing directory. In this case, it will initialize files from the template </span>  
- <span class=" -Color -Color-Faint -C-Faint">that do not exist yet, but never overwrite existing files.</span>                     
+ If you wish to initialize DSO in an existing project, you can specify an       
+ existing directory. In this case, it will initialize files from the template   
+ that do not exist yet, but never overwrite existing files.                     
+ <span class=" -Color -Color-Faint -C-Faint">Template libraries can be configured via the </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">DSO_TEMPLATE_LIBRARIES</span><span class=" -Color -Color-Faint -C-Faint"> </span>           
+ <span class=" -Color -Color-Faint -C-Faint">environment variable. Please refer to the documentation for more details. If </span>  
+ <span class=" -Color -Color-Faint -C-Faint">the environment variable is not set, the default template library is used. If </span> 
+ <span class=" -Color -Color-Faint -C-Faint">only one template library is configured, it is not necessary to specify </span>       
+ <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--library</span><span class=" -Color -Color-Faint -C-Faint">.</span>                                                                     
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">Templates are obtained from the specified template library and selected based </span> 
+ <span class=" -Color -Color-Faint -C-Faint">on the template&#39;s unique identifier. If only a single project template is </span>     
+ <span class=" -Color -Color-Faint -C-Faint">available from the template library, it is not necessary to specify </span>           
+ <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--template</span><span class=" -Color -Color-Faint -C-Faint">.</span>                                                                    
+                                                                                
+ <span class=" -Color -Color-Faint -C-Faint">Templates can define an arbitrary number of parameters. These parameters are </span>  
+ <span class=" -Color -Color-Faint -C-Faint">prompted for interactively. If you prefer, you can specify them as additional </span> 
+ <span class=" -Color -Color-Faint -C-Faint">command line parameters, e.g. </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--description</span><span class=" -Color -Color-Faint -C-Faint">.</span>                                   
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--description</span>    <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>                                                        <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>           <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">    </span>  Show this message and exit.                           <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--template</span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-t</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Specify the id of a template to use from the specified <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                       template library                                       <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--library</span>   <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-l</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Choose the template library to use                     <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>          <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">    </span>  Show this message and exit.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
