@@ -85,6 +85,9 @@ def get_instantiate_template_help_text(type_):
         Templates are obtained from the specified template library and selected based on the template's unique
         identifier. If only a single {type_} template is available from the template library, it is not necessary
         to specify `--template`.
+
+        Templates can define an arbitrary number of parameters. These parameters are prompted for interactively.
+        If you prefer, you can specify them as additional command line parameters, e.g. `--description`.
         """
     )
 
