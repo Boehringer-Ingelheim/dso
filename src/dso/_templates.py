@@ -32,7 +32,7 @@ def _get_template_libraries() -> dict[str, dict]:
             template_module = importlib.import_module(lib_path)
             tmp_dir = resources.files(template_module)
         except ImportError:
-            raise NotImplementedError from None
+            tmp_dir = Path(lib_path).absolute()
 
         with (tmp_dir / "index.json").open("rb") as f:
             index = json.load(f)
@@ -40,7 +40,7 @@ def _get_template_libraries() -> dict[str, dict]:
             if id_ in libraries:
                 raise ValueError(f"ID {id_} is not unique for {lib_path}.")
             libraries[id_] = index
-            libraries[id_]["path"] = lib_path
+            libraries[id_]["path"] = tmp_dir
     return libraries
 
 
@@ -55,6 +55,7 @@ def _get_templates(library: dict, type_: Literal["init", "folder", "stage"]) -> 
         if t["id"] in templates:
             raise ValueError(f"ID {t['id']} is not unique for library {library['id']} and type {type_}.")
         templates[t["id"]] = t
+        templates[t["id"]]["path"] = library["path"] / type_ / t["id"]
 
     return templates
 
@@ -109,6 +110,8 @@ def prompt_for_template_params(
     library = libraries[library_id]
     templates = _get_templates(library, type_)
 
+    if len(templates) == 1:
+        template_id = next(iter(templates))
     if template_id is None:
         choices = [Choice(t["id"], value=t["id"], description=t["description"]) for t in templates.values()]
         template_id = str(
@@ -121,7 +124,7 @@ def prompt_for_template_params(
                 show_description=True,
             ).ask()
         )
-        template = templates[template_id]
+    template = templates[template_id]
 
     for p in template["params"]:
         name = p["name"]

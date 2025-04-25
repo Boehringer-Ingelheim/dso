@@ -57,7 +57,8 @@ def dso_create_stage(ctx, name: str | None, *, template_id: str | None = None, l
 
     # get extra arguments, see https://stackoverflow.com/questions/32944131/add-unspecified-options-to-cli-command-using-python-click
     params = {ctx.args[i][2:]: ctx.args[i + 1] for i in range(0, len(ctx.args), 2)}
-    params["name"] = name
+    if name is not None:
+        params["name"] = name
 
     template, params = prompt_for_template_params("stage", library_id, template_id, **params)
 
@@ -106,9 +107,10 @@ def dso_create_folder(ctx, name: str | None, *, template_id: str | None = None, 
 
     # get extra arguments, see https://stackoverflow.com/questions/32944131/add-unspecified-options-to-cli-command-using-python-click
     params = {ctx.args[i][2:]: ctx.args[i + 1] for i in range(0, len(ctx.args), 2)}
-    params["name"] = name
+    if name is not None:
+        params["name"] = name
 
-    template, params = prompt_for_template_params("stage", library_id, template_id, **params)
+    template, params = prompt_for_template_params("folder", library_id, template_id, **params)
 
     target_dir = Path(getcwd()) / params["name"]
 
