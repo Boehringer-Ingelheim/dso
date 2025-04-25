@@ -65,7 +65,7 @@ commands, respectively. Each template is organized in a separate folder. The fol
 id.
 
 `index.json` is a index file that contains meta information on all templates which is read by the `dso init`/`dso create`
-commands. The `index.json` file needs to adhere to [this JSON schema](https://github.com/Boehringer-Ingelheim/dso/blob/main/src/dso/templates/schema.json).
+commands. The `index.json` file needs to adhere to [this JSON schema](https://github.com/Boehringer-Ingelheim/dso/blob/main/src/dso/templates/schema.json). For a full example, check out DSO's [default library on GitHub](https://github.com/Boehringer-Ingelheim/dso/tree/main/src/dso/templates).
 
 ```json
 {
