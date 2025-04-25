@@ -6,10 +6,15 @@ from pathlib import Path
 from textwrap import dedent, indent
 
 import rich_click as click
-from rich.prompt import Confirm, Prompt
+from rich.prompt import Confirm
 
 from dso._logging import log
-from dso._util import get_project_root, get_template_path, instantiate_template
+from dso._templates import (
+    get_instantiate_template_help_text,
+    instantiate_template,
+    prompt_for_template_params,
+)
+from dso._util import get_project_root
 
 # list of stage template with description - can be later populated also from external directories
 STAGE_TEMPLATES = {
@@ -31,26 +36,33 @@ CREATE_STAGE_HELP_TEXT = dedent(
 )
 
 
-@click.option("--description")
-@click.option("--template", type=click.Choice(list(STAGE_TEMPLATES)))
 @click.argument("name", required=False)
-@click.command("stage", help=CREATE_STAGE_HELP_TEXT)
-def dso_create_stage(name: str | None = None, template: str | None = None, description: str | None = None):
+@click.option("--library", "-l", "library_id", help="Specify the id of a template library")
+@click.option(
+    "--template", "-t", "template_id", help="Specify the id of a template to use from the specified template library"
+)
+@click.command(
+    "stage",
+    help="Create a new stage.\n\nA stage can be in any subfolder of the projects. Stages shall not be nested.\n\n"
+    + get_instantiate_template_help_text("stage"),
+    context_settings={
+        "ignore_unknown_options": True,
+        "allow_extra_args": True,
+    },
+)
+@click.pass_context
+def dso_create_stage(ctx, name: str | None, *, template_id: str | None = None, library_id: str | None = None):
     """Create a new stage."""
-    import questionary
-
     from dso._compile_config import compile_all_configs
 
-    if template is None:
-        template = str(questionary.select("Choose a template:", choices=list(STAGE_TEMPLATES)).ask())
+    # get extra arguments, see https://stackoverflow.com/questions/32944131/add-unspecified-options-to-cli-command-using-python-click
+    params = {ctx.args[i][2:]: ctx.args[i + 1] for i in range(0, len(ctx.args), 2)}
+    if name is not None:
+        params["name"] = name
 
-    if name is None:
-        name = Prompt.ask('[bold]Please enter the name of the stage, e.g. "01_preprocessing"')
+    template, params = prompt_for_template_params("stage", library_id, template_id, **params)
 
-    if description is None:
-        description = Prompt.ask("[bold]Please add a short description of the stage")
-
-    target_dir = Path(getcwd()) / name
+    target_dir = Path(getcwd()) / params["name"]
     if target_dir.exists():
         log.error(f"[red]Couldn't create stage: Folder with name {target_dir} already exists!")
         sys.exit(1)
@@ -60,37 +72,47 @@ def dso_create_stage(name: str | None = None, template: str | None = None, descr
     project_root = get_project_root(target_dir)
     stage_path = target_dir.relative_to(project_root)
 
-    instantiate_template(
-        get_template_path("stage", template),
-        target_dir,
-        stage_name=name,
-        stage_description=description,
-        stage_path=stage_path,
-    )
+    instantiate_template(template["path"], target_dir, rel_path_from_project_root=stage_path, **params)
     log.info("[green]Stage created successfully.")
     compile_all_configs([target_dir])
 
 
 @click.argument("name", required=False)
-@click.command("folder")
-def dso_create_folder(name: str | None = None):
-    """Create a new folder. A folder can contain subfolders or stages.
+@click.option("--library", "-l", "library_id", help="Specify the id of a template library")
+@click.option(
+    "--template", "-t", "template_id", help="Specify the id of a template to use from the specified template library"
+)
+@click.command(
+    "folder",
+    help=dedent("""\
+    Create a new folder. A folder can contain subfolders or stages.
 
     Technically, nothing prevents you from just using `mkdir`. This command additionally adds some default
     files that might be useful, e.g. an empty `dvc.yaml`.
 
     You can specify a path to an existing folder. In that case all template files that do not exist will
-    be copied to the folder. Existing files will never be overwritten.
-    """
+    be copied to the folder. Existing files will never be overwritten.\n
+    """)
+    + get_instantiate_template_help_text("folder"),
+    context_settings={
+        "ignore_unknown_options": True,
+        "allow_extra_args": True,
+    },
+)
+@click.pass_context
+def dso_create_folder(ctx, name: str | None, *, template_id: str | None = None, library_id: str | None = None):
+    """Create a new folder. A folder can contain subfolders or stages."""
     # currently there's only one template for folders
     from dso._compile_config import compile_all_configs
 
-    template = "default"
+    # get extra arguments, see https://stackoverflow.com/questions/32944131/add-unspecified-options-to-cli-command-using-python-click
+    params = {ctx.args[i][2:]: ctx.args[i + 1] for i in range(0, len(ctx.args), 2)}
+    if name is not None:
+        params["name"] = name
 
-    if name is None:
-        name = Prompt.ask('[bold]Please enter the name of the folder, e.g. "RNAseq"')
+    template, params = prompt_for_template_params("folder", library_id, template_id, **params)
 
-    target_dir = Path(getcwd()) / name
+    target_dir = Path(getcwd()) / params["name"]
 
     if target_dir.exists():
         if not Confirm.ask("[bold]Directory already exists. Do you want to copy template files to existing folder?"):
@@ -98,7 +120,11 @@ def dso_create_folder(name: str | None = None):
 
     target_dir.mkdir(exist_ok=True)
 
-    instantiate_template(get_template_path("folder", template), target_dir, folder_name=name)
+    # stage dir, relative to project root
+    project_root = get_project_root(target_dir)
+    folder_path = target_dir.relative_to(project_root)
+
+    instantiate_template(template["path"], target_dir, rel_path_from_project_root=folder_path, **params)
     log.info("[green]Folder created successfully.")
     compile_all_configs([target_dir])
 

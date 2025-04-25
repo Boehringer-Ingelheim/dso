@@ -1,3 +1,4 @@
+import json
 from os import chdir
 from subprocess import check_call
 
@@ -7,18 +8,108 @@ from click.testing import CliRunner
 from dso.cli import dso_create
 
 
+@pytest.mark.parametrize("command", ["folder", "stage"])
+def test_custom_template(command, tmp_path, dso_project):
+    template_id = "test_template"
+    lib_dir = tmp_path / "test_library"
+    lib_dir.mkdir()
+    template_dir = lib_dir / command / template_id
+    template_dir.mkdir(parents=True)
+    with (lib_dir / "index.json").open("w") as f:
+        item = {
+            "id": template_id,
+            "description": "foobarstage",
+            "usage": "...",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Stage/folder name",
+                },
+                {
+                    "name": "description",
+                    "description": "description",
+                },
+                {
+                    "name": "custom_param",
+                    "description": "A custom parameter",
+                },
+            ],
+        }
+        json.dump(
+            {
+                "id": "test_library2",
+                "description": "foobar",
+                "init": [],
+                "folder": [item],
+                "stage": [item],
+            },
+            f,
+        )
+
+    # add a test file that will be populated by jinja2 and is easy to verify
+    with (template_dir / "test.json").open("w") as f:
+        json.dump(
+            {
+                "name": "{{ name }}",
+                "description": "{{ description }}",
+                "custom_param": "{{ custom_param }}",
+            },
+            f,
+        )
+
+    runner = CliRunner()
+    chdir(dso_project)
+
+    result = runner.invoke(
+        dso_create,
+        [
+            command,
+            "testname",
+            "--library",
+            "test_library2",
+            "--template",
+            template_id,
+            "--description",
+            "testdescription",
+            "--custom_param",
+            "testcustom",
+        ],
+        env={"DSO_TEMPLATE_LIBRARIES": f"dso.templates:{lib_dir}"},
+    )
+
+    print(result.output)
+    assert result.exit_code == 0
+
+    with (dso_project / "testname" / "test.json").open("rb") as f:
+        actual = json.load(f)
+
+    assert actual == {
+        "name": "testname",
+        "description": "testdescription",
+        "custom_param": "testcustom",
+    }
+
+
 @pytest.mark.parametrize("template", ["bash", "quarto_r", "quarto_py", "quarto_ipynb"])
 def test_create_stage(dso_project, template):
     runner = CliRunner()
     chdir(dso_project)
     result = runner.invoke(
-        dso_create, ["stage", "teststage", "--template", template, "--description", "testdescription"]
+        dso_create,
+        [
+            "stage",
+            "teststage",
+            "--template",
+            template,
+            "--description",
+            "testdescription",
+        ],
     )
     print(result.output)
     assert result.exit_code == 0
     assert (dso_project / "teststage").is_dir()
     assert (dso_project / "teststage" / "dvc.yaml").is_file()
-    assert "teststage:" in (dso_project / "teststage" / "dvc.yaml").read_text()
+    assert '"teststage":' in (dso_project / "teststage" / "dvc.yaml").read_text()
     if template == "quarto":
         assert (dso_project / "teststage" / "src" / "teststage.qmd").is_file()
         assert 'read_params("teststage")' in (dso_project / "teststage" / "src" / "teststage.qmd").read_text()

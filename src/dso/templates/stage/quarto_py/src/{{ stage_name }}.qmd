@@ -11,7 +11,7 @@ only the stage-dependent parameters that are defined in the 'params' section of 
 ```{python}
 #| label: read_params
 
-params = read_params("{{ stage_path }}")
+params = read_params("{{ rel_path_from_project_root }}")
 ```
 
 

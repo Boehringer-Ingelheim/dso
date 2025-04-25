@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning][].
 ### Additions
 
 -   Add `dso status` and `dso push` as a wrappers for the respective `dvc` commands ([#114](https://github.com/Boehringer-Ingelheim/dso/pull/114)).
+-   Add support for custom template libraries. Additional template libraries can be configured via
+    the `DSO_TEMPLATE_LIBRARIES` environment variable. As part of this PR, the `dso init` and `dso create` commands
+    were rewritten. ([#117](https://github.com/Boehringer-Ingelheim/dso/pull/117))
 
 ### Template updates
 
