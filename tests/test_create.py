@@ -18,7 +18,7 @@ def test_create_stage(dso_project, template):
     assert result.exit_code == 0
     assert (dso_project / "teststage").is_dir()
     assert (dso_project / "teststage" / "dvc.yaml").is_file()
-    assert "teststage:" in (dso_project / "teststage" / "dvc.yaml").read_text()
+    assert '"teststage":' in (dso_project / "teststage" / "dvc.yaml").read_text()
     if template == "quarto":
         assert (dso_project / "teststage" / "src" / "teststage.qmd").is_file()
         assert 'read_params("teststage")' in (dso_project / "teststage" / "src" / "teststage.qmd").read_text()
