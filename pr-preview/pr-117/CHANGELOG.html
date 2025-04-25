@@ -50,7 +50,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=2c2b68f2"></script>
+    <script src="_static/documentation_options.js?v=a3209298"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -469,6 +469,9 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <h3>Additions<a class="headerlink" href="#additions" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">status</span></code> and <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">push</span></code> as a wrappers for the respective <code class="docutils literal notranslate"><span class="pre">dvc</span></code> commands (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/114">#114</a>).</p></li>
+<li><p>Add support for custom template libraries. Additional template libraries can be configured via
+the <code class="docutils literal notranslate"><span class="pre">DSO_TEMPLATE_LIBRARIES</span></code> environment variable. As part of this PR, the <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> and <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> commands
+were rewritten. (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/117">#117</a>)</p></li>
 </ul>
 </section>
 <section id="template-updates">

@@ -30,8 +30,9 @@ Universal license.
 
 ## Using custom template libraries
 
-Currently, dso only supports the internal templates mentioned above. However, we plan to add support to custom
-stage templates soon ([#9](https://github.com/Boehringer-Ingelheim/dso/issues/9)). This enables some interesting use-cases:
+DSO templates are organized in "template libraries". The "default" template library ships with the DSO package.
+Additionally, custom template libraries can be specified using the [`DSO_TEMPLATE_LIBRARIES` environment variable](cli_configuration.md#environment-variables).
+This enables the following use-cases:
 
 -   Organization-specific templates: Use templates that make it easier to comply with internal processes or apply
     corporate design.
@@ -39,29 +40,61 @@ stage templates soon ([#9](https://github.com/Boehringer-Ingelheim/dso/issues/9)
     require more flexibility than predefined worflows such as nf-core, but can still benefit from a structured
     "base" document to get started with.
 
+Template libraries can be provided as:
+
+-   A python module (for instance, the default library is `dso.templates`)
+-   A path on the file system (e.g. `/data/share/dso_templates`)
+
+A template library is structured as follows:
+
+```
+.
+├── folder
+│   ├── folder_template_1
+│   └── folder_template_2
+├── index.json
+├── init
+│   └── project_template_1
+└── stage
+    ├── stage_template_1
+    └── stage_template_2
+```
+
+The subfolders `init`, `folder` and `stage` contain templates for the `dso init`, `dso create folder` and `dso create stage`
+commands, respectively. Each template is organized in a separate folder. The folder name corresponds to the template's unique
+id.
+
+`index.json` is a index file that contains meta information on all templates which is read by the `dso init`/`dso create`
+commands. The `index.json` file needs to adhere to [this JSON schema](https://github.com/Boehringer-Ingelheim/dso/blob/main/src/dso/templates/schema.json).
+
+```json
+{
+    "id": "mylibrary",
+    "description": "My amazing library",
+    "init": [
+        {
+            "id": "my_project_template",
+            "description": "...",
+            "usage": "After initializing this project template, please configure the settings in ...",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Folder name used for the project"
+                },
+                // ... Add arbitrary custom parameters here. The CLI will prompt for them when initalizing the template
+            ]
+        }
+    ],
+    "folder": [], // follows the same structure as "init"
+    "stage": [], // follows the same structure as "init"
+}
+```
+
 ## Writing templates
 
 Template directories are recursively copied to their destination and files are rendered with [jinja2](https://jinja.palletsprojects.com/en/stable/templates/).
-You can use all features of jinja2 such as `if/else` blocks or loops. Additionally, you have access to the
-following variables:
+You can use all features of jinja2 such as `if/else` blocks or loops. You have access to all variables that
+are defined in the `index.json` as described above.
 
-Available variables for **project** templates:
-
-| variable            | content                                               |
-| ------------------- | ----------------------------------------------------- |
-| project_name        | project/folder name as provided to the `dso init` CLI |
-| project_description | description as provided to the `dso init` CLI         |
-
-Available variables for **folder** templates:
-
-| variable    | content                                                |
-| ----------- | ------------------------------------------------------ |
-| folder_name | folder name as provided to the `dso create folder` CLI |
-
-Available variables for **stage** templates:
-
-| variable          | content                                               |
-| ----------------- | ----------------------------------------------------- |
-| stage_name        | folder name as provided to the `dso create stage` CLI |
-| stage_description | description as provided to the `dso create stage` CLI |
-| stage_path        | Path to the stage relative to the project root        |
+Additionally, for `folder` and `stage` templates, the variable `rel_path_from_project_root` gets injected. As
+the name suggests, it provides the path to the stage/folder relative to the project root.
