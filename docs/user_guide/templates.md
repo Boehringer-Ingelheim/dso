@@ -67,7 +67,7 @@ id.
 `index.json` is a index file that contains meta information on all templates which is read by the `dso init`/`dso create`
 commands. The `index.json` file needs to adhere to [this JSON schema](https://github.com/Boehringer-Ingelheim/dso/blob/main/src/dso/templates/schema.json).
 
-```jsonc
+```json
 {
     "id": "mylibrary",
     "description": "My amazing library",

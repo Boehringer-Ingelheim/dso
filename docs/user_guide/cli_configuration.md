@@ -13,7 +13,7 @@ The following environment variables can be used to change certain dso behaviors,
 | `DSO_QUIET`                     | `DSO_QUIET=1` disables info messages, `DSO_QUIET=2` disables warnings. This is equivalent to `-q` and `-qq`, respectively.                        |
 | `DSO_VERBOSE`                   | `DSO_VERBOSE=1` enables debug logging. This is equivalent to `-v`                                                                                 |
 | `DSO_SKIP_COMPILE`              | `DSO_SKIP_COMPILE` disables automated internal calls to `dso compile-config` in commands that support it. This is equivalent to `--skip-compile`. |
-| `DSO_TEMPLATE_LIBRARIES`        | Specify paths to [template libraries](user_guide/templates.md). Libraries can either be specified as path on the file system or python modules. Multiple libraries are separated using `:`. The default library is `dso.templates`. Example: `DSO_TEMPLATE_LIBRARIES="dso.templates:/path/to/my/custom/library"`|
+| `DSO_TEMPLATE_LIBRARIES`        | Specify paths to [template libraries](templates.md). Libraries can either be specified as path on the file system or python modules. Multiple libraries are separated using `:`. The default library is `dso.templates`. Example: `DSO_TEMPLATE_LIBRARIES="dso.templates:/path/to/my/custom/library"`|
 
 ## Project-specific settings -- `pyproject.toml`
 
