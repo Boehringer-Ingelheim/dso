@@ -33,7 +33,7 @@ dependencies = [
   "pre-commit",
   "pypdf",
   "pyyaml",
-  "questionary",
+  "questionary>=2.1",
   "rich",
   "rich-click",
   "ruamel-yaml",

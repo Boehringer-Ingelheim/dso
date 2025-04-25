@@ -1,5 +1,5 @@
 stages:
-  {{ stage_name }}:
+  { { name } }:
     params: []
     deps: []
     outs:

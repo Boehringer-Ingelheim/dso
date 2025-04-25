@@ -64,6 +64,10 @@
                                 "type": "string"
                             }
                         },
+                        "propertyNames": {
+                            "pattern": "^(?!rel_path_from_project_root$).*$",
+                            "description": "'rel_path_from_project_root ' is a reserved property name automatically provided by DSO"
+                        },
                         "required": ["name", "description"]
                     },
                     "minItems": 0

@@ -1,7 +1,7 @@
 [project]
 name = "dsoproj"
 version = "0.1.0dev"
-description = "{{ project_description }}"
+description = "{{ description }}"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [

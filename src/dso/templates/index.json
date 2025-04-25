@@ -39,11 +39,11 @@
             "params": [
                 {
                     "name": "name",
-                    "description": "Stage name (used as folder name)"
+                    "description": "Stage name (used as folder name), e.g \"01_preprocessing\""
                 },
                 {
                     "name": "description",
-                    "description": "A short project description, used in the README"
+                    "description": "A short description of the stage, used in the README"
                 }
             ]
         },
@@ -54,11 +54,11 @@
             "params": [
                 {
                     "name": "name",
-                    "description": "Stage name (used as folder name)"
+                    "description": "Stage name (used as folder name), e.g \"01_preprocessing\""
                 },
                 {
                     "name": "description",
-                    "description": "A short project description, used in the README"
+                    "description": "A short description of the stage, used in the README"
                 }
             ]
         },
@@ -69,11 +69,11 @@
             "params": [
                 {
                     "name": "name",
-                    "description": "Stage name (used as folder name)"
+                    "description": "Stage name (used as folder name), e.g \"01_preprocessing\""
                 },
                 {
                     "name": "description",
-                    "description": "A short project description, used in the README"
+                    "description": "A short description of the stage, used in the README"
                 }
             ]
         },
@@ -84,11 +84,11 @@
             "params": [
                 {
                     "name": "name",
-                    "description": "Stage name (used as folder name)"
+                    "description": "Stage name (used as folder name), e.g \"01_preprocessing\""
                 },
                 {
                     "name": "description",
-                    "description": "A short project description, used in the README"
+                    "description": "A short description of the stage, used in the README"
                 }
             ]
         }
