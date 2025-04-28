@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning][].
 ### Fixes
 
 -   Exclude `meta.yaml` at the root of a stage/folder/project template. `meta.yaml` files can be used
-    to define metadata of templates, but it is currently not used by `dso` ([#118](https://github.com/Boehringer-Ingelheim/dso/pull/118)).
+    to define metadata of templates, but it is currently not used by `dso` ([#119](https://github.com/Boehringer-Ingelheim/dso/pull/119)).
 
 ## v0.13.0
 
