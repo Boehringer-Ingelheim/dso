@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## v0.13.2
+
+### Fixes
+
+-   Rename filenames with a jinja2 variable in the default template library to match the new
+    variables names that were introduced in `v0.13.0` ([#120](https://github.com/Boehringer-Ingelheim/dso/pull/120)).
+
 ## v0.13.1
 
 ### Fixes
