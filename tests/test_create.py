@@ -110,7 +110,7 @@ def test_create_stage(dso_project, template):
     assert (dso_project / "teststage").is_dir()
     assert (dso_project / "teststage" / "dvc.yaml").is_file()
     assert '"teststage":' in (dso_project / "teststage" / "dvc.yaml").read_text()
-    if template == "quarto":
+    if template.startswith("quarto"):
         assert (dso_project / "teststage" / "src" / "teststage.qmd").is_file()
         assert 'read_params("teststage")' in (dso_project / "teststage" / "src" / "teststage.qmd").read_text()
     assert "testdescription" in (dso_project / "teststage" / "README.md").read_text()
