@@ -90,8 +90,16 @@ def test_custom_template(command, tmp_path, dso_project):
     }
 
 
-@pytest.mark.parametrize("template", ["bash", "quarto_r", "quarto_py", "quarto_ipynb"])
-def test_create_stage(dso_project, template):
+@pytest.mark.parametrize(
+    "template,expected_src",
+    [
+        ["bash", None],
+        ["quarto_r", "src/teststage.qmd"],
+        ["quarto_py", "src/teststage.qmd"],
+        ["quarto_ipynb", "src/teststage.ipynb"],
+    ],
+)
+def test_create_stage(dso_project, template, expected_src):
     runner = CliRunner()
     chdir(dso_project)
     result = runner.invoke(
@@ -110,9 +118,10 @@ def test_create_stage(dso_project, template):
     assert (dso_project / "teststage").is_dir()
     assert (dso_project / "teststage" / "dvc.yaml").is_file()
     assert '"teststage":' in (dso_project / "teststage" / "dvc.yaml").read_text()
-    if template == "quarto":
-        assert (dso_project / "teststage" / "src" / "teststage.qmd").is_file()
-        assert 'read_params("teststage")' in (dso_project / "teststage" / "src" / "teststage.qmd").read_text()
+    if expected_src is not None:
+        assert (dso_project / "teststage" / expected_src).is_file()
+        # .replace to handle ipynb json
+        assert 'read_params("teststage")' in (dso_project / "teststage" / expected_src).read_text().replace('\\"', '"')
     assert "testdescription" in (dso_project / "teststage" / "README.md").read_text()
     # Check that all pre-commit checks pass on the newly initiated template
     check_call(["pre-commit", "install"], cwd=dso_project)
