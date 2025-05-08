@@ -6,6 +6,18 @@ default_stages:
   - pre-push
 minimum_pre_commit_version: 2.16.0
 repos:
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.33.0
+    hooks:
+      - id: check-jsonschema
+        files: "src/dso/templates/schema.json"
+        args: ["--check-metaschema"]
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.33.0
+    hooks:
+      - id: check-jsonschema
+        files: "src/dso/templates/index.json"
+        args: ["--schemafile", "src/dso/templates/schema.json"]
   - repo: https://github.com/biomejs/pre-commit
     rev: v1.9.4
     hooks:
@@ -15,6 +27,7 @@ repos:
     rev: v2.5.1
     hooks:
       - id: pyproject-fmt
+        exclude: ^src/dso/templates/.*$
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.11.6
     hooks:

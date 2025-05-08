@@ -9,6 +9,13 @@ import sys
 from datetime import datetime
 from importlib.metadata import metadata
 from pathlib import Path
+import os
+import rich_click as click
+
+# set maximum width for help pages
+click.rich_click.MAX_WIDTH = 96
+# Set force color for rich outputs shown in the docs
+os.environ["FORCE_COLOR"] = "1"
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE / "extensions"))
@@ -29,15 +36,15 @@ repository_url = urls["Source"]
 # The full version, including alpha/beta/rc tags
 release = info["Version"]
 
-bibtex_bibfiles = ["references.bib"]
+# bibtex_bibfiles = ["references.bib"]
 templates_path = ["_templates"]
 nitpicky = True  # Warn about broken links
 needs_sphinx = "4.0"
 
 html_context = {
     "display_github": True,  # Integrate GitHub
-    "github_user": "sturmgre",
-    "github_repo": "dso",
+    "github_user": "Boehringer-Ingelheim",
+    "github_repo": project_name,
     "github_version": "main",
     "conf_py_path": "/docs/",
 }
@@ -47,18 +54,19 @@ html_context = {
 # Add any Sphinx extension module names here, as strings.
 # They can be extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
-    "myst_nb",
+    "myst_parser",
+    "sphinx_design",
     "sphinx_copybutton",
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
-    "sphinxcontrib.bibtex",
+    # "sphinxcontrib.bibtex",
     "sphinx_autodoc_typehints",
-    "sphinx_tabs.tabs",
     "sphinx.ext.mathjax",
     "IPython.sphinxext.ipython_console_highlighting",
     "sphinxext.opengraph",
+    "click_extra.sphinx",
     *[p.stem for p in (HERE / "extensions").glob("*.py")],
 ]
 

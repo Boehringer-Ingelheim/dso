@@ -1,0 +1,11 @@
+stages:
+  "{{ name }}":
+    params:
+      - dso.quarto
+    deps:
+      - src/{{ name }}.ipynb
+    outs:
+      - output
+      - report/{{ name }}.html
+    cmd:
+      - uv run dso exec quarto .
