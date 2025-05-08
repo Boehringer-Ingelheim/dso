@@ -7,13 +7,13 @@ We assume that you are already familiar with git and with making pull requests o
 In addition to the packages needed to _use_ this package,
 you need additional python packages to [run tests](#writing-tests) and [build the documentation](#docs-building).
 
+
 The easiest way is to get familiar with [hatch environments][], with which these tasks are simply:
 
 ```bash
 hatch test  # defined in the table [tool.hatch.envs.hatch-test] in pyproject.toml
 hatch run docs:build  # defined in the table [tool.hatch.envs.docs]
 ```
-
 If you prefer managing environments manually, you can use `pip`:
 
 ```bash
@@ -99,6 +99,7 @@ gives you time to fix the issue or reach out to the developers of the dependency
 
 ### Updating the version number
 
+
 DSO uses [hatch-vcs](https://github.com/ofek/hatch-vcs) to automaticlly retrieve the version number
 from the git tag. To make a new release, navigate to the “Releases” page of this project on GitHub. Specify vX.X.X as a tag name and create a release. For more information, see [managing GitHub releases][]. This will automatically create a git tag and trigger a Github workflow that creates a release on PyPI.
 
@@ -112,6 +113,7 @@ Please adhere to [Semantic Versioning][semver], in brief
 >
 > Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
 
+
 [semver]: https://semver.org/
 [managing GitHub releases]: https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
 [pypi]: https://pypi.org/
@@ -120,6 +122,7 @@ Please adhere to [Semantic Versioning][semver], in brief
 
 Please write documentation for new or changed features and use-cases.
 This project uses [sphinx][] with the following features:
+
 
 -   The [myst][] extension allows to write documentation in markdown/Markedly Structured Text
 -   [Numpy-style docstrings][numpydoc] (through the [napoloen][numpydoc-napoleon] extension).
@@ -134,6 +137,7 @@ See scanpy’s {doc}`scanpy:dev/documentation` for more information on how to wr
 [numpydoc-napoleon]: https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html
 [numpydoc]: https://numpydoc.readthedocs.io/en/latest/format.html
 [sphinx-autodoc-typehints]: https://github.com/tox-dev/sphinx-autodoc-typehints
+
 
 ### Hints
 
