@@ -122,18 +122,20 @@ def prompt_for_template_params(
             template_id = next(iter(templates))
         else:
             choices = [Choice(t["id"], value=t["id"], description=t["description"]) for t in templates.values()]
-            template_id = str(
-                questionary.select(
-                    "Choose a template:",
-                    choices=choices,
-                    use_jk_keys=False,
-                    use_search_filter=True,
-                    show_selected=True,
-                    show_description=True,
-                ).ask()
-            )
-            if template_id is None:
-                sys.exit(1)
+            template_id = questionary.select(
+                "Choose a template:",
+                choices=choices,
+                use_jk_keys=False,
+                use_search_filter=True,
+                show_selected=True,
+                show_description=True,
+            ).ask()
+
+    if template_id is None:
+        sys.exit(1)
+    else:
+        template_id = str(template_id)
+
     template = templates[template_id]
 
     for p in template["params"]:
