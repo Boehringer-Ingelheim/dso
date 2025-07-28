@@ -51,7 +51,7 @@ def update_files_in_src(path: Path, source_base: str, target_base: str, source_r
     if os.path.exists(path):
         for root, _, files in os.walk(path):
             for file in files:
-                if source_base in file:
+                if not file.startswith("."):
                     old_file_path = os.path.join(root, file)
                     new_file_name = file.replace(source_base, target_base)
                     new_file_path = os.path.join(root, new_file_name)
@@ -111,10 +111,10 @@ def get_direct_path_from_root(root_path, subdirectory_path):
 @click.argument("source", type=click.Path(exists=True, file_okay=True, dir_okay=True, path_type=Path))
 @click.argument("target", type=click.Path(file_okay=True, dir_okay=True, path_type=Path))
 def dso_mv(source: str | None = None, target: str | None = None):
-    """Move and rename a stage or a folder
+    """Move and rename a stage or a folder and update references to it
 
-    This is an imperfect renaming function replacing the stage or folder name
-    in files in the project.
+    A stage or folder is renamed with references to it. In a stage, the dvc.yaml, params.in.yaml
+    and src files. In other folder or stages, dvc.yaml, params.in.yaml and src files are updated.
     """
     # rewrite to relative path roots
     if source is None:
