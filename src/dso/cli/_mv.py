@@ -51,8 +51,8 @@ def update_files_in_src(path: Path, source_base: str, target_base: str, source_r
     if os.path.exists(path):
         for root, _, files in os.walk(path):
             for file in files:
-                if not file.startswith("."):
-                    old_file_path = os.path.join(root, file)
+                old_file_path = os.path.join(root, file)
+                if not file.startswith(".") and os.path.isfile(old_file_path):
                     new_file_name = file.replace(source_base, target_base)
                     new_file_path = os.path.join(root, new_file_name)
                     log.debug(f"Renaming file {old_file_path} to {new_file_path}")
