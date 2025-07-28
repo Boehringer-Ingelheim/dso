@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning][].
 ### Fixes
 
 -  Exit gracefully when aborting template selections.
+-  added `dso mv` for moving and renaming stages or folders while updating names and references
 
 ## v0.13.2
 
