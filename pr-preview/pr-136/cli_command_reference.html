@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="cli_command_reference.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso pull: dso repro: dso watermark:" />
+<meta property="og:description" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso mv: dso pull: dso repro: dso watermark:" />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="_images/social_previews/summary_cli_command_reference_cb5178e2.png" />
-<meta property="og:image:alt" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso pull: dso repro: dso watermark:" />
-<meta name="description" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso pull: dso repro: dso watermark:" />
+<meta property="og:image" content="_images/social_previews/summary_cli_command_reference_ead89594.png" />
+<meta property="og:image:alt" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso mv: dso pull: dso repro: dso watermark:" />
+<meta name="description" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso mv: dso pull: dso repro: dso watermark:" />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Command reference &#8212; dso-core</title>
@@ -50,7 +50,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=59eeb482"></script>
+    <script src="_static/documentation_options.js?v=73de5a68"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -380,6 +380,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-get-config">dso get-config</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init">dso init</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-lint">dso lint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-mv">dso mv</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-pull">dso pull</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro">dso repro</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-watermark">dso watermark</a></li>
@@ -684,6 +685,23 @@ document.write(`
 </pre></div>
 </div>
 </section>
+<section id="dso-mv">
+<h2>dso mv<a class="headerlink" href="#dso-mv" title="Link to this heading">#</a></h2>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>mv<span class="w"> </span>--help
+                                                                                
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso mv</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">SOURCE</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">TARGET</span>                                          
+                                                                                
+ Move and rename a stage or a folder and update references to it                
+ <span class=" -Color -Color-Faint -C-Faint">A stage or folder is renamed with references to it. In a stage, the dvc.yaml, </span> 
+ <span class=" -Color -Color-Faint -C-Faint">params.in.yaml and src files. In other folder or stages, dvc.yaml, </span>            
+ <span class=" -Color -Color-Faint -C-Faint">params.in.yaml and src files are updated.</span>                                      
+                                                                                
+<span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
 <section id="dso-pull">
 <h2>dso pull<a class="headerlink" href="#dso-pull" title="Link to this heading">#</a></h2>
 <div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>pull<span class="w"> </span>--help
@@ -803,6 +821,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-get-config">dso get-config</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init">dso init</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-lint">dso lint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-mv">dso mv</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-pull">dso pull</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro">dso repro</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-watermark">dso watermark</a></li>
