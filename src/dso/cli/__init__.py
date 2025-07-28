@@ -19,6 +19,7 @@ from dso._util import get_project_root
 
 from ._create import dso_create
 from ._exec import dso_exec
+from ._mv import dso_mv
 
 click.rich_click.USE_MARKDOWN = True
 
@@ -251,6 +252,7 @@ dso.add_command(dso_exec)
 dso.add_command(dso_lint)
 dso.add_command(dso_get_config)
 dso.add_command(dso_watermark)
+dso.add_command(dso_mv)
 
 for command in ["repro", "pull", "status", "push"]:
     dso.add_command(_dvc_wrapper(command))
