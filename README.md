@@ -42,7 +42,7 @@ Universal license. See also the [separate LICENSE file](https://github.com/Boehr
 dso was initially developed by
 
 -   [Gregor Sturm](https://github.com/grst)
--   [Tom Schwarzl](https://github.com/tschwarzl)
+-   [Thomas Schwarzl](https://github.com/tschwarzl)
 -   [Daniel Schreyer](https://github.com/dschreyer)
 -   [Alexander Peltzer](https://github.com/apeltzer)
 

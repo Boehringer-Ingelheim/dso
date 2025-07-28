@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## v0.13.3
+
+### Fixes
+
+-  Exit gracefully when aborting template selections.
+
 ## v0.13.2
 
 ### Fixes

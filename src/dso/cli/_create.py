@@ -63,9 +63,11 @@ def dso_create_stage(ctx, name: str | None, *, template_id: str | None = None, l
     template, params = prompt_for_template_params("stage", library_id, template_id, **params)
 
     target_dir = Path(getcwd()) / params["name"]
+
     if target_dir.exists():
         log.error(f"[red]Couldn't create stage: Folder with name {target_dir} already exists!")
         sys.exit(1)
+
     target_dir.mkdir()
 
     # stage dir, relative to project root
