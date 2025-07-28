@@ -50,7 +50,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=4d3067ad"></script>
+    <script src="../_static/documentation_options.js?v=451db241"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -393,13 +393,13 @@ document.write(`
 <h1>dso._lint.DSO001<a class="headerlink" href="#dso-lint-dso001" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="dso._lint.DSO001">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dso._lint.</span></span><span class="sig-name descname"><span class="pre">DSO001</span></span><a class="headerlink" href="#dso._lint.DSO001" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dso._lint.</span></span><span class="sig-name descname"><span class="pre">DSO001</span></span><a class="headerlink" href="#dso._lint.DSO001" title="Link to this definition">#</a></dt>
 <dd><p>In a quarto stage, ensure <code class="docutils literal notranslate"><span class="pre">dso::read_params</span></code> is called and stage name is correct</p>
 </dd></dl>
 
 <section id="attributes-table">
 <h2>Attributes table<a class="headerlink" href="#attributes-table" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#dso._lint.DSO001.PATTERN" title="dso._lint.DSO001.PATTERN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PATTERN</span></code></a></p></td>
 <td><p></p></td>
@@ -410,7 +410,7 @@ document.write(`
 </section>
 <section id="methods-table">
 <h2>Methods table<a class="headerlink" href="#methods-table" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#dso._lint.DSO001.check" title="dso._lint.DSO001.check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check</span></code></a>(file)</p></td>
 <td><p>Check that the file passes the linting step.</p></td>
@@ -434,13 +434,13 @@ document.write(`
 <h2>Methods<a class="headerlink" href="#methods" title="Link to this heading">#</a></h2>
 <dl class="py method">
 <dt class="sig sig-object py" id="dso._lint.DSO001.check">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">DSO001.</span></span><span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dso._lint.DSO001.check" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">DSO001.</span></span><span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dso._lint.DSO001.check" title="Link to this definition">#</a></dt>
 <dd><p>Check that the file passes the linting step.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dso._lint.DSO001.is_applicable">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">DSO001.</span></span><span class="sig-name descname"><span class="pre">is_applicable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dso._lint.DSO001.is_applicable" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">DSO001.</span></span><span class="sig-name descname"><span class="pre">is_applicable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dso._lint.DSO001.is_applicable" title="Link to this definition">#</a></dt>
 <dd><p>Check if the rule is applicable to <code class="docutils literal notranslate"><span class="pre">file</span></code>.</p>
 <p>Return true, if “dso exec quarto” is found in the dvc.yaml associated with this stage AND
 the file matches the pattern</p>
