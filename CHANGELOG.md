@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning][].
 ### Fixes
 
 -  Exit gracefully when aborting template selections.
+-  added `-all` option `dso compile-config` to compile all configs in project
 
 ## v0.13.2
 

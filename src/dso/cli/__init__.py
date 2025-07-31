@@ -24,8 +24,15 @@ click.rich_click.USE_MARKDOWN = True
 
 
 @click.command(name="compile-config")
+@click.option(
+    "--all",
+    is_flag=True,
+    type=bool,
+    default=False,
+    help="Compile all configs in the project",
+)
 @click.argument("args", nargs=-1)
-def dso_compile_config(args):
+def dso_compile_config(all, args):
     """Compile params.in.yaml into params.yaml using Jinja2 templating and resolving recursive templates.
 
     If passing no arguments, configs will be resolved for the current working directory (i.e. all parent configs,
@@ -34,7 +41,11 @@ def dso_compile_config(args):
     """
     from dso._compile_config import compile_all_configs
 
-    if not len(args):
+    if all and not len(args):
+        paths = [get_project_root(Path.cwd())]
+    elif all:
+        paths = [get_project_root(Path(x)) for x in args]
+    elif not len(args):
         paths = [Path.cwd()]
     else:
         paths = [Path(x) for x in args]
