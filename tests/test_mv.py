@@ -19,7 +19,7 @@ def test_mv_stage(quarto_stage, source, target):
     chdir(quarto_stage)
     source_dir = Path(quarto_stage).resolve()
     base_dir = source_dir.parent
-    renamed_dir = Path(base_dir / target)
+    renamed_dir = base_dir / target
 
     result = runner.invoke(
         dso_mv,
