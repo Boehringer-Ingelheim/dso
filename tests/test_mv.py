@@ -19,7 +19,7 @@ def test_mv_stage(quarto_stage, source, target):
     runner = CliRunner()
     chdir(quarto_stage)
     source_dir = Path(quarto_stage).resolve()
-    base_dir = Path(os.path.dirname(source_dir))
+    base_dir = source_dir.parent
     renamed_dir = Path(base_dir / target)
 
     result = runner.invoke(
