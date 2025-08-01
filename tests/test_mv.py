@@ -1,5 +1,4 @@
 from os import chdir
-from pathlib import Path
 from subprocess import check_call
 
 import pytest
