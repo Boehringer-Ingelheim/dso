@@ -17,7 +17,7 @@ from dso.cli import dso_mv
 def test_mv_stage(quarto_stage, source, target):
     runner = CliRunner()
     chdir(quarto_stage)
-    source_dir = Path(quarto_stage).resolve()
+    source_dir = quarto_stage.resolve()
     base_dir = source_dir.parent
     renamed_dir = base_dir / target
 
