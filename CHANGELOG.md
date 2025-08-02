@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning][].
 
 -  Exit gracefully when aborting template selections.
 
+### Additions
+
+-  Added `--all` option to `dso compile-config` to compile all configs in project ([#137](https://github.com/Boehringer-Ingelheim/dso/pull/137/files))
+
 ## v0.13.2
 
 ### Fixes
