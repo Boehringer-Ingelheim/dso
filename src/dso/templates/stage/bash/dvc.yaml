@@ -13,6 +13,6 @@ stages:
 
         # For more complex shell logic like variables or loops
         # add a script src/{{ name }}.sh and execute from here:
-        # sh src/{{ name }}.sh
+        # bash src/{{ name }}.sh
 
         EOF
