@@ -1,6 +1,7 @@
 # dso
 .dso.json
 params.yaml
+meta.yaml
 
 # uv
 .venv

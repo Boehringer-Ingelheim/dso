@@ -157,10 +157,7 @@ def instantiate_template(template_path: Traversable, target_dir: Path | str, **p
 
     def _traverse_template(curr_path, subdir):
         for p in curr_path.iterdir():
-            # skip a meta.yaml at the root of a template
-            # TODO make this generic (e.g. a "dsoignore" file)
-            if p.is_file() and curr_path == template_path and p.name == "meta.yaml":
-                continue
+            # Include meta.yaml files to help users understand template usage
             if p.is_file():
                 name_rendered = Template(p.name).render(params)
                 # this file is used for checking in empty folders in git.

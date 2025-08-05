@@ -1,0 +1,68 @@
+# {{ name }} - Quarto Python Stage Template Usage Guide
+
+## About This Template
+This template creates a Quarto-based stage using Python for generating reports and analyses as part of your DVC pipeline.
+
+## Description
+{{ description }}
+
+## How to Use This Stage
+
+### Getting Started
+1. Open the `src/{{ name }}.qmd` file - this is your main Quarto document
+2. Edit the Quarto markdown file to include your Python analysis
+3. Update `dvc.yaml` to declare your inputs and outputs
+
+### Key Files
+- `src/{{ name }}.qmd`: Your main Quarto document with Python code
+- `dvc.yaml`: DVC pipeline definition - update dependencies and outputs here
+- `params.in.yaml`: Parameter definitions (add your analysis parameters here)
+- `input/`: Directory for input files (add your data files here)
+- `output/`: Directory for output files (reports and artifacts will be generated here)
+- `README.md`: Documentation for this specific stage
+
+### Working with Quarto
+1. **Add Python code blocks**: Use ````{python}` code blocks for your analysis
+2. **Use parameters**: Access parameters with `read_params("{{ name }}")`
+3. **Read input data**: Reference files in the `input/` directory
+4. **Save outputs**: Write results to the `output/` directory
+
+### Example Quarto Content
+```markdown
+---
+title: "{{ name | title }}"
+format: html
+---
+
+# Analysis
+
+```{python}
+import pandas as pd
+from dso import read_params
+
+# Read parameters
+params = read_params("{{ name }}")
+
+# Read input data
+df = pd.read_csv("input/data.csv")
+
+# Your analysis here
+result = df.describe()
+print(result)
+
+# Save output
+result.to_csv("output/summary.csv")
+```
+
+### Next Steps
+1. Update dependencies (`deps`) in `dvc.yaml` to include your input files
+2. Update outputs (`outs`) in `dvc.yaml` to include generated reports and data
+3. Add analysis parameters to `params.in.yaml`
+4. Implement your analysis in `src/{{ name }}.qmd`
+5. Test your stage with: `dvc repro {{ name }}`
+
+## Tips
+- Use `read_params("{{ name }}")` to access parameters from your Quarto document
+- The output HTML report will be automatically generated in the `output/` directory
+- You can include plots, tables, and interactive content using Quarto features
+- Consider using relative paths for better portability
