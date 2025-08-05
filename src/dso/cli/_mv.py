@@ -43,6 +43,9 @@ def update_references_in_file(file: Path, pattern: str, replacement: str):
             Path(file).write_text(updated_content)
         except (OSError, UnicodeDecodeError) as e:
             log.error(f"[red]Failed to update {file}: {e}")
+    else:
+        log.error(f"[red]Trying to replace references in '{file}', but files does not exist. Exiting.")
+        sys.exit(1)
 
 
 def update_files_in_src(path: Path, source_base: str, target_base: str, source_relative: Path, target_relative: Path):
