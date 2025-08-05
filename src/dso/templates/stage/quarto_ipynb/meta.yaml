@@ -23,7 +23,7 @@ This template creates a Quarto-based stage using a Jupyter notebook for generati
 
 ### Working with Jupyter Notebooks
 1. **Edit with your favorite editor**: Use Jupyter Lab, VS Code, or any notebook editor
-2. **Use parameters**: Access parameters with `read_params("{{ name }}")`
+2. **Use parameters**: Access parameters with `read_params("{{ rel_path_from_project_root }}")`
 3. **Read input data**: Reference files in the `input/` directory
 4. **Save outputs**: Write results to the `output/` directory
 
@@ -39,7 +39,7 @@ The notebook already contains a basic structure. You can:
 
 2. **Read parameters**:
    ```python
-   params = read_params("{{ name }}")
+   params = read_params("{{ rel_path_from_project_root }}")
    ```
 
 3. **Load and analyze data**:
@@ -68,7 +68,7 @@ The notebook already contains a basic structure. You can:
 5. Test your stage with: `dvc repro {{ name }}`
 
 ## Tips
-- Use `read_params("{{ name }}")` to access parameters from your notebook
+- Use `read_params("{{ rel_path_from_project_root }}")` to access parameters from your notebook
 - The output HTML report will be automatically generated in the `output/` directory via Quarto
 - Clear cell outputs before committing to keep the notebook clean
 - Consider using relative paths for better portability

@@ -23,7 +23,7 @@ This template creates a Quarto-based stage using R for generating reports and an
 
 ### Working with Quarto
 1. **Add R code blocks**: Use ````{r}` code blocks for your analysis
-2. **Use parameters**: Access parameters with `read_params("{{ name }}")`
+2. **Use parameters**: Access parameters with `read_params("{{ rel_path_from_project_root }}")`
 3. **Read input data**: Reference files in the `input/` directory
 4. **Save outputs**: Write results to the `output/` directory
 
@@ -40,7 +40,7 @@ format: html
 library(dso)
 
 # Read parameters
-params <- read_params("{{ name }}")
+params <- read_params("{{ rel_path_from_project_root }}")
 
 # Read input data
 df <- read.csv("input/data.csv")
@@ -64,7 +64,7 @@ write.csv(summary_stats, "output/summary.csv")
 5. Test your stage with: `dvc repro {{ name }}`
 
 ## Tips
-- Use `read_params("{{ name }}")` to access parameters from your Quarto document
+- Use `read_params("{{ rel_path_from_project_root }}")` to access parameters from your Quarto document
 - The output HTML report will be automatically generated in the `output/` directory
 - You can include plots, tables, and interactive content using Quarto features
 - Consider using relative paths for better portability
