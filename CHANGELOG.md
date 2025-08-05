@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning][].
 
 -  Added `--all` option to `dso compile-config` to compile all configs in project ([#137](https://github.com/Boehringer-Ingelheim/dso/pull/137/files))
 
+### Chore
+
+-  Drop support for Python 3.10 in accordance with SPEC0 ([#140](https://github.com/Boehringer-Ingelheim/dso/pull/140)).
+
 ## v0.13.2
 
 ### Fixes
