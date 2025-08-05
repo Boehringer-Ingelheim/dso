@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Getting started" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="tutorials/getting_started.html" />
+<meta property="og:site_name" content="Project name not set" />
+<meta property="og:description" content="This section will guide you through the most important features of dso and show how to work with a dso project. dso init – Initialize a project: dso init initializes a new project in your current d..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_tutorials_getting_started_64ac1b18.png" />
+<meta property="og:image:alt" content="This section will guide you through the most important features of dso and show how to work with a dso project. dso init – Initialize a project: dso init initializes a new project in your current d..." />
+<meta name="description" content="This section will guide you through the most important features of dso and show how to work with a dso project. dso init – Initialize a project: dso init initializes a new project in your current d..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Getting started &#8212; dso-core</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=42210275" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=366103d0" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=ee6fd597"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/getting_started';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Collaborating on an existing DSO/DVC Project" href="work_on_existing_project.html" />
+    <link rel="prev" title="DSO: data science operations" href="../index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">dso-core</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="work_on_existing_project.html">Collaborating on an existing DSO/DVC Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_project.html">Transforming an existing project into DSO format</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/templates.html">Project and stage templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/params_files.html">Configuration files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/pre_commit.html">pre-commit integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/uv.html"><code class="docutils literal notranslate"><span class="pre">uv</span></code> integration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide/linting.html">Linting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../generated/dso._lint.DSO001.html">dso._lint.DSO001</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/quarto.html">Quarto integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/cli_configuration.html">DSO Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../cli_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli_command_reference.html">Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli_shell_completion.html">Shell completion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO Python API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../python_usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_api.html">API reference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO R API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">Usage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/reference/index.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso-r/blob/main/CHANGELOG.md">Changelog</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/Boehringer-Ingelheim/dso" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorials/getting_started.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Getting started</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init-initialize-a-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create-add-folders-or-stages-to-your-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-files">Configuration files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-a-stage">Implementing a stage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dvc-yaml">dvc.yaml</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quarto-stage">Quarto Stage</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bash-stage">Bash Stage</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-files-and-parameters-from-r-or-python">Accessing files and parameters from R or Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro-reproducing-all-stages"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tracking-and-syncing-files-with-dvc">Tracking and syncing files with DVC</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pushing-data-to-a-remote">Pushing data to a remote</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pulling-changes-from-remote">Pulling changes from remote</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="getting-started">
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
+<p>This section will guide you through the most important features of dso and show how to work with a dso project.</p>
+<section id="dso-init-initialize-a-project">
+<h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project<a class="headerlink" href="#dso-init-initialize-a-project" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> initializes a new project in your current directory. In the context of DSO, a project is a structured
+folder where input files, scripts and output files are organized and managed.</p>
+<p>To initialize a project use the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># To initialize a project called &quot;test_project&quot; use the following command</span>
+dso<span class="w"> </span>init<span class="w"> </span>test_project<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;This is a test project&quot;</span>
+</pre></div>
+</div>
+<p>It creates the root directory of your project with all the necessary configuration files for <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">dvc</span></code>, <code class="docutils literal notranslate"><span class="pre">uv</span></code> and <code class="docutils literal notranslate"><span class="pre">dso</span></code> itself.</p>
+</section>
+<section id="dso-create-add-folders-or-stages-to-your-project">
+<h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project<a class="headerlink" href="#dso-create-add-folders-or-stages-to-your-project" title="Link to this heading">#</a></h2>
+<p>We consider a <em>stage</em> an individual step in your analysis, usually a script/notebook with defined inputs and outputs.
+Stages can be organized in <em>folders</em> with arbitrary structures. <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> initializes folders and stages
+from predefined templates. We recommend naming stages with a numeric prefix, e.g. <code class="docutils literal notranslate"><span class="pre">01_</span></code> to declare the
+order of scripts, but this is not a requirement. Currently, two stage templates are available that
+use either a quarto document or a bash script to conduct the analysis.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>test_project
+
+<span class="c1"># Let&#39;s create a folder that we&#39;ll use to organize all analysis steps related to &quot;RNA-seq&quot;</span>
+dso<span class="w"> </span>create<span class="w"> </span>folder<span class="w"> </span>RNA_seq
+
+<span class="c1"># Let&#39;s create first stage for pre-processing</span>
+<span class="nb">cd</span><span class="w"> </span>RNA_seq
+dso<span class="w"> </span>create<span class="w"> </span>stage<span class="w"> </span>01_preprocessing<span class="w"> </span>--template<span class="w"> </span>bash<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;Run nf-core/rnaseq&quot;</span>
+
+<span class="c1"># Let&#39;s create a second stage for quality control</span>
+dso<span class="w"> </span>create<span class="w"> </span>stage<span class="w"> </span>02_qc<span class="w"> </span>--template<span class="w"> </span>quarto<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;Perform RNA-seq quality control&quot;</span>
+</pre></div>
+</div>
+<p>Stages have the following pre-defined folder-structure. This folder system aims to make the structure coherent throughout a project for easy readability and navigation. Additional folders can still be added if necessary.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>stage
+  |-- input            # contains Input Data
+  |-- src              # contains Analysis Script(s)
+  |-- output           # contains outputs generated by Analysis Scripts
+  |-- report           # contains HTML Report generated by Analysis Scripts
+</pre></div>
+</div>
+<p>For more information about project and stage templates, click <a class="reference internal" href="../user_guide/templates.html"><span class="std std-doc">here</span></a>.</p>
+</section>
+<section id="configuration-files">
+<h2>Configuration files<a class="headerlink" href="#configuration-files" title="Link to this heading">#</a></h2>
+<p>DSO proposes to put all parameters for your analysis (e.g. paths to input or output files, thresholds, etc)
+in YAML-base configuration files. You can add a <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> at any level of a dso project (<em>project</em>, <em>folder</em> or <em>stage</em>).</p>
+<p>By running</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>compile-config
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files will be <em>compiled</em> into <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> files. Compilation offers the following advantages:</p>
+<ul class="simple">
+<li><p><em>inheritance</em>: All variables defined in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> files in any parent directory will be included.</p></li>
+<li><p><em>templating</em>: Variables can be composed using <a class="reference external" href="https://jinja.palletsprojects.com/en/stable/templates/#variables">jinja2 syntax</a>, e.g. <code class="docutils literal notranslate"><span class="pre">foo:</span> <span class="pre">&quot;{{</span> <span class="pre">bar</span> <span class="pre">}}_version2&quot;</span></code>.</p></li>
+<li><p><em>path resolving</em>: Paths will be always relative to each compiled <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> file, no matter where they were defined.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/dso-yaml-inherit.png"><img alt="../_images/dso-yaml-inherit.png" src="../_images/dso-yaml-inherit.png" style="width: 80%;" />
+</a>
+<p></p>
+<p>For more details, please refer to <a class="reference internal" href="../user_guide/params_files.html"><span class="std std-doc">Configuration files</span></a>.</p>
+</section>
+<section id="implementing-a-stage">
+<h2>Implementing a stage<a class="headerlink" href="#implementing-a-stage" title="Link to this heading">#</a></h2>
+<p>A stage is a single step in your analysis and usually generates some kind of output data from input data. The input data can also be supplied by previous stages. To create a stage, use the <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span> <span class="pre">stage</span></code> command and select either the <em>bash</em> or one of the <em>quarto</em> <a class="reference internal" href="../user_guide/templates.html"><span class="std std-doc">templates</span></a> as a starting-point.</p>
+<p>The essential files of a stage are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code>: The DVC configuration file that defines your data pipelines, dependencies, and outputs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">params.yaml</span></code>: Auto-generated configuration file (never modify this by hand!).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code>: Modifiable configuration file containing stage-specific configurations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src/&lt;stage_name&gt;.qmd</span></code> (when using <code class="docutils literal notranslate"><span class="pre">quarto</span></code> template): A Quarto file containing your script that runs the analysis for this stage.</p></li>
+</ul>
+<section id="dvc-yaml">
+<h3>dvc.yaml<a class="headerlink" href="#dvc-yaml" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> file contains information about the parameters, inputs, outputs, and commands used and executes in your stage.
+Variables stored in the <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> of a stage can be directly used within the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>stages:
+<span class="w">  </span>01_preprocessing:
+<span class="w">    </span><span class="c1"># Parameters used in this stage, defined in params.yaml (NO need for ${...}!!)</span>
+<span class="w">    </span>params:
+<span class="w">      </span>-<span class="w"> </span>dso
+<span class="w">      </span>-<span class="w"> </span>thresholds
+<span class="w">    </span><span class="c1"># Dependencies required for this stage, can be defined in params.yaml (use with ${...})</span>
+<span class="w">    </span>deps:
+<span class="w">      </span>-<span class="w"> </span>src/01_preprocessing.qmd
+<span class="w">      </span>-<span class="w"> </span><span class="si">${</span><span class="p"> file_with_abs_path </span><span class="si">}</span>
+<span class="w">      </span>-<span class="w"> </span><span class="si">${</span><span class="p"> samplesheet </span><span class="si">}</span>
+
+<span class="w">    </span><span class="c1"># Outputs generated by this stage, can be defined in params.yaml (use ${ ... })</span>
+<span class="w">    </span>outs:
+<span class="w">      </span>-<span class="w"> </span>output
+<span class="w">      </span>-<span class="w"> </span>report/01_preprocessing.html
+</pre></div>
+</div>
+<section id="quarto-stage">
+<h4>Quarto Stage<a class="headerlink" href="#quarto-stage" title="Link to this heading">#</a></h4>
+<p>By default, a Quarto stage includes the following <code class="docutils literal notranslate"><span class="pre">cmd</span></code> section in the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># Command to render the Quarto script and move the HTML report to the report folder</span>
+    <span class="n">cmd</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">dso</span> <span class="n">exec</span> <span class="n">quarto</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">exec</span> <span class="pre">quarto</span></code> provides additional features such as pre-run scripts and watermarking.
+For more information see <a class="reference internal" href="../user_guide/quarto.html"><span class="std std-doc">here</span></a>.</p>
+</section>
+<section id="bash-stage">
+<h4>Bash Stage<a class="headerlink" href="#bash-stage" title="Link to this heading">#</a></h4>
+<p>A Bash stage, by default, does not include an additional script. Bash code can be directly embedded in the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">cmd</span><span class="p">:</span>
+      <span class="o">-</span> <span class="o">|</span>
+        <span class="n">bash</span> <span class="o">-</span><span class="n">euo</span> <span class="n">pipefail</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span>
+
+        <span class="c1"># add bash code here</span>
+
+        <span class="n">EOF</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="accessing-files-and-parameters-from-r-or-python">
+<h3>Accessing files and parameters from R or Python<a class="headerlink" href="#accessing-files-and-parameters-from-r-or-python" title="Link to this heading">#</a></h3>
+<p>You can easily access files and configurations using either the DSO R-package or the Python module:</p>
+<ul class="simple">
+<li><p>For Python, refer to the <a class="reference internal" href="../python_usage.html"><span class="std std-doc">Python Usage Page</span></a>.</p></li>
+<li><p>For R, refer to the <a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">R Package Page</a>.</p></li>
+</ul>
+</section>
+</section>
+<section id="dso-repro-reproducing-all-stages">
+<h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages<a class="headerlink" href="#dso-repro-reproducing-all-stages" title="Link to this heading">#</a></h2>
+<p>To execute (or <em>reproduce</em>, in dvc-speak) all scripts in a project, use <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code>.
+<code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> is a wrapper around <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">repro</span></code> that</p>
+<ul class="simple">
+<li><p>compiles all configuration files</p></li>
+<li><p>computes the checkums of all input files and compares them against the previously executed version</p></li>
+<li><p>executes all stages with modified inputs</p></li>
+<li><p>generates <code class="docutils literal notranslate"><span class="pre">dvc.lock</span></code> files that document all input files, output files and their versions.</p></li>
+</ul>
+<p>Several command options are available and are detailed in the <a class="reference external" href="https://dvc.org/doc/command-reference/repro">dvc repro documentation</a>. The most common usages are detailed below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproducing the whole project</span>
+dso<span class="w"> </span>repro
+
+<span class="c1"># Reproducing all stages within a specific directory</span>
+dso<span class="w"> </span>repro<span class="w"> </span>-R<span class="w"> </span>&lt;path&gt;
+
+<span class="c1"># Reproducing a single stage with its dependency stages</span>
+dso<span class="w"> </span>repro<span class="w"> </span>subfolder/my_stage/dvc.yaml
+
+<span class="c1"># Reproducing a single stage without its dependency stages</span>
+dso<span class="w"> </span>repro<span class="w"> </span>-s<span class="w"> </span>subfolder/my_stage/dvc.yaml
+
+<span class="c1"># Reproduce stage even if no changes were found</span>
+dso<span class="w"> </span>repro<span class="w"> </span>-s<span class="w"> </span>-f<span class="w"> </span>subfolder/my_stage/dvc.yaml
+</pre></div>
+</div>
+</section>
+<section id="tracking-and-syncing-files-with-dvc">
+<h2>Tracking and syncing files with DVC<a class="headerlink" href="#tracking-and-syncing-files-with-dvc" title="Link to this heading">#</a></h2>
+<p>Code is tracked with git as with any other project, while data is tracked by <code class="docutils literal notranslate"><span class="pre">dvc</span></code> and synced with a <a class="reference external" href="https://dvc.org/doc/user-guide/data-management/remote-storage#remote-storage">dvc remote</a>. DVC stores <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> or <code class="docutils literal notranslate"><span class="pre">dvc.lock</span></code> files in the git repository
+that reference file versions associated with each commit.</p>
+<a class="reference internal image-reference" href="../_images/dso-dvc-remotes.png"><img alt="../_images/dso-dvc-remotes.png" src="../_images/dso-dvc-remotes.png" style="width: 80%;" />
+</a>
+<p></p>
+<p>In your DSO project, all outputs are automatically controlled by DVC, ensuring that your data is versioned.
+When you have input data that was not generated within your pipeline, you need to add them to your DSO project.
+Use <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">add</span></code> to track such files with DVC. This command creates an associated <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> file and automatically appends
+the tracked file to <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>. The <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> file acts as a placeholder for the original file and should be tracked by git.</p>
+<p>This command is particularly useful when data is generated outside of your DSO project but is used within your analysis, such as metadata or preprocessed data.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add a file to DVC</span>
+dvc<span class="w"> </span>add<span class="w"> </span>&lt;directoryname/filename&gt;
+
+<span class="c1"># Example Usage:</span>
+dvc<span class="w"> </span>add<span class="w"> </span>metadata/external_clinical_annotation.csv
+</pre></div>
+</div>
+<section id="pushing-data-to-a-remote">
+<h3>Pushing data to a remote<a class="headerlink" href="#pushing-data-to-a-remote" title="Link to this heading">#</a></h3>
+<p>To ensure your collaborators can access files you added or results you generated, you need to sync
+data with a <a class="reference external" href="https://dvc.org/doc/user-guide/data-management/remote-storage#remote-storage">dvc remote</a>. DVC supports
+many backends, for instance S3 buckets, or a folder on a shared file system.</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">remote</span> <span class="pre">add</span></code> command to specify a remote directory where the version-controlled files will be stored.
+By adding the <code class="docutils literal notranslate"><span class="pre">-d</span></code> (default) option, dvc sets this directory as the default remote storage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a directory for storing version-controlled files</span>
+mkdir<span class="w"> </span>/path/on/shared/filesystem/project1/DVC_STORAGE
+
+<span class="c1"># Execute within the project directory to define the remote storage</span>
+dvc<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>-d<span class="w"> </span>&lt;remote_name&gt;<span class="w"> </span>/path/on/shared/filesystem/project1/DVC_STORAGE
+</pre></div>
+</div>
+<p>After tracking your data with DVC and committing your changes locally, you need to push these changes to both
+the remote storage and your Git repository.</p>
+<p>Here’s how to do it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Push DVC-controlled data to the remote storage</span>
+dvc<span class="w"> </span>push
+
+<span class="c1"># Commit changes to the Git repository with a descriptive message</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Descriptive commit message&quot;</span>
+
+<span class="c1"># Push committed changes to the remote Git repository</span>
+git<span class="w"> </span>push
+</pre></div>
+</div>
+<p>Pushing to the dvc remote can be automated using the <a class="reference internal" href="../user_guide/pre_commit.html"><span class="std std-doc">pre-commit integration</span></a>.</p>
+</section>
+<section id="pulling-changes-from-remote">
+<h3>Pulling changes from remote<a class="headerlink" href="#pulling-changes-from-remote" title="Link to this heading">#</a></h3>
+<p>Whenever you switch into a new stage of your git repository (e.g. by using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> to retreive changes
+from a collaborator, or by using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">switch</span></code> to move to another branch) you need to make sure the
+corresponding data tracked by <code class="docutils literal notranslate"><span class="pre">dvc</span></code> is checked out as well.</p>
+<p>The most convenient way to do so is by using</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>pull
+</pre></div>
+</div>
+<p>This first compiles the configuration and then calls <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">pull</span></code> internally. Running <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">pull</span></code> without
+compiling the configuration files first may fail.
+For more details, please refer to <a class="reference internal" href="../user_guide/params_files.html"><span class="std std-doc">Configuration files</span></a>.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">DSO: data science operations</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="work_on_existing_project.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Collaborating on an existing DSO/DVC Project</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init-initialize-a-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-create-add-folders-or-stages-to-your-project"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-files">Configuration files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-a-stage">Implementing a stage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dvc-yaml">dvc.yaml</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quarto-stage">Quarto Stage</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bash-stage">Bash Stage</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-files-and-parameters-from-r-or-python">Accessing files and parameters from R or Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro-reproducing-all-stages"><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tracking-and-syncing-files-with-dvc">Tracking and syncing files with DVC</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pushing-data-to-a-remote">Pushing data to a remote</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pulling-changes-from-remote">Pulling changes from remote</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gregor Sturm, Thomas Schwarzl, Alexander Peltzer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Gregor Sturm, Thomas Schwarzl, Alexander Peltzer..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
