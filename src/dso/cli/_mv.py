@@ -62,6 +62,9 @@ def update_files_in_src(path: Path, source_base: str, target_base: str, source_r
                     log.error(f"[red]Failed to rename {file_path}: {e}")
 
                 update_references_in_file(new_file_path, str(source_relative), str(target_relative))
+    else:
+        log.error(f"[red]Src directory {path} does not exist.")
+        sys.exit(1)
 
 
 def update_source(
@@ -82,7 +85,9 @@ def update_source(
     update_references_in_file(dvc_file_path, str(source_base), str(target_base))
 
     src_path = target_absolute_path / "src"
-    update_files_in_src(src_path, source_base, target_base, source_relative_path, target_relative_path)
+
+    if src_path.exists():
+        update_files_in_src(src_path, source_base, target_base, source_relative_path, target_relative_path)
 
     if os.path.dirname(source_relative_path) != os.path.dirname(target_relative_path):
         log.warning(
