@@ -12,11 +12,16 @@ and this project adheres to [Semantic Versioning][].
 
 ### Fixes
 
--  Exit gracefully when aborting template selections.
+-  Exit gracefully when aborting template selections ([#134](https://github.com/Boehringer-Ingelheim/dso/pull/134)).
+-  Make sure watermarking doesn't modify external images inplace ([#140](https://github.com/Boehringer-Ingelheim/dso/pull/140)).
 
 ### Additions
 
 -  Added `--all` option to `dso compile-config` to compile all configs in project ([#137](https://github.com/Boehringer-Ingelheim/dso/pull/137/files))
+
+### Chore
+
+-  Drop support for Python 3.10 in accordance with SPEC0 ([#140](https://github.com/Boehringer-Ingelheim/dso/pull/140)).
 
 ## v0.13.2
 

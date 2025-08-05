@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
+import tomllib
 from collections.abc import Sequence
 from contextlib import contextmanager
 from functools import cache
@@ -12,12 +13,6 @@ from pathlib import Path
 from rich.prompt import Confirm
 
 from dso._logging import console, log
-
-# compatibilty with python 3.10
-try:
-    import tomllib
-except ImportError:
-    import tomli as tomllib
 
 
 def check_project_roots(paths: Sequence[Path]) -> Path:
