@@ -12,7 +12,13 @@ from textwrap import dedent, indent
 from ruamel.yaml import YAML
 
 
-def render_quarto(quarto_dir: Path, report_dir: Path, before_script: str, cwd: Path, with_pandocfilter: bool = False):
+def render_quarto(
+    quarto_dir: Path,
+    report_dir: Path,
+    before_script: str,
+    cwd: Path,
+    with_pandocfilter: bool = False,
+):
     """
     Render a quarto project
 
