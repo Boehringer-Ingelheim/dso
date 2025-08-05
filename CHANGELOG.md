@@ -12,7 +12,8 @@ and this project adheres to [Semantic Versioning][].
 
 ### Fixes
 
--  Exit gracefully when aborting template selections.
+-  Exit gracefully when aborting template selections ([#134](https://github.com/Boehringer-Ingelheim/dso/pull/134)).
+-  Make sure watermarking doesn't modify external images inplace ([#140](https://github.com/Boehringer-Ingelheim/dso/pull/140)).
 
 ### Additions
 
