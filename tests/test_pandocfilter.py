@@ -1,3 +1,4 @@
+import hashlib
 from os import chdir
 from shutil import copyfile
 from textwrap import dedent
@@ -14,6 +15,13 @@ def test_pandocfilter(quarto_stage):
     copyfile(TESTDATA / "git_logo.pdf", quarto_stage / "src" / "git_logo.pdf")
     copyfile(TESTDATA / "git_logo.svg", quarto_stage / "src" / "git_logo.svg")
     copyfile(TESTDATA / "git_logo.svg", quarto_stage / "src" / "git logo.svg")
+
+    # ensure that external files do not get modified inplace
+    checksums_before = {}
+    for ext in ["png", "pdf", "svg"]:
+        with (quarto_stage / "src" / f"git_logo.{ext}").open("rb") as f:
+            checksums_before[ext] = hashlib.file_digest(f, "md5").hexdigest()
+
     (quarto_stage / "src" / "_quarto.yml").write_text(
         dedent(
             """\
@@ -67,6 +75,14 @@ def test_pandocfilter(quarto_stage):
         cwd=quarto_stage,
         with_pandocfilter=True,
     )
+
+    checksums_after = {}
+    for ext in ["png", "pdf", "svg"]:
+        with (quarto_stage / "src" / f"git_logo.{ext}").open("rb") as f:
+            checksums_after[ext] = hashlib.file_digest(f, "md5").hexdigest()
+
+    assert checksums_before == checksums_after
+
     out_html = (quarto_stage / "report" / "quarto_stage.html").read_text()
     assert "Disclaimer" in out_html
     assert "This is a disclaimer" in out_html
