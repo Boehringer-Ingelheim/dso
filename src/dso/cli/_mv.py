@@ -89,7 +89,7 @@ def update_source(
     if src_path.exists():
         update_files_in_src(src_path, source_base, target_base, source_relative_path, target_relative_path)
 
-    if os.path.dirname(source_relative_path) != os.path.dirname(target_relative_path):
+    if source_relative_path.parent != target_relative_path.parent:
         log.warning(
             "[red] ATTENTION: target directory is changing. References of renamed item to other stages must be updated manually."
         )
