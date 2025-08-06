@@ -8,4 +8,5 @@ stages:
       - output
       - report/{{ name }}.html
     cmd:
+      - mkdir -p output
       - uv run dso exec quarto .
