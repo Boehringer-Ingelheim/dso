@@ -25,7 +25,8 @@ def _get_template_libraries() -> dict[str, dict]:
     Paths to template libraries are obtained from `DSO_TEMPLATE_LIBRARIES` env variable.
     The paths can either be a python module, or a path to directory in the file system.
     """
-    lib_paths = set(os.environ.get("DSO_TEMPLATE_LIBRARIES", "dso.templates").split(":"))
+    # as opposed to set(), this keep the order of libraries as specified in DSO_TEMPLATE_LIBRARIES
+    lib_paths = list(dict.fromkeys(os.environ.get("DSO_TEMPLATE_LIBRARIES", "dso.templates").split(":")))
 
     libraries = {}
     for lib_path in lib_paths:
