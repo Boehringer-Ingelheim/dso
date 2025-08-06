@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning][].
 
 ### Fixes
 
+-  Fix how the `output` directory in stages is treated. Previously, the `output` directory was not part of of the stage template. Instead it got added dynamically during `dso exec quarto` and removed again in case it was empty. Now, it is included in the stage template and will be created as empty directory. Additionally, `get-config` will create an output directory if it is detected in the `outs` section of `dvc.yaml` ([#144](https://github.com/Boehringer-Ingelheim/dso/pull/144)).
 -  Exit gracefully when aborting template selections ([#134](https://github.com/Boehringer-Ingelheim/dso/pull/134)).
 -  Make sure watermarking doesn't modify external images inplace ([#140](https://github.com/Boehringer-Ingelheim/dso/pull/140)).
 -  Do not exclude `meta.yaml` from templates. We leave it up to the templates to .gitignore them ([#142](https://github.com/Boehringer-Ingelheim/dso/pull/142)).
@@ -49,7 +50,7 @@ and this project adheres to [Semantic Versioning][].
 
 ### Template updates
 
--   Add `_quarto.yml` to "init" template ([#115](https://github.com/Boehringer-Ingelheim/dso/pull/115))
+-   Add `_quarto.yml` to "init" template `.gitignore` ([#115](https://github.com/Boehringer-Ingelheim/dso/pull/115))
 
 ### Chore
 

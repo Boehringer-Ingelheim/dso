@@ -111,6 +111,9 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> 
             if match := dvc_param_pat.findall(dep):
                 keep_params.update(match)
         for out in dvc_stage_config.get("outs", []):
+            # hack: for special case of "output" directory, create the directory if it does not exist
+            if out.rstrip("/") == "output":
+                (stage_path / "output").mkdir(exist_ok=True)
             if match := dvc_param_pat.findall(out):
                 keep_params.update(match)
 
