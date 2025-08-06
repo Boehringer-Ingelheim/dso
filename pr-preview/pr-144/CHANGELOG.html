@@ -50,7 +50,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=b0a90453"></script>
+    <script src="_static/documentation_options.js?v=86c99268"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -482,7 +482,12 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <section id="fixes">
 <h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Fix how the <code class="docutils literal notranslate"><span class="pre">output</span></code> directory in stages is treated. Previously, the <code class="docutils literal notranslate"><span class="pre">output</span></code> directory was not part of of the stage template. Instead it got added dynamically during <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">exec</span> <span class="pre">quarto</span></code> and removed again in case it was empty. Now, it is included in the stage template and will be created as empty directory. Additionally, <code class="docutils literal notranslate"><span class="pre">get-config</span></code> will create an output directory if it is detected in the <code class="docutils literal notranslate"><span class="pre">outs</span></code> section of <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/144">#144</a>).</p></li>
+<li><p>Fix how the <code class="docutils literal notranslate"><span class="pre">output</span></code> directory in stages is treated. Previously, the <code class="docutils literal notranslate"><span class="pre">output</span></code> directory was not
+part of of the stage template. Instead it got added dynamically during <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">exec</span> <span class="pre">quarto</span></code> and removed
+again in case it was empty. This could lead to failures of <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">repro</span></code>, because <code class="docutils literal notranslate"><span class="pre">dvc</span></code> removed the <code class="docutils literal notranslate"><span class="pre">output</span></code>
+directory on repro, expecting it to be recreated by the script. Now, the <code class="docutils literal notranslate"><span class="pre">output</span></code> directory is part of the
+stage template, and a <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">-p</span> <span class="pre">output</span></code> is included in the stage command, ensuring that the directory will
+always be created (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/144">#144</a>).</p></li>
 <li><p>Exit gracefully when aborting template selections (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/134">#134</a>).</p></li>
 <li><p>Make sure watermarking doesn’t modify external images inplace (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/140">#140</a>).</p></li>
 <li><p>Do not exclude <code class="docutils literal notranslate"><span class="pre">meta.yaml</span></code> from templates. We leave it up to the templates to .gitignore them (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/142">#142</a>).</p></li>
