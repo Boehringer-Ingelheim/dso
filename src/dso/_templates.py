@@ -25,7 +25,8 @@ def _get_template_libraries() -> dict[str, dict]:
     Paths to template libraries are obtained from `DSO_TEMPLATE_LIBRARIES` env variable.
     The paths can either be a python module, or a path to directory in the file system.
     """
-    lib_paths = set(os.environ.get("DSO_TEMPLATE_LIBRARIES", "dso.templates").split(":"))
+    # as opposed to set(), this keep the order of libraries as specified in DSO_TEMPLATE_LIBRARIES
+    lib_paths = list(dict.fromkeys(os.environ.get("DSO_TEMPLATE_LIBRARIES", "dso.templates").split(":")))
 
     libraries = {}
     for lib_path in lib_paths:
@@ -110,7 +111,7 @@ def prompt_for_template_params(
         if len(libraries) == 1:
             library_id = next(iter(libraries))
         else:
-            library_id = str(questionary.select("Choose a template library:", choices=list(libraries)).ask())
+            library_id = questionary.select("Choose a template library:", choices=list(libraries)).ask()
             if library_id is None:
                 sys.exit(1)  # user aborted prompt
 
@@ -131,10 +132,8 @@ def prompt_for_template_params(
                 show_description=True,
             ).ask()
 
-    if template_id is None:
-        sys.exit(1)
-    else:
-        template_id = str(template_id)
+            if template_id is None:
+                sys.exit(1)  # user aborted prompt
 
     template = templates[template_id]
 
@@ -143,7 +142,7 @@ def prompt_for_template_params(
         if name not in kwargs:
             res = questionary.text(p["description"]).ask()
             if res is None:
-                sys.exit(1)
+                sys.exit(1)  # user aborted prompt
             kwargs[name] = res
 
     return template, kwargs

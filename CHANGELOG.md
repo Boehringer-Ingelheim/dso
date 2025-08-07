@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning][].
 -  Exit gracefully when aborting template selections ([#134](https://github.com/Boehringer-Ingelheim/dso/pull/134)).
 -  Make sure watermarking doesn't modify external images inplace ([#140](https://github.com/Boehringer-Ingelheim/dso/pull/140)).
 -  Do not exclude `meta.yaml` from templates. We leave it up to the templates to .gitignore them ([#142](https://github.com/Boehringer-Ingelheim/dso/pull/142)).
+-  Fix that template libraries appeared in random order in `dso create` ([#145](https://github.com/Boehringer-Ingelheim/dso/pull/145)).
 
 ### Additions
 
