@@ -5,7 +5,6 @@ import subprocess
 import sys
 import tomllib
 from collections.abc import Sequence
-from contextlib import contextmanager
 from functools import cache
 from os import environ
 from pathlib import Path
@@ -158,20 +157,6 @@ def _update_dot_dso_json(dir: Path, update_dict: dict):
 
     with dot_dso_json.open("w") as f:
         json.dump(config, f)
-
-
-@contextmanager
-def add_directory(dir: Path):
-    """Context manager that temporarily creates a directory and removes it again if it's empty"""
-    dir.mkdir(exist_ok=True)
-    try:
-        yield
-    finally:
-        try:
-            dir.rmdir()
-        except OSError:
-            # directory not empty
-            pass
 
 
 def check_ask_pre_commit(dir: Path):
