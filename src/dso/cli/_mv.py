@@ -48,7 +48,7 @@ def update_references_in_file(file: Path, pattern: str, replacement: str):
         sys.exit(1)
 
 
-def update_files_in_src(path: Path, source_base: str, target_base: str, source_relative: Path, target_relative: Path):
+def update_files_in_src_folder(path: Path, source_base: str, target_base: str, source_relative: Path, target_relative: Path):
     """Rename all files which contain stage name, for all update the stage"""
     if path.exists():
         for file_path in path.rglob("*"):
@@ -87,7 +87,7 @@ def update_source(
     src_path = target_absolute_path / "src"
 
     if src_path.exists():
-        update_files_in_src(src_path, source_base, target_base, source_relative_path, target_relative_path)
+        update_files_in_src_folder(src_path, source_base, target_base, source_relative_path, target_relative_path)
 
     if source_relative_path.parent != target_relative_path.parent:
         log.warning(
