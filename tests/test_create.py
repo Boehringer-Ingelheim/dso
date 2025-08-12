@@ -90,6 +90,7 @@ def test_custom_template(command, tmp_path, dso_project):
     }
 
 
+@pytest.mark.parametrize("abspath", [True, False])
 @pytest.mark.parametrize(
     "template,expected_src",
     [
@@ -99,14 +100,17 @@ def test_custom_template(command, tmp_path, dso_project):
         ["quarto_ipynb", "src/teststage.ipynb"],
     ],
 )
-def test_create_stage(dso_project, template, expected_src):
+def test_create_stage(dso_project, template, expected_src, abspath):
     runner = CliRunner()
     chdir(dso_project)
+    stagename = "teststage"
+    if abspath:
+        stagename = str((dso_project / stagename).absolute())
     result = runner.invoke(
         dso_create,
         [
             "stage",
-            "teststage",
+            stagename,
             "--template",
             template,
             "--description",

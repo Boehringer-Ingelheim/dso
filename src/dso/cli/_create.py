@@ -62,6 +62,10 @@ def dso_create_stage(ctx, name: str | None, *, template_id: str | None = None, l
 
     template, params = prompt_for_template_params("stage", library_id, template_id, **params)
 
+    # ensure `name` is relative to the current working directory
+    if Path(params["name"]).is_absolute():
+        params["name"] = str(Path(params["name"]).relative_to(getcwd()))
+
     target_dir = Path(getcwd()) / params["name"]
 
     if target_dir.exists():
