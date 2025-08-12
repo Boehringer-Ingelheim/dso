@@ -39,7 +39,10 @@ CREATE_STAGE_HELP_TEXT = dedent(
 @click.argument("name", required=False)
 @click.option("--library", "-l", "library_id", help="Specify the id of a template library")
 @click.option(
-    "--template", "-t", "template_id", help="Specify the id of a template to use from the specified template library"
+    "--template",
+    "-t",
+    "template_id",
+    help="Specify the id of a template to use from the specified template library",
 )
 @click.command(
     "stage",
@@ -51,7 +54,13 @@ CREATE_STAGE_HELP_TEXT = dedent(
     },
 )
 @click.pass_context
-def dso_create_stage(ctx, name: str | None, *, template_id: str | None = None, library_id: str | None = None):
+def dso_create_stage(
+    ctx,
+    name: str | None,
+    *,
+    template_id: str | None = None,
+    library_id: str | None = None,
+):
     """Create a new stage."""
     from dso._compile_config import compile_all_configs
 
@@ -62,9 +71,8 @@ def dso_create_stage(ctx, name: str | None, *, template_id: str | None = None, l
 
     template, params = prompt_for_template_params("stage", library_id, template_id, **params)
 
-    # ensure `name` is relative to the current working directory
-    if Path(params["name"]).is_absolute():
-        params["name"] = str(Path(params["name"]).relative_to(getcwd()))
+    # ensure `name` is only the stage name even when path is specified
+    params["name"] = Path(params["name"]).name
 
     target_dir = Path(getcwd()) / params["name"]
 
@@ -86,7 +94,10 @@ def dso_create_stage(ctx, name: str | None, *, template_id: str | None = None, l
 @click.argument("name", required=False)
 @click.option("--library", "-l", "library_id", help="Specify the id of a template library")
 @click.option(
-    "--template", "-t", "template_id", help="Specify the id of a template to use from the specified template library"
+    "--template",
+    "-t",
+    "template_id",
+    help="Specify the id of a template to use from the specified template library",
 )
 @click.command(
     "folder",
@@ -106,7 +117,13 @@ def dso_create_stage(ctx, name: str | None, *, template_id: str | None = None, l
     },
 )
 @click.pass_context
-def dso_create_folder(ctx, name: str | None, *, template_id: str | None = None, library_id: str | None = None):
+def dso_create_folder(
+    ctx,
+    name: str | None,
+    *,
+    template_id: str | None = None,
+    library_id: str | None = None,
+):
     """Create a new folder. A folder can contain subfolders or stages."""
     # currently there's only one template for folders
     from dso._compile_config import compile_all_configs
