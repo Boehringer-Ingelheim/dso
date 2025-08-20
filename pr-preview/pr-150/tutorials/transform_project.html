@@ -1,0 +1,540 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Transforming an existing project into DSO format" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="tutorials/transform_project.html" />
+<meta property="og:site_name" content="Project name not set" />
+<meta property="og:description" content="Transforming a project into the DSO format is best done in a separate Git branch to ensure the integrity of the original analysis. Additionally, the transformation can be done step-by-step, transfo..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_tutorials_transform_project_3d736403.png" />
+<meta property="og:image:alt" content="Transforming a project into the DSO format is best done in a separate Git branch to ensure the integrity of the original analysis. Additionally, the transformation can be done step-by-step, transfo..." />
+<meta name="description" content="Transforming a project into the DSO format is best done in a separate Git branch to ensure the integrity of the original analysis. Additionally, the transformation can be done step-by-step, transfo..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Transforming an existing project into DSO format &#8212; dso-core</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=42210275" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=366103d0" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=b3e49225"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/transform_project';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Project and stage templates" href="../user_guide/templates.html" />
+    <link rel="prev" title="Collaborating on an existing DSO/DVC Project" href="work_on_existing_project.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">dso-core</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="work_on_existing_project.html">Collaborating on an existing DSO/DVC Project</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Transforming an existing project into DSO format</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/templates.html">Project and stage templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/params_files.html">Configuration files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/pre_commit.html">pre-commit integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/uv.html"><code class="docutils literal notranslate"><span class="pre">uv</span></code> integration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide/linting.html">Linting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../generated/dso._lint.DSO001.html">dso._lint.DSO001</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/quarto.html">Quarto integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/cli_configuration.html">DSO Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO CLI</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../cli_installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli_command_reference.html">Command reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli_shell_completion.html">Shell completion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO Python API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../python_usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_api.html">API reference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DSO R API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/">Usage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://boehringer-ingelheim.github.io/dso-r/reference/index.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso-r/blob/main/CHANGELOG.md">Changelog</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/Boehringer-Ingelheim/dso" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorials/transform_project.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Transforming an existing project into DSO format</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-dso-in-your-project-and-folders">Initializing DSO in your project and folders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-dvc-remote-storage">Set-up the DVC remote storage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-analysis-scripts-to-stages">Transforming analysis scripts to stages</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="transforming-an-existing-project-into-dso-format">
+<h1>Transforming an existing project into DSO format<a class="headerlink" href="#transforming-an-existing-project-into-dso-format" title="Link to this heading">#</a></h1>
+<p>Transforming a project into the DSO format is best done in a separate Git branch to ensure the integrity of the original analysis. Additionally, the transformation can be done step-by-step, transforming single analysis stages at a time.</p>
+<section id="initializing-dso-in-your-project-and-folders">
+<h2>Initializing DSO in your project and folders<a class="headerlink" href="#initializing-dso-in-your-project-and-folders" title="Link to this heading">#</a></h2>
+<p>The easiest way to obtain all essential DSO files for your project is to use the DSO command <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> on project root level. Without specifying any additional path, <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> will ask whether you want to initialize the DSO folder structure in the current directory.
+When applied to an existing directory, <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> will add missing files, but never change or replace any existing file.</p>
+<p>Usage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>init
+<span class="c1"># Please enter the name of the project, e.g., &quot;single_cell_lung_atlas&quot;:</span>
+<span class="c1"># Directory already exists. Do you want to initialize DSO in an existing project? [y/n]: y</span>
+</pre></div>
+</div>
+<p>This also applies to folders that organize your project. To transform folders to be usable in the DSO/DVC environment use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>create<span class="w"> </span>folder
+<span class="c1"># Please enter the name of the folder, e.g., &quot;RNAseq&quot;:</span>
+<span class="c1"># Directory already exists. Do you want to copy template files to existing folder? [y/n]: y</span>
+</pre></div>
+</div>
+</section>
+<section id="set-up-the-dvc-remote-storage">
+<h2>Set-up the DVC remote storage<a class="headerlink" href="#set-up-the-dvc-remote-storage" title="Link to this heading">#</a></h2>
+<p>DVC needs a remote storage where your DVC-controlled input and output files are stored.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a directory for storing version-controlled files</span>
+mkdir<span class="w"> </span>/path/on/shared/filesystem/project1/DVC_STORAGE
+
+<span class="c1"># Execute within the project directory to define the remote storage</span>
+dvc<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>-d<span class="w"> </span>&lt;remote_name&gt;<span class="w"> </span>/path/on/shared/filesystem/project1/DVC_STORAGE
+</pre></div>
+</div>
+</section>
+<section id="transforming-analysis-scripts-to-stages">
+<h2>Transforming analysis scripts to stages<a class="headerlink" href="#transforming-analysis-scripts-to-stages" title="Link to this heading">#</a></h2>
+<p>The last step is to transform the written analysis scripts into stages. To create a stage, use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dso<span class="w"> </span>create<span class="w"> </span>stage<span class="w"> </span>&lt;stage_name&gt;<span class="w"> </span><span class="c1"># e.g. 01_preprocessing</span>
+</pre></div>
+</div>
+<p>How-to set-up a stage and the configuration files can be found on the <a class="reference internal" href="getting_started.html"><span class="std std-doc">dso getting-started page</span></a>.
+The following list describes the most important tasks in transforming your analysis scripts to stages.</p>
+<ul class="simple">
+<li><p>Define all parameters and stage input files/folders in a params.in.yaml.</p></li>
+<li><p>Avoid duplicate entries and use parameter inheritance to your advantage.</p></li>
+<li><p>If multiple stages use an input file or a parameter, define it in the <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> of a higher level folder.</p></li>
+<li><p>Define all parameters and dependencies in the dvc.yaml that are used within the stage.</p></li>
+<li><p>Use absolute paths when data is not DVC-controlled and stored within your repository.</p></li>
+<li><p>Use relative paths for stage outputs and DVC-controlled inputs.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">!path</span></code> in your <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> when using relative paths to files/folders - <code class="docutils literal notranslate"><span class="pre">!path</span></code> resolves the relative path regardless of the current folder or stage.</p></li>
+<li><p>To track files/folders using DVC, use <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">add</span> <span class="pre">&lt;filename/foldername&gt;</span></code>.</p></li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">read_params()</span></code> function implemented in the DSO R-package and the DSO Python API to read configuration files in your analysis scripts.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">stage_here()</span></code> to resolve relative paths from your <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code>.</p></li>
+<li><p>Write all output files generated within a stage into the output directory.</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="work_on_existing_project.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Collaborating on an existing DSO/DVC Project</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../user_guide/templates.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Project and stage templates</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-dso-in-your-project-and-folders">Initializing DSO in your project and folders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-dvc-remote-storage">Set-up the DVC remote storage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-analysis-scripts-to-stages">Transforming analysis scripts to stages</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gregor Sturm, Thomas Schwarzl, Alexander Peltzer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Gregor Sturm, Thomas Schwarzl, Alexander Peltzer..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
