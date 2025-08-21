@@ -153,7 +153,7 @@ class SVGWatermarker(Watermarker):
         with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tf:
             watermark_overlay.save(tf)
             temp_file_name = tf.name
-        
+
         try:
             watermark_overlay_svg = compose.Image(*size, temp_file_name)
             fig = compose.Figure(*size, base_image, watermark_overlay_svg)
@@ -176,7 +176,7 @@ class PDFWatermarker(Watermarker):
             with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tf:
                 watermark_overlay.save(tf)
                 temp_file_name = tf.name
-            
+
             try:
                 watermark_overlay_pdf = PdfReader(temp_file_name).pages[0]
                 page_obj.merge_page(watermark_overlay_pdf)
