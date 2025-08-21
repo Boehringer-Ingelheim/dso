@@ -1,5 +1,6 @@
 """Add text-watermarks to images"""
 
+import os
 import tempfile
 from abc import abstractmethod
 from importlib import resources
@@ -149,11 +150,16 @@ class SVGWatermarker(Watermarker):
         size = self._get_size(base_image)
 
         watermark_overlay = self.get_watermark_overlay(size)
-        with tempfile.NamedTemporaryFile(suffix=".png") as tf:
+        with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tf:
             watermark_overlay.save(tf)
-            watermark_overlay_svg = compose.Image(*size, tf.name)
-        fig = compose.Figure(*size, base_image, watermark_overlay_svg)
-        fig.save(output_image)
+            temp_file_name = tf.name
+        
+        try:
+            watermark_overlay_svg = compose.Image(*size, temp_file_name)
+            fig = compose.Figure(*size, base_image, watermark_overlay_svg)
+            fig.save(output_image)
+        finally:
+            os.unlink(temp_file_name)
 
 
 class PDFWatermarker(Watermarker):
@@ -167,11 +173,16 @@ class PDFWatermarker(Watermarker):
         for page_obj in reader.pages:
             size = (int(page_obj.mediabox.width), int(page_obj.mediabox.height))
             watermark_overlay = self.get_watermark_overlay(size)
-            with tempfile.NamedTemporaryFile(suffix=".pdf") as tf:
+            with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tf:
                 watermark_overlay.save(tf)
-                watermark_overlay_pdf = PdfReader(tf.file).pages[0]
+                temp_file_name = tf.name
+            
+            try:
+                watermark_overlay_pdf = PdfReader(temp_file_name).pages[0]
                 page_obj.merge_page(watermark_overlay_pdf)
                 writer.add_page(page_obj)
+            finally:
+                os.unlink(temp_file_name)
 
         with open(output_image, "wb") as f:
             writer.write(f)
