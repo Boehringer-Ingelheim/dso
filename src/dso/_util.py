@@ -51,7 +51,8 @@ def _find_in_parent_abs(start_directory: Path, file_or_folder: str, recurse_barr
 
     This is to ensure @cache doesn't lead to wrong results when calling this from different working directories.
     """
-    if start_directory == Path("/"):
+    # Check if we've reached a root directory (handles both Unix "/" and Windows "C:\" style roots)
+    if start_directory == start_directory.parent:
         return None
     if recurse_barrier is not None:
         if not start_directory.is_relative_to(recurse_barrier):
