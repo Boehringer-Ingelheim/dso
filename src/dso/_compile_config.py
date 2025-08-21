@@ -5,7 +5,7 @@ import shutil
 import tempfile
 from collections.abc import Collection, Sequence
 from functools import partial
-from io import TextIOWrapper
+from io import StringIO, TextIOWrapper
 from pathlib import Path
 from textwrap import dedent
 
@@ -193,24 +193,30 @@ def compile_all_configs(paths: Sequence[Path]):
 
         # Write to temporary file first and compare to previous params.yaml
         # Only ask for confirmation, overwrite, and show log if they are different
-        with tempfile.NamedTemporaryFile(mode="w+", delete=False) as tmpfile:
-            # dump to tempfile (write directly to avoid Windows permission issues)
-            tmpfile.write(PARAMS_YAML_DISCLAIMER)
-            tmpfile.write("\n")
-            ruamel = YAML()
-            ruamel.dump(conf, tmpfile)
-            tmpfile.flush()  # ensure content is written before comparison
-            tmpfile.close()  # close before using with filecmp on Windows
-
-            try:
-                # check for equivalence
-                if not out_file.exists() or not filecmp.cmp(tmpfile.name, out_file, shallow=False):
-                    shutil.copy(tmpfile.name, out_file)
-                    log.debug(f"Compiled ./{config.relative_to(project_root)} to {out_file.name}")
-                else:
-                    log.debug(f"./{config.relative_to(project_root)} [green]is already up-to-date!")
-            finally:
-                # Clean up temporary file
-                os.unlink(tmpfile.name)
+        
+        # Generate YAML content as string first to avoid Windows tempfile issues
+        yaml_content = StringIO()
+        ruamel = YAML()
+        yaml_content.write(PARAMS_YAML_DISCLAIMER)
+        yaml_content.write("\n")
+        ruamel.dump(conf, yaml_content)
+        content_str = yaml_content.getvalue()
+        
+        # Create temporary file and write content
+        with tempfile.NamedTemporaryFile(mode="w", delete=False, encoding='utf-8') as tmpfile:
+            tmpfile.write(content_str)
+            tmpfile.flush()
+            temp_file_name = tmpfile.name
+        
+        try:
+            # check for equivalence (file is now closed and accessible on Windows)
+            if not out_file.exists() or not filecmp.cmp(temp_file_name, out_file, shallow=False):
+                shutil.copy(temp_file_name, out_file)
+                log.debug(f"Compiled ./{config.relative_to(project_root)} to {out_file.name}")
+            else:
+                log.debug(f"./{config.relative_to(project_root)} [green]is already up-to-date!")
+        finally:
+            # Clean up temporary file
+            os.unlink(temp_file_name)
 
     log.info("[green]Configuration compiled successfully.")

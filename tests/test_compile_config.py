@@ -275,8 +275,9 @@ def test_compile_config_windows_tempfile_fix(tmp_path):
     """Test that the Windows tempfile fix works correctly.
 
     This test verifies that the compile_all_configs function doesn't fail
-    with PermissionError when trying to reopen a NamedTemporaryFile, which
-    is an issue specifically on Windows but can affect cross-platform code.
+    with PermissionError when accessing temporary files, which is an issue
+    specifically on Windows. The fix uses StringIO to generate YAML content
+    first, then writes it to a properly closed temporary file.
     """
     runner = CliRunner()
     with runner.isolated_filesystem(temp_dir=tmp_path) as td:
