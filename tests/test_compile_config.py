@@ -273,7 +273,7 @@ def test_get_list_of_configs_to_compile(tmp_path, paths, expected):
 
 def test_compile_config_windows_tempfile_fix(tmp_path):
     """Test that the Windows tempfile fix works correctly.
-    
+
     This test verifies that the compile_all_configs function doesn't fail
     with PermissionError when trying to reopen a NamedTemporaryFile, which
     is an issue specifically on Windows but can affect cross-platform code.
@@ -282,7 +282,7 @@ def test_compile_config_windows_tempfile_fix(tmp_path):
     with runner.isolated_filesystem(temp_dir=tmp_path) as td:
         td = Path(td)
         (td / ".git").mkdir()
-        
+
         # Create a basic params.in.yaml file
         _setup_yaml_configs(
             td,
@@ -290,21 +290,21 @@ def test_compile_config_windows_tempfile_fix(tmp_path):
                 "params.in.yaml": {"windows_test": "success", "value": 123},
             },
         )
-        
+
         # This should work without permission errors
         result = runner.invoke(dso_compile_config, [])
         assert result.exit_code == 0, f"Compile failed: {result.output}"
-        
+
         # Verify the output file was created
         params_yaml = td / "params.yaml"
         assert params_yaml.exists(), "params.yaml was not created"
-        
+
         # Verify the content is correct
         with params_yaml.open() as f:
             compiled_config = yaml.safe_load(f)
             assert compiled_config["windows_test"] == "success"
             assert compiled_config["value"] == 123
-        
+
         # Run compile again to test the file comparison logic
         result2 = runner.invoke(dso_compile_config, [])
         assert result2.exit_code == 0, f"Second compile failed: {result2.output}"

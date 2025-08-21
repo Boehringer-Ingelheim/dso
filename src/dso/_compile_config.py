@@ -193,7 +193,7 @@ def compile_all_configs(paths: Sequence[Path]):
 
         # Write to temporary file first and compare to previous params.yaml
         # Only ask for confirmation, overwrite, and show log if they are different
-        with tempfile.NamedTemporaryFile(mode='w+', delete=False) as tmpfile:
+        with tempfile.NamedTemporaryFile(mode="w+", delete=False) as tmpfile:
             # dump to tempfile (write directly to avoid Windows permission issues)
             tmpfile.write(PARAMS_YAML_DISCLAIMER)
             tmpfile.write("\n")
@@ -201,7 +201,7 @@ def compile_all_configs(paths: Sequence[Path]):
             ruamel.dump(conf, tmpfile)
             tmpfile.flush()  # ensure content is written before comparison
             tmpfile.close()  # close before using with filecmp on Windows
-            
+
             try:
                 # check for equivalence
                 if not out_file.exists() or not filecmp.cmp(tmpfile.name, out_file, shallow=False):
