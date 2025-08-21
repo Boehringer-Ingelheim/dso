@@ -88,7 +88,9 @@ def _load_yaml_with_auto_adjusting_paths(
         def get_adjusted(self):
             if relative:
                 # not possible with pathlib, because pathlib requires the paths to be subpaths of each other
-                return Path(os.path.relpath(source / self.path, destination))
+                rel_path = os.path.relpath(source / self.path, destination)
+                # Normalize path separators to forward slashes for cross-platform consistency
+                return Path(rel_path.replace(os.sep, '/'))
             else:
                 return (source / self.path).absolute()
 
