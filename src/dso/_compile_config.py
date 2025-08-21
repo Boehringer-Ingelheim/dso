@@ -193,7 +193,7 @@ def compile_all_configs(paths: Sequence[Path]):
 
         # Write to temporary file first and compare to previous params.yaml
         # Only ask for confirmation, overwrite, and show log if they are different
-        
+
         # Generate YAML content as string first to avoid Windows tempfile issues
         yaml_content = StringIO()
         ruamel = YAML()
@@ -201,13 +201,13 @@ def compile_all_configs(paths: Sequence[Path]):
         yaml_content.write("\n")
         ruamel.dump(conf, yaml_content)
         content_str = yaml_content.getvalue()
-        
+
         # Create temporary file and write content
-        with tempfile.NamedTemporaryFile(mode="w", delete=False, encoding='utf-8') as tmpfile:
+        with tempfile.NamedTemporaryFile(mode="w", delete=False, encoding="utf-8") as tmpfile:
             tmpfile.write(content_str)
             tmpfile.flush()
             temp_file_name = tmpfile.name
-        
+
         try:
             # check for equivalence (file is now closed and accessible on Windows)
             if not out_file.exists() or not filecmp.cmp(temp_file_name, out_file, shallow=False):
