@@ -17,6 +17,7 @@ from ruamel.yaml import YAML
 def _make_pandoc_filter_script() -> Path:
     """
     Create a temporary wrapper script that calls: python -m dso.pandocfilter
+
     Returns the script Path. Caller must delete it.
     """
     if os.name == "nt":

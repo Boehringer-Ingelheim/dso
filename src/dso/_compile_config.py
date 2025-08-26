@@ -34,7 +34,7 @@ PARAMS_YAML_DISCLAIMER = dedent(
 
 
 def _normalize_windows_separators(obj):
-    """
+    r"""
     Recursively replace forward slashes with backslashes in strings on Windows.
 
     Heuristics:
@@ -53,10 +53,11 @@ def _normalize_windows_separators(obj):
 
 
 def _format_path_for_yaml(path: Path, *, base: Path, relative: bool) -> str:
-    """
+    r"""
     Return a string to be written into YAML using OS-native separators:
-      - relative=True  -> relative path with OS-native separators
-      - relative=False -> absolute native path (Windows => '\\', POSIX => '/')
+
+    - relative=True  -> relative path with OS-native separators
+    - relative=False -> absolute native path (Windows => '\\', POSIX => '/')
     """
     path = Path(path).resolve()
     base = Path(base).resolve()
@@ -132,9 +133,7 @@ def _load_yaml_with_auto_adjusting_paths(
             return _format_path_for_yaml(target, base=destination, relative=relative)
 
         def get_adjusted(self) -> str:
-            """
-            Return the adjusted path as a string with OS-native separators.
-            """
+            """Return the adjusted path as a string with OS-native separators."""
             adj = (source / self.path).resolve()
             return str(adj) if not relative else os.path.relpath(adj, start=destination.resolve())
 

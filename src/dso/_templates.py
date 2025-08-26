@@ -44,8 +44,9 @@ _BINARY_EXTS = {
 
 
 def _split_template_libraries_env(raw: str) -> list[str]:
-    """
+    r"""
     Split DSO_TEMPLATE_LIBRARIES into paths/modules.
+
     - If os.pathsep is present, split on that.
     - Otherwise split on ':' but keep Windows drive specifiers like 'C:\'.
     """
