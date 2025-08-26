@@ -55,6 +55,16 @@ jobs:
         if: runner.os == 'Windows'
         run: choco install pandoc
 
+      - name: Install Jupyter + ipykernel
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install jupyter ipykernel nbformat nbclient
+          python -m ipykernel install --user --name=python3
+
+      - name: Set QUARTO_PYTHON (cross-platform)
+        shell: bash
+        run: echo "QUARTO_PYTHON=$(python -c 'import sys; print(sys.executable)')" >> $GITHUB_ENV
+
       - name: "Install DSO"
         run: pip install  ${{ matrix.pip-flags }} '.[test]'
 
