@@ -1,7 +1,7 @@
 """Add text-watermarks to images"""
 
-import os
 import contextlib
+import os
 import tempfile
 from abc import abstractmethod
 from importlib import resources
