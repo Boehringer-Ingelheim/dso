@@ -1,12 +1,12 @@
 """Helper functions for rendering quarto documents"""
 
+import contextlib
 import os
-import stat
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
-import contextlib
 from contextlib import contextmanager
 from pathlib import Path
 from textwrap import dedent, indent
@@ -32,7 +32,7 @@ def _make_pandoc_filter_script() -> Path:
         fd, script_path = tempfile.mkstemp(suffix=".sh")
         os.close(fd)
         p = Path(script_path)
-        p.write_text(f"#!/bin/bash\n{sys.executable} -m dso.pandocfilter \"$@\"\n", encoding="utf-8")
+        p.write_text(f'#!/bin/bash\n{sys.executable} -m dso.pandocfilter "$@"\n', encoding="utf-8")
         p.chmod(p.stat().st_mode | stat.S_IEXEC)
         return p
 
@@ -88,8 +88,7 @@ def render_quarto(
             quarto = shutil.which("quarto")
             if not quarto:
                 raise FileNotFoundError(
-                    "Quarto CLI not found on PATH (required on Windows). "
-                    "Install Quarto or add it to PATH."
+                    "Quarto CLI not found on PATH (required on Windows). Install Quarto or add it to PATH."
                 )
 
             cmd = [quarto, "render", str(quarto_dir), "--execute", "--output-dir", str(report_dir)]
