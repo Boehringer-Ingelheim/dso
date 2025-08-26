@@ -1,3 +1,4 @@
+import os
 from os import chdir
 from textwrap import dedent
 
@@ -73,19 +74,24 @@ def test_get_config(dso_project):
         )
     )
 
+    # Normalize expected paths to OS-native separators
+    foo = os.path.normpath("input/A.txt")
+    bar = os.path.normpath("input/B.txt")
+    baz = os.path.normpath("input/C.txt")
+
     # raises an error because there are multiple stages
     with pytest.raises(SystemExit):
         get_config("mystage")
 
     assert get_config("mystage", all=True) == {
-        "parent": {"foo": "input/A.txt", "bar": "input/B.txt", "baz": "input/C.txt"},
+        "parent": {"foo": foo, "bar": bar, "baz": baz},
         "param": 42,
         "other": "rocket",
     }
 
-    assert get_config("mystage:mystage01") == {"parent": {"foo": "input/A.txt", "bar": "input/B.txt"}, "param": 42}
-    assert get_config("mystage:mystage02") == {"parent": {"foo": "input/A.txt"}, "param": 42}
-    assert get_config("mystage:mystage03") == {"parent": {"foo": "input/A.txt"}, "other": "rocket"}
+    assert get_config("mystage:mystage01") == {"parent": {"foo": foo, "bar": bar}, "param": 42}
+    assert get_config("mystage:mystage02") == {"parent": {"foo": foo}, "param": 42}
+    assert get_config("mystage:mystage03") == {"parent": {"foo": foo}, "other": "rocket"}
 
 
 def test_get_config_order(dso_project):

@@ -1,6 +1,6 @@
+import contextlib
 import filecmp
-import os.path
-import shutil
+import os
 import tempfile
 from collections.abc import Collection, Sequence
 from functools import partial
@@ -12,7 +12,12 @@ import hiyapyco
 from ruamel.yaml import YAML, yaml_object
 
 from ._logging import log
-from ._util import check_project_roots, find_in_parent, get_dso_config_from_pyproject_toml, get_project_root
+from ._util import (
+    check_project_roots,
+    find_in_parent,
+    get_dso_config_from_pyproject_toml,
+    get_project_root,
+)
 
 PARAMS_YAML_DISCLAIMER = dedent(
     """\
@@ -28,6 +33,46 @@ PARAMS_YAML_DISCLAIMER = dedent(
 )
 
 
+def _normalize_windows_separators(obj):
+    """
+    Recursively replace forward slashes with backslashes in strings on Windows.
+
+    Heuristics:
+    - Skip URLs ('://')
+    - Skip UNC/pseudo-URL prefixes ('//') and existing UNC ('\\\\')
+    """
+    if isinstance(obj, dict):
+        return {k: _normalize_windows_separators(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_normalize_windows_separators(v) for v in obj]
+    if isinstance(obj, str):
+        if "://" in obj or obj.startswith(("//", "\\\\")):
+            return obj
+        return obj.replace("/", "\\")
+    return obj
+
+
+def _format_path_for_yaml(path: Path, *, base: Path, relative: bool) -> str:
+    """
+    Return a string to be written into YAML using OS-native separators:
+      - relative=True  -> relative path with OS-native separators
+      - relative=False -> absolute native path (Windows => '\\', POSIX => '/')
+    """
+    path = Path(path).resolve()
+    base = Path(base).resolve()
+
+    if relative:
+        # On Windows, relpath raises ValueError if paths are on different drives.
+        try:
+            rel = os.path.relpath(path, start=base)
+        except ValueError:
+            # Fall back to absolute if no sensible relpath can be formed.
+            return str(path)
+        return rel  # already OS-native
+    else:
+        return str(path)  # absolute, OS-native
+
+
 def _load_yaml_with_auto_adjusting_paths(
     yaml_stream: TextIOWrapper,
     destination: Path,
@@ -39,8 +84,8 @@ def _load_yaml_with_auto_adjusting_paths(
 
     Parameters
     ----------
-    yaml_path
-        Path of the yaml file to load
+    yaml_stream
+        Opened stream of the yaml file to load (ruamel provides .name)
     destination
         Path to which the file shall be adjusted
     missing_path_warnings
@@ -63,14 +108,12 @@ def _load_yaml_with_auto_adjusting_paths(
     if not destination.is_relative_to(source):
         raise ValueError("Destination path can be the same as source, or a child thereof.")
 
-    # inherit from `str` to make this compatible with hiyapyco interpolation
     @yaml_object(ruamel)
     class AutoAdjustingPathWithLocation(str):
         """
         Represents a YAML node that adjusts a relative path relative to a specified destination directory.
 
-        Can be evaulated either using Ruamel during dumping YAML to file, or whenever it is cast
-        to a string (e.g. by hiyapyco). To this end, __repr__ and __str__ are overridden.
+        Works with hiyapyco interpolation because we inherit from str.
         """
 
         yaml_tag = "!path"
@@ -84,22 +127,27 @@ def _load_yaml_with_auto_adjusting_paths(
                     log.warning(f"Path {self.path} in stage {stage} does not exist!")
                     missing_path_warnings.add((self.path, source))
 
-        def get_adjusted(self):
-            if relative:
-                # not possible with pathlib, because pathlib requires the paths to be subpaths of each other
-                return Path(os.path.relpath(source / self.path, destination))
-            else:
-                return (source / self.path).absolute()
+        def _adjusted_str(self) -> str:
+            target = source / self.path
+            return _format_path_for_yaml(target, base=destination, relative=relative)
+
+        def get_adjusted(self) -> str:
+            """
+            Return the adjusted path as a string with OS-native separators.
+            """
+            adj = (source / self.path).resolve()
+            return str(adj) if not relative else os.path.relpath(adj, start=destination.resolve())
 
         @classmethod
         def to_yaml(cls, representer, node):
-            return representer.represent_str(str(node.get_adjusted()))
+            # Serialize as normalized string (OS-native separators)
+            return representer.represent_str(node._adjusted_str())
 
         def __repr__(self):
-            return str(self.get_adjusted())
+            return self._adjusted_str()
 
         def __str__(self):
-            return str(self.get_adjusted())
+            return self._adjusted_str()
 
         @classmethod
         def from_yaml(cls, constructor, node):
@@ -110,20 +158,15 @@ def _load_yaml_with_auto_adjusting_paths(
 
 def _get_list_of_configs_to_compile(paths: Sequence[Path], project_root: Path):
     """Find all files named params.in.yaml in `dir` and all subdirectories"""
-    # Get all configs that are children of the current working directory
+    # Get all configs that are children of the provided paths
     all_configs = {x for dir in paths for x in dir.glob("**/params.in.yaml")}
     for c in all_configs:
         assert c.is_relative_to(project_root), "Config file not relative to project root"
 
-    # Now we still need to find all config.in.yaml files in any parent directory (to enable the hierarchical compilation).
-    # We can start with the input paths, as they are per definition a parent of all config files found.
+    # Also include any parent configs for hierarchical compilation.
     for tmp_path in paths:
-        # Check each parent directory if it contains a "params.in.yaml" - If yes, add it to the list of all configs.
-        # We don't need to re-check the parents of added items, because their parent is per definition also a parent
-        # of a config that was already part of the list.
         while (tmp_path := find_in_parent(tmp_path.parent, "params.in.yaml", project_root)) is not None:
             all_configs.add(tmp_path)
-            # we don't want to find the current config again, therefore .parent
             tmp_path = tmp_path.parent
 
     return all_configs
@@ -164,14 +207,13 @@ def compile_all_configs(paths: Sequence[Path]):
     # by default, use relative paths
     use_relative_paths = dso_config.get("use_relative_paths", True)
 
-    # keep track of paths for which we emitted a warning that the path doesn't exist to ensure
-    # we are only emitting one warning for each (file path, source yaml file path)
+    # Track missing paths we've warned about (file path, source yaml file path)
     missing_path_warnings: set[tuple[Path, Path]] = set()
 
     for config in all_configs:
-        # sorted sorts path from parent to child. This is what we want as hyapyco gives precedence to configs
-        # later in the list.
+        # Parent to child order; hiyapyco gives precedence to later items.
         configs_to_merge = _get_parent_configs(config, all_configs)
+
         conf = hiyapyco.load(
             *[str(x) for x in configs_to_merge],
             method=hiyapyco.METHOD_MERGE,
@@ -184,26 +226,38 @@ def compile_all_configs(paths: Sequence[Path]):
                 relative=use_relative_paths,
             ),
         )
-        # an empty configuration should actually be an empty dictionary.
+
         if conf is None:
             conf = {}
-        # write config to "params.yaml" in same directory
+
+        # Make all path-like strings use backslashes on Windows
+        if os.name == "nt":
+            conf = _normalize_windows_separators(conf)
+
         out_file = config.parent / "params.yaml"
 
-        # Write to temporary file first and compare to previous params.yaml
-        # Only ask for confirmation, overwrite, and show log if they are different
-        with tempfile.NamedTemporaryFile() as tmpfile:
-            # dump to tempfile
-            with open(tmpfile.name, "w") as f:
+        # Write to temp file (Windows-safe) then compare & replace atomically.
+        fd, tmp_name = tempfile.mkstemp(suffix=".yaml")
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as f:
                 f.write(PARAMS_YAML_DISCLAIMER)
                 f.write("\n")
                 ruamel = YAML()
                 ruamel.dump(conf, f)
-            # check for equivalience
-            if not out_file.exists() or not filecmp.cmp(f.name, out_file, shallow=False):
-                shutil.copy(tmpfile.name, out_file)
+
+            needs_update = not out_file.exists() or not filecmp.cmp(tmp_name, out_file, shallow=False)
+
+            if needs_update:
+                out_file.parent.mkdir(parents=True, exist_ok=True)
+                os.replace(tmp_name, out_file)
                 log.debug(f"Compiled ./{config.relative_to(project_root)} to {out_file.name}")
             else:
                 log.debug(f"./{config.relative_to(project_root)} [green]is already up-to-date!")
+                with contextlib.suppress(OSError):
+                    os.remove(tmp_name)
+        finally:
+            if os.path.exists(tmp_name):
+                with contextlib.suppress(OSError):
+                    os.remove(tmp_name)
 
     log.info("[green]Configuration compiled successfully.")

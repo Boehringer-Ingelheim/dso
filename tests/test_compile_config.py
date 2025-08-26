@@ -1,3 +1,4 @@
+import os
 from functools import partial
 from io import StringIO
 from pathlib import Path
@@ -18,17 +19,17 @@ from dso.cli import dso_compile_config
 
 
 def _setup_yaml_configs(tmp_path, configs: dict[str, dict]):
-    for path, dict in configs.items():
+    for path, dict_ in configs.items():
         path = tmp_path / path
         path.parent.mkdir(exist_ok=True, parents=True)
-        with path.open("w") as f:
-            yaml.dump(dict, f)
+        with path.open("w", encoding="utf-8") as f:
+            yaml.safe_dump(dict_, f)
 
 
 @pytest.mark.parametrize("relative", [True, False])
 @pytest.mark.parametrize("interpolate", [True, False])
 def test_auto_adjusting_path(tmp_path, interpolate, relative):
-    """Test that audo-adjusting paths work as expected.
+    """Test that auto-adjusting paths work as expected.
 
     If `interpolate` is `True`, the AutoAdjustingPath object
     is already evaluated by hiyapyco, otherwise it is returned
@@ -40,7 +41,7 @@ def test_auto_adjusting_path(tmp_path, interpolate, relative):
     destination.mkdir(parents=True)
     (tmp_path / "test.txt").touch()  # create fake file, otherwise check for missing file will fail.
 
-    with test_file.open("w") as f:
+    with test_file.open("w", encoding="utf-8") as f:
         f.write(
             dedent(
                 """\
@@ -48,7 +49,8 @@ def test_auto_adjusting_path(tmp_path, interpolate, relative):
                 """
             )
         )
-    with test_file.open("r") as f:
+
+    with test_file.open("r", encoding="utf-8") as f:
         res = hiyapyco.load(
             str(test_file),
             method=hiyapyco.METHOD_MERGE,
@@ -61,21 +63,28 @@ def test_auto_adjusting_path(tmp_path, interpolate, relative):
             ),
         )
 
+    # Dump with ruamel then parse back to compare value cleanly
     ruamel = YAML()
     with StringIO() as s:
         ruamel.dump(res, s)
-        actual = s.getvalue()
+        actual_yaml = s.getvalue()
 
-    # using .split() to ignore differences in whitespace
+    loaded = yaml.safe_load(actual_yaml)
+    assert "my_path" in loaded
+
     if relative:
-        assert actual.split() == ["my_path:", "../../test.txt"]
+        # Expected relative path from destination to source; OS-native separators
+        expected_rel = os.path.normpath(os.path.join("..", "..", "test.txt"))
+        assert loaded["my_path"] == expected_rel
     else:
-        assert actual.split() == ["my_path:", f"{tmp_path}/test.txt"]
+        # Expected absolute path with OS-native separators
+        expected_abs = str((tmp_path / "test.txt").resolve())
+        assert loaded["my_path"] == expected_abs
 
 
 @pytest.mark.parametrize("relative", [True, False])
 @pytest.mark.parametrize(
-    "test_yaml,expected",
+    "test_yaml,expected_rel",
     [
         (
             """\
@@ -93,31 +102,34 @@ def test_auto_adjusting_path(tmp_path, interpolate, relative):
         ),
     ],
 )
-def test_auto_adjusting_path_with_jinja(tmp_path, relative, test_yaml, expected):
+def test_auto_adjusting_path_with_jinja(tmp_path, relative, test_yaml, expected_rel):
     runner = CliRunner()
     with runner.isolated_filesystem(temp_dir=tmp_path) as td:
         td = Path(td)
         test_file = td / "params.in.yaml"
         (td / ".git").mkdir()
 
-        # relative = true is the default for now
-        # to ensure it really is the default, we don't add a configuration file
-        # in that case.
+        # relative=True is default; when False, set config to produce absolute paths
         if not relative:
-            (td / "pyproject.toml").write_text("[tool.dso]\nuse_relative_paths = false")
+            (td / "pyproject.toml").write_text("[tool.dso]\nuse_relative_paths = false", encoding="utf-8")
 
-        with test_file.open("w") as f:
-            f.write(dedent(test_yaml))
+        test_file.write_text(dedent(test_yaml), encoding="utf-8")
 
         result = runner.invoke(dso_compile_config, [])
         print(result.output)
-        td = Path(td)
         assert result.exit_code == 0
-        with (td / "params.yaml").open() as f:
+
+        with (td / "params.yaml").open(encoding="utf-8") as f:
+            compiled = yaml.safe_load(f)
+            assert "B" in compiled
             if relative:
-                assert yaml.safe_load(f)["B"] == expected
+                # Expect OS-native separators
+                expected = os.path.normpath(expected_rel)
+                assert compiled["B"] == expected
             else:
-                assert yaml.safe_load(f)["B"] == str(td / expected)
+                # Expect absolute path under target directory (OS-native separators)
+                expected_abs = str((td / expected_rel).resolve())
+                assert compiled["B"] == expected_abs
 
 
 def test_compile_configs(tmp_path):
@@ -135,13 +147,12 @@ def test_compile_configs(tmp_path):
         )
         result = runner.invoke(dso_compile_config, [])
         print(result.output)
-        td = Path(td)
         assert result.exit_code == 0
-        with (td / "params.yaml").open() as f:
+        with (td / "params.yaml").open(encoding="utf-8") as f:
             assert yaml.safe_load(f) == {"only_root": "foo", "value": "root", "list": [1, 2, 3]}
-        with (td / "A/B/params.yaml").open() as f:
+        with (td / "A/B/params.yaml").open(encoding="utf-8") as f:
             assert yaml.safe_load(f) == {"only_root": "foo", "value": "B", "list": [1, 2, 3, 4]}
-        with (td / "A/B/C/params.yaml").open() as f:
+        with (td / "A/B/C/params.yaml").open(encoding="utf-8") as f:
             assert yaml.safe_load(f) == {"only_root": "foo", "value": "C", "list": [1, 2, 3, 4, 5], "jinja2": "foo"}
 
 
@@ -160,11 +171,10 @@ def test_compile_configs_null_override(tmp_path):
         )
         result = runner.invoke(dso_compile_config, [])
         print(result.output)
-        td = Path(td)
         assert result.exit_code == 0
-        with (td / "params.yaml").open() as f:
+        with (td / "params.yaml").open(encoding="utf-8") as f:
             assert yaml.safe_load(f) == {"str": "str", "list": [1, 2, 3], "dict": {"A": 1, "B": 2}, "null": None}
-        with (td / "A/B/params.yaml").open() as f:
+        with (td / "A/B/params.yaml").open(encoding="utf-8") as f:
             assert yaml.safe_load(f) == {"str": None, "list": None, "dict": None, "null": None}
 
 
