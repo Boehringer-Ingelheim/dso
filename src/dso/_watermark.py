@@ -66,9 +66,7 @@ class Watermarker:
         return watermark_tiled
 
     def _get_watermark_tile(self) -> Image.Image:
-        """Get a tile of predefined size that contains the watermark text twice
-        (once top left corner, once middle right - this leads to a regular pattern)
-        """
+        """Get a tile of predefined size that contains the watermark text twice (once top left corner, once middle right - this leads to a regular pattern)"""
         img = Image.new("RGBA", self.tile_size, color=(255, 255, 255, 0))
 
         d = ImageDraw.Draw(img)
@@ -194,11 +192,7 @@ class PDFWatermarker(Watermarker):
                     with contextlib.suppress(OSError):
                         os.remove(tmp_pdf)
         finally:
-            # Explicitly close the reader (good hygiene)
-            try:
-                reader.close()
-            except Exception:
-                pass
+            reader.close()
 
         with open(output_image, "wb") as f:
             writer.write(f)
