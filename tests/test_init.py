@@ -1,4 +1,6 @@
 import json
+import os
+import stat
 from pathlib import Path
 from shutil import rmtree
 from subprocess import check_call
@@ -6,6 +8,12 @@ from subprocess import check_call
 from click.testing import CliRunner
 
 from dso.cli import dso_init
+
+
+def _chmod_and_retry(func, path, exc):
+    # make writable then retry
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
 
 
 def test_custom_template(tmp_path):
@@ -109,7 +117,7 @@ def test_init_existing_dir(dso_project):
     # delete some files
     (dso_project / "params.in.yaml").unlink()
     (dso_project / "README.md").unlink()
-    rmtree(dso_project / ".git")
+    rmtree(dso_project / ".git", onerror=_chmod_and_retry)
 
     result = runner.invoke(dso_init, [str(dso_project), "--description", "testdescription"], input="y")
     assert result.exit_code == 0

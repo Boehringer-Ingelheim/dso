@@ -46,22 +46,31 @@ def find_in_parent(start_directory: Path, file_or_folder: str, recurse_barrier: 
 
 @cache
 def _find_in_parent_abs(start_directory: Path, file_or_folder: str, recurse_barrier: Path | None = None) -> Path | None:
-    """
-    Implementation of `_find_in_parent`, work only with absolute paths here.
+    r"""
+    Implementation of `find_in_parent` that works with absolute paths and is cacheable.
 
-    This is to ensure @cache doesn't lead to wrong results when calling this from different working directories.
+    Handles both POSIX ('/') and Windows drive roots ('C:\\') by stopping when
+    start_directory.parent == start_directory.
     """
-    if start_directory == Path("/"):
-        return None
-    if recurse_barrier is not None:
-        if not start_directory.is_relative_to(recurse_barrier):
-            return None
+    # If a file is passed, start from its parent directory
     if start_directory.is_file():
-        return _find_in_parent_abs(start_directory.parent, file_or_folder, recurse_barrier)
-    if (start_directory / file_or_folder).exists():
-        return start_directory / file_or_folder
-    else:
-        return _find_in_parent_abs(start_directory.parent, file_or_folder, recurse_barrier)
+        start_directory = start_directory.parent
+
+    # Respect recurse barrier (inclusive); if we've gone above it, stop
+    if recurse_barrier is not None and not start_directory.is_relative_to(recurse_barrier):
+        return None
+
+    # Check the current level
+    candidate = start_directory / file_or_folder
+    if candidate.exists():
+        return candidate
+
+    # If we're at the filesystem root, stop
+    if start_directory.parent == start_directory:
+        return None
+
+    # Recurse one level up
+    return _find_in_parent_abs(start_directory.parent, file_or_folder, recurse_barrier)
 
 
 def get_project_root(start_directory: Path) -> Path:

@@ -13,6 +13,7 @@ maintainers = [
 authors = [
   { name = "Gregor Sturm" },
   { name = "Thomas Schwarzl" },
+  { name = "Daniel Schreyer" },
   { name = "Alexander Peltzer" },
 ]
 requires-python = ">=3.11"

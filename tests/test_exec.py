@@ -47,7 +47,7 @@ def test_exec_quarto_bibliography(quarto_stage_bibliography):
     result = runner.invoke(dso_exec, ["quarto", stage_path])
     assert result.exit_code == 0
     assert (quarto_stage_bibliography / "report" / "quarto_stage.html").is_file()
-    assert "Knuth" in (quarto_stage_bibliography / "report" / "quarto_stage.html").read_text()
+    assert "Knuth" in (quarto_stage_bibliography / "report" / "quarto_stage.html").read_text(encoding="utf-8")
 
 
 def test_exec_quarto_stylesheet(quarto_stage_css):

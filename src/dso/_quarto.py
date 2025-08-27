@@ -1,6 +1,8 @@
 """Helper functions for rendering quarto documents"""
 
+import contextlib
 import os
+import shutil
 import stat
 import subprocess
 import sys
@@ -10,6 +12,30 @@ from pathlib import Path
 from textwrap import dedent, indent
 
 from ruamel.yaml import YAML
+
+
+def _make_pandoc_filter_script() -> Path:
+    """
+    Create a temporary wrapper script that calls: python -m dso.pandocfilter
+
+    Returns the script Path. Caller must delete it.
+    """
+    if os.name == "nt":
+        # Windows: use a .cmd so pandoc can execute it
+        fd, script_path = tempfile.mkstemp(suffix=".cmd")
+        os.close(fd)
+        p = Path(script_path)
+        # Quote python path; forward all args
+        p.write_text(f'@echo off\r\n"{sys.executable}" -m dso.pandocfilter %*\r\n', encoding="utf-8")
+        return p
+    else:
+        # POSIX: use a .sh and make it executable
+        fd, script_path = tempfile.mkstemp(suffix=".sh")
+        os.close(fd)
+        p = Path(script_path)
+        p.write_text(f'#!/bin/bash\n{sys.executable} -m dso.pandocfilter "$@"\n', encoding="utf-8")
+        p.chmod(p.stat().st_mode | stat.S_IEXEC)
+        return p
 
 
 def render_quarto(
@@ -29,63 +55,76 @@ def render_quarto(
     report_dir
         Output directory of the rendered document
     before_script
-        Bash snippet to execute before running quarto (e.g. to setup the enviornment)
+        Bash snippet to execute before running quarto (e.g. to setup the environment)
+        (Ignored on Windows)
     """
-    before_script = indent(before_script, " " * 8)
-    report_dir = report_dir.absolute()
-    report_dir.mkdir(exist_ok=True)
+    quarto_dir = Path(quarto_dir)
+    report_dir = Path(report_dir).absolute()
+    cwd = Path(cwd)
 
-    # clean up existing `.rmarkdown` files that may interfere with rendering
-    # these are leftovers from a previous, failed `quarto render` attempt. If they still exist, the next attempt
-    # fails. We remove them *before* the run instead of cleaning them up *after* the run, because they
-    # may be useful for debugging failures.
-    # see https://github.com/Boehringer-Ingelheim/dso/issues/54
+    report_dir.mkdir(parents=True, exist_ok=True)
+
+    # Clean up leftover .rmarkdown files from previous failed render attempts
     for f in quarto_dir.glob("*.rmarkdown"):
         if f.is_file():
-            f.unlink()
+            with contextlib.suppress(OSError):
+                f.unlink()
 
-    # Enable pandocfilter if requested.
-    # We create a temporary script that then calls the current python binary with the dso.pandocfilter module
-    # This may seem cumbersome, but we do it this way because
-    #  * pandoc only supports a single binary for `--filter`, referring to subcommands or `-m` is not possible here
-    #  * we want to ensure that exactly the same python/dso version is used for the pandocfilter as for the
-    #    parent command (important when running through dso-mgr)
-    filter_script = None
+    # Optional pandoc filter wrapper
+    filter_script: Path | None = None
     if with_pandocfilter:
-        with tempfile.NamedTemporaryFile(delete=False, mode="w") as f:
-            f.write("#!/bin/bash\n")
-            f.write(f'{sys.executable} -m dso.pandocfilter "$@"\n')
-            filter_script = Path(f.name)
+        filter_script = _make_pandoc_filter_script()
 
-        filter_script.chmod(filter_script.stat().st_mode | stat.S_IEXEC)
+    # Quiet flag from env (compatible with previous behavior)
+    quiet_env = os.environ.get("DSO_QUIET", "0")
+    quiet = bool(int(quiet_env)) if quiet_env.isdigit() else False
 
-        pandocfilter = f"--filter {filter_script}"
-    else:
-        pandocfilter = ""
+    # Bump Deno memory for Quarto
+    env = os.environ.copy()
+    env.setdefault("QUARTO_DENO_V8_OPTIONS", "--max-old-space-size=8192")
 
-    # propagate quiet setting to quarto
-    quiet = "--quiet" if bool(int(os.environ.get("DSO_QUIET", 0))) else ""
-    script = dedent(
-        f"""\
-        #!/bin/bash
-        set -euo pipefail
+    try:
+        if os.name == "nt":
+            # Windows: call Quarto CLI directly (no /bin/bash)
+            quarto = shutil.which("quarto")
+            if not quarto:
+                raise FileNotFoundError(
+                    "Quarto CLI not found on PATH (required on Windows). Install Quarto or add it to PATH."
+                )
 
-        # this flags enables building larger reports with embedded resources
-        export QUARTO_DENO_V8_OPTIONS=--max-old-space-size=8192
+            cmd = [quarto, "render", str(quarto_dir), "--execute", "--output-dir", str(report_dir)]
+            if quiet:
+                cmd.append("--quiet")
+            if filter_script is not None:
+                cmd += ["--filter", str(filter_script)]
 
-        {before_script}
+            subprocess.run(cmd, cwd=str(cwd), env=env, check=True)
 
-        quarto render "{quarto_dir}" --execute --output-dir "{report_dir}" {quiet} {pandocfilter}
-        """
-    )
-    res = subprocess.run(script, shell=True, executable="/bin/bash", cwd=cwd)
+        else:
+            # POSIX: honor the bash snippet and use /bin/bash
+            before_script_indented = indent(before_script or "", " " * 8)
+            filter_arg = f"--filter {filter_script}" if filter_script else ""
+            quiet_arg = "--quiet" if quiet else ""
 
-    # clean up
-    if filter_script is not None:
-        filter_script.unlink()
+            script = dedent(
+                f"""\
+                #!/bin/bash
+                set -euo pipefail
 
-    if res.returncode:
-        sys.exit(res.returncode)
+                # this flag enables building larger reports with embedded resources
+                export QUARTO_DENO_V8_OPTIONS="${{QUARTO_DENO_V8_OPTIONS:---max-old-space-size=8192}}"
+
+                {before_script_indented}
+
+                quarto render "{quarto_dir}" --execute --output-dir "{report_dir}" {quiet_arg} {filter_arg}
+                """
+            )
+            subprocess.run(script, shell=True, executable="/bin/bash", cwd=str(cwd), env=env, check=True)
+
+    finally:
+        if filter_script is not None:
+            with contextlib.suppress(OSError):
+                filter_script.unlink()
 
 
 @contextmanager
@@ -93,10 +132,12 @@ def quarto_config_yml(quarto_config: dict | None, quarto_dir: Path):
     """Context manager that temporarily creates a _quarto.yml file and cleans up after itself"""
     if quarto_config is None:
         quarto_config = {}
-    config_file = quarto_dir / "_quarto.yml"
+    config_file = Path(quarto_dir) / "_quarto.yml"
     yaml = YAML(typ="safe")
-    yaml.dump(quarto_config, config_file)
+    with config_file.open("w", encoding="utf-8", newline="\n") as fh:
+        yaml.dump(quarto_config, fh)
     try:
         yield
     finally:
-        config_file.unlink()
+        with contextlib.suppress(FileNotFoundError, PermissionError):
+            config_file.unlink()
