@@ -1,10 +1,10 @@
 """Main entry point for CLI"""
 
-import json
 import logging
 import os
 import subprocess
 import sys
+from json import dump as json_dump
 from os import getcwd
 from pathlib import Path
 from textwrap import dedent
@@ -70,7 +70,7 @@ def dso_compile_config(all, args):
     help="Do not compile configs before loading it. The same can be achieved by setting the `DSO_SKIP_COMPILE=1` env var.",
 )
 @click.option(
-    "--as_json",
+    "--json",
     is_flag=True,
     type=bool,
     default=False,
@@ -79,7 +79,7 @@ def dso_compile_config(all, args):
 @click.argument(
     "stage",
 )
-def dso_get_config(stage, all, skip_compile, as_json):
+def dso_get_config(stage, all, skip_compile, json):
     """Get the configuration for a given stage and print it to STDOUT in yaml or json format.
 
     The path to the stage must be relative to the root dir of the project.
@@ -94,8 +94,8 @@ def dso_get_config(stage, all, skip_compile, as_json):
 
     try:
         out_config = get_config(stage, all=all, skip_compile=skip_compile)
-        if as_json:
-            json.dump(out_config, sys.stdout, indent=4)  # Output the config in JSON format
+        if json:
+            json_dump(out_config, sys.stdout, indent=4)  # Output the config in JSON format
         else:
             yaml = YAML()
             yaml.dump(out_config, sys.stdout)  # Output the config in YAML format
