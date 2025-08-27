@@ -1,5 +1,6 @@
 """Main entry point for CLI"""
 
+import json
 import logging
 import os
 import subprocess
@@ -68,11 +69,18 @@ def dso_compile_config(all, args):
     default=bool(int(os.environ.get("DSO_SKIP_COMPILE", 0))),
     help="Do not compile configs before loading it. The same can be achieved by setting the `DSO_SKIP_COMPILE=1` env var.",
 )
+@click.option(
+    "--as_json",
+    is_flag=True,
+    type=bool,
+    default=False,
+    help="Output config in json format.",
+)
 @click.argument(
     "stage",
 )
-def dso_get_config(stage, all, skip_compile):
-    """Get the configuration for a given stage and print it to STDOUT in yaml format.
+def dso_get_config(stage, all, skip_compile, as_json):
+    """Get the configuration for a given stage and print it to STDOUT in yaml or json format.
 
     The path to the stage must be relative to the root dir of the project.
 
@@ -86,8 +94,11 @@ def dso_get_config(stage, all, skip_compile):
 
     try:
         out_config = get_config(stage, all=all, skip_compile=skip_compile)
-        yaml = YAML()
-        yaml.dump(out_config, sys.stdout)
+        if as_json:
+            json.dump(out_config, sys.stdout, indent=4)  # Output the config in JSON format
+        else:
+            yaml = YAML()
+            yaml.dump(out_config, sys.stdout)  # Output the config in YAML format
     except KeyError as e:
         log.error(f"dvc.yaml defines parameter {e} that is not in params.yaml")
         sys.exit(1)
