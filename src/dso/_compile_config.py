@@ -203,10 +203,8 @@ def compile_all_configs(paths: Sequence[Path]):
     log.info(f"Compiling a total of {len(all_configs)} config files.")
 
     dso_config = get_dso_config_from_pyproject_toml(project_root)
-    # by default, use relative paths
     use_relative_paths = dso_config.get("use_relative_paths", True)
 
-    # Track missing paths we've warned about (file path, source yaml file path)
     missing_path_warnings: set[tuple[Path, Path]] = set()
 
     for config in all_configs:
@@ -234,29 +232,33 @@ def compile_all_configs(paths: Sequence[Path]):
             conf = _normalize_windows_separators(conf)
 
         out_file = config.parent / "params.yaml"
+        out_dir = out_file.parent
+        out_dir.mkdir(parents=True, exist_ok=True)
 
-        # Write to temp file (Windows-safe) then compare & replace atomically.
-        fd, tmp_name = tempfile.mkstemp(suffix=".yaml")
+        # --- Write to a temp file in the SAME DIRECTORY as out_file (portable & atomic) ---
+        fd, tmp_name = tempfile.mkstemp(dir=out_dir, prefix=".params-", suffix=".yaml")
         try:
             with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as f:
                 f.write(PARAMS_YAML_DISCLAIMER)
                 f.write("\n")
-                ruamel = YAML()
-                ruamel.dump(conf, f)
+                YAML().dump(conf, f)
+                f.flush()
+                os.fsync(f.fileno())
 
             needs_update = not out_file.exists() or not filecmp.cmp(tmp_name, out_file, shallow=False)
 
             if needs_update:
-                out_file.parent.mkdir(parents=True, exist_ok=True)
                 os.replace(tmp_name, out_file)
                 log.debug(f"Compiled ./{config.relative_to(project_root)} to {out_file.name}")
             else:
                 log.debug(f"./{config.relative_to(project_root)} [green]is already up-to-date!")
                 with contextlib.suppress(OSError):
-                    os.remove(tmp_name)
+                    os.remove(tmp_name)  # cleanup temp
+
         finally:
-            if os.path.exists(tmp_name):
-                with contextlib.suppress(OSError):
+            # If replace/move already consumed tmp_name, this is a no-op
+            with contextlib.suppress(OSError):
+                if os.path.exists(tmp_name):
                     os.remove(tmp_name)
 
     log.info("[green]Configuration compiled successfully.")
