@@ -50,7 +50,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=ba0f171a"></script>
+    <script src="_static/documentation_options.js?v=3ffd7ea2"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -422,7 +422,7 @@ document.write(`
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">create         </span> Create stage folder structure subcommand.                    <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">exec           </span> Dso wrappers around various tools                            <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">get-config     </span> Get the configuration for a given stage and print it to      <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> STDOUT in yaml format.                                       <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> STDOUT in yaml or json format.                               <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">init           </span> If you wish to initialize DSO in an existing project, you    <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> can specify an existing directory. In this case, it will     <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> initialize files from the template that do not exist yet,    <span class=" -Color -Color-Faint -C-Faint">│</span>
@@ -604,7 +604,8 @@ document.write(`
                                                                                 
  <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso get-config</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">STAGE</span>                                          
                                                                                 
- Get the configuration for a given stage and print it to STDOUT in yaml format. 
+ Get the configuration for a given stage and print it to STDOUT in yaml or json 
+ format.                                                                        
  <span class=" -Color -Color-Faint -C-Faint">The path to the stage must be relative to the root dir of the project.</span>         
                                                                                 
  <span class=" -Color -Color-Faint -C-Faint">By default, the configuration is filtered to include only the keys that are </span>   
@@ -618,6 +619,7 @@ document.write(`
 <span class=" -Color -Color-Faint -C-Faint">│</span>                     <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">dvc.yaml</span>                                                 <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--skip-compile</span>      Do not compile configs before loading it. The same can   <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span>                     be achieved by setting the <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_SKIP_COMPILE=1</span> env var.   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--json</span>              Output config in json format.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>              Show this message and exit.                              <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
