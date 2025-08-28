@@ -36,10 +36,13 @@ CREATE_STAGE_HELP_TEXT = dedent(
 )
 
 
-@click.argument("name", required=False)
+@click.argument("stage_path", required=False)
 @click.option("--library", "-l", "library_id", help="Specify the id of a template library")
 @click.option(
-    "--template", "-t", "template_id", help="Specify the id of a template to use from the specified template library"
+    "--template",
+    "-t",
+    "template_id",
+    help="Specify the id of a template to use from the specified template library",
 )
 @click.command(
     "stage",
@@ -51,24 +54,32 @@ CREATE_STAGE_HELP_TEXT = dedent(
     },
 )
 @click.pass_context
-def dso_create_stage(ctx, name: str | None, *, template_id: str | None = None, library_id: str | None = None):
+def dso_create_stage(
+    ctx,
+    stage_path: str | None,
+    *,
+    template_id: str | None = None,
+    library_id: str | None = None,
+):
     """Create a new stage."""
     from dso._compile_config import compile_all_configs
 
     # get extra arguments, see https://stackoverflow.com/questions/32944131/add-unspecified-options-to-cli-command-using-python-click
     params = {ctx.args[i][2:]: ctx.args[i + 1] for i in range(0, len(ctx.args), 2)}
-    if name is not None:
-        params["name"] = name
+    if stage_path is not None:
+        params["name"] = stage_path
 
     template, params = prompt_for_template_params("stage", library_id, template_id, **params)
 
-    target_dir = Path(getcwd()) / params["name"]
+    target_dir = Path.cwd() / params["name"]
+    # ensure `name` is only the stage name even when path is specified
+    params["name"] = Path(params["name"]).name
 
     if target_dir.exists():
         log.error(f"[red]Couldn't create stage: Folder with name {target_dir} already exists!")
         sys.exit(1)
 
-    target_dir.mkdir()
+    target_dir.mkdir(parents=True)
 
     # stage dir, relative to project root
     project_root = get_project_root(target_dir)
@@ -82,7 +93,10 @@ def dso_create_stage(ctx, name: str | None, *, template_id: str | None = None, l
 @click.argument("name", required=False)
 @click.option("--library", "-l", "library_id", help="Specify the id of a template library")
 @click.option(
-    "--template", "-t", "template_id", help="Specify the id of a template to use from the specified template library"
+    "--template",
+    "-t",
+    "template_id",
+    help="Specify the id of a template to use from the specified template library",
 )
 @click.command(
     "folder",
@@ -102,7 +116,13 @@ def dso_create_stage(ctx, name: str | None, *, template_id: str | None = None, l
     },
 )
 @click.pass_context
-def dso_create_folder(ctx, name: str | None, *, template_id: str | None = None, library_id: str | None = None):
+def dso_create_folder(
+    ctx,
+    name: str | None,
+    *,
+    template_id: str | None = None,
+    library_id: str | None = None,
+):
     """Create a new folder. A folder can contain subfolders or stages."""
     # currently there's only one template for folders
     from dso._compile_config import compile_all_configs

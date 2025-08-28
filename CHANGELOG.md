@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning][].
 ### Additions
 
 -  Added `--all` option to `dso compile-config` to compile all configs in project ([#137](https://github.com/Boehringer-Ingelheim/dso/pull/137/files))
+-  Added `dso mv` for moving and renaming stages or folders while updating names and references ([#136](https://github.com/Boehringer-Ingelheim/dso/pull/136/files))
 
 ### Chore
 

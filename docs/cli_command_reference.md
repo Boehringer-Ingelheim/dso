@@ -70,6 +70,14 @@ from dso.cli import dso
 invoke(dso, args=["lint", "--help"])
 ```
 
+## dso mv
+
+```{eval-rst}
+.. click:run::
+    from dso.cli import dso
+    invoke(dso, args=["mv", "--help"])
+```
+
 ## dso pull
 
 ```{click:run}

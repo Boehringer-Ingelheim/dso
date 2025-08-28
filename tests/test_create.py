@@ -90,23 +90,41 @@ def test_custom_template(command, tmp_path, dso_project):
     }
 
 
+@pytest.mark.parametrize("abspath", [True, False])
 @pytest.mark.parametrize(
-    "template,expected_src",
+    "template,stage_path,expected_src",
     [
-        ["bash", None],
-        ["quarto_r", "src/teststage.qmd"],
-        ["quarto_py", "src/teststage.qmd"],
-        ["quarto_ipynb", "src/teststage.ipynb"],
+        ["bash", "teststage", None],
+        ["quarto_r", "teststage", "src/teststage.qmd"],
+        ["quarto_r", "subfolderA/teststage", "src/teststage.qmd"],
+        ["quarto_py", "teststage", "src/teststage.qmd"],
+        ["quarto_ipynb", "teststage", "src/teststage.ipynb"],
     ],
 )
-def test_create_stage(dso_project, template, expected_src):
+def test_create_stage(dso_project, template, stage_path, expected_src, abspath):
+    """
+    Test dso create stage
+
+    Parameters
+    ----------
+    dso_project
+        fixture with empty dso project
+    template
+        template name
+    stage_path
+        path/name of stage to be created
+    expected_src
+        expected path to created file in src folder, relative to stage_path
+    abspath
+        if True, convert stage_path to absolute before testing
+    """
     runner = CliRunner()
     chdir(dso_project)
     result = runner.invoke(
         dso_create,
         [
             "stage",
-            "teststage",
+            str((dso_project / stage_path).absolute() if abspath else stage_path),
             "--template",
             template,
             "--description",
@@ -115,14 +133,16 @@ def test_create_stage(dso_project, template, expected_src):
     )
     print(result.output)
     assert result.exit_code == 0
-    assert (dso_project / "teststage").is_dir()
-    assert (dso_project / "teststage" / "dvc.yaml").is_file()
-    assert '"teststage":' in (dso_project / "teststage" / "dvc.yaml").read_text()
+    assert (dso_project / stage_path).is_dir()
+    assert (dso_project / stage_path / "dvc.yaml").is_file()
+    assert '"teststage":' in (dso_project / stage_path / "dvc.yaml").read_text()
     if expected_src is not None:
-        assert (dso_project / "teststage" / expected_src).is_file()
+        assert (dso_project / stage_path / expected_src).is_file()
         # .replace to handle ipynb json
-        assert 'read_params("teststage")' in (dso_project / "teststage" / expected_src).read_text().replace('\\"', '"')
-    assert "testdescription" in (dso_project / "teststage" / "README.md").read_text()
+        assert f'read_params("{stage_path}")' in (dso_project / stage_path / expected_src).read_text().replace(
+            '\\"', '"'
+        )
+    assert "testdescription" in (dso_project / stage_path / "README.md").read_text()
     # Check that all pre-commit checks pass on the newly initiated template
     check_call(["pre-commit", "install"], cwd=dso_project)
     check_call(["pre-commit", "run", "--all-files"], cwd=dso_project)
