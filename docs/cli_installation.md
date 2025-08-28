@@ -12,10 +12,9 @@ uv tool install dso-core
 
 This command installs the `dso` binary:
 
-```{eval-rst}
-.. click:run::
-    from dso.cli import dso
-    invoke(dso, args=["--version"])
+```{click:run}
+from dso.cli import dso
+invoke(dso, args=["--version"])
 ```
 
 If you prefer to manage the Python environment yourself, you can use `pip` as usual:

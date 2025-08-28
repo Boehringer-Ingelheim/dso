@@ -42,7 +42,7 @@ dependencies = [
 
 optional-dependencies.dev = [ "hatch", "pre-commit" ]
 optional-dependencies.doc = [
-  "click-extra[sphinx]",
+  "click-extra[sphinx]>=5.1",
   "docutils>=0.8,!=0.18.*,!=0.19.*",
   # For notebooks
   "ipykernel",
@@ -96,9 +96,7 @@ python = [ "3.12" ]
 line-length = 120
 src = [ "src" ]
 extend-include = [ "*.ipynb" ]
-exclude = [
-  "src/dso/hiyapyco.py",
-]
+exclude = [ "src/dso/hiyapyco.py" ]
 
 format.docstring-code-format = true
 lint.select = [
@@ -154,9 +152,7 @@ addopts = [
 
 [tool.coverage.run]
 source = [ "dso" ]
-omit = [
-  "**/test_*.py",
-]
+omit = [ "**/test_*.py" ]
 
 [tool.cruft]
 skip = [
