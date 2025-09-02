@@ -274,10 +274,19 @@ def _dvc_wrapper(command: str):
 )
 @click.argument("target", type=click.Path(file_okay=True, dir_okay=True, path_type=Path))
 def dso_mv(source: Path, target: Path):
-    """Move or rename a stage or a folder and update references to it
+    """
+    Move or rename a stage or a folder and update references to it.
 
-    A stage or folder is renamed with references to it. In a stage, the dvc.yaml, params.in.yaml
-    and src files. In other folder or stages, dvc.yaml, params.in.yaml and src files are updated.
+    This function moves or renames a stage or folder and updates references to it in associated files.
+    For a stage, this includes `dvc.yaml`, `params.in.yaml`, and source files. For other folders or
+    stages, it updates references in `dvc.yaml`, `params.in.yaml`, and source files accordingly.
+
+    Note: This feature is experimental. References outside the source will not be updated and must
+    be adjusted manually.
+
+    Args:
+        source (Path): The source path of the stage or folder to be moved or renamed.
+        target (Path): The target path where the stage or folder will be moved or renamed to.
     """
     mv(source, target)
 

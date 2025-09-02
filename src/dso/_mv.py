@@ -125,7 +125,7 @@ def mv(source: Path, target: Path):
     """Move or rename a stage or a folder and update references to it
 
     A stage or folder is renamed with references to it. In a stage, the dvc.yaml, params.in.yaml
-    and src files. In other folder or stages, dvc.yaml, params.in.yaml and src files are updated.
+    and src files. In other folder or stages, references in dvc.yaml, params.in.yaml and src files are updated.
 
     This feature is experimental. Within the source, outbounding references will not be updated
     and need to be adjusted manually.
