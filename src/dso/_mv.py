@@ -1,10 +1,10 @@
 """Rename stage or folder"""
 
-import os
-import re
-import sys
 from os import getcwd
+from os.path import relpath
 from pathlib import Path
+from re import escape, sub
+from sys import exit
 
 from dso._logging import log
 from dso._util import get_project_root
@@ -20,8 +20,8 @@ def update_references_to_source_recursively(current_path: Path, source_absolute_
     log.debug("[yellow]Updating all references to source")
     log.debug(f"{current_path} - {source_absolute_path} - {target_absolute_path}")
 
-    source_direct_path = os.path.relpath(source_absolute_path, start=current_path)
-    target_direct_path = os.path.relpath(target_absolute_path, start=current_path)
+    source_direct_path = relpath(source_absolute_path, start=current_path)
+    target_direct_path = relpath(target_absolute_path, start=current_path)
 
     log.info(f"Relatives path from {current_path}: {source_direct_path} to {target_direct_path}")
 
@@ -48,17 +48,17 @@ def update_references_to_source_recursively(current_path: Path, source_absolute_
 
 def update_references_in_file(file: Path, pattern: str, replacement: str):
     """Update all pattern in file"""
-    if os.path.exists(file):
+    if file.exists():
         log.debug(f"Updating {file}: replacing '{pattern}' with '{replacement}'")
         try:
-            content = Path(file).read_text()
-            updated_content = re.sub(rf"(?<![\\/]){re.escape(pattern)}", replacement, content)
-            Path(file).write_text(updated_content)
+            content = file.read_text()
+            updated_content = sub(rf"(?<![\\/]){escape(pattern)}", replacement, content)
+            file.write_text(updated_content)
         except (OSError, UnicodeDecodeError) as e:
             log.error(f"[red]Failed to update {file}: {e}")
     else:
-        log.error(f"[red]Trying to replace references in '{file}', but files does not exist. Exiting.")
-        sys.exit(1)
+        log.error(f"[red]Trying to replace references in '{file}', but file does not exist. Exiting.")
+        exit(1)
 
 
 def update_files_in_src_folder(
@@ -83,7 +83,7 @@ def update_files_in_src_folder(
                 update_references_in_file(new_file_path, str(source_relative), str(target_relative))
     else:
         log.error(f"[red]Src directory {path} does not exist.")
-        sys.exit(1)
+        exit(1)
 
 
 def update_source(
@@ -146,11 +146,11 @@ def mv(source: Path, target: Path):
     # assert that source and target are in project_root
     if project_root not in source.parents:
         log.error(f"[red]{source} is not within the project root {project_root}!")
-        sys.exit(1)
+        exit(1)
 
     if project_root not in target.parents:
         log.error(f"[red]{target} is not within the project root {project_root}!")
-        sys.exit(1)
+        exit(1)
 
     source_relative_path = source.relative_to(project_root)
     target_relative_path = target.relative_to(project_root)
@@ -175,17 +175,17 @@ def mv(source: Path, target: Path):
 
     if not source_absolute_path.exists():
         log.error(f"[red]{source} does not exist!")
-        sys.exit(1)
+        exit(1)
 
     # Currently is not allowed to move the folder or stage to a directory
     # which does not exist.
     if not target_absolute_dir.exists():
         log.error(f"[red]{target_relative_dir} does not exist. Target base directory must already exist.")
-        sys.exit(1)
+        exit(1)
 
     if target_absolute_path.exists():
         log.error(f"[red]{target} already exists!")
-        sys.exit(1)
+        exit(1)
 
     update_source(
         source_base,
