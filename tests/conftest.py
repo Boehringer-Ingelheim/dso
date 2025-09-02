@@ -3,11 +3,10 @@ from pathlib import Path
 from textwrap import dedent
 
 from click.testing import CliRunner
-from pytest import fixture
-
 from dso._compile_config import compile_all_configs
 from dso._logging import log
 from dso.cli import dso_create, dso_init
+from pytest import fixture
 
 TESTDATA = Path(__file__).parent / "data"
 
@@ -70,7 +69,11 @@ def quarto_stage_empty_configs(quarto_stage) -> Path:
     with (quarto_stage / "params.in.yaml").open("w") as f:
         f.write("\n")
     # remove param from `dvc.yaml` because it's not in the empty config anymore
-    lines = [line for line in (quarto_stage / "dvc.yaml").read_text().splitlines() if "dso.quarto" not in line]
+    lines = [
+        line
+        for line in (quarto_stage / "dvc.yaml").read_text().splitlines()
+        if "dso.quarto" not in line
+    ]
     (quarto_stage / "dvc.yaml").write_text("\n".join(lines) + "\n")
     compile_all_configs([quarto_stage])
 
@@ -175,7 +178,9 @@ def dso_project_with_multiple_stages(tmp_path) -> Path:
     proj_name = "dso_project_multi"
     chdir(tmp_path)
 
-    runner.invoke(dso_init, [proj_name, "--description", "a test project with multiple stages"])
+    runner.invoke(
+        dso_init, [proj_name, "--description", "a test project with multiple stages"]
+    )
     project_path = tmp_path / proj_name
     chdir(project_path)
 
@@ -335,7 +340,7 @@ def dso_project_with_multiple_stages(tmp_path) -> Path:
             )
         )
 
-    with (path_0200 / "0200_AnalysisA" / "01_Preprocessing" / "params.in.yaml").open("w") as f:
+    with (path_0200 / "01_Preprocessing" / "params.in.yaml").open("w") as f:
         f.write(
             dedent(
                 """\
@@ -353,5 +358,7 @@ def dso_project_with_multiple_stages(tmp_path) -> Path:
                 """
             )
         )
+
+    compile_all_configs([project_path])
 
     return project_path
