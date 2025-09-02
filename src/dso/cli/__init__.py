@@ -280,7 +280,6 @@ def dso_mv(source: Path, target: Path):
     This function moves or renames a stage or folder and updates references to it in associated files.
     For a stage, this includes `dvc.yaml`, `params.in.yaml`, and source files. For other folders or
     stages, it updates references in `dvc.yaml`, `params.in.yaml`, and source files accordingly.
-
     Note: This feature is experimental. References outside the source will not be updated and must
     be adjusted manually.
 
