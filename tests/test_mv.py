@@ -3,6 +3,7 @@ from subprocess import check_call
 
 import pytest
 from click.testing import CliRunner
+
 from dso._compile_config import compile_all_configs
 from dso.cli import dso_mv
 
@@ -76,9 +77,7 @@ def test_mv_stage_with_dependencies(dso_project_with_multiple_stages):
     target_dvc_file = path_target / "dvc.yaml"
     assert f'"{target}":' in (target_dvc_file.read_text())
 
-    def assert_params_file_content(
-        path, rel_to_source, rel_to_target, file, similar=""
-    ):
+    def assert_params_file_content(path, rel_to_source, rel_to_target, file, similar=""):
         """
         Check if params.in.yaml file in 'path' contains stage with 'file' with path 'rel_to_target'
         and not 'rel_to_source' anymore. If 'similar' is not empty, check if the similar target
@@ -94,15 +93,9 @@ def test_mv_stage_with_dependencies(dso_project_with_multiple_stages):
         if similar != "":
             assert f"{similar}" in params_content
 
-    assert_params_file_content(
-        project_dir, rel_source, rel_target, "/input/C.txt", rel_similar
-    )
-    assert_params_file_content(
-        path_0200, source, target, "/input/C.txt", f"../{rel_similar}"
-    )
-    assert_params_file_content(
-        path_target, "", "", "input/C.txt", f"../../{rel_similar}"
-    )
+    assert_params_file_content(project_dir, rel_source, rel_target, "/input/C.txt", rel_similar)
+    assert_params_file_content(path_0200, source, target, "/input/C.txt", f"../{rel_similar}")
+    assert_params_file_content(path_target, "", "", "input/C.txt", f"../../{rel_similar}")
     assert_params_file_content(
         path_0100,
         f"../{rel_source}",
@@ -110,6 +103,4 @@ def test_mv_stage_with_dependencies(dso_project_with_multiple_stages):
         "/input/C.txt",
         f"../{rel_similar}",
     )
-    assert_params_file_content(
-        path_0300, f"../{rel_source}", f"../{rel_target}", "/input/C.txt", similar
-    )
+    assert_params_file_content(path_0300, f"../{rel_source}", f"../{rel_target}", "/input/C.txt", similar)
