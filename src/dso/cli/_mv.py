@@ -12,34 +12,27 @@ from dso._logging import log
 from dso._util import get_project_root
 
 
-def update_references_to_source_recursively(
-    current_path: Path, source_absolute_path: Path, target_absolute_path: Path
-):
+def update_references_to_source_recursively(current_path: Path, source_absolute_path: Path, target_absolute_path: Path):
     """In the whole project, recursively search for relative references to the old location and update to relative reference to the new location.
-    Skip target directory and subdirectory and skip hidden folders."""
+    Skip target directory and subdirectory and skip hidden folders.
+    """
     log.debug("[yellow]Updating all references to source")
     log.debug(f"{current_path} - {source_absolute_path} - {target_absolute_path}")
 
     source_direct_path = os.path.relpath(source_absolute_path, start=current_path)
     target_direct_path = os.path.relpath(target_absolute_path, start=current_path)
 
-    log.info(
-        f"Relatives path from {current_path}: {source_direct_path} to {target_direct_path}"
-    )
+    log.info(f"Relatives path from {current_path}: {source_direct_path} to {target_direct_path}")
 
     for filename in ["dvc.yaml", "params.in.yaml"]:
-        update_references_in_file(
-            current_path / filename, source_direct_path, target_direct_path
-        )
+        update_references_in_file(current_path / filename, source_direct_path, target_direct_path)
 
     # Iterate over all non-hidden files in the src subdirectory of dvc_dir
     src_subdir = current_path / "src"
     if src_subdir.exists() and src_subdir.is_dir():
         for file_path in src_subdir.rglob("*"):
             if file_path.is_file() and not file_path.name.startswith("."):
-                update_references_in_file(
-                    file_path, source_direct_path, target_direct_path
-                )
+                update_references_in_file(file_path, source_direct_path, target_direct_path)
 
     for dvc_dir in current_path.rglob("*"):
         # search all non-hidden folders with dvc.yaml inside which are not part of target
@@ -49,9 +42,7 @@ def update_references_to_source_recursively(
             and (dvc_dir / "dvc.yaml").exists()
             and dvc_dir != target_absolute_path
         ):
-            update_references_to_source_recursively(
-                dvc_dir, source_absolute_path, target_absolute_path
-            )
+            update_references_to_source_recursively(dvc_dir, source_absolute_path, target_absolute_path)
 
 
 def update_references_in_file(file: Path, pattern: str, replacement: str):
@@ -60,16 +51,12 @@ def update_references_in_file(file: Path, pattern: str, replacement: str):
         log.debug(f"Updating {file}: replacing '{pattern}' with '{replacement}'")
         try:
             content = Path(file).read_text()
-            updated_content = re.sub(
-                rf"(?<![\\/]){re.escape(pattern)}", replacement, content
-            )
+            updated_content = re.sub(rf"(?<![\\/]){re.escape(pattern)}", replacement, content)
             Path(file).write_text(updated_content)
         except (OSError, UnicodeDecodeError) as e:
             log.error(f"[red]Failed to update {file}: {e}")
     else:
-        log.error(
-            f"[red]Trying to replace references in '{file}', but files does not exist. Exiting."
-        )
+        log.error(f"[red]Trying to replace references in '{file}', but files does not exist. Exiting.")
         sys.exit(1)
 
 
@@ -84,9 +71,7 @@ def update_files_in_src_folder(
     if path.exists():
         for file_path in path.rglob("*"):
             if file_path.is_file() and not file_path.name.startswith("."):
-                new_file_name = file_path.name.replace(
-                    str(source_base), str(target_base)
-                )
+                new_file_name = file_path.name.replace(str(source_base), str(target_base))
                 new_file_path = file_path.parent / new_file_name
                 log.debug(f"Renaming file {file_path} to {new_file_path}")
                 try:
@@ -94,9 +79,7 @@ def update_files_in_src_folder(
                 except OSError as e:
                     log.error(f"[red]Failed to rename {file_path}: {e}")
 
-                update_references_in_file(
-                    new_file_path, str(source_relative), str(target_relative)
-                )
+                update_references_in_file(new_file_path, str(source_relative), str(target_relative))
     else:
         log.error(f"[red]Src directory {path} does not exist.")
         sys.exit(1)
@@ -145,9 +128,7 @@ def update_source(
     "source",
     type=click.Path(exists=True, file_okay=True, dir_okay=True, path_type=Path),
 )
-@click.argument(
-    "target", type=click.Path(file_okay=True, dir_okay=True, path_type=Path)
-)
+@click.argument("target", type=click.Path(file_okay=True, dir_okay=True, path_type=Path))
 def dso_mv(source: Path, target: Path):
     """Move and rename a stage or a folder and update references to it
 
@@ -202,9 +183,7 @@ def dso_mv(source: Path, target: Path):
     # Currently is not allowed to move the folder or stage to a directory
     # which does not exist.
     if not target_absolute_dir.exists():
-        log.error(
-            f"[red]{target_relative_dir} does not exist. Target base directory must already exist."
-        )
+        log.error(f"[red]{target_relative_dir} does not exist. Target base directory must already exist.")
         sys.exit(1)
 
     if target_absolute_path.exists():
@@ -220,8 +199,6 @@ def dso_mv(source: Path, target: Path):
         target_absolute_path,
     )
 
-    update_references_to_source_recursively(
-        project_root, source_absolute_path, target_absolute_path
-    )
+    update_references_to_source_recursively(project_root, source_absolute_path, target_absolute_path)
 
     log.debug(f"[green]Moved from {source} to {target} successfully.")
