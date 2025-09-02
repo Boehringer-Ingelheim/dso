@@ -50,7 +50,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=eac39d4c"></script>
+    <script src="_static/documentation_options.js?v=757e6776"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -423,14 +423,14 @@ document.write(`
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">create         </span> Create stage folder structure subcommand.                    <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">exec           </span> Dso wrappers around various tools                            <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">get-config     </span> Get the configuration for a given stage and print it to      <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> STDOUT in yaml format.                                       <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> STDOUT in yaml or json format.                               <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">init           </span> If you wish to initialize DSO in an existing project, you    <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> can specify an existing directory. In this case, it will     <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> initialize files from the template that do not exist yet,    <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> but never overwrite existing files.                          <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">lint           </span> Lint a dso project                                           <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">mv             </span> Move and rename a stage or a folder and update references to <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> it                                                           <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">mv             </span> Move or rename a stage or a folder and update references to  <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> it (experimental).                                           <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">pull           </span> Wrapper around <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">dvc pull</span>, compiling configuration before      <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">               </span> running.                                                     <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">push           </span> Wrapper around <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">dvc push</span>, compiling configuration before      <span class=" -Color -Color-Faint -C-Faint">│</span>
@@ -607,7 +607,8 @@ document.write(`
                                                                                 
  <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso get-config</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">STAGE</span>                                          
                                                                                 
- Get the configuration for a given stage and print it to STDOUT in yaml format. 
+ Get the configuration for a given stage and print it to STDOUT in yaml or json 
+ format.                                                                        
  <span class=" -Color -Color-Faint -C-Faint">The path to the stage must be relative to the root dir of the project.</span>         
                                                                                 
  <span class=" -Color -Color-Faint -C-Faint">By default, the configuration is filtered to include only the keys that are </span>   
@@ -621,6 +622,7 @@ document.write(`
 <span class=" -Color -Color-Faint -C-Faint">│</span>                     <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">dvc.yaml</span>                                                 <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--skip-compile</span>      Do not compile configs before loading it. The same can   <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span>                     be achieved by setting the <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_SKIP_COMPILE=1</span> env var.   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--json</span>              Output config in json format.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>              Show this message and exit.                              <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
@@ -692,10 +694,23 @@ document.write(`
                                                                                 
  <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso mv</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">SOURCE</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">TARGET</span>                                          
                                                                                 
- Move and rename a stage or a folder and update references to it                
- <span class=" -Color -Color-Faint -C-Faint">A stage or folder is renamed with references to it. In a stage, the dvc.yaml, </span> 
- <span class=" -Color -Color-Faint -C-Faint">params.in.yaml and src files. In other folder or stages, dvc.yaml, </span>            
- <span class=" -Color -Color-Faint -C-Faint">params.in.yaml and src files are updated.</span>                                      
+ Move or rename a stage or a folder and update references to it (experimental). 
+ <span class=" -Color -Color-Faint -C-Faint">This function moves or renames a stage or folder and updates references to it </span> 
+ <span class=" -Color -Color-Faint -C-Faint">in associated files. For a stage, this includes </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">dvc.yaml</span><span class=" -Color -Color-Faint -C-Faint">, </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">params.in.yaml</span><span class=" -Color -Color-Faint -C-Faint">, and </span> 
+ <span class=" -Color -Color-Faint -C-Faint">source files. For other folders or stages, it updates references in </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">dvc.yaml</span><span class=" -Color -Color-Faint -C-Faint">, </span> 
+ <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">params.in.yaml</span><span class=" -Color -Color-Faint -C-Faint">, and source files accordingly. Note: This feature is </span>           
+ <span class=" -Color -Color-Faint -C-Faint">experimental. References outside the source will not be updated and must be </span>   
+ <span class=" -Color -Color-Faint -C-Faint">adjusted manually.</span>                                                             
+                                                                                
+                                                                                
+                                   <span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">Parameters</span>                                   
+                                                                                
+ <span class=" -Color -Color-BGBlack -C-BGBlack">                                                                              </span> 
+ <span class=" -Color -Color-BGBlack -C-BGBlack"> </span><span class=" -Color -Color-BrightWhite -Color-BrightWhite-BGBlack -C-BrightWhite -C-BGBlack">source</span><span class=" -Color -Color-BGBlack -C-BGBlack">                                                                       </span> 
+ <span class=" -Color -Color-BGBlack -C-BGBlack"> </span><span class=" -Color -Color-BrightWhite -Color-BrightWhite-BGBlack -C-BrightWhite -C-BGBlack">    The source path of the stage or folder to be moved or renamed.</span><span class=" -Color -Color-BGBlack -C-BGBlack">           </span> 
+ <span class=" -Color -Color-BGBlack -C-BGBlack"> </span><span class=" -Color -Color-BrightWhite -Color-BrightWhite-BGBlack -C-BrightWhite -C-BGBlack">target</span><span class=" -Color -Color-BGBlack -C-BGBlack">                                                                       </span> 
+ <span class=" -Color -Color-BGBlack -C-BGBlack"> </span><span class=" -Color -Color-BrightWhite -Color-BrightWhite-BGBlack -C-BrightWhite -C-BGBlack">    The target path where the stage or folder will be moved or renamed to.</span><span class=" -Color -Color-BGBlack -C-BGBlack">   </span> 
+ <span class=" -Color -Color-BGBlack -C-BGBlack">                                                                              </span> 
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
