@@ -6,8 +6,6 @@ import sys
 from os import getcwd
 from pathlib import Path
 
-import rich_click as click
-
 from dso._logging import log
 from dso._util import get_project_root
 
@@ -115,7 +113,7 @@ def update_source(
 
     if source_relative_path.parent != target_relative_path.parent:
         log.warning(
-            "[red] ATTENTION: target directory is changing. References of renamed item to other stages must be updated manually."
+            "[red] ATTENTION: target directory is changing. References of renamed item to other stages must be updated manually!"
         )
 
     readme_path = target_absolute_path / "README.md"
@@ -123,22 +121,17 @@ def update_source(
     update_references_in_file(readme_path, str(source_base), str(target_base))
 
 
-@click.command(name="mv")
-@click.argument(
-    "source",
-    type=click.Path(exists=True, file_okay=True, dir_okay=True, path_type=Path),
-)
-@click.argument("target", type=click.Path(file_okay=True, dir_okay=True, path_type=Path))
-def dso_mv(source: Path, target: Path):
-    """Move and rename a stage or a folder and update references to it
+def mv(source: Path, target: Path):
+    """Move or rename a stage or a folder and update references to it
 
     A stage or folder is renamed with references to it. In a stage, the dvc.yaml, params.in.yaml
     and src files. In other folder or stages, dvc.yaml, params.in.yaml and src files are updated.
+
+    This feature is experimental. Within the source, outbounding references will not be updated
+    and need to be adjusted manually.
     """
     log.info(f"[yellow]Renaming from '{source}' to '{target}'.")
-    log.info(
-        "[red]Warning: This renaming feature is experimental. If a stage is moved to a different folder, you may need to manually update references to other files."
-    )
+    log.info("[red]Warning: This feature is experimental.")
 
     # Make path absolute, resolving all symlinks
     source = Path(source).resolve()

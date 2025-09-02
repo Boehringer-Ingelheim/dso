@@ -15,12 +15,12 @@ from ruamel.yaml import YAML
 
 from dso._logging import log
 from dso._metadata import __version__
+from dso._mv import mv
 from dso._templates import get_instantiate_template_help_text, instantiate_with_repo, prompt_for_template_params
 from dso._util import get_project_root
 
 from ._create import dso_create
 from ._exec import dso_exec
-from ._mv import dso_mv
 
 click.rich_click.USE_MARKDOWN = True
 
@@ -265,6 +265,21 @@ def _dvc_wrapper(command: str):
         sys.exit(res.returncode)
 
     return command_wrapper
+
+
+@click.command(name="mv")
+@click.argument(
+    "source",
+    type=click.Path(exists=True, file_okay=True, dir_okay=True, path_type=Path),
+)
+@click.argument("target", type=click.Path(file_okay=True, dir_okay=True, path_type=Path))
+def dso_mv(source: Path, target: Path):
+    """Move or rename a stage or a folder and update references to it
+
+    A stage or folder is renamed with references to it. In a stage, the dvc.yaml, params.in.yaml
+    and src files. In other folder or stages, dvc.yaml, params.in.yaml and src files are updated.
+    """
+    mv(source, target)
 
 
 dso.add_command(dso_create)
