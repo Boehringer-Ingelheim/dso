@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning][].
 ### Additions
 
 -  JSON output support for `dso get-config` ([#157](https://github.com/Boehringer-Ingelheim/dso/issues/157))
+-  Added `dso mv` for moving and renaming stages or folders while updating names and references ([#136](https://github.com/Boehringer-Ingelheim/dso/pull/136/files), [#132](https://github.com/Boehringer-Ingelheim/dso/issues/132))
 
 ## v0.13.3
 
@@ -32,7 +33,6 @@ and this project adheres to [Semantic Versioning][].
 ### Additions
 
 -  Added `--all` option to `dso compile-config` to compile all configs in project ([#137](https://github.com/Boehringer-Ingelheim/dso/pull/137/files))
--  Added `dso mv` for moving and renaming stages or folders while updating names and references ([#136](https://github.com/Boehringer-Ingelheim/dso/pull/136/files))
 
 ### Chore
 

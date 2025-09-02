@@ -11,7 +11,10 @@ from dso._util import get_project_root
 
 
 def update_references_to_source_recursively(current_path: Path, source_absolute_path: Path, target_absolute_path: Path):
-    """In the whole project, recursively search for relative references to the old location and update to relative reference to the new location.
+    """
+    Update references to source recursivly
+
+    In the whole project, recursively search for relative references to the old location and update to relative reference to the new location.
     Skip target directory and subdirectory and skip hidden folders.
     """
     log.debug("[yellow]Updating all references to source")
@@ -122,7 +125,8 @@ def update_source(
 
 
 def mv(source: Path, target: Path):
-    """Move or rename a stage or a folder and update references to it
+    """
+    Move or rename a stage or a folder and update references to it
 
     A stage or folder is renamed with references to it. In a stage, the dvc.yaml, params.in.yaml
     and src files. In other folder or stages, references in dvc.yaml, params.in.yaml and src files are updated.
