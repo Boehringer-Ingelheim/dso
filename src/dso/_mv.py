@@ -120,8 +120,8 @@ def update_source(
         )
 
     readme_path = target_absolute_path / "README.md"
-
-    update_references_in_file(readme_path, str(source_base), str(target_base))
+    if readme_path.exists():
+        update_references_in_file(readme_path, str(source_base), str(target_base))
 
 
 def mv(source: Path, target: Path):

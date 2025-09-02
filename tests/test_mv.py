@@ -158,3 +158,36 @@ def test_mv_stage_existing_dir(dso_project_with_multiple_stages):
 
     assert result.exit_code == 1
     assert path_source.is_dir()
+
+
+@pytest.mark.parametrize(
+    "rel_source,rel_target",
+    [
+        ["0200_AnalysisA", "0200_AnalysisC"],
+    ],
+)
+def test_mv_folder(dso_project_with_multiple_stages, rel_source, rel_target):
+    runner = CliRunner()
+    project_dir = dso_project_with_multiple_stages.resolve()
+    dir_0100 = "0100_ETL"
+    dir_0300 = "0300_AnalysisB"
+    path_source = project_dir / rel_source
+    path_target = project_dir / rel_target
+    path_0100 = project_dir / dir_0100
+    path_0300 = project_dir / dir_0300
+
+    result = runner.invoke(
+        dso_mv,
+        [
+            str(path_source),
+            str(path_target),
+        ],
+    )
+
+    assert result.exit_code == 0
+    assert path_target.is_dir()
+
+    assert_params_file_content(project_dir, rel_source, rel_target, "/")
+    assert_params_file_content(path_target, "", "", "input/C.txt")
+    assert_params_file_content(path_0100, f"../{rel_source}", f"../{rel_target}", "")
+    assert_params_file_content(path_0300, f"../{rel_source}", relpath(path_target, start=path_0300), "")
