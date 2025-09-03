@@ -50,7 +50,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=cf1e0168"></script>
+    <script src="_static/documentation_options.js?v=283e8333"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -692,28 +692,32 @@ document.write(`
 <h2>dso mv<a class="headerlink" href="#dso-mv" title="Link to this heading">#</a></h2>
 <div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>mv<span class="w"> </span>--help
                                                                                 
- <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso mv</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">SOURCE</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">TARGET</span>                                          
+ <span class=" -Color -Color-Yellow -C-Yellow">Usage:</span> <span class=" -Color -Color-Bold -C-Bold">dso mv</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">OPTIONS</span>] <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">SOURCE</span> [<span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">TARGET</span>]                                        
                                                                                 
  Move or rename a stage or a folder and update references to it (experimental). 
- <span class=" -Color -Color-Faint -C-Faint">This function moves or renames a stage or folder and updates references to it </span> 
- <span class=" -Color -Color-Faint -C-Faint">in associated files. For a stage, this includes </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">dvc.yaml</span><span class=" -Color -Color-Faint -C-Faint">, </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">params.in.yaml</span><span class=" -Color -Color-Faint -C-Faint">, and </span> 
- <span class=" -Color -Color-Faint -C-Faint">source files. For other folders or stages, it updates references in </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">dvc.yaml</span><span class=" -Color -Color-Faint -C-Faint">, </span> 
- <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">params.in.yaml</span><span class=" -Color -Color-Faint -C-Faint">, and source files accordingly. Note: This feature is </span>           
- <span class=" -Color -Color-Faint -C-Faint">experimental. References outside the source will not be updated and must be </span>   
- <span class=" -Color -Color-Faint -C-Faint">adjusted manually.</span>                                                             
+ <span class=" -Color -Color-Faint -C-Faint">This command allows you to move or rename a stage or folder within your </span>       
+ <span class=" -Color -Color-Faint -C-Faint">project. It ensures that all references to the moved or renamed stage or </span>      
+ <span class=" -Color -Color-Faint -C-Faint">folder are updated in associated files such as </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">dvc.yaml</span><span class=" -Color -Color-Faint -C-Faint">, </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">params.in.yaml</span><span class=" -Color -Color-Faint -C-Faint">, and </span>  
+ <span class=" -Color -Color-Faint -C-Faint">source files. Note that this feature is experimental, and references inside </span>   
+ <span class=" -Color -Color-Faint -C-Faint">the target will not be updated automatically. These must be adjusted manually.</span> 
                                                                                 
+ <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">mv</span><span class=" -Color -Color-Faint -C-Faint"> also has functionality to increment an index in the stage or folder </span>        
+ <span class=" -Color -Color-Faint -C-Faint">prefixes. For this, one has to provide along with the source argument the </span>     
+ <span class=" -Color -Color-Faint -C-Faint">option </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--increment-prefix</span><span class=" -Color -Color-Faint -C-Faint">, the prefix index for the specified stage or folder </span> 
+ <span class=" -Color -Color-Faint -C-Faint">and all subsequent items will be incremented automatically using </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">dso mv</span><span class=" -Color -Color-Faint -C-Faint"> or </span>    
+ <span class=" -Color -Color-Faint -C-Faint">renamed if they are not dso items (do not contain dvc.yaml files). An example </span> 
+ <span class=" -Color -Color-Faint -C-Faint">would be </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">dso mv 01_preprocessing --increment-prefix 02</span><span class=" -Color -Color-Faint -C-Faint">, then it would be </span>      
+ <span class=" -Color -Color-Faint -C-Faint">renamed to 02_preprocessing, 02_analysis would be renamed to 03_analysis, and </span> 
+ <span class=" -Color -Color-Faint -C-Faint">so on. Prefixes can contain a variable stem and a numeric part. e.g. A0101, </span>   
+ <span class=" -Color -Color-Faint -C-Faint">A0102, A0103, ..  or 1235-923-01, 1235-923-02, 1235-923-03,...</span>                 
                                                                                 
-                                   <span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">Parameters</span>                                   
-                                                                                
- <span class=" -Color -Color-BGBlack -C-BGBlack">                                                                              </span> 
- <span class=" -Color -Color-BGBlack -C-BGBlack"> </span><span class=" -Color -Color-BrightWhite -Color-BrightWhite-BGBlack -C-BrightWhite -C-BGBlack">source</span><span class=" -Color -Color-BGBlack -C-BGBlack">                                                                       </span> 
- <span class=" -Color -Color-BGBlack -C-BGBlack"> </span><span class=" -Color -Color-BrightWhite -Color-BrightWhite-BGBlack -C-BrightWhite -C-BGBlack">    The source path of the stage or folder to be moved or renamed.</span><span class=" -Color -Color-BGBlack -C-BGBlack">           </span> 
- <span class=" -Color -Color-BGBlack -C-BGBlack"> </span><span class=" -Color -Color-BrightWhite -Color-BrightWhite-BGBlack -C-BrightWhite -C-BGBlack">target</span><span class=" -Color -Color-BGBlack -C-BGBlack">                                                                       </span> 
- <span class=" -Color -Color-BGBlack -C-BGBlack"> </span><span class=" -Color -Color-BrightWhite -Color-BrightWhite-BGBlack -C-BrightWhite -C-BGBlack">    The target path where the stage or folder will be moved or renamed to.</span><span class=" -Color -Color-BGBlack -C-BGBlack">   </span> 
- <span class=" -Color -Color-BGBlack -C-BGBlack">                                                                              </span> 
+ <span class=" -Color -Color-Faint -C-Faint">You must specify either a target path or the </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--increment-prefix</span><span class=" -Color -Color-Faint -C-Faint"> option, but </span>   
+ <span class=" -Color -Color-Faint -C-Faint">not both. These options are mutually exclusive.</span>                                
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--increment-prefix</span>    <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Increments the prefix for source stage or folder <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                             and subsequent items.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>                <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">    </span>  Show this message and exit.                      <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
