@@ -11,9 +11,7 @@ from dso._logging import log
 from dso._util import get_project_root
 
 
-def update_references_to_source_recursively(
-    current_path: Path, source_absolute_path: Path, target_absolute_path: Path
-):
+def update_references_to_source_recursively(current_path: Path, source_absolute_path: Path, target_absolute_path: Path):
     """
     Update references to source recursivly
 
@@ -25,23 +23,17 @@ def update_references_to_source_recursively(
     source_direct_path = relpath(source_absolute_path, start=current_path)
     target_direct_path = relpath(target_absolute_path, start=current_path)
 
-    log.debug(
-        f"Updating relatives path in {current_path}: {source_direct_path} to {target_direct_path}"
-    )
+    log.debug(f"Updating relatives path in {current_path}: {source_direct_path} to {target_direct_path}")
 
     for filename in ["dvc.yaml", "params.in.yaml"]:
-        update_references_in_file(
-            current_path / filename, source_direct_path, target_direct_path
-        )
+        update_references_in_file(current_path / filename, source_direct_path, target_direct_path)
 
     # Iterate over all non-hidden files in the src subdirectory of dvc_dir
     src_subdir = current_path / "src"
     if src_subdir.exists() and src_subdir.is_dir():
         for file_path in src_subdir.rglob("*"):
             if file_path.is_file() and not file_path.name.startswith("."):
-                update_references_in_file(
-                    file_path, source_direct_path, target_direct_path
-                )
+                update_references_in_file(file_path, source_direct_path, target_direct_path)
 
     for dvc_dir in current_path.rglob("*"):
         # search all non-hidden folders with dvc.yaml inside which are not part of target
@@ -51,9 +43,7 @@ def update_references_to_source_recursively(
             and (dvc_dir / "dvc.yaml").exists()
             and dvc_dir != target_absolute_path
         ):
-            update_references_to_source_recursively(
-                dvc_dir, source_absolute_path, target_absolute_path
-            )
+            update_references_to_source_recursively(dvc_dir, source_absolute_path, target_absolute_path)
 
 
 def update_references_in_file(file: Path, pattern: str, replacement: str):
@@ -65,15 +55,11 @@ def update_references_in_file(file: Path, pattern: str, replacement: str):
             updated_content = sub(rf"(?<![\\/]){escape(pattern)}", replacement, content)
             file.write_text(updated_content)
             if content != updated_content:
-                log.info(
-                    f"Updated references in {file}: {content} -> {updated_content}"
-                )
+                log.info(f"Updated references in {file}: {content} -> {updated_content}")
         except (OSError, UnicodeDecodeError) as e:
             log.error(f"[red]Failed to update {file}: {e}")
     else:
-        log.error(
-            f"[red]Trying to replace references in '{file}', but file does not exist. Exiting."
-        )
+        log.error(f"[red]Trying to replace references in '{file}', but file does not exist. Exiting.")
         exit(1)
 
 
@@ -88,9 +74,7 @@ def update_files_in_src_folder(
     if path.exists():
         for file_path in path.rglob("*"):
             if file_path.is_file() and not file_path.name.startswith("."):
-                new_file_name = file_path.name.replace(
-                    str(source_base), str(target_base)
-                )
+                new_file_name = file_path.name.replace(str(source_base), str(target_base))
                 new_file_path = file_path.parent / new_file_name
                 log.debug(f"Renaming file {file_path} to {new_file_path}")
                 try:
@@ -98,9 +82,7 @@ def update_files_in_src_folder(
                 except OSError as e:
                     log.error(f"[red]Failed to rename {file_path}: {e}")
 
-                update_references_in_file(
-                    new_file_path, str(source_relative), str(target_relative)
-                )
+                update_references_in_file(new_file_path, str(source_relative), str(target_relative))
     else:
         log.error(f"[red]Src directory {path} does not exist.")
         exit(1)
@@ -200,9 +182,7 @@ def mv(source: Path, target: Path):
     # Currently is not allowed to move the folder or stage to a directory
     # which does not exist.
     if not target_absolute_dir.exists():
-        log.error(
-            f"[red]{target_relative_dir} does not exist. Target base directory must already exist."
-        )
+        log.error(f"[red]{target_relative_dir} does not exist. Target base directory must already exist.")
         exit(1)
 
     if target_absolute_path.exists():
@@ -218,9 +198,7 @@ def mv(source: Path, target: Path):
         target_absolute_path,
     )
 
-    update_references_to_source_recursively(
-        project_root, source_absolute_path, target_absolute_path
-    )
+    update_references_to_source_recursively(project_root, source_absolute_path, target_absolute_path)
 
     log.debug(f"[green]Moved from {source} to {target} successfully.")
 
@@ -267,33 +245,21 @@ def increment_prefixes(source: Path, target_prefix: str):
         exit(1)
 
     if source_prefix_number_of_digits != target_prefix_number_of_digits:
-        log.error(
-            f"[red]Prefix '{source_prefix}' and '{target_prefix}' must have the same number of digits."
-        )
+        log.error(f"[red]Prefix '{source_prefix}' and '{target_prefix}' must have the same number of digits.")
         exit(1)
 
     # get the numeric indeces and calculate the offset
-    source_prefix_index = int(
-        source_prefix[len(source_prefix) - source_prefix_number_of_digits :]
-    )
-    target_prefix_index = int(
-        target_prefix[len(target_prefix) - target_prefix_number_of_digits :]
-    )
+    source_prefix_index = int(source_prefix[len(source_prefix) - source_prefix_number_of_digits :])
+    target_prefix_index = int(target_prefix[len(target_prefix) - target_prefix_number_of_digits :])
 
     offset = target_prefix_index - source_prefix_index
 
     # get the stem of the prefixes
-    source_prefix_stem = source_prefix[
-        : len(source_prefix) - source_prefix_number_of_digits
-    ]
-    target_prefix_stem = target_prefix[
-        : len(target_prefix) - target_prefix_number_of_digits
-    ]
+    source_prefix_stem = source_prefix[: len(source_prefix) - source_prefix_number_of_digits]
+    target_prefix_stem = target_prefix[: len(target_prefix) - target_prefix_number_of_digits]
 
     # Create the regex pattern for matching source files
-    source_pattern = (
-        rf"^{escape(source_prefix_stem)}(\d{{{source_prefix_number_of_digits}}})(.+)"
-    )
+    source_pattern = rf"^{escape(source_prefix_stem)}(\d{{{source_prefix_number_of_digits}}})(.+)"
 
     # Find all files/folders in parent_dir matching the pattern and prepare list with
     # source and target info
@@ -316,9 +282,7 @@ def increment_prefixes(source: Path, target_prefix: str):
                         "target_path": parent_dir
                         / (
                             target_prefix_stem
-                            + str(int(m.group(1)) + offset).zfill(
-                                target_prefix_number_of_digits
-                            )
+                            + str(int(m.group(1)) + offset).zfill(target_prefix_number_of_digits)
                             + m.group(2)
                         ),
                     }
@@ -330,18 +294,14 @@ def increment_prefixes(source: Path, target_prefix: str):
     # rename all sources, if the source is a directory with a dvc.yaml file, then use `dso mv`,
     # otherwise just rename the directory
     for item in source_target_list:
-        log.info(
-            f"[yellow]Renaming {item['source_path'].name} to {item['target_path'].name} in {parent_dir}"
-        )
+        log.info(f"[yellow]Renaming {item['source_path'].name} to {item['target_path'].name} in {parent_dir}")
 
         if (item["target_path"] / "dvc.yaml").exists():
             mv(item["source_path"], item["target_path"])
         else:
             try:
                 item["source_path"].rename(item["target_path"])
-                log.info(
-                    f"[yellow]Renamed {item['source_path']} to {item['target_path']}"
-                )
+                log.info(f"[yellow]Renamed {item['source_path']} to {item['target_path']}")
             except OSError as e:
                 log.error(f"[red]Failed to rename {item['source_path']}: {e}")
 
