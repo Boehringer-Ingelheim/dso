@@ -16,7 +16,7 @@ from dso.cli import dso_mv
         ["quarto_stage", "renamed"],
     ],
 )
-def test_mv_stage(quarto_stage, source, target):
+def test_mv_stage(quarto_stage: Path, source: str, target: str):
     runner = CliRunner()
     chdir(quarto_stage)
     source_dir = quarto_stage.resolve()
@@ -71,7 +71,7 @@ def assert_params_file_content(path, rel_to_source, rel_to_target, file, similar
         ["0200_AnalysisA/01_Preprocessing", "0300_AnalysisB/10_Preprocessing"],
     ],
 )
-def test_mv_stage_with_dependencies(dso_project_with_multiple_stages, rel_source, rel_target):
+def test_mv_stage_with_dependencies(dso_project_with_multiple_stages: Path, rel_source, rel_target):
     runner = CliRunner()
     project_dir = dso_project_with_multiple_stages.resolve()
     rel_source = Path(rel_source)
@@ -142,7 +142,7 @@ def test_mv_stage_with_dependencies(dso_project_with_multiple_stages, rel_source
     )
 
 
-def test_mv_stage_existing_dir(dso_project_with_multiple_stages):
+def test_mv_stage_existing_dir(dso_project_with_multiple_stages: Path):
     runner = CliRunner()
     project_dir = dso_project_with_multiple_stages.resolve()
     path_source = project_dir / "0200_AnalysisA" / "01_Preprocessing"
@@ -166,7 +166,7 @@ def test_mv_stage_existing_dir(dso_project_with_multiple_stages):
         ["0200_AnalysisA", "0200_AnalysisC"],
     ],
 )
-def test_mv_folder(dso_project_with_multiple_stages, rel_source, rel_target):
+def test_mv_folder(dso_project_with_multiple_stages: Path, rel_source: str, rel_target: str):
     runner = CliRunner()
     project_dir = dso_project_with_multiple_stages.resolve()
     dir_0100 = "0100_ETL"
@@ -191,3 +191,113 @@ def test_mv_folder(dso_project_with_multiple_stages, rel_source, rel_target):
     assert_params_file_content(path_target, "", "", "input/C.txt")
     assert_params_file_content(path_0100, f"../{rel_source}", f"../{rel_target}", "")
     assert_params_file_content(path_0300, f"../{rel_source}", relpath(path_target, start=path_0300), "")
+
+
+def test_mv_input_missing(dso_project: Path):
+    runner = CliRunner()
+
+    result = runner.invoke(
+        dso_mv,
+        [
+            "0100_ETL",
+        ],
+    )
+
+    assert result.exit_code == 2
+
+
+def test_mv_conflicting_input(dso_project: Path):
+    runner = CliRunner()
+
+    result = runner.invoke(
+        dso_mv,
+        [
+            "0100_ETL",
+            "ABC",
+            "--increment-prefix",
+            "023",
+        ],
+    )
+
+    assert result.exit_code == 2
+
+
+@pytest.mark.parametrize(
+    "rel_source,increment_prefix,start_dir,expected_dirs,relocated_dirs",
+    [
+        [
+            "01_Preprocessing",
+            "02",
+            "0200_AnalysisA",
+            ["02_Preprocessing", "03_Analysis", "04_Exploring", "05_Reporting"],
+            ["01_Preprocessing", "02_Analysis", "03_Exploring", "04_Reporting"],
+        ],
+        [
+            "01_Preprocessing",
+            "03",
+            "0200_AnalysisA",
+            ["03_Preprocessing", "04_Analysis", "05_Exploring", "06_Reporting"],
+            ["01_Preprocessing", "02_Analysis", "03_Exploring", "04_Reporting"],
+        ],
+        [
+            "02_Analysis",
+            "01",
+            "0200_AnalysisA",
+            ["01_Preprocessing", "01_Analysis", "02_Exploring", "03_Reporting"],
+            ["02_Analysis", "03_Exploring", "04_Reporting"],
+        ],
+        [
+            "0101_ETL",
+            "0102",
+            "0100_ETL",
+            ["0102_ETL", "0103_ETLA"],
+            ["0101_ETL", "0102_ETLA"],
+        ],
+        [
+            "0100_ETL",
+            "02",
+            "",
+            ["0200_ETL", "0300_AnalysisA", "0400_AnalysisB"],
+            ["0100_ETL", "0200_AnalysisA", "0300_AnalysisB"],
+        ],
+        [
+            "0100_ETL/0101_ETL",
+            "0102",
+            "",
+            ["0100_ETL/0102_ETL", "0100_ETL/0103_ETLA"],
+            ["0100_ETL/0101_ETL", "0100_ETL/0102_ETLA"],
+        ],
+    ],
+)
+def test_mv_increment_prefix(
+    dso_project_with_multiple_stages: Path,
+    rel_source: str,
+    increment_prefix: str,
+    start_dir: str,
+    expected_dirs: list[str],
+    relocated_dirs: list[str],
+):
+    runner = CliRunner()
+    project_dir = dso_project_with_multiple_stages.resolve()
+
+    current_dir = project_dir
+    if start_dir != "":
+        current_dir = project_dir / start_dir
+
+    chdir(current_dir)
+
+    result = runner.invoke(
+        dso_mv,
+        [
+            str(rel_source),
+            "--increment-prefix",
+            str(increment_prefix),
+        ],
+    )
+
+    # print(result.output)
+    assert result.exit_code == 0
+    for dir_name in expected_dirs:
+        assert (current_dir / dir_name).is_dir()
+    for dir_name in relocated_dirs:
+        assert not (current_dir / dir_name).exists()

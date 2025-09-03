@@ -15,7 +15,7 @@ from ruamel.yaml import YAML
 
 from dso._logging import log
 from dso._metadata import __version__
-from dso._mv import mv
+from dso._mv import increment_prefixes, mv
 from dso._templates import get_instantiate_template_help_text, instantiate_with_repo, prompt_for_template_params
 from dso._util import get_project_root
 
@@ -272,25 +272,45 @@ def _dvc_wrapper(command: str):
     "source",
     type=click.Path(exists=True, file_okay=True, dir_okay=True, path_type=Path),
 )
-@click.argument("target", type=click.Path(file_okay=True, dir_okay=True, path_type=Path))
-def dso_mv(source: Path, target: Path):
+@click.argument(
+    "target",
+    type=click.Path(file_okay=True, dir_okay=True, path_type=Path),
+    required=False,
+)
+@click.option(
+    "--increment-prefix",
+    help=("Increments the prefix for source stage or folder and subsequent items."),
+    default=None,
+)
+def dso_mv(source: Path, target: Path | None, increment_prefix: str | None):
     """
     Move or rename a stage or a folder and update references to it (experimental).
 
-    This function moves or renames a stage or folder and updates references to it in associated files.
-    For a stage, this includes `dvc.yaml`, `params.in.yaml`, and source files. For other folders or
-    stages, it updates references in `dvc.yaml`, `params.in.yaml`, and source files accordingly.
-    Note: This feature is experimental. References outside the source will not be updated and must
-    be adjusted manually.
+    This command allows you to move or rename a stage or folder within your project. It ensures that all references
+    to the moved or renamed stage or folder are updated in associated files such as `dvc.yaml`, `params.in.yaml`,
+    and source files. Note that this feature is experimental, and references inside the target will not be updated automatically.
+    These must be adjusted manually.
 
-    Parameters
-    ----------
-        source
-            The source path of the stage or folder to be moved or renamed.
-        target
-            The target path where the stage or folder will be moved or renamed to.
+    `mv` also has functionality to increment an index in the stage or folder prefixes. For this, one has to
+    provide along with the source argument the option `--increment-prefix`, the prefix index for the specified stage
+    or folder and all subsequent items will be incremented automatically using `dso mv` or renamed if they are not dso items
+    (do not contain dvc.yaml files).
+    An example would be `dso mv 01_preprocessing --increment-prefix 02`, then it would be renamed to
+    02_preprocessing, 02_analysis would be renamed to 03_analysis, and so on. Prefixes can contain a variable stem and
+    a numeric part. e.g. A0101, A0102, A0103, ..  or 1235-923-01, 1235-923-02, 1235-923-03,...
+
+    You must specify either a target path or the `--increment-prefix` option, but not both. These options are mutually exclusive.
     """
-    mv(source, target)
+    if (target is None and increment_prefix is None) or (target is not None and increment_prefix is not None):
+        log.error("Either target or increment need to be specified, but not both.")
+        sys.exit(1)
+    elif target is not None and increment_prefix is None:
+        mv(source, target)
+    elif target is None and increment_prefix is not None:
+        increment_prefixes(source, increment_prefix)
+    else:
+        log.error(f"Invalid state reached with: target '{target}' and increment_prefix '{increment_prefix}'.")
+        sys.exit(1)
 
 
 dso.add_command(dso_create)
