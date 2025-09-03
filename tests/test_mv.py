@@ -301,3 +301,39 @@ def test_mv_increment_prefix(
         assert (current_dir / dir_name).is_dir()
     for dir_name in relocated_dirs:
         assert not (current_dir / dir_name).exists()
+
+
+def test_mv_increment_prefix_longer_than_source(dso_project_with_multiple_stages: Path):
+    runner = CliRunner()
+    project_dir = dso_project_with_multiple_stages.resolve()
+    chdir(project_dir)
+
+    result = runner.invoke(
+        dso_mv,
+        [
+            "0100_ETL/0101_ETL",
+            "--increment-prefix",
+            "100120301230130120",
+        ],
+    )
+
+    assert result.exit_code == 1
+    assert "is longer than" in result.output
+
+
+def test_mv_increment_prefix_no_numbers(dso_project_with_multiple_stages: Path):
+    runner = CliRunner()
+    project_dir = dso_project_with_multiple_stages.resolve()
+    chdir(project_dir)
+
+    result = runner.invoke(
+        dso_mv,
+        [
+            "0100_ETL/0101_ETL",
+            "--increment-prefix",
+            "ASJKJL",
+        ],
+    )
+
+    assert result.exit_code == 1
+    assert "must end with at least one digit" in result.output

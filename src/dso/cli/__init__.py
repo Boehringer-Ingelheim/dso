@@ -284,22 +284,18 @@ def _dvc_wrapper(command: str):
 )
 def dso_mv(source: Path, target: Path | None, increment_prefix: str | None):
     """
-    Move or rename a stage or a folder and update references to it (experimental).
+    Move or rename a stage or folder and update all references (experimental).
 
-    This command allows you to move or rename a stage or folder within your project. It ensures that all references
-    to the moved or renamed stage or folder are updated in associated files such as `dvc.yaml`, `params.in.yaml`,
-    and source files. Note that this feature is experimental, and references inside the target will not be updated automatically.
-    These must be adjusted manually.
+    This command lets you move or rename a stage or folder in your project. All references to the moved or renamed item
+    in files like `dvc.yaml`, `params.in.yaml`, and source files will be updated automatically.
+    Note: references inside the target itself are not updated and must be changed manually.
 
-    `mv` also has functionality to increment an index in the stage or folder prefixes. For this, one has to
-    provide along with the source argument the option `--increment-prefix`, the prefix index for the specified stage
-    or folder and all subsequent items will be incremented automatically using `dso mv` or renamed if they are not dso items
-    (do not contain dvc.yaml files).
-    An example would be `dso mv 01_preprocessing --increment-prefix 02`, then it would be renamed to
-    02_preprocessing, 02_analysis would be renamed to 03_analysis, and so on. Prefixes can contain a variable stem and
-    a numeric part. e.g. A0101, A0102, A0103, ..  or 1235-923-01, 1235-923-02, 1235-923-03,...
+    You can also use this command to increment the numeric prefix of a stage or folder and all subsequent items.
+    For example, running `dso mv 01_preprocessing --increment-prefix 02` will rename `01_preprocessing` to `02_preprocessing`,
+    `02_analysis` to `03_analysis`, and so on. Prefixes can include both numbers and letters, such as `A0101`, `A0102`, etc.
 
-    You must specify either a target path or the `--increment-prefix` option, but not both. These options are mutually exclusive.
+    You must specify either a target path (to move/rename) or use the `--increment-prefix` option (to increment prefixes),
+    but not both at the same time.
     """
     if (target is None and increment_prefix is None) or (target is not None and increment_prefix is not None):
         log.error("Either target or increment need to be specified, but not both.")
