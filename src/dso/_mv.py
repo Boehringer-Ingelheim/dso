@@ -137,7 +137,9 @@ def mv(source: Path, target: Path):
     and need to be adjusted manually.
     """
     log.info(f"[yellow]Renaming '{source}' to '{target}'.")
-    log.info("[red]Warning: This feature is experimental. Behavior may change in the future. Please report issues on GitHub.")
+    log.info(
+        "[red]Warning: This feature is experimental. Behavior may change in the future. Please report issues on GitHub."
+    )
 
     # Make path absolute, resolving all symlinks
     source = Path(source).resolve()
