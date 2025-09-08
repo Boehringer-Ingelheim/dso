@@ -205,6 +205,14 @@ def mv(source: Path, target: Path):
     log.debug(f"[green]Moved from {source} to {target} successfully.")
 
 
+def _get_n_numeric(prefix) -> int:
+    """Determine how many digits are at the end of prefix starting from the last character"""
+    for i, c in enumerate(reversed(prefix)):
+        if not c.isdigit():
+            return i
+    return len(prefix)
+
+
 def increment_prefixes(source: Path, target_prefix: str):
     """Increment the numeric part of prefix of all subsequent directories."""
     parent_dir = source.parent
@@ -221,26 +229,16 @@ def increment_prefixes(source: Path, target_prefix: str):
     # split source into two parts, first with the same length of prefix
     # second part is the rest
     source_prefix = source.name[: len(target_prefix)]
-    # source_base = source.name[len(target_prefix) :]
 
     # determine how many digits are at the end of new_prefix starting from the last character
-    target_prefix_number_of_digits = 0
-    for c in reversed(target_prefix):
-        if c.isdigit():
-            target_prefix_number_of_digits += 1
-        else:
-            break
+    target_prefix_number_of_digits = _get_n_numeric(target_prefix)
+
     if target_prefix_number_of_digits == 0:
         log.error(f"[red]Prefix '{target_prefix}' must end with at least one digit.")
         exit(1)
 
     # determine how many digits are at the end of source.name starting from the last character
-    source_prefix_number_of_digits = 0
-    for c in reversed(source_prefix):
-        if c.isdigit():
-            source_prefix_number_of_digits += 1
-        else:
-            break
+    source_prefix_number_of_digits = _get_n_numeric(source_prefix)
 
     if source_prefix_number_of_digits == 0:
         log.error(f"[red]Prefix '{source_prefix}' must end with at least one digit.")
@@ -251,14 +249,14 @@ def increment_prefixes(source: Path, target_prefix: str):
         exit(1)
 
     # get the numeric indeces and calculate the offset
-    source_prefix_index = int(source_prefix[len(source_prefix) - source_prefix_number_of_digits :])
-    target_prefix_index = int(target_prefix[len(target_prefix) - target_prefix_number_of_digits :])
+    source_prefix_index = int(source_prefix[-source_prefix_number_of_digits:])
+    target_prefix_index = int(target_prefix[-target_prefix_number_of_digits:])
 
     offset = target_prefix_index - source_prefix_index
 
     # get the stem of the prefixes
-    source_prefix_stem = source_prefix[: len(source_prefix) - source_prefix_number_of_digits]
-    target_prefix_stem = target_prefix[: len(target_prefix) - target_prefix_number_of_digits]
+    source_prefix_stem = source_prefix[:-source_prefix_number_of_digits]
+    target_prefix_stem = target_prefix[:-target_prefix_number_of_digits]
 
     # Create the regex pattern for matching source files
     source_pattern = rf"^{escape(source_prefix_stem)}(\d{{{source_prefix_number_of_digits}}})(.+)"
