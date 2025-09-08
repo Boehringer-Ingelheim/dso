@@ -15,6 +15,7 @@ from ruamel.yaml import YAML
 
 from dso._logging import log
 from dso._metadata import __version__
+from dso._mv import increment_prefixes, mv
 from dso._templates import get_instantiate_template_help_text, instantiate_with_repo, prompt_for_template_params
 from dso._util import get_project_root
 
@@ -266,6 +267,48 @@ def _dvc_wrapper(command: str):
     return command_wrapper
 
 
+@click.command(name="mv")
+@click.argument(
+    "source",
+    type=click.Path(exists=True, file_okay=True, dir_okay=True, path_type=Path),
+)
+@click.argument(
+    "target",
+    type=click.Path(file_okay=True, dir_okay=True, path_type=Path),
+    required=False,
+)
+@click.option(
+    "--increment-prefix",
+    help=("Increments the prefix for source stage or folder and subsequent items."),
+    default=None,
+)
+def dso_mv(source: Path, target: Path | None, increment_prefix: str | None):
+    """
+    Move or rename a stage or folder and update all references (experimental).
+
+    This command lets you move or rename a stage or folder in your project. All references to the moved or renamed item
+    in files like `dvc.yaml`, `params.in.yaml`, and source files will be updated automatically.
+    Note: references inside the target itself are not updated and must be changed manually.
+
+    You can also use this command to increment the numeric prefix of a stage or folder and all subsequent items.
+    For example, running `dso mv 01_preprocessing --increment-prefix 02` will rename `01_preprocessing` to `02_preprocessing`,
+    `02_analysis` to `03_analysis`, and so on. Prefixes can include both numbers and letters, such as `A0101`, `A0102`, etc.
+
+    You must specify either a target path (to move/rename) or use the `--increment-prefix` option (to increment prefixes),
+    but not both at the same time.
+    """
+    if (target is None and increment_prefix is None) or (target is not None and increment_prefix is not None):
+        log.error("Either target or increment need to be specified, but not both.")
+        sys.exit(1)
+    elif target is not None and increment_prefix is None:
+        mv(source, target)
+    elif target is None and increment_prefix is not None:
+        increment_prefixes(source, increment_prefix)
+    else:
+        log.error(f"Invalid state reached with: target '{target}' and increment_prefix '{increment_prefix}'.")
+        sys.exit(1)
+
+
 dso.add_command(dso_create)
 dso.add_command(dso_init)
 dso.add_command(dso_compile_config)
@@ -273,6 +316,7 @@ dso.add_command(dso_exec)
 dso.add_command(dso_lint)
 dso.add_command(dso_get_config)
 dso.add_command(dso_watermark)
+dso.add_command(dso_mv)
 
 for command in ["repro", "pull", "status", "push"]:
     dso.add_command(_dvc_wrapper(command))

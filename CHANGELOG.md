@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning][].
 ### Additions
 
 -  JSON output support for `dso get-config` ([#157](https://github.com/Boehringer-Ingelheim/dso/issues/157))
+-  Added `dso mv` for moving and renaming stages or folders while updating names and references ([#136](https://github.com/Boehringer-Ingelheim/dso/pull/136/files), [#132](https://github.com/Boehringer-Ingelheim/dso/issues/132)). Includes an `--increment-prefix` option to easily batch-rename numbered
+   prefixes (e.g., changing `01_Preprocessing`, `02_Analysis` to `02_Preprocessing`, `03_Analysis`).
 
 ## v0.13.3
 
