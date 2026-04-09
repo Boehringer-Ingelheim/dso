@@ -1,0 +1,20 @@
+---
+format: html
+engine: julia
+---
+
+```{julia}
+#| label: load_libraries
+
+using DSO
+```
+
+Load the stage-specific 'params.yaml' config using the `read_params(..)` function. This function specifically loads
+only the stage-dependent parameters that are defined in the 'params' section of the 'dvc.yaml' file.
+
+```{julia}
+#| label: read_params
+#| echo: false
+
+params_obj = read_params("julia_companion_test/01_basic_dso_commands")
+```
