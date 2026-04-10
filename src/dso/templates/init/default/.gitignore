@@ -28,7 +28,6 @@ __pycache__
 _quarto.yml
 
 # Julia stuff
-Manifest.toml
 *.ji
 *.so
 *.dylib
