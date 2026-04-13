@@ -27,35 +27,38 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=42210275" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=366103d0" />
   
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=3ffd7ea2"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/documentation_options.js?v=f49d0478"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'cli_command_reference';</script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -64,6 +67,7 @@
     <link rel="prev" title="Installation" href="cli_installation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.dev1+g9e7863d9f" />
   </head>
   
   
@@ -79,19 +83,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -99,7 +92,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -107,8 +99,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -124,7 +116,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -154,15 +147,11 @@
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
@@ -211,9 +200,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -311,7 +305,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -325,25 +319,17 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -405,16 +391,16 @@ document.write(`
  Root command                                                                   
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--quiet</span>    <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-q</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER RANGE</span>  Reduce verbosity. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">-q</span> disables info messages,   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--quiet  </span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-q</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER RANGE</span>  Reduce verbosity. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">-q</span> disables info messages,   <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span>                               <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">-qq</span> disables warnings. Errors messages cannot  <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span>                               be disabled. The same can be achieved by       <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span>                               setting the env var <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_QUIET=1</span> or             <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span>                               <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_QUIET=2</span>, respectively.                     <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--verbose</span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-v</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">             </span>  Increase logging verbosity to include debug    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--verbose</span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-v</span>                 Increase logging verbosity to include debug    <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span>                               messages. The same can be achieved by setting  <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span>                               the env var <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_VERBOSE=1</span>.                     <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--version</span>      <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">             </span>  Show the version and exit.                     <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>         <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">             </span>  Show this message and exit.                    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--version</span>                     Show the version and exit.                     <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help   </span>                     Show this message and exit.                    <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 <span class=" -Color -Color-Faint -C-Faint">╭─ Commands ───────────────────────────────────────────────────────────────────╮</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">compile-config </span> Compile params.in.yaml into params.yaml using Jinja2         <span class=" -Color -Color-Faint -C-Faint">│</span>
@@ -455,8 +441,8 @@ document.write(`
  <span class=" -Color -Color-Faint -C-Faint">related to these paths will be compiled (useful for using with pre-commit).</span>    
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--all</span>       Compile all configs in the project                               <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--all </span>  Compile all configs in the project                                   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>  Show this message and exit.                                          <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
@@ -470,7 +456,7 @@ document.write(`
  Create stage folder structure subcommand.                                      
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>  Show this message and exit.                                          <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 <span class=" -Color -Color-Faint -C-Faint">╭─ Commands ───────────────────────────────────────────────────────────────────╮</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">folder </span> Create a new folder. A folder can contain subfolders or stages.      <span class=" -Color -Color-Faint -C-Faint">│</span>
@@ -511,8 +497,8 @@ document.write(`
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--template</span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-t</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Specify the id of a template to use from the specified <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span>                       template library                                       <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--library</span>   <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-l</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Specify the id of a template library                   <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>          <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">    </span>  Show this message and exit.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--library </span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-l</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Specify the id of a template library                   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help    </span>            Show this message and exit.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
@@ -544,8 +530,8 @@ document.write(`
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--template</span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-t</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Specify the id of a template to use from the specified <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span>                       template library                                       <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--library</span>   <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-l</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Specify the id of a template library                   <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>          <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">    </span>  Show this message and exit.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--library </span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-l</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Specify the id of a template library                   <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help    </span>            Show this message and exit.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
@@ -560,7 +546,7 @@ document.write(`
  Dso wrappers around various tools                                              
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>  Show this message and exit.                                          <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 <span class=" -Color -Color-Faint -C-Faint">╭─ Commands ───────────────────────────────────────────────────────────────────╮</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">quarto </span> Render a quarto stage. Quarto parameters are inherited from          <span class=" -Color -Color-Faint -C-Faint">│</span>
@@ -577,22 +563,21 @@ document.write(`
  Render a quarto stage. Quarto parameters are inherited from params.yaml        
  <span class=" -Color -Color-Faint -C-Faint">A quarto stage is assmed to have the following structure:</span>                      
                                                                                 
- <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Faint -C-Faint">One or multiple </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">.qmd</span><span class=" -Color -Color-Faint -C-Faint"> files in </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">src</span><span class=" -Color -Color-Faint -C-Faint">                                          </span> 
- <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow"> • </span><span class=" -Color -Color-Faint -C-Faint">Reports will be stored in </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">report</span><span class=" -Color -Color-Faint -C-Faint">                                           </span> 
+ <span class=" -Color -Color-Bold -C-Bold"> • </span><span class=" -Color -Color-Faint -C-Faint">One or multiple </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">.qmd</span><span class=" -Color -Color-Faint -C-Faint"> files in </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">src</span><span class=" -Color -Color-Faint -C-Faint">                                          </span> 
+ <span class=" -Color -Color-Bold -C-Bold"> • </span><span class=" -Color -Color-Faint -C-Faint">Reports will be stored in </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">report</span><span class=" -Color -Color-Faint -C-Faint">                                           </span> 
                                                                                 
  <span class=" -Color -Color-Faint -C-Faint">No </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">_quarto.yml</span><span class=" -Color -Color-Faint -C-Faint"> shall be present as it will be automatically created </span>           
  <span class=" -Color -Color-Faint -C-Faint">tempoarily. Instead supply quarto parameters in </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">params.in.yaml</span><span class=" -Color -Color-Faint -C-Faint"> under the key </span>  
  <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">dso.quarto</span><span class=" -Color -Color-Faint -C-Faint">.</span>                                                                    
                                                                                 
-                                                                                
-                                   <span class=" -Color -Color-Bold -Color-Bold-Faint -C-Bold -C-Faint">Parameters</span>                                   
+ <span class=" -Color -Color-Faint -Color-Faint-Magenta -C-Faint -C-Magenta">Parameters</span>                                                                     
                                                                                 
  <span class=" -Color -Color-Faint -C-Faint">stage Path to the stage, e.g. </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">.</span><span class=" -Color -Color-Faint -C-Faint"> for the current directory.</span>                     
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--skip-compile</span>      Do not compile configs before linting. The same can be   <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                     achieved by setting the <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_SKIP_COMPILE=1</span> env var.      <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>              Show this message and exit.                              <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--skip-compile</span>  Do not compile configs before linting. The same can be       <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                 achieved by setting the <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_SKIP_COMPILE=1</span> env var.          <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help        </span>  Show this message and exit.                                  <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
@@ -615,12 +600,11 @@ document.write(`
  <span class=" -Color -Color-Faint -C-Faint">specified using </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">path/to/stage:stage_name</span><span class=" -Color -Color-Faint -C-Faint"> unless </span><span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Cyan -Color-Bold-Faint-Cyan-BGBlack -C-Bold -C-Faint -C-Cyan -C-BGBlack">--all</span><span class=" -Color -Color-Faint -C-Faint"> is given.</span>                
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--all</span>               Include all parameters, not only those mentioned in      <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                     <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">dvc.yaml</span>                                                 <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--skip-compile</span>      Do not compile configs before loading it. The same can   <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                     be achieved by setting the <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_SKIP_COMPILE=1</span> env var.   <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--json</span>              Output config in json format.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>              Show this message and exit.                              <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--all         </span>  Include all parameters, not only those mentioned in <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">dvc.yaml</span> <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--skip-compile</span>  Do not compile configs before loading it. The same can be    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                 achieved by setting the <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_SKIP_COMPILE=1</span> env var.          <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--json        </span>  Output config in json format.                                <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help        </span>  Show this message and exit.                                  <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
@@ -652,8 +636,8 @@ document.write(`
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--template</span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-t</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Specify the id of a template to use from the specified <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">│</span>                       template library                                       <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--library</span>   <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-l</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Choose the template library to use                     <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>          <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">    </span>  Show this message and exit.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--library </span>  <span class=" -Color -Color-Bold -Color-Bold-Green -C-Bold -C-Green">-l</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT</span>  Choose the template library to use                     <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help    </span>            Show this message and exit.                            <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
@@ -678,9 +662,9 @@ document.write(`
  <span class=" -Color -Color-Faint -C-Faint">Configurations are compiled before linting.</span>                                    
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--skip-compile</span>      Do not compile configs before linting. The same can be   <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                     achieved by setting the <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_SKIP_COMPILE=1</span> env var.      <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>              Show this message and exit.                              <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--skip-compile</span>  Do not compile configs before linting. The same can be       <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                 achieved by setting the <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">DSO_SKIP_COMPILE=1</span> env var.          <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help        </span>  Show this message and exit.                                  <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
@@ -694,7 +678,7 @@ document.write(`
  Wrapper around <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">dvc pull</span>, compiling configuration before running.               
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>  Show this message and exit.                                          <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
@@ -708,7 +692,7 @@ document.write(`
  Wrapper around <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">dvc repro</span>, compiling configuration before running.              
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>      Show this message and exit.                                      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>  Show this message and exit.                                          <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
@@ -724,21 +708,20 @@ document.write(`
  <span class=" -Color -Color-Faint -C-Faint">Can also be used standalone for watermarking images.</span>                           
                                                                                 
 <span class=" -Color -Color-Faint -C-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Red -C-Red">*</span>  <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--text</span>                  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT                </span>  Text to use as watermark    <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  <span class=" -Color -Color-Faint -Color-Faint-Red -C-Faint -C-Red">[required]                 </span> <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--tile_size</span>             <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">&lt;</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER INTEGER&gt;...</span>  watermark text will be      <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  arranged in tile of this    <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  size (once at top left,     <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  once at middle right).      <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  Specify the tile size as    <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  e.g. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">120 80</span>                 <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--font_size</span>             <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER             </span>                              <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--font_outline</span>          <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER             </span>                              <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--font_color</span>            <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT                </span>  Use RGBA (e.g. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">#AAAAAA88</span>)   <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  to specify transparency     <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--font_outline_color</span>    <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT                </span>  Use RGBA (e.g. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">#AAAAAA88</span>)   <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>                                                  to specify transparency     <span class=" -Color -Color-Faint -C-Faint">│</span>
-<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help</span>                  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">                    </span>  Show this message and exit. <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span> <span class=" -Color -Color-Red -C-Red">*</span>  <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--text              </span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT                </span>  Text to use as watermark      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                <span class=" -Color -Color-Faint -Color-Faint-Red -C-Faint -C-Red">[required]                   </span> <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--tile_size         </span>  <span class=" -Color -Color-Bold -Color-Bold-Faint -Color-Bold-Faint-Yellow -C-Bold -C-Faint -C-Yellow">&lt;</span><span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER INTEGER&gt;...</span>  watermark text will be        <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                arranged in tile of this size <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                (once at top left, once at    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                middle right). Specify the    <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                tile size as e.g. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">120 80</span>      <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--font_size         </span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER             </span>                                <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--font_outline      </span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">INTEGER             </span>                                <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--font_color        </span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT                </span>  Use RGBA (e.g. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">#AAAAAA88</span>) to  <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                specify transparency          <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--font_outline_color</span>  <span class=" -Color -Color-Bold -Color-Bold-Yellow -C-Bold -C-Yellow">TEXT                </span>  Use RGBA (e.g. <span class=" -Color -Color-Bold -Color-Bold-Cyan -Color-Bold-Cyan-BGBlack -C-Bold -C-Cyan -C-BGBlack">#AAAAAA88</span>) to  <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>                                                specify transparency          <span class=" -Color -Color-Faint -C-Faint">│</span>
+<span class=" -Color -Color-Faint -C-Faint">│</span>    <span class=" -Color -Color-Bold -Color-Bold-Cyan -C-Bold -C-Cyan">--help              </span>                        Show this message and exit.   <span class=" -Color -Color-Faint -C-Faint">│</span>
 <span class=" -Color -Color-Faint -C-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 </pre></div>
 </div>
@@ -781,14 +764,16 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso">dso</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-compile-config">dso compile-config</a></li>
@@ -831,7 +816,7 @@ By Gregor Sturm, Thomas Schwarzl, Alexander Peltzer
 
   <p class="copyright">
     
-      © Copyright 2025, Gregor Sturm, Thomas Schwarzl, Alexander Peltzer..
+      © Copyright 2026, Gregor Sturm, Thomas Schwarzl, Alexander Peltzer..
       <br/>
     
   </p>
@@ -855,8 +840,8 @@ By Gregor Sturm, Thomas Schwarzl, Alexander Peltzer
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
