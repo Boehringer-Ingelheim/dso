@@ -30,3 +30,23 @@ dso pull
 ### Make changes to DSO Project
 
 After pulling the source code from the git repository and the respective data from the DVC remote storage, everything is set-up to make changes and expand on the dso project. Please follow the instructions on how-to set-up folders, stages, or configuration files described in the [dso getting-started page](../tutorials/getting_started.md).
+
+
+### Fixing merge conflicts in dvc.lock files
+
+When merging branches it is expected that `dvc.lock` files are conflicting. There's usually no point in trying to resolve conflicts, as `dso repro` will anyway have to be run after a successful merge, regenerating the respective lockfiles. 
+With the following bash onliner, you can remove all offending `dvc.lock` files. You can then conclude the merge and run `dso repro`. 
+
+```bash
+# remove all conflicting lock files
+git diff --name-only --diff-filter=U | grep 'dvc\.lock$' | xargs git rm
+
+# check if all conficts have been resolved
+git status
+
+# conclude merge
+git commit
+
+# rerun merged analysis stages
+dso repro
+```
