@@ -34,8 +34,8 @@ After pulling the source code from the git repository and the respective data fr
 
 ### Fixing merge conflicts in dvc.lock files
 
-When merging branches it is expected that `dvc.lock` files are conflicting. There's usually no point in trying to resolve conflicts, as `dso repro` will anyway have to be run after a successful merge, regenerating the respective lockfiles. 
-With the following bash onliner, you can remove all offending `dvc.lock` files. You can then conclude the merge and run `dso repro`. 
+When merging branches it is expected that `dvc.lock` files are conflicting. There's usually no point in trying to resolve conflicts, as `dso repro` will anyway have to be run after a successful merge, regenerating the respective lockfiles.
+With the following bash onliner, you can remove all offending `dvc.lock` files. You can then conclude the merge and run `dso repro`.
 
 ```bash
 # remove all conflicting lock files
