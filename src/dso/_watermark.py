@@ -1,5 +1,6 @@
 """Add text-watermarks to images"""
 
+import io
 import tempfile
 from abc import abstractmethod
 from importlib import resources
@@ -157,22 +158,138 @@ class SVGWatermarker(Watermarker):
 
 
 class PDFWatermarker(Watermarker):
-    """Add watermarks to PDF images. The watermark overlay will be a pixel graphic embedded in the svg."""
+    """Add watermarks to PDF files using native PDF text operations."""
 
-    # Inspired by https://www.geeksforgeeks.org/working-with-pdf-files-in-python/
     def apply_and_save(self, input_image: Path | str, output_image: Path | str):
         """Apply the watermark to an image and save it to the specified output file"""
         reader = PdfReader(input_image)
         writer = PdfWriter()
         for page_obj in reader.pages:
-            size = (int(page_obj.mediabox.width), int(page_obj.mediabox.height))
-            watermark_overlay = self.get_watermark_overlay(size)
-            with tempfile.NamedTemporaryFile(suffix=".pdf") as tf:
-                watermark_overlay.save(tf)
-                watermark_overlay_pdf = PdfReader(tf.file).pages[0]
-                page_obj.merge_page(watermark_overlay_pdf)
-                writer.add_page(page_obj)
+            page_width = float(page_obj.mediabox.width)
+            page_height = float(page_obj.mediabox.height)
+            pdf_bytes = self._create_text_watermark_pdf(page_width, page_height)
+            watermark_overlay_pdf = PdfReader(io.BytesIO(pdf_bytes)).pages[0]
+            page_obj.merge_page(watermark_overlay_pdf)
+            writer.add_page(page_obj)
 
         with open(output_image, "wb") as f:
             writer.write(f)
         reader.close()
+
+    @staticmethod
+    def _parse_color(color_str: str) -> tuple[float, float, float, float]:
+        """Parse a color string (#RRGGBBAA or #RRGGBB) to (r, g, b, a) floats in [0, 1]."""
+        color_str = color_str.lstrip("#")
+        r = int(color_str[0:2], 16) / 255
+        g = int(color_str[2:4], 16) / 255
+        b = int(color_str[4:6], 16) / 255
+        a = int(color_str[6:8], 16) / 255 if len(color_str) >= 8 else 1.0
+        return r, g, b, a
+
+    @staticmethod
+    def _pdf_escape(text: str) -> str:
+        """Escape special characters for a PDF literal string."""
+        return text.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
+
+    def _create_text_watermark_pdf(self, page_width: float, page_height: float) -> bytes:
+        """Build a single-page PDF with tiled watermark text using a PDF Tiling Pattern.
+
+        The watermark tile is defined once as a pattern and the page is filled with it,
+        so the renderer can cache and repeat the tile efficiently.
+        """
+        fill_r, fill_g, fill_b, fill_a = self._parse_color(self.font_color)
+        stroke_r, stroke_g, stroke_b, stroke_a = self._parse_color(self.font_outline_color)
+
+        tile_w, tile_h = self.tile_size
+        escaped_text = self._pdf_escape(self.text)
+
+        # Approximate text width using Helvetica average character width (~0.52 * font_size)
+        approx_text_width = len(self.text) * self.font_size * 0.52
+
+        # Build the pattern's content stream (drawn once, tiled by the renderer)
+        tile_lines: list[str] = []
+        tile_lines.append("BT")
+        tile_lines.append(f"/F1 {self.font_size} Tf")
+
+        if self.font_outline > 0:
+            tile_lines.append("2 Tr")  # Fill then stroke
+            tile_lines.append(f"{self.font_outline} w")
+            tile_lines.append(f"{stroke_r:.4f} {stroke_g:.4f} {stroke_b:.4f} RG")
+        else:
+            tile_lines.append("0 Tr")  # Fill only
+
+        tile_lines.append(f"{fill_r:.4f} {fill_g:.4f} {fill_b:.4f} rg")
+
+        # Position 1: top-left of tile (mirrors PIL anchor "lt" at (10, 10))
+        # PDF y-axis is bottom-up, so top of tile = tile_h
+        tx1 = 10
+        ty1 = tile_h - 10 - self.font_size
+        tile_lines.append(f"1 0 0 1 {tx1:.2f} {ty1:.2f} Tm")
+        tile_lines.append(f"({escaped_text}) Tj")
+
+        # Position 2: middle-right of tile (mirrors PIL anchor "rm")
+        tx2 = tile_w - 10 - approx_text_width
+        ty2 = tile_h / 2 - self.font_size * 0.4
+        tile_lines.append(f"1 0 0 1 {tx2:.2f} {ty2:.2f} Tm")
+        tile_lines.append(f"({escaped_text}) Tj")
+
+        tile_lines.append("ET")
+        tile_content = "\n".join(tile_lines).encode()
+
+        # Page content stream: fill the entire page with the pattern
+        page_content = (f"q /GS0 gs\n/Pattern cs /P1 scn\n0 0 {page_width} {page_height} re f\nQ").encode()
+
+        # ---- Assemble minimal PDF ----
+        def _obj(n: int, body: bytes) -> bytes:
+            return f"{n} 0 obj\n".encode() + body + b"\nendobj\n"
+
+        def _stream_obj(n: int, extra_header: str, data: bytes) -> bytes:
+            hdr = f"{n} 0 obj\n<< {extra_header}/Length {len(data)} >>\nstream\n".encode()
+            return hdr + data + b"\nendstream\nendobj\n"
+
+        objects = [
+            # 1: Catalog
+            _obj(1, b"<< /Type /Catalog /Pages 2 0 R >>"),
+            # 2: Pages
+            _obj(2, b"<< /Type /Pages /Kids [3 0 R] /Count 1 >>"),
+            # 3: Page
+            _obj(
+                3,
+                f"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 {page_width} {page_height}] "
+                f"/Resources << /Pattern << /P1 4 0 R >> /ExtGState << /GS0 7 0 R >> >> "
+                f"/Contents 6 0 R >>".encode(),
+            ),
+            # 4: Tiling Pattern
+            _stream_obj(
+                4,
+                f"/Type /Pattern /PatternType 1 /PaintType 1 /TilingType 1 "
+                f"/BBox [0 0 {tile_w} {tile_h}] /XStep {tile_w} /YStep {tile_h} "
+                f"/Resources << /Font << /F1 5 0 R >> >> ",
+                tile_content,
+            ),
+            # 5: Font
+            _obj(5, b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"),
+            # 6: Page content stream
+            _stream_obj(6, "", page_content),
+            # 7: Graphics state for transparency
+            _obj(
+                7,
+                f"<< /Type /ExtGState /ca {fill_a:.4f} /CA {stroke_a:.4f} >>".encode(),
+            ),
+        ]
+
+        pdf = bytearray(b"%PDF-1.4\n%\xe2\xe3\xcf\xd3\n")
+        offsets: list[int] = []
+        for obj in objects:
+            offsets.append(len(pdf))
+            pdf.extend(obj)
+
+        xref_offset = len(pdf)
+        pdf.extend(f"xref\n0 {len(objects) + 1}\n".encode())
+        pdf.extend(b"0000000000 65535 f \r\n")
+        for offset in offsets:
+            pdf.extend(f"{offset:010d} 00000 n \r\n".encode())
+
+        pdf.extend(f"trailer\n<< /Size {len(objects) + 1} /Root 1 0 R >>\nstartxref\n{xref_offset}\n%%EOF\n".encode())
+
+        return bytes(pdf)
