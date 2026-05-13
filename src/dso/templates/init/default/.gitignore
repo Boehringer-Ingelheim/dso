@@ -49,5 +49,8 @@ sccprj/
 Thumbs.db
 ~$*
 
+# quarto
+*.quarto_ipynb
+
 # dso
 .dso.json
