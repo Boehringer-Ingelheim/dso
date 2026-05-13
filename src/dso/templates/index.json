@@ -1,0 +1,96 @@
+{
+    "id": "default",
+    "description": "The default templates shipped with DSO",
+    "init": [
+        {
+            "id": "default",
+            "description": "Default DSO project template. A generic template suitable for data science projects with reasonable defaults. Designed for both R and Pytyhon",
+            "usage": "Start adding folders and stages using `dso create`. See [the docs](https://boehringer-ingelheim.github.io/dso/tutorials/getting_started.html#dso-create-add-folders-or-stages-to-your-project) for more details.",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Project name, used as folder name, e.g. \"single_cell_lung_atlas\""
+                },
+                {
+                    "name": "description",
+                    "description": "A short project description, used in the README"
+                }
+            ]
+        }
+    ],
+    "folder": [
+        {
+            "id": "default",
+            "description": "Default DSO folder template. Use folders to organize this project. The template is basically an empty folder with a params.in.yaml and dvc.yaml file.",
+            "usage": "Start adding stages using `dso create`. See [the docs](https://boehringer-ingelheim.github.io/dso/tutorials/getting_started.html#dso-create-add-folders-or-stages-to-your-project) for more details.",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Folder name, e.g. 'RNAseq'"
+                }
+            ]
+        }
+    ],
+    "stage": [
+        {
+            "id": "bash",
+            "description": "Execute a simple bash snippet or call an external script",
+            "usage": "Directly add bash commands to `dvc.yaml` or add bash script to `src` and reference it from `dvc.yaml`",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Stage name (used as folder name), e.g \"01_preprocessing\""
+                },
+                {
+                    "name": "description",
+                    "description": "A short description of the stage, used in the README"
+                }
+            ]
+        },
+        {
+            "id": "quarto_r",
+            "description": "Generate a quarto report using R (qmd file)",
+            "usage": "Start editing the `qmd` file in `src` and declare inputs and outputs in `dvc.yaml`",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Stage name (used as folder name), e.g \"01_preprocessing\""
+                },
+                {
+                    "name": "description",
+                    "description": "A short description of the stage, used in the README"
+                }
+            ]
+        },
+        {
+            "id": "quarto_py",
+            "description": "Generate a quarto report using Python (qmd file)",
+            "usage": "Start editing the `qmd` file in `src` and declare inputs and outputs in `dvc.yaml`",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Stage name (used as folder name), e.g \"01_preprocessing\""
+                },
+                {
+                    "name": "description",
+                    "description": "A short description of the stage, used in the README"
+                }
+            ]
+        },
+        {
+            "id": "quarto_ipynb",
+            "description": "Generate a quarto report using Python (ipynb file)",
+            "usage": "Edit the jupyter notebook in `src` using your favorite editor and declare inputs and outputs in `dvc.yaml`",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Stage name (used as folder name), e.g \"01_preprocessing\""
+                },
+                {
+                    "name": "description",
+                    "description": "A short description of the stage, used in the README"
+                }
+            ]
+        }
+    ]
+}

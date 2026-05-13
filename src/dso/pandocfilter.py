@@ -3,22 +3,22 @@ Pandocfilter that add watermarks to quarto reports
 
  * warning box at the top
  * watermark to all PNG images
+
+Called internally by `dso exec quarto` via `python -m dso.pandocfilter`.
 """
 
 import sys
 import urllib.parse
 from copy import copy
+from pathlib import Path
+from tempfile import NamedTemporaryFile
 from textwrap import dedent
 
 import PIL
-import PIL.Image
-import PIL.ImageChops
-import PIL.ImageDraw
-import PIL.ImageFont
 from panflute import Div, Image, RawBlock, run_filter
 
 from dso._logging import log
-from dso.watermark import Watermarker
+from dso._watermark import Watermarker
 
 
 def _get_disclaimer_box(title, text):
@@ -73,15 +73,18 @@ def _sanitize_watermark_config(config):
 def action(elem, doc):
     """Panflutes action"""
     watermark_config = _sanitize_watermark_config(doc.get_metadata("watermark"))
-    if watermark_config is not None:
+    if watermark_config:  # could be "" or None, both which evaluate to False
         if "text" not in watermark_config:
             log.error("Need to specify at least `watermark.text`")
             sys.exit(1)
         if isinstance(elem, Image):
             try:
                 log.debug(f"Modifying image {elem.url}")
-                path = urllib.parse.unquote(elem.url)
-                Watermarker.add_watermark(path, path, **watermark_config)
+                path = Path(urllib.parse.unquote(elem.url))
+                # use a temporary file to add the watermark, otherwise the original file may be modified inplace
+                out_path = NamedTemporaryFile(delete=False, suffix=path.suffix).name
+                Watermarker.add_watermark(path, out_path, **watermark_config)
+                elem.url = urllib.parse.quote(out_path)
 
             except PIL.UnidentifiedImageError:
                 log.warning("Image could not be read by PIL. It will not receive a watermark.")
@@ -89,10 +92,5 @@ def action(elem, doc):
     return elem
 
 
-def main(doc=None):
-    """
-    A pandoc filter to add warning boxes to documents and watermarks to plots
-
-    Called internally by `dso exec quarto`.
-    """
-    return run_filter(action, prepare=prepare, doc=doc)
+if __name__ == "__main__":
+    run_filter(action, prepare=prepare, doc=None)

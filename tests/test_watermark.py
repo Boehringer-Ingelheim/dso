@@ -4,7 +4,8 @@ import pytest
 from click.testing import CliRunner
 from PIL import Image
 
-from dso.watermark import SVGWatermarker, Watermarker, cli
+from dso._watermark import PDFWatermarker, SVGWatermarker, Watermarker
+from dso.cli import dso_watermark
 from tests.conftest import TESTDATA
 
 
@@ -31,6 +32,18 @@ def test_add_watermark_svg(tmp_path):
 
 
 @pytest.mark.parametrize(
+    "pdf_file",
+    [
+        "git_logo.pdf",  # single page, pixel
+        "lorem_ipsum.pdf",  # multi page, vector
+    ],
+)
+def test_add_watermark_pdf(tmp_path, pdf_file):
+    wm = PDFWatermarker("test")
+    wm.apply_and_save(TESTDATA / pdf_file, tmp_path / pdf_file)
+
+
+@pytest.mark.parametrize(
     "params",
     [
         [],
@@ -54,6 +67,6 @@ def test_add_watermark_cli(tmp_path, params):
     test_image = _get_test_image(tmp_path, format="png", size=(500, 500))
     test_image_out = tmp_path / "test_image_out.png"
 
-    result = runner.invoke(cli, [str(test_image), str(test_image_out), "--text", "test text", *params])
+    result = runner.invoke(dso_watermark, [str(test_image), str(test_image_out), "--text", "test text", *params])
     assert result.exit_code == 0
     assert test_image_out.is_file()

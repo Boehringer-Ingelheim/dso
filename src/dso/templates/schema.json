@@ -1,0 +1,79 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Universal Meta YAML Schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "Unique identifier of the library. Must be unique across all libraries used."
+        },
+        "description": {
+            "type": "string",
+            "description": "Description of the library."
+        },
+        "init": {
+            "type": "array",
+            "description": "List of templates for `dso init`.",
+            "items": {
+                "$ref": "#/definitions/templateItem"
+            }
+        },
+        "folder": {
+            "type": "array",
+            "description": "List of templates for `dso create folder`.",
+            "items": {
+                "$ref": "#/definitions/templateItem"
+            }
+        },
+        "stage": {
+            "type": "array",
+            "description": "List of templates for `dso create stage`.",
+            "items": {
+                "$ref": "#/definitions/templateItem"
+            }
+        }
+    },
+    "definitions": {
+        "templateItem": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier of the template. Must be unique within one template library."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the template."
+                },
+                "usage": {
+                    "type": "string",
+                    "description": "How to use the template. Describe, for instance, the next steps after initializing."
+                },
+                "params": {
+                    "type": "array",
+                    "description": "Jinja2 parameters that can be passed to the template. This is only about how to initialize the template and has nothing to do with the DVC parameters of the stage.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "description": "Name of the variable, used in template with curly brackets, e.g. `{{ name }}`.",
+                                "type": "string"
+                            },
+                            "description": {
+                                "description": "Description of the variable.",
+                                "type": "string"
+                            }
+                        },
+                        "propertyNames": {
+                            "pattern": "^(?!rel_path_from_project_root$).*$",
+                            "description": "'rel_path_from_project_root ' is a reserved property name automatically provided by DSO"
+                        },
+                        "required": ["name", "description"]
+                    },
+                    "minItems": 0
+                }
+            },
+            "required": ["id", "usage", "description", "params"]
+        }
+    }
+}

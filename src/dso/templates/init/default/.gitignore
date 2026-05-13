@@ -1,3 +1,10 @@
+# dso
+.dso.json
+params.yaml
+
+# uv
+.venv
+
 # Editors
 *.code-workspace
 .vscode
@@ -18,6 +25,7 @@ __pycache__
 ## Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+_quarto.yml
 
 # Slurm
 *.out
@@ -36,6 +44,10 @@ sccprj/
 
 # nodejs/pre-commit
 /node_modules
+
+# Windows
+Thumbs.db
+~$*
 
 # dso
 .dso.json

@@ -5,9 +5,8 @@ from textwrap import dedent
 from click.testing import CliRunner
 from pytest import fixture
 
-from dso.compile_config import compile_all_configs
-from dso.create import cli as dso_create
-from dso.init import cli as dso_init
+from dso._compile_config import compile_all_configs
+from dso.cli import dso_create, dso_init
 
 TESTDATA = Path(__file__).parent / "data"
 
@@ -32,13 +31,16 @@ def quarto_stage(dso_project) -> Path:
     runner = CliRunner()
     stage_name = "quarto_stage"
     chdir(dso_project)
-    runner.invoke(dso_create, ["stage", stage_name, "--template", "quarto", "--description", "a quarto stage"])
+    runner.invoke(dso_create, ["stage", stage_name, "--template", "quarto_r", "--description", "a quarto stage"])
     with (Path(stage_name) / "src" / f"{stage_name}.qmd").open("w") as f:
         f.write(
             dedent(
                 """\
                 ```{python}
                 print("Hello World!")
+                from dso import read_params, stage_here
+                read_params("quarto_stage")
+                (stage_here("output") / "hello.txt").touch()
                 ```
                 """
             )
@@ -56,6 +58,9 @@ def quarto_stage_empty_configs(quarto_stage) -> Path:
         f.write("\n")
     with (quarto_stage / "params.in.yaml").open("w") as f:
         f.write("\n")
+    # remove param from `dvc.yaml` because it's not in the empty config anymore
+    lines = [line for line in (quarto_stage / "dvc.yaml").read_text().splitlines() if "dso.quarto" not in line]
+    (quarto_stage / "dvc.yaml").write_text("\n".join(lines) + "\n")
     compile_all_configs([quarto_stage])
 
     return quarto_stage

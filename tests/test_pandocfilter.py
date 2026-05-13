@@ -1,14 +1,27 @@
+import hashlib
+from os import chdir
 from shutil import copyfile
 from textwrap import dedent
 
-from dso.exec import _render_quarto
+from click.testing import CliRunner
+
+from dso._quarto import render_quarto
+from dso.cli import dso_exec
 from tests.conftest import TESTDATA
 
 
 def test_pandocfilter(quarto_stage):
     copyfile(TESTDATA / "git_logo.png", quarto_stage / "src" / "git_logo.png")
+    copyfile(TESTDATA / "git_logo.pdf", quarto_stage / "src" / "git_logo.pdf")
     copyfile(TESTDATA / "git_logo.svg", quarto_stage / "src" / "git_logo.svg")
     copyfile(TESTDATA / "git_logo.svg", quarto_stage / "src" / "git logo.svg")
+
+    # ensure that external files do not get modified inplace
+    checksums_before = {}
+    for ext in ["png", "pdf", "svg"]:
+        with (quarto_stage / "src" / f"git_logo.{ext}").open("rb") as f:
+            checksums_before[ext] = hashlib.file_digest(f, "md5").hexdigest()
+
     (quarto_stage / "src" / "_quarto.yml").write_text(
         dedent(
             """\
@@ -40,6 +53,10 @@ def test_pandocfilter(quarto_stage):
 
             ![PNG Image](git_logo.png)
 
+            a PDF Image
+
+            ![PDF Image](git_logo.pdf)
+
             and an SVG image
 
             ![SVG Image](git_logo.svg)
@@ -51,10 +68,61 @@ def test_pandocfilter(quarto_stage):
         )
     )
 
-    _render_quarto(
-        quarto_stage / "src", quarto_stage / "report", before_script="", cwd=quarto_stage, with_pandocfilter=True
+    render_quarto(
+        quarto_stage / "src",
+        quarto_stage / "report",
+        before_script="",
+        cwd=quarto_stage,
+        with_pandocfilter=True,
     )
+
+    checksums_after = {}
+    for ext in ["png", "pdf", "svg"]:
+        with (quarto_stage / "src" / f"git_logo.{ext}").open("rb") as f:
+            checksums_after[ext] = hashlib.file_digest(f, "md5").hexdigest()
+
+    assert checksums_before == checksums_after
+
     out_html = (quarto_stage / "report" / "quarto_stage.html").read_text()
     assert "Disclaimer" in out_html
     assert "This is a disclaimer" in out_html
     assert "callout-important" in out_html
+
+
+def test_override_config(quarto_stage):
+    """Test that it's possible to remove a watermark/disclaimer by overriding the config with null"""
+    # I didn't find a straightforward way of testing programmatically that there's really no watermark.
+    # this test still guarantees that it doesn't fail with an error when overring the watermark config (which it did previously)
+    (quarto_stage / ".." / "params.in.yaml").write_text(
+        dedent(
+            """\
+            dso:
+              quarto:
+                watermark:
+                  text: test
+                disclaimer:
+                  title: test disclaimer
+                  text: lorem ipsum
+            """
+        )
+    )
+    (quarto_stage / "params.in.yaml").write_text(
+        dedent(
+            """\
+            dso:
+              quarto:
+                watermark: null
+                disclaimer: null
+            """
+        )
+    )
+
+    runner = CliRunner()
+    chdir(quarto_stage)
+    stage_path = "."
+
+    result = runner.invoke(dso_exec, ["quarto", stage_path])
+    assert result.exit_code == 0
+
+    out_html = (quarto_stage / "report" / "quarto_stage.html").read_text()
+    assert "test disclaimer" not in out_html
