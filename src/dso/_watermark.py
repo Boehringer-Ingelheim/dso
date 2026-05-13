@@ -1,16 +1,37 @@
 """Add text-watermarks to images"""
 
 import io
-import tempfile
 from abc import abstractmethod
+from dataclasses import dataclass
 from importlib import resources
 from pathlib import Path
+from typing import cast
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageColor, ImageDraw, ImageFont
 from pypdf import PdfReader, PdfWriter
-from svgutils import compose
 
 from dso import assets
+
+
+@dataclass
+class RGBAColor:
+    """Color with channels normalized to [0, 1]."""
+
+    r: float
+    g: float
+    b: float
+    a: float
+
+    @property
+    def hex_rgb(self) -> str:
+        """Return the color as a CSS hex string (#rrggbb), ignoring alpha."""
+        return f"#{round(self.r * 255):02x}{round(self.g * 255):02x}{round(self.b * 255):02x}"
+
+    @staticmethod
+    def from_string(color_str: str) -> "RGBAColor":
+        """Parse any color string accepted by Pillow to an RGBAColor with values in [0, 1]."""
+        r, g, b, *a = ImageColor.getrgb(color_str)
+        return RGBAColor(r / 255, g / 255, b / 255, (a[0] if a else 255) / 255)
 
 
 class Watermarker:
@@ -41,7 +62,7 @@ class Watermarker:
         font_size: int = 18,
         font_outline: int = 1,
         font_color: str = "#EEEEEE60",
-        font_outline_color: str = "#44444460",
+        font_outline_color: str = "#A5A5A590",
     ):
         self.text = text
         self.tile_size = tile_size
@@ -54,6 +75,24 @@ class Watermarker:
     def apply_and_save(self, input_image: Path | str, output_image: Path | str):
         """Apply the watermark to an image"""
         ...
+
+    @staticmethod
+    def add_watermark(input_image: Path | str, output_image: Path | str, **kwargs):
+        """Add watermark to an image, using the different implementations base on the file type"""
+        input_image = Path(input_image)
+        ext = input_image.suffix
+        if ext == ".svg":
+            wm = SVGWatermarker(**kwargs)
+        elif ext == ".pdf":
+            wm = PDFWatermarker(**kwargs)
+        else:
+            wm = PILWatermarker(**kwargs)
+
+        wm.apply_and_save(input_image, output_image)
+
+
+class PILWatermarker(Watermarker):
+    """Add watermarks to any image supported by Pillow"""
 
     def get_watermark_overlay(self, size: tuple[int, int]) -> Image.Image:
         """Generate an overlay with the watermark that has the same size as the base image"""
@@ -100,24 +139,6 @@ class Watermarker:
 
         return img
 
-    @staticmethod
-    def add_watermark(input_image: Path | str, output_image: Path | str, **kwargs):
-        """Add watermark to an image, using the different implementations base on the file type"""
-        input_image = Path(input_image)
-        ext = input_image.suffix
-        if ext == ".svg":
-            wm = SVGWatermarker(**kwargs)
-        elif ext == ".pdf":
-            wm = PDFWatermarker(**kwargs)
-        else:
-            wm = PILWatermarker(**kwargs)
-
-        wm.apply_and_save(input_image, output_image)
-
-
-class PILWatermarker(Watermarker):
-    """Add watermarks to any image supported by Pillow"""
-
     def apply_and_save(self, input_image: Path | str, output_image: Path | str):
         """Apply the watermark to an image and save it to the specified output file"""
         base_image = Image.open(input_image).convert("RGBA")
@@ -132,29 +153,123 @@ class PILWatermarker(Watermarker):
 
 
 class SVGWatermarker(Watermarker):
-    """Add watermarks to SVG images. The watermark overlay will be a pixel graphic embedded in the svg."""
+    """Add watermarks to SVG images using native SVG text elements with a tiling pattern."""
 
-    def _get_size(self, svg_image: compose.SVG):
-        try:
-            if svg_image.width is None or svg_image.height is None:
-                raise ValueError("Watermarking works only with SVG images that define an explicit width and height")
-            return (int(svg_image.width), int(svg_image.height))
-        except AttributeError:
-            raise ValueError(
-                "Watermarking works only with SVG images that define an explicit width and height"
-            ) from None
+    @staticmethod
+    def _parse_svg_length(value: str) -> float:
+        """Parse an SVG length value, stripping any unit suffix (px, pt, …)."""
+        import re
+
+        m = re.match(r"([\d.]+)", value.strip())
+        if not m:
+            raise ValueError(f"Cannot parse SVG length: {value!r}")
+        return float(m.group(1))
+
+    def _get_dimensions(self, root) -> tuple[float, float]:
+        """Return (width, height) from the SVG root element."""
+        w = root.get("width")
+        h = root.get("height")
+        if w is not None and h is not None:
+            return self._parse_svg_length(w), self._parse_svg_length(h)
+        vb = root.get("viewBox")
+        if vb:
+            parts = vb.split()
+            return float(parts[2]), float(parts[3])
+        raise ValueError("Watermarking requires SVG images that define an explicit width/height or viewBox")
 
     def apply_and_save(self, input_image: Path | str, output_image: Path | str):
         """Apply the watermark to an image and save it to the specified output file"""
-        base_image = compose.SVG(input_image, fix_mpl=True)
-        size = self._get_size(base_image)
+        import xml.etree.ElementTree as ET
 
-        watermark_overlay = self.get_watermark_overlay(size)
-        with tempfile.NamedTemporaryFile(suffix=".png") as tf:
-            watermark_overlay.save(tf)
-            watermark_overlay_svg = compose.Image(*size, tf.name)
-        fig = compose.Figure(*size, base_image, watermark_overlay_svg)
-        fig.save(output_image)
+        # Pre-register all namespaces so ElementTree preserves them in the output.
+        # iterparse yields (event, (prefix, uri)) for "start-ns" but is typed as
+        # (str, Element) — cast to the actual runtime type to satisfy Pylance.
+        for _event, ns_tuple in ET.iterparse(input_image, events=["start-ns"]):
+            prefix, uri = cast(tuple[str, str], ns_tuple)
+            ET.register_namespace(prefix, uri)
+        ET.register_namespace("", "http://www.w3.org/2000/svg")
+
+        tree = ET.parse(input_image)
+        root = tree.getroot()
+
+        ns = root.tag.split("}")[0] + "}" if root.tag.startswith("{") else ""
+
+        width, height = self._get_dimensions(root)
+        tile_w, tile_h = self.tile_size
+        fill = RGBAColor.from_string(self.font_color)
+        stroke = RGBAColor.from_string(self.font_outline_color)
+
+        stroke_attrs: dict[str, str] = {}
+        if self.font_outline > 0:
+            stroke_attrs = {
+                "stroke": stroke.hex_rgb,
+                "stroke-opacity": f"{stroke.a:.4f}",
+                "stroke-width": str(self.font_outline),
+                "paint-order": "stroke fill",
+            }
+
+        common_text_attrs = {
+            "font-family": "Helvetica, Arial, sans-serif",
+            "font-size": str(self.font_size),
+            "fill": fill.hex_rgb,
+            "fill-opacity": f"{fill.a:.4f}",
+            **stroke_attrs,
+        }
+
+        # Add <defs> at the front if not present
+        defs = root.find(f"{ns}defs")
+        if defs is None:
+            defs = ET.Element(f"{ns}defs")
+            root.insert(0, defs)
+
+        pattern = ET.SubElement(
+            defs,
+            f"{ns}pattern",
+            {
+                "id": "dso-watermark-pattern",
+                "patternUnits": "userSpaceOnUse",
+                "width": str(tile_w),
+                "height": str(tile_h),
+            },
+        )
+
+        # Position 1: top-left of tile (matches PIL anchor "lt" at (10, 10))
+        # SVG y is baseline; PIL y=10 is top of text. baseline = top + ascent ≈ top + 0.75 * font_size
+        text1 = ET.SubElement(
+            pattern,
+            f"{ns}text",
+            {"x": "10", "y": str(10 + self.font_size * 0.75), **common_text_attrs},
+        )
+        text1.text = self.text
+
+        # Position 2: middle-right of tile (matches PIL anchor "rm")
+        # PIL center at y = tile_h/2 + font_size. baseline = center + 0.25 * font_size
+        text2 = ET.SubElement(
+            pattern,
+            f"{ns}text",
+            {
+                "x": str(tile_w - 10),
+                "y": str(tile_h / 2 + self.font_size * 1.25),
+                "text-anchor": "end",
+                **common_text_attrs,
+            },
+        )
+        text2.text = self.text
+
+        # Overlay rect filling the full SVG canvas with the tiled pattern
+        ET.SubElement(
+            root,
+            f"{ns}rect",
+            {
+                "x": "0",
+                "y": "0",
+                "width": str(width),
+                "height": str(height),
+                "fill": "url(#dso-watermark-pattern)",
+            },
+        )
+
+        tree.write(output_image, xml_declaration=True, encoding="utf-8")
 
 
 class PDFWatermarker(Watermarker):
@@ -177,19 +292,48 @@ class PDFWatermarker(Watermarker):
         reader.close()
 
     @staticmethod
-    def _parse_color(color_str: str) -> tuple[float, float, float, float]:
-        """Parse a color string (#RRGGBBAA or #RRGGBB) to (r, g, b, a) floats in [0, 1]."""
-        color_str = color_str.lstrip("#")
-        r = int(color_str[0:2], 16) / 255
-        g = int(color_str[2:4], 16) / 255
-        b = int(color_str[4:6], 16) / 255
-        a = int(color_str[6:8], 16) / 255 if len(color_str) >= 8 else 1.0
-        return r, g, b, a
-
-    @staticmethod
     def _pdf_escape(text: str) -> str:
-        """Escape special characters for a PDF literal string."""
-        return text.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
+        r"""Escape text for a PDF literal string (PDF spec Table 4.1).
+
+        Named escapes are used for the defined control characters; all other
+        characters outside printable ASCII (0x20–0x7E) are encoded as \\ddd
+        octal sequences using WinAnsiEncoding (cp1252), which is the standard
+        encoding for PDF base fonts like Helvetica.
+
+        Source: https://opensource.adobe.com/dc-acrobat-sdk-docs/pdfstandards/pdfreference1.0.pdf
+
+        Raises
+        ------
+        ValueError
+            If the text contains characters outside the WinAnsiEncoding (cp1252) range.
+        """
+        _named = {
+            "\\": "\\\\",
+            "(": "\\(",
+            ")": "\\)",
+            "\n": "\\n",
+            "\r": "\\r",
+            "\t": "\\t",
+            "\b": "\\b",
+            "\f": "\\f",
+        }
+        parts: list[str] = []
+        for ch in text:
+            if ch in _named:
+                parts.append(_named[ch])
+            elif 0x20 <= ord(ch) <= 0x7E:
+                parts.append(ch)
+            else:
+                try:
+                    encoded = ch.encode("cp1252")
+                except UnicodeEncodeError:
+                    raise ValueError(
+                        f"Character {ch!r} (U+{ord(ch):04X}) is not supported by the PDF "
+                        f"base font encoding (WinAnsiEncoding/cp1252)."
+                    ) from None
+                for byte in encoded:
+                    parts.append(f"\\{byte:03o}")
+        return "".join(parts)
 
     def _create_text_watermark_pdf(self, page_width: float, page_height: float) -> bytes:
         """Build a single-page PDF with tiled watermark text using a PDF Tiling Pattern.
@@ -197,8 +341,8 @@ class PDFWatermarker(Watermarker):
         The watermark tile is defined once as a pattern and the page is filled with it,
         so the renderer can cache and repeat the tile efficiently.
         """
-        fill_r, fill_g, fill_b, fill_a = self._parse_color(self.font_color)
-        stroke_r, stroke_g, stroke_b, stroke_a = self._parse_color(self.font_outline_color)
+        fill = RGBAColor.from_string(self.font_color)
+        stroke = RGBAColor.from_string(self.font_outline_color)
 
         tile_w, tile_h = self.tile_size
         escaped_text = self._pdf_escape(self.text)
@@ -214,22 +358,24 @@ class PDFWatermarker(Watermarker):
         if self.font_outline > 0:
             tile_lines.append("2 Tr")  # Fill then stroke
             tile_lines.append(f"{self.font_outline} w")
-            tile_lines.append(f"{stroke_r:.4f} {stroke_g:.4f} {stroke_b:.4f} RG")
+            tile_lines.append(f"{stroke.r:.4f} {stroke.g:.4f} {stroke.b:.4f} RG")
         else:
             tile_lines.append("0 Tr")  # Fill only
 
-        tile_lines.append(f"{fill_r:.4f} {fill_g:.4f} {fill_b:.4f} rg")
+        tile_lines.append(f"{fill.r:.4f} {fill.g:.4f} {fill.b:.4f} rg")
 
         # Position 1: top-left of tile (mirrors PIL anchor "lt" at (10, 10))
-        # PDF y-axis is bottom-up, so top of tile = tile_h
+        # PDF y-axis is bottom-up. baseline = tile_h - top - ascent ≈ tile_h - 10 - 0.75 * font_size
         tx1 = 10
-        ty1 = tile_h - 10 - self.font_size
+        ty1 = tile_h - 10 - self.font_size * 0.75
         tile_lines.append(f"1 0 0 1 {tx1:.2f} {ty1:.2f} Tm")
         tile_lines.append(f"({escaped_text}) Tj")
 
         # Position 2: middle-right of tile (mirrors PIL anchor "rm")
+        # PIL center at tile_h/2 + font_size from top → tile_h/2 - font_size in PDF coords.
+        # baseline = center - 0.25 * font_size
         tx2 = tile_w - 10 - approx_text_width
-        ty2 = tile_h / 2 - self.font_size * 0.4
+        ty2 = tile_h / 2 - self.font_size * 1.25
         tile_lines.append(f"1 0 0 1 {tx2:.2f} {ty2:.2f} Tm")
         tile_lines.append(f"({escaped_text}) Tj")
 
@@ -268,13 +414,13 @@ class PDFWatermarker(Watermarker):
                 tile_content,
             ),
             # 5: Font
-            _obj(5, b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"),
+            _obj(5, b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>"),
             # 6: Page content stream
             _stream_obj(6, "", page_content),
             # 7: Graphics state for transparency
             _obj(
                 7,
-                f"<< /Type /ExtGState /ca {fill_a:.4f} /CA {stroke_a:.4f} >>".encode(),
+                f"<< /Type /ExtGState /ca {fill.a:.4f} /CA {stroke.a:.4f} >>".encode(),
             ),
         ]
 

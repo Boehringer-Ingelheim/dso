@@ -44,6 +44,35 @@ def test_add_watermark_pdf(tmp_path, pdf_file):
 
 
 @pytest.mark.parametrize(
+    "text, expected",
+    [
+        # Printable ASCII passes through unchanged
+        ("hello world", "hello world"),
+        # Named escapes
+        ("back\\slash", "back\\\\slash"),
+        ("left(paren", "left\\(paren"),
+        ("right)paren", "right\\)paren"),
+        ("new\nline", "new\\nline"),
+        ("carriage\rreturn", "carriage\\rreturn"),
+        ("hori\tzontal", "hori\\tzontal"),
+        ("back\bspace", "back\\bspace"),
+        ("form\ffeed", "form\\ffeed"),
+        # Non-ASCII encoded as WinAnsiEncoding (cp1252) octal sequences
+        # 'é' → cp1252 byte 0xE9 → \351
+        ("café", "caf\\351"),
+        # '€' → cp1252 byte 0x80 → \200
+        ("€1", "\\2001"),
+        # German umlauts
+        ("äöü", "\\344\\366\\374"),
+        # Combination: parens + non-ASCII
+        ("(café)", "\\(caf\\351\\)"),
+    ],
+)
+def test_pdf_escape(text, expected):
+    assert PDFWatermarker._pdf_escape(text) == expected
+
+
+@pytest.mark.parametrize(
     "params",
     [
         [],

@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## v1.0.0
+
+### Additions
+
+ - Watermarks in PDF and SVG are now natively implemented in these formats as text, rather than including an image overlay ([#170](https://github.com/Boehringer-Ingelheim/dso/pull/170))
+
+### Changes
+
+ - The default font outline color for watermarks is now a bit lighter ([#170](https://github.com/Boehringer-Ingelheim/dso/pull/170))
+
 ## v0.14.0
 
 ### Additions
