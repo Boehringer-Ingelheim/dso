@@ -49,12 +49,13 @@ optional-dependencies.doc = [
   "ipython",
   "matplotlib",
   "myst-parser",
-  "sphinx>=4",
+  "sphinx>=8.1",
   "sphinx-autodoc-typehints",
   "sphinx-book-theme>=1",
   "sphinx-copybutton",
   "sphinx-design",
-  "sphinxcontrib-bibtex>=1",
+  # "sphinxcontrib-bibtex>=1",
+  "sphinxcontrib-katex",
   "sphinxext-opengraph",
 ]
 optional-dependencies.test = [
