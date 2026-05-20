@@ -1,12 +1,17 @@
 ---
+title: "{{ name }}"
 format: html
 engine: julia
 ---
 
+# Set up Julia environment
+
 ```{julia}
 #| label: load_libraries
 
-using DSO
+using DataScienceOperations
+using QuartoTools
+const DSO = DataScienceOperations
 ```
 
 Load the stage-specific 'params.yaml' config using the `read_params(..)` function. This function specifically loads
@@ -16,5 +21,13 @@ only the stage-dependent parameters that are defined in the 'params' section of 
 #| label: read_params
 #| echo: false
 
-params_obj = read_params("julia_companion_test/01_basic_dso_commands")
+params_obj = DSO.read_params("{{ rel_path_from_project_root }}")
+```
+
+# Session info
+
+```{julia}
+#| label: session_info
+
+DSO.session_info()
 ```
