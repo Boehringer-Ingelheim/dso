@@ -21,7 +21,7 @@ only the stage-dependent parameters that are defined in the 'params' section of 
 #| label: read_params
 #| echo: false
 
-params_obj = DSO.read_params("{{ rel_path_from_project_root }}")
+params_obj = DSO.read_params("{{ rel_path_from_project_root }}");
 ```
 
 # Session info
