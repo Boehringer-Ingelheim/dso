@@ -97,6 +97,7 @@ def test_custom_template(command, tmp_path, dso_project):
         ["quarto_r", "src/teststage.qmd"],
         ["quarto_py", "src/teststage.qmd"],
         ["quarto_ipynb", "src/teststage.ipynb"],
+        ["quarto_jl", "src/teststage.qmd"]
     ],
 )
 def test_create_stage(dso_project, template, expected_src):
