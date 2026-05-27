@@ -40,6 +40,10 @@ dependencies = [
   "svgutils",
   "uv",
 ]
+urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
+urls.Home-page = "https://github.com/Boehringer-Ingelheim/dso"
+urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
+scripts.dso = "dso.cli:dso"
 
 [dependency-groups]
 dev = [ "hatch", "pre-commit" ]
@@ -69,10 +73,6 @@ doc = [
   "sphinxcontrib-katex",
   "sphinxext-opengraph",
 ]
-scripts.dso = "dso.cli:dso"
-urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
-urls.Home-page = "https://github.com/Boehringer-Ingelheim/dso"
-urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
 
 [tool.hatch]
 build.targets.wheel.packages = [ "src/dso" ]
