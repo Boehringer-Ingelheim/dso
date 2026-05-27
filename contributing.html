@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="contributing.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="We assume that you are already familiar with git and with making pull requests on GitHub. Installing dev dependencies: In addition to the packages needed to use this package, you need additional py..." />
+<meta property="og:description" content="This document aims at summarizing the most important information for getting you started on contributing to this project. We assume that you are already familiar with git and with making pull reque..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="_images/social_previews/summary_contributing_8d3f9afb.png" />
-<meta property="og:image:alt" content="We assume that you are already familiar with git and with making pull requests on GitHub. Installing dev dependencies: In addition to the packages needed to use this package, you need additional py..." />
-<meta name="description" content="We assume that you are already familiar with git and with making pull requests on GitHub. Installing dev dependencies: In addition to the packages needed to use this package, you need additional py..." />
+<meta property="og:image" content="_images/social_previews/summary_contributing_f0c7051e.png" />
+<meta property="og:image:alt" content="This document aims at summarizing the most important information for getting you started on contributing to this project. We assume that you are already familiar with git and with making pull reque..." />
+<meta name="description" content="This document aims at summarizing the most important information for getting you started on contributing to this project. We assume that you are already familiar with git and with making pull reque..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Contributing guide &#8212; dso-core</title>
@@ -41,7 +41,7 @@
   <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=42210275" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=947db71a" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=f49d0478"></script>
+    <script src="_static/documentation_options.js?v=ca33891d"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +67,7 @@
     <link rel="prev" title="Changelog" href="CHANGELOG.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g9e7863d9f" />
+  <meta name="docsearch:version" content="0.1.dev1+g7952dfd3a" />
   </head>
   
   
@@ -380,22 +380,104 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="contributing-guide">
 <h1>Contributing guide<a class="headerlink" href="#contributing-guide" title="Link to this heading">#</a></h1>
-<p>We assume that you are already familiar with git and with making pull requests on GitHub.</p>
+<p>This document aims at summarizing the most important information for getting you started on contributing to this project.
+We assume that you are already familiar with git and with making pull requests on GitHub.</p>
+<p>For more extensive tutorials, that also cover the absolute basics,
+please refer to other resources such as the <a class="reference external" href="https://www.pyopensci.org/learn.html">pyopensci tutorials</a>,
+the <a class="reference external" href="https://learn.scientific-python.org/development/tutorials/">scientific Python tutorials</a>, or the <a class="reference external" href="https://scanpy.readthedocs.io/en/latest/dev/index.html">scanpy developer guide</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <em>hatch</em> project manager</p>
+<p>We highly recommend to familiarize yourself with <a class="reference external" href="https://hatch.pypa.io/latest/"><code class="docutils literal notranslate"><span class="pre">hatch</span></code></a>.
+Hatch is a Python project manager that</p>
+<ul class="simple">
+<li><p>manages virtual environments, separately for development, testing and building the documentation.
+Separating the environments is useful to avoid dependency conflicts.</p></li>
+<li><p>allows to run tests locally in different environments (e.g. different python versions)</p></li>
+<li><p>allows to run tasks defined in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>, e.g. to build documentation.</p></li>
+</ul>
+<p>While the project is setup with <code class="docutils literal notranslate"><span class="pre">hatch</span></code> in mind,
+it is still possible to use different tools to manage dependencies, such as <code class="docutils literal notranslate"><span class="pre">uv</span></code> or <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
+</div>
 <section id="installing-dev-dependencies">
 <h2>Installing dev dependencies<a class="headerlink" href="#installing-dev-dependencies" title="Link to this heading">#</a></h2>
 <p>In addition to the packages needed to <em>use</em> this package,
 you need additional python packages to <a class="reference internal" href="#writing-tests">run tests</a> and <a class="reference internal" href="#docs-building">build the documentation</a>.</p>
-<p>The easiest way is to get familiar with <a class="reference external" href="https://hatch.pypa.io/latest/tutorials/environment/basic-usage/">hatch environments</a>, with which these tasks are simply:</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Hatch</label><div class="sd-tab-content docutils">
+<p>On the command line, you typically interact with hatch through its command line interface (CLI).
+Running one of the following commands will automatically resolve the environments for testing and
+building the documentation in the background:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span><span class="nb">test</span><span class="w">  </span><span class="c1"># defined in the table [tool.hatch.envs.hatch-test] in pyproject.toml</span>
 hatch<span class="w"> </span>run<span class="w"> </span>docs:build<span class="w">  </span><span class="c1"># defined in the table [tool.hatch.envs.docs]</span>
 </pre></div>
 </div>
-<p>If you prefer managing environments manually, you can use <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>dso
-python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<p>When using an IDE such as VS Code,
+you’ll have to point the editor at the paths to the virtual environments manually.
+The environment you typically want to use as your main development environment is the <code class="docutils literal notranslate"><span class="pre">hatch-test</span></code>
+environment with the latest Python version.</p>
+<p>To get a list of all environments for your projects, run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span>env<span class="w"> </span>show<span class="w"> </span>-i
+</pre></div>
+</div>
+<p>This will list “Standalone” environments and a table of “Matrix” environments like the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+------------+---------+--------------------------+----------+---------------------------------+-------------+</span>
+<span class="o">|</span> <span class="n">Name</span>       <span class="o">|</span> <span class="n">Type</span>    <span class="o">|</span> <span class="n">Envs</span>                     <span class="o">|</span> <span class="n">Features</span> <span class="o">|</span> <span class="n">Dependencies</span>                    <span class="o">|</span> <span class="n">Scripts</span>     <span class="o">|</span>
+<span class="o">+------------+---------+--------------------------+----------+---------------------------------+-------------+</span>
+<span class="o">|</span> <span class="n">hatch</span><span class="o">-</span><span class="n">test</span> <span class="o">|</span> <span class="n">virtual</span> <span class="o">|</span> <span class="n">hatch</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">py3</span><span class="mf">.10</span><span class="o">-</span><span class="n">stable</span> <span class="o">|</span> <span class="n">dev</span>      <span class="o">|</span> <span class="n">coverage</span><span class="o">-</span><span class="n">enable</span><span class="o">-</span><span class="n">subprocess</span><span class="o">==</span><span class="mf">1.0</span> <span class="o">|</span> <span class="n">cov</span><span class="o">-</span><span class="n">combine</span> <span class="o">|</span>
+<span class="o">|</span>            <span class="o">|</span>         <span class="o">|</span> <span class="n">hatch</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">py3</span><span class="mf">.13</span><span class="o">-</span><span class="n">stable</span> <span class="o">|</span> <span class="n">test</span>     <span class="o">|</span> <span class="n">coverage</span><span class="p">[</span><span class="n">toml</span><span class="p">]</span><span class="o">~=</span><span class="mf">7.4</span>             <span class="o">|</span> <span class="n">cov</span><span class="o">-</span><span class="n">report</span>  <span class="o">|</span>
+<span class="o">|</span>            <span class="o">|</span>         <span class="o">|</span> <span class="n">hatch</span><span class="o">-</span><span class="n">test</span><span class="o">.</span><span class="n">py3</span><span class="mf">.13</span><span class="o">-</span><span class="n">pre</span>    <span class="o">|</span>          <span class="o">|</span> <span class="n">pytest</span><span class="o">-</span><span class="n">mock</span><span class="o">~=</span><span class="mf">3.12</span>               <span class="o">|</span> <span class="n">run</span>         <span class="o">|</span>
+<span class="o">|</span>            <span class="o">|</span>         <span class="o">|</span>                          <span class="o">|</span>          <span class="o">|</span> <span class="n">pytest</span><span class="o">-</span><span class="n">randomly</span><span class="o">~=</span><span class="mf">3.15</span>           <span class="o">|</span> <span class="n">run</span><span class="o">-</span><span class="n">cov</span>     <span class="o">|</span>
+<span class="o">|</span>            <span class="o">|</span>         <span class="o">|</span>                          <span class="o">|</span>          <span class="o">|</span> <span class="n">pytest</span><span class="o">-</span><span class="n">rerunfailures</span><span class="o">~=</span><span class="mf">14.0</span>      <span class="o">|</span>             <span class="o">|</span>
+<span class="o">|</span>            <span class="o">|</span>         <span class="o">|</span>                          <span class="o">|</span>          <span class="o">|</span> <span class="n">pytest</span><span class="o">-</span><span class="n">xdist</span><span class="p">[</span><span class="n">psutil</span><span class="p">]</span><span class="o">~=</span><span class="mf">3.5</span>       <span class="o">|</span>             <span class="o">|</span>
+<span class="o">|</span>            <span class="o">|</span>         <span class="o">|</span>                          <span class="o">|</span>          <span class="o">|</span> <span class="n">pytest</span><span class="o">~=</span><span class="mf">8.1</span>                     <span class="o">|</span>             <span class="o">|</span>
+<span class="o">+------------+---------+--------------------------+----------+---------------------------------+-------------+</span>
+</pre></div>
+</div>
+<p>From the <code class="docutils literal notranslate"><span class="pre">Envs</span></code> column, select the environment name you want to use for development.
+In this example, it would be <code class="docutils literal notranslate"><span class="pre">hatch-test.py3.13-stable</span></code>.</p>
+<p>Next, create the environment with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>hatch-test.py3.13-stable
+</pre></div>
+</div>
+<p>Then, obtain the path to the environment using</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span>env<span class="w"> </span>find<span class="w"> </span>hatch-test.py3.13-stable
+</pre></div>
+</div>
+<p>In case you are using VScode, now open the command palette (Ctrl+Shift+P) and search for <code class="docutils literal notranslate"><span class="pre">Python:</span> <span class="pre">Select</span> <span class="pre">Interpreter</span></code>.
+Choose <code class="docutils literal notranslate"><span class="pre">Enter</span> <span class="pre">Interpreter</span> <span class="pre">Path</span></code> and paste the path to the virtual environment from above.</p>
+<p>In this future, this may become easier through a hatch vscode extension.</p>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+uv</label><div class="sd-tab-content docutils">
+<p>A popular choice for managing virtual environments is <a class="reference external" href="https://docs.astral.sh/uv/">uv</a>.
+The main disadvantage compared to hatch is that it supports only a single environment per project at a time,
+which requires you to mix the dependencies for running tests and building docs.
+This can have undesired side-effects,
+such as requiring to install a lower version of a library your project depends on,
+only because an outdated sphinx plugin pins an older version.</p>
+<p>To initalize a virtual environment in the <code class="docutils literal notranslate"><span class="pre">.venv</span></code> directory of your project, simply run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>sync<span class="w"> </span>--all-extras
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">.venv</span></code> directory is typically automatically discovered by IDEs such as VS Code.</p>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Pip</label><div class="sd-tab-content docutils">
+<p>Pip is nowadays mostly superseded by environment manager such as <a class="reference external" href="https://hatch.pypa.io/latest/">hatch</a>.
+However, for the sake of completeness, and since it’s ubiquitously available,
+we describe how you can manage environments manually using <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
 <span class="nb">source</span><span class="w"> </span>.venv/bin/activate
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev,test,doc]&quot;</span>
 </pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">.venv</span></code> directory is typically automatically discovered by IDEs such as VS Code.</p>
+</div>
 </div>
 </section>
 <section id="code-style">
@@ -430,19 +512,44 @@ hatch<span class="w"> </span>env<span class="w"> </span>find<span class="w"> </s
 </pre></div>
 </div>
 <p>Alternatively, you can run all tests from the command line by executing</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Hatch</label><div class="sd-tab-content docutils">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span><span class="nb">test</span><span class="w">  </span><span class="c1"># test with the highest supported Python version</span>
 <span class="c1"># or</span>
 hatch<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--all<span class="w">  </span><span class="c1"># test with all supported Python versions</span>
 </pre></div>
 </div>
+</div>
+<input id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-4">
+uv</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>pytest
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-5">
+Pip</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+pytest
+</pre></div>
+</div>
+</div>
+</div>
 <p>in the root of the repository.</p>
 <section id="continuous-integration">
 <h3>Continuous integration<a class="headerlink" href="#continuous-integration" title="Link to this heading">#</a></h3>
-<p>Continuous integration will automatically run the tests on all pull requests and test
+<p>Continuous integration via GitHub actions will automatically run the tests on all pull requests and test
 against the minimum and maximum supported Python version.</p>
 <p>Additionally, there’s a CI job that tests against pre-releases of all dependencies (if there are any).
 The purpose of this check is to detect incompatibilities of new package versions early on and
-gives you time to fix the issue or reach out to the developers of the dependency before the package is released to a wider audience.</p>
+gives you time to fix the issue or reach out to the developers of the dependency before the package
+is released to a wider audience.</p>
+<p>The CI job is defined in <code class="docutils literal notranslate"><span class="pre">.github/workflows/test.yaml</span></code>,
+however the single point of truth for CI jobs is the Hatch test matrix defined in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.
+This means that local testing via hatch and remote testing on CI tests against the same python versions and uses the same environments.</p>
 </section>
 </section>
 <section id="publishing-a-release">
@@ -471,7 +578,6 @@ This project uses <a class="reference external" href="https://www.sphinx-doc.org
 <li><p>The <a class="reference external" href="https://myst-parser.readthedocs.io/en/latest/intro.html">myst</a> extension allows to write documentation in markdown/Markedly Structured Text</p></li>
 <li><p><a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">Numpy-style docstrings</a> (through the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html">napoloen</a> extension).</p></li>
 <li><p><a class="reference external" href="https://github.com/tox-dev/sphinx-autodoc-typehints">sphinx-autodoc-typehints</a>, to automatically reference annotated input and output types</p></li>
-<li><p>Citations can be included with <a class="reference external" href="https://sphinxcontrib-bibtex.readthedocs.io/">sphinxcontrib-bibtex</a></p></li>
 </ul>
 <p>See scanpy’s <a class="reference external" href="https://scanpy.readthedocs.io/en/stable/dev/documentation.html" title="(in Scanpy v1.13.0.dev)"><span>Documentation</span></a> for more information on how to write your own.</p>
 <section id="hints">
@@ -485,9 +591,34 @@ you can add an entry to the <code class="docutils literal notranslate"><span cla
 </section>
 <section id="building-the-docs-locally">
 <span id="docs-building"></span><h3>Building the docs locally<a class="headerlink" href="#building-the-docs-locally" title="Link to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span>docs:build
-hatch<span class="w"> </span>docs:open
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-6" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-6">
+Hatch</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span>run<span class="w"> </span>docs:build
+hatch<span class="w"> </span>run<span class="w"> </span>docs:open
 </pre></div>
+</div>
+</div>
+<input id="sd-tab-item-7" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-7">
+uv</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs
+uv<span class="w"> </span>run<span class="w"> </span>sphinx-build<span class="w"> </span>-M<span class="w"> </span>html<span class="w"> </span>.<span class="w"> </span>_build<span class="w"> </span>-W
+<span class="o">(</span>xdg-<span class="o">)</span>open<span class="w"> </span>_build/html/index.html
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-8" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-8">
+Pip</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<span class="nb">cd</span><span class="w"> </span>docs
+sphinx-build<span class="w"> </span>-M<span class="w"> </span>html<span class="w"> </span>.<span class="w"> </span>_build<span class="w"> </span>-W
+<span class="o">(</span>xdg-<span class="o">)</span>open<span class="w"> </span>_build/html/index.html
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
