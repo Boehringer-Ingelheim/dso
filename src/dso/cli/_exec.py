@@ -8,7 +8,7 @@ from dso._logging import log
 
 
 @click.command("quarto")
-@click.argument("stage", required=True)
+@click.argument("stage", required=True, type=click.Path(exists=True))
 @click.option(
     "--skip-compile",
     help="Do not compile configs before linting. The same can be achieved by setting the `DSO_SKIP_COMPILE=1` env var.",
