@@ -19,6 +19,9 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - uses: j178/prek-action@v2
+        with:
+          # only run the pre-commit config in the project root, not in templates
+          extra-args: "--all-files --config ./.pre-commit-config.yaml"
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         if: "!cancelled()"
