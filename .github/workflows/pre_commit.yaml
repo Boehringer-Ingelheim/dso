@@ -1,8 +1,8 @@
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 name: pre-commit
 
@@ -14,11 +14,14 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref }}
 
-      - uses: pre-commit/action@v3.0.1
+      - uses: j178/prek-action@v2
+        with:
+          # only run the pre-commit config in the project root, not in templates
+          extra-args: "--all-files --config ./.pre-commit-config.yaml"
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         if: "!cancelled()"

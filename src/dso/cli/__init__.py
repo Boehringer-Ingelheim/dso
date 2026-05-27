@@ -21,7 +21,7 @@ from dso._util import get_project_root
 from ._create import dso_create
 from ._exec import dso_exec
 
-click.rich_click.USE_MARKDOWN = True
+click.rich_click.TEXT_MARKUP = "markdown"
 
 
 @click.command(name="compile-config")

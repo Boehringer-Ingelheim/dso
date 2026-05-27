@@ -21,6 +21,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 dynamic = [ "version" ]
 dependencies = [
@@ -39,25 +40,14 @@ dependencies = [
   "svgutils",
   "uv",
 ]
+urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
+urls.Home-page = "https://github.com/Boehringer-Ingelheim/dso"
+urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
+scripts.dso = "dso.cli:dso"
 
-optional-dependencies.dev = [ "hatch", "pre-commit" ]
-optional-dependencies.doc = [
-  "click-extra[sphinx]>=5.1",
-  "docutils>=0.8,!=0.18.*,!=0.19.*",
-  # For notebooks
-  "ipykernel",
-  "ipython",
-  "matplotlib",
-  "myst-parser",
-  "sphinx>=4",
-  "sphinx-autodoc-typehints",
-  "sphinx-book-theme>=1",
-  "sphinx-copybutton",
-  "sphinx-design",
-  "sphinxcontrib-bibtex>=1",
-  "sphinxext-opengraph",
-]
-optional-dependencies.test = [
+[dependency-groups]
+dev = [ "hatch", "pre-commit" ]
+test = [
   "coverage",
   "freezegun",
   "pytest",
@@ -66,38 +56,51 @@ optional-dependencies.test = [
   "pytest-xdist",   # for parallel testing with `pytest -n`
   "quarto",
 ]
-urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
-urls.Home-page = "https://github.com/Boehringer-Ingelheim/dso"
-urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
-scripts.dso = "dso.cli:dso"
+doc = [
+  "click-extra[sphinx]>=5.1",
+  "docutils>=0.8,!=0.18.*,!=0.19.*",
+  # For notebooks
+  "ipykernel",
+  "ipython",
+  "matplotlib",
+  "myst-parser",
+  "sphinx>=8.1",
+  "sphinx-autodoc-typehints",
+  "sphinx-book-theme>=1",
+  "sphinx-copybutton",
+  "sphinx-design",
+  # "sphinxcontrib-bibtex>=1",
+  "sphinxcontrib-katex",
+  "sphinxext-opengraph",
+]
 
-[tool.hatch.version]
-source = "vcs"
-
-[tool.hatch.build.targets.wheel]
-packages = [ "src/dso" ]
-
-[tool.hatch.envs.default]
-installer = "uv"
-features = [ "dev" ]
-
-[tool.hatch.envs.docs]
-features = [ "doc" ]
-scripts.build = "sphinx-build -M html docs docs/_build {args}"
-scripts.open = "python -m webbrowser -t docs/_build/html/index.html"
-scripts.clean = "git clean -fdX -- {args:docs}"
-
-[tool.hatch.envs.hatch-test]
-features = [ "test" ]
-[[tool.hatch.envs.hatch-test.matrix]]
-python = [ "3.12" ]
+[tool.hatch]
+build.targets.wheel.packages = [ "src/dso" ]
+envs.default.installer = "uv"
+envs.default.dependency-groups = [ "dev" ]
+envs.docs.dependency-groups = [ "doc" ]
+envs.docs.scripts.build = "sphinx-build -M html docs docs/_build {args}"
+envs.docs.scripts.open = "python -m webbrowser -t docs/_build/html/index.html"
+envs.docs.scripts.clean = "git clean -fdX -- {args:docs}"
+envs.hatch-test.dependency-groups = [ "dev", "test" ]
+envs.hatch-test.matrix = [
+  # Test the lowest and highest supported Python versions with normal deps
+  { deps = [ "stable" ], python = [ "3.11", "3.14" ] },
+  # Test the newest supported Python version also with pre-release deps
+  { deps = [ "pre" ], python = [ "3.14" ] },
+]
+# If the matrix variable `deps` is set to "pre",
+# set the environment variable `UV_PRERELEASE` to "allow".
+envs.hatch-test.overrides.matrix.deps.env-vars = [
+  { key = "UV_PRERELEASE", value = "allow", if = [ "pre" ] },
+]
+version.source = "vcs"
 
 [tool.ruff]
 line-length = 120
 src = [ "src" ]
 extend-include = [ "*.ipynb" ]
 exclude = [ "src/dso/hiyapyco.py" ]
-
 format.docstring-code-format = true
 lint.select = [
   "B",      # flake8-bugbear
@@ -143,16 +146,19 @@ lint.per-file-ignores."docs/*" = [ "I" ]
 lint.per-file-ignores."tests/*" = [ "D" ]
 lint.pydocstyle.convention = "numpy"
 
-[tool.pytest.ini_options]
-testpaths = [ "tests" ]
-xfail_strict = true
-addopts = [
+[tool.pytest]
+ini_options.testpaths = [ "tests" ]
+ini_options.xfail_strict = true
+ini_options.addopts = [
   "--import-mode=importlib", # allow using test files with same name
 ]
 
-[tool.coverage.run]
-source = [ "dso" ]
-omit = [ "**/test_*.py" ]
+[tool.coverage]
+run.omit = [
+  "**/test_*.py",
+]
+run.patch = [ "subprocess" ]
+run.source = [ "dso" ]
 
 [tool.cruft]
 skip = [
