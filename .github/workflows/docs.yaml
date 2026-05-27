@@ -14,8 +14,9 @@ on:
 concurrency: preview-${{ github.ref }}
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
+  deployments: write
 
 jobs:
   docs:
