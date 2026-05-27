@@ -1,12 +1,8 @@
 import pytest
 
-from dso._util import (
-    _read_dot_dso_json,
-    _update_dot_dso_json,
-    find_in_parent,
-    get_dso_config_from_pyproject_toml,
-    git_list_files,
-)
+from dso._util import (_read_dot_dso_json, _update_dot_dso_json,
+                       find_in_parent, get_dso_config_from_pyproject_toml,
+                       git_list_files)
 
 
 @pytest.mark.parametrize(
@@ -77,6 +73,7 @@ def test_git_list_files(dso_project):
             ".editorconfig",
             ".gitattributes",
             ".gitignore",
+            "Project.toml",
             ".pre-commit-config.yaml",
             "README.md",
             "dvc.yaml",
