@@ -13,16 +13,15 @@ and this project adheres to [Semantic Versioning][].
 ### Additions
 
  - Watermarks in PDF and SVG are now natively implemented in these formats as text, rather than including an image overlay ([#170](https://github.com/Boehringer-Ingelheim/dso/pull/170))
+-  JSON output support for `dso get-config` ([#157](https://github.com/Boehringer-Ingelheim/dso/issues/157))
 
 ### Changes
 
  - The default font outline color for watermarks is now a bit lighter ([#170](https://github.com/Boehringer-Ingelheim/dso/pull/170))
 
-## v0.14.0
+### Chore
 
-### Additions
-
--  JSON output support for `dso get-config` ([#157](https://github.com/Boehringer-Ingelheim/dso/issues/157))
+-  Update scverse template to v0.6.0 ([#162](https://github.com/Boehringer-Ingelheim/dso/issues/162))
 
 ## v0.13.3
 

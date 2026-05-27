@@ -4,14 +4,23 @@ version = "0.1.0dev"
 description = "{{ description }}"
 readme = "README.md"
 requires-python = ">=3.11"
+classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
 dependencies = [
   "dso-core>=0.9",
 ]
 
+[tool.uv]
+package = false
+
 [tool.ruff]
 line-length = 120
 extend-include = [ "*.ipynb" ]
-
 lint.select = [
   "B",      # flake8-bugbear
   "BLE",    # flake8-blind-except
@@ -56,6 +65,3 @@ lint.unfixable = [ "F841" ]
 
 [tool.dso]
 use_dso_mgr = true
-
-[tool.uv]
-package = false

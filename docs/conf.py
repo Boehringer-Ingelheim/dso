@@ -92,6 +92,7 @@ nb_output_stderr = "remove"
 nb_execution_mode = "off"
 nb_merge_streams = True
 typehints_defaults = "braces"
+click_extra_enable_exec_directives = True
 
 source_suffix = {
     ".rst": "restructuredtext",
