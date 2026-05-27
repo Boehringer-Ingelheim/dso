@@ -2,10 +2,13 @@ from os import chdir
 
 import pytest
 
+import dso
 from dso import here, read_params, set_stage, stage_here
 
 
 def test_api(quarto_stage):
+    # reset this to avoid race condition during parallel testing
+    dso.api.CONFIG.stage_here = None
     chdir(quarto_stage)
 
     assert here() == (quarto_stage / "..").resolve()
