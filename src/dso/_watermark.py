@@ -284,8 +284,8 @@ class PDFWatermarker(Watermarker):
             page_height = float(page_obj.mediabox.height)
             pdf_bytes = self._create_text_watermark_pdf(page_width, page_height)
             watermark_overlay_pdf = PdfReader(io.BytesIO(pdf_bytes)).pages[0]
-            page_obj.merge_page(watermark_overlay_pdf)
             writer.add_page(page_obj)
+            writer.pages[-1].merge_page(watermark_overlay_pdf)
 
         with open(output_image, "wb") as f:
             writer.write(f)
