@@ -181,6 +181,80 @@ def test_get_config_matrix(dso_project):
     assert list(config) == ["A"]
 
 
+def test_get_config_malformed_variable_substitution(dso_project, capfd):
+    """Test that get_config warns when dvc.yaml contains malformed variable substitution syntax"""
+    chdir(dso_project)
+    stage = dso_project / "mystage"
+    stage.mkdir()
+    (stage / "params.in.yaml").touch()
+
+    (dso_project / "params.in.yaml").write_text(
+        dedent(
+            """\
+            test_param: "output/test.txt"
+            other_param: "something"
+            """
+        )
+    )
+
+    (stage / "dvc.yaml").write_text(
+        dedent(
+            """\
+            stages:
+               mystage01:
+                 params:
+                   - other_param
+                 outs:
+                   - ${ test_param ]
+                 cmd: "echo Hello World!"
+            """
+        )
+    )
+
+    config = get_config("mystage")
+    # The malformed entry should not be parsed as a parameter
+    assert config == {"other_param": "something"}
+    # Check that a warning was emitted
+    captured = capfd.readouterr()
+    assert "Possible syntax error" in captured.err or "Possible syntax error" in captured.out
+
+
+def test_get_config_malformed_variable_substitution_deps(dso_project, capfd):
+    """Test that get_config warns when deps section has malformed variable substitution"""
+    chdir(dso_project)
+    stage = dso_project / "mystage"
+    stage.mkdir()
+    (stage / "params.in.yaml").touch()
+
+    (dso_project / "params.in.yaml").write_text(
+        dedent(
+            """\
+            test_param: "input/test.txt"
+            other_param: "something"
+            """
+        )
+    )
+
+    (stage / "dvc.yaml").write_text(
+        dedent(
+            """\
+            stages:
+               mystage01:
+                 params:
+                   - other_param
+                 deps:
+                   - ${ test_param ]
+                 cmd: "echo Hello World!"
+            """
+        )
+    )
+
+    config = get_config("mystage")
+    assert config == {"other_param": "something"}
+    captured = capfd.readouterr()
+    assert "Possible syntax error" in captured.err or "Possible syntax error" in captured.out
+
+
 def test_get_config_path_relative_to_root_dir(quarto_stage):
     chdir(quarto_stage)
     config1 = get_config("quarto_stage")

@@ -107,12 +107,17 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> 
         else:
             keep_params = set(params)
         dvc_param_pat = re.compile(r"\$\{\s*(.*?)\s*\}")
-        for dep in dvc_stage_config.get("deps", []):
-            if match := dvc_param_pat.findall(dep):
-                keep_params.update(match)
-        for out in dvc_stage_config.get("outs", []):
-            if match := dvc_param_pat.findall(out):
-                keep_params.update(match)
+        # Pattern to detect malformed variable substitution (contains ${ but not properly closed)
+        dvc_param_malformed_pat = re.compile(r"\$\{[^}]*$")
+        for section in ("deps", "outs"):
+            for entry in dvc_stage_config.get(section, []) or []:
+                if match := dvc_param_pat.findall(entry):
+                    keep_params.update(match)
+                elif dvc_param_malformed_pat.search(entry):
+                    log.warning(
+                        f"Possible syntax error in `{section}` section of `dvc.yaml`: `{entry}`. "
+                        "Variable substitution uses the syntax `${ <param_name> }`."
+                    )
 
         log.info(
             f"Only including the following parameters which are listed in `dvc.yaml`: [green]{', '.join(keep_params)}"
