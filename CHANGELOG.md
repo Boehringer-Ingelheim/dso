@@ -8,13 +8,22 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
-## v0.14.0
+## v1.0.0
 
 ### Additions
 
+ - Watermarks in PDF and SVG are now natively implemented in these formats as text, rather than including an image overlay ([#170](https://github.com/Boehringer-Ingelheim/dso/pull/170))
 -  JSON output support for `dso get-config` ([#157](https://github.com/Boehringer-Ingelheim/dso/issues/157))
 -  Added `dso mv` for moving and renaming stages or folders while updating names and references ([#136](https://github.com/Boehringer-Ingelheim/dso/pull/136/files), [#132](https://github.com/Boehringer-Ingelheim/dso/issues/132)). Includes an `--increment-prefix` option to easily batch-rename numbered
    prefixes (e.g., changing `01_Preprocessing`, `02_Analysis` to `02_Preprocessing`, `03_Analysis`).
+
+### Changes
+
+ - The default font outline color for watermarks is now a bit lighter ([#170](https://github.com/Boehringer-Ingelheim/dso/pull/170))
+
+### Chore
+
+-  Update scverse template to v0.6.0 ([#162](https://github.com/Boehringer-Ingelheim/dso/issues/162))
 
 ## v0.13.3
 
