@@ -77,12 +77,11 @@ urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
 [tool.hatch]
 build.targets.wheel.packages = [ "src/dso" ]
 envs.default.installer = "uv"
-envs.default.features = [ "dev" ]
-envs.docs.features = [ "doc" ]
+envs.default.dependency-groups = [ "dev" ]
+envs.docs.dependency-groups = [ "doc" ]
 envs.docs.scripts.build = "sphinx-build -M html docs docs/_build {args}"
 envs.docs.scripts.open = "python -m webbrowser -t docs/_build/html/index.html"
 envs.docs.scripts.clean = "git clean -fdX -- {args:docs}"
-envs.hatch-test.features = [ "test" ]
 envs.hatch-test.dependency-groups = [ "dev", "test" ]
 envs.hatch-test.matrix = [
   # Test the lowest and highest supported Python versions with normal deps
