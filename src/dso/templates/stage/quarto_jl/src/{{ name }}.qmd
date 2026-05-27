@@ -6,12 +6,22 @@ engine: julia
 
 # Set up Julia environment
 
+## Activate environment
+
+```{julia}
+#| label: activate_project
+
+import Pkg as Pkg
+Pkg.activate(Base.current_project())
+```
+
+## Load libraries
+
 ```{julia}
 #| label: load_libraries
 
-using DataScienceOperations
-using QuartoTools
-const DSO = DataScienceOperations
+import DataScienceOperations as DSO
+import QuartoTools as QT
 ```
 
 Load the stage-specific 'params.yaml' config using the `read_params(..)` function. This function specifically loads
@@ -21,7 +31,7 @@ only the stage-dependent parameters that are defined in the 'params' section of 
 #| label: read_params
 #| echo: false
 
-params_obj = DSO.read_params("{{ rel_path_from_project_root }}");
+params = DSO.read_params("{{ rel_path_from_project_root }}");
 ```
 
 # Session info
