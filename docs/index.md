@@ -65,5 +65,5 @@ Changelog <https://github.com/Boehringer-Ingelheim/dso-r/blob/main/CHANGELOG.md>
 
 Usage <https://smlms.github.io/DataScienceOperations.jl/stable/>
 API reference <https://smlms.github.io/DataScienceOperations.jl/stable/api/>
-Changelog: tbd
+Changelog: <https://github.com/SMLMS/DataScienceOperations.jl/blob/main/CHANGELOG.md>
 ```
