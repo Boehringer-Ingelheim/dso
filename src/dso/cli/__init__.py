@@ -279,6 +279,7 @@ def _dvc_wrapper(command: str):
 )
 @click.option(
     "--increment-prefix",
+    "-i",
     help=("Increments the prefix for source stage or folder and subsequent items."),
     default=None,
 )

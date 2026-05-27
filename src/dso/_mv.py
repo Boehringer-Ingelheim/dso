@@ -1,5 +1,6 @@
 """Rename stage or folder"""
 
+import difflib
 import re
 from os import getcwd
 from os.path import relpath
@@ -8,7 +9,7 @@ from re import escape, sub
 from sys import exit
 
 from dso._logging import log
-from dso._util import get_project_root
+from dso._util import get_project_root, git_list_files
 
 
 def update_references_to_source_recursively(current_path: Path, source_absolute_path: Path, target_absolute_path: Path):
@@ -28,11 +29,11 @@ def update_references_to_source_recursively(current_path: Path, source_absolute_
     for filename in ["dvc.yaml", "params.in.yaml"]:
         update_references_in_file(current_path / filename, source_direct_path, target_direct_path)
 
-    # Iterate over all non-hidden files in the src subdirectory of dvc_dir
+    # Iterate over all git-tracked files in the src subdirectory of dvc_dir
     src_subdir = current_path / "src"
     if src_subdir.exists() and src_subdir.is_dir():
-        for file_path in src_subdir.rglob("*"):
-            if file_path.is_file() and not file_path.name.startswith("."):
+        for file_path in git_list_files(src_subdir):
+            if file_path.is_file():
                 update_references_in_file(file_path, source_direct_path, target_direct_path)
 
     for dvc_dir in current_path.rglob("*"):
@@ -55,7 +56,13 @@ def update_references_in_file(file: Path, pattern: str, replacement: str):
             updated_content = sub(rf"(?<![\\/]){escape(pattern)}", replacement, content)
             file.write_text(updated_content)
             if content != updated_content:
-                log.info(f"Updated references in {file}: {content} -> {updated_content}")
+                diff = difflib.unified_diff(
+                    content.splitlines(keepends=True),
+                    updated_content.splitlines(keepends=True),
+                    fromfile=str(file),
+                    tofile=str(file),
+                )
+                log.info(f"Updated references in {file}:\n{''.join(diff)}")
         except (OSError, UnicodeDecodeError) as e:
             log.error(f"[red]Failed to update {file}: {e}")
     else:
@@ -72,8 +79,8 @@ def update_files_in_src_folder(
 ):
     """Rename all files which contain stage name, for all update the stage"""
     if path.exists():
-        for file_path in path.rglob("*"):
-            if file_path.is_file() and not file_path.name.startswith("."):
+        for file_path in git_list_files(path):
+            if file_path.is_file():
                 new_file_name = file_path.name.replace(str(source_base), str(target_base))
                 new_file_path = file_path.parent / new_file_name
                 log.debug(f"Renaming file {file_path} to {new_file_path}")
@@ -188,8 +195,15 @@ def mv(source: Path, target: Path):
         exit(1)
 
     if target_absolute_path.exists():
-        log.error(f"[red]{target} already exists!")
-        exit(1)
+        if target_absolute_path.is_dir():
+            # If target is an existing directory, move source into it (like Unix mv)
+            target_absolute_path = target_absolute_path / source_absolute_path.name
+            target_relative_path = target_absolute_path.relative_to(project_root)
+            target_relative_dir = target_relative_path.parent
+            target_base = target_absolute_path.name
+        else:
+            log.error(f"[red]{target} already exists!")
+            exit(1)
 
     update_source(
         source_base,
@@ -296,7 +310,7 @@ def increment_prefixes(source: Path, target_prefix: str):
     for item in source_target_list:
         log.info(f"[yellow]Renaming {item['source_path'].name} to {item['target_path'].name} in {parent_dir}")
 
-        if (item["target_path"] / "dvc.yaml").exists():
+        if (item["source_path"] / "dvc.yaml").exists():
             mv(item["source_path"], item["target_path"])
         else:
             try:

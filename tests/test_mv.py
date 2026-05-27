@@ -143,6 +143,7 @@ def test_mv_stage_with_dependencies(dso_project_with_multiple_stages: Path, rel_
 
 
 def test_mv_stage_existing_dir(dso_project_with_multiple_stages: Path):
+    """Moving into an existing directory should place source inside that directory (like Unix mv)."""
     runner = CliRunner()
     project_dir = dso_project_with_multiple_stages.resolve()
     path_source = project_dir / "0200_AnalysisA" / "01_Preprocessing"
@@ -156,8 +157,9 @@ def test_mv_stage_existing_dir(dso_project_with_multiple_stages: Path):
         ],
     )
 
-    assert result.exit_code == 1
-    assert path_source.is_dir()
+    assert result.exit_code == 0
+    assert not path_source.is_dir()
+    assert (path_target / "01_Preprocessing").is_dir()
 
 
 @pytest.mark.parametrize(
