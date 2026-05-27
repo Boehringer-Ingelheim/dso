@@ -67,6 +67,26 @@ def quarto_stage_empty_configs(quarto_stage) -> Path:
 
 
 @fixture
+def quarto_stage_null_before_script(quarto_stage) -> Path:
+    """
+    DSO project with quarto stage, with before_script explicitly set to null
+    """
+    with (quarto_stage / ".." / "params.in.yaml").open("w") as f:
+        f.write(
+            dedent(
+                """\
+                dso:
+                  quarto:
+                    before_script: null
+                """
+            )
+        )
+    compile_all_configs([quarto_stage])
+
+    return quarto_stage
+
+
+@fixture
 def quarto_stage_bibliography(quarto_stage) -> Path:
     """
     DSO project with quarto stage, including a bibiliography file
