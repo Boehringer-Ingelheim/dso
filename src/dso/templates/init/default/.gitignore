@@ -27,6 +27,14 @@ __pycache__
 *.knit.md
 _quarto.yml
 
+# Julia stuff
+*.ji
+*.so
+*.dylib
+*.dll
+_freeze/
+.qmd.checkpoint
+
 # Slurm
 *.out
 
