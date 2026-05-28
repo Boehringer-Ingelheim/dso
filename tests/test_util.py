@@ -78,6 +78,7 @@ def test_git_list_files(dso_project):
             ".gitattributes",
             ".gitignore",
             ".pre-commit-config.yaml",
+            "Project.toml",
             "README.md",
             "dvc.yaml",
             "params.in.yaml",

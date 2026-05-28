@@ -1,0 +1,43 @@
+---
+title: "{{ name }}"
+format: html
+engine: julia
+---
+
+# Set up Julia environment
+
+## Activate environment
+
+```{julia}
+#| label: activate_project
+
+import Pkg as Pkg
+Pkg.activate(Base.current_project())
+```
+
+## Load libraries
+
+```{julia}
+#| label: load_libraries
+
+import DataScienceOperations as DSO
+import QuartoTools as QT
+```
+
+Load the stage-specific 'params.yaml' config using the `read_params(..)` function. This function specifically loads
+only the stage-dependent parameters that are defined in the 'params' section of the 'dvc.yaml' file.
+
+```{julia}
+#| label: read_params
+#| echo: false
+
+params = DSO.read_params("{{ rel_path_from_project_root }}");
+```
+
+# Session info
+
+```{julia}
+#| label: session_info
+
+DSO.session_info()
+```
