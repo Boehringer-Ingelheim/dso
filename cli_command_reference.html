@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=5e221aac"></script>
+    <script src="_static/documentation_options.js?v=aac98cd4"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +67,7 @@
     <link rel="prev" title="Installation" href="cli_installation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g7e6110af3" />
+  <meta name="docsearch:version" content="0.1.dev1+gc743e5572" />
   </head>
   
   
@@ -415,10 +415,9 @@
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">exec           </span> Dso wrappers around various tools                            <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">get-config     </span> Get the configuration for a given stage and print it to      <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">               </span> STDOUT in yaml or json format.                               <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
-<span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">init           </span> If you wish to initialize DSO in an existing project, you    <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
-<span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">               </span> can specify an existing directory. In this case, it will     <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
-<span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">               </span> initialize files from the template that do not exist yet,    <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
-<span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">               </span> but never overwrite existing files.                          <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
+<span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">init           </span> Initialize a new DSO project. This sets up a git repository  <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
+<span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">               </span> and creates all necessary configuration files for git, dvc,  <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
+<span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">               </span> uv and dso itself.                                           <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">lint           </span> Lint a dso project                                           <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">pull           </span> Wrapper around <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold-Cyan-BGBlack -Ansi-Bold -Ansi-Cyan -Ansi-BGBlack">dvc pull</span>, compiling configuration before      <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">               </span> running.                                                     <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
@@ -621,9 +620,12 @@
                                                                                 
  <span class=" -Ansi -Ansi-Yellow -Ansi-Yellow">Usage:</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold">dso init</span> [<span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">OPTIONS</span>] [<span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">NAME</span>]                                               
                                                                                 
- If you wish to initialize DSO in an existing project, you can specify an       
- existing directory. In this case, it will initialize files from the template   
- that do not exist yet, but never overwrite existing files.                     
+ Initialize a new DSO project. This sets up a git repository and creates all    
+ necessary configuration files for git, dvc, uv and dso itself.                 
+ <span class=" -Ansi -Ansi-Faint -Ansi-Faint">If you wish to initialize DSO in an existing project, you can specify an </span>      
+ <span class=" -Ansi -Ansi-Faint -Ansi-Faint">existing directory. In this case, it will initialize files from the template </span>  
+ <span class=" -Ansi -Ansi-Faint -Ansi-Faint">that do not exist yet, but never overwrite existing files.</span>                     
+                                                                                
  <span class=" -Ansi -Ansi-Faint -Ansi-Faint">Template libraries can be configured via the </span><span class=" -Ansi -Ansi-Bold -Ansi-Bold-Faint -Ansi-Bold-Faint-Cyan -Ansi-Bold-Faint-Cyan-BGBlack -Ansi-Bold -Ansi-Faint -Ansi-Cyan -Ansi-BGBlack">DSO_TEMPLATE_LIBRARIES</span><span class=" -Ansi -Ansi-Faint -Ansi-Faint"> </span>           
  <span class=" -Ansi -Ansi-Faint -Ansi-Faint">environment variable. Please refer to the documentation for more details. If </span>  
  <span class=" -Ansi -Ansi-Faint -Ansi-Faint">the environment variable is not set, the default template library is used. If </span> 

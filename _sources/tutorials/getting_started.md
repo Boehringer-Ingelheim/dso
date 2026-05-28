@@ -14,7 +14,7 @@ To initialize a project use the following command:
 dso init test_project --description "This is a test project"
 ```
 
-It creates the root directory of your project with all the necessary configuration files for `git`, `dvc`, `uv` and `dso` itself.
+It creates the root directory of your project and **initializes a git repository** with all the necessary configuration files for `git`, `dvc`, `uv` and `dso` itself.
 
 ## `dso create` -- Add folders or stages to your project
 
