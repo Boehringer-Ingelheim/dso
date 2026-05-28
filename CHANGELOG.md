@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning][].
 
 ### Additions
 
+-  `read_params`/`get_config` now warns when `deps`/`outs` sections in `dvc.yaml` contain malformed variable substitution syntax (e.g. `${ param ]` instead of `${ param }`) ([#151](https://github.com/Boehringer-Ingelheim/dso/issues/151))
 -  Watermarks in PDF and SVG are now natively implemented in these formats as text, rather than including an image overlay ([#170](https://github.com/Boehringer-Ingelheim/dso/pull/170))
 -  JSON output support for `dso get-config` ([#157](https://github.com/Boehringer-Ingelheim/dso/issues/157))
 -  Improve shell autocompletion by adding `click.Path()` type to path arguments in CLI commands ([#173](https://github.com/Boehringer-Ingelheim/dso/pull/173))
