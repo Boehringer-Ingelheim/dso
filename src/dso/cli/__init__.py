@@ -113,6 +113,8 @@ def dso_get_config(stage, all, skip_compile, json):
 @click.command(
     "init",
     help=dedent("""\
+    Initialize a new DSO project. This sets up a git repository and creates all necessary configuration
+    files for git, dvc, uv and dso itself.\n
     If you wish to initialize DSO in an existing project, you can specify an existing directory. In
     this case, it will initialize files from the template that do not exist yet, but never overwrite existing files.\n
     """)
