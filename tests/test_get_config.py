@@ -255,6 +255,53 @@ def test_get_config_malformed_variable_substitution_deps(dso_project, capfd):
     assert "Possible syntax error" in captured.err or "Possible syntax error" in captured.out
 
 
+@pytest.mark.parametrize(
+    "malformed_entry",
+    [
+        "${ test_param ]",  # ] instead of }
+        "${ test_param )",  # ) instead of }
+        "${ test_param",  # no closing brace at all
+        "$( test_param )",  # wrong brackets $()
+        "$[ test_param ]",  # wrong brackets $[]
+        "${{ test_param }}",  # double braces (GitHub Actions syntax)
+    ],
+)
+def test_get_config_malformed_variable_patterns(dso_project, capfd, malformed_entry):
+    """Test that get_config warns for various common malformed variable substitution patterns"""
+    chdir(dso_project)
+    stage = dso_project / "mystage"
+    stage.mkdir()
+    (stage / "params.in.yaml").touch()
+
+    (dso_project / "params.in.yaml").write_text(
+        dedent(
+            """\
+            test_param: "output/test.txt"
+            other_param: "something"
+            """
+        )
+    )
+
+    (stage / "dvc.yaml").write_text(
+        dedent(
+            f"""\
+            stages:
+               mystage01:
+                 params:
+                   - other_param
+                 outs:
+                   - {malformed_entry}
+                 cmd: "echo Hello World!"
+            """
+        )
+    )
+
+    config = get_config("mystage")
+    assert config == {"other_param": "something"}
+    captured = capfd.readouterr()
+    assert "Possible syntax error" in captured.err or "Possible syntax error" in captured.out
+
+
 def test_get_config_path_relative_to_root_dir(quarto_stage):
     chdir(quarto_stage)
     config1 = get_config("quarto_stage")

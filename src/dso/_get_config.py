@@ -107,17 +107,26 @@ def get_config(stage: str, *, all: bool = False, skip_compile: bool = False) -> 
         else:
             keep_params = set(params)
         dvc_param_pat = re.compile(r"\$\{\s*(.*?)\s*\}")
-        # Pattern to detect malformed variable substitution (contains ${ but not properly closed)
-        dvc_param_malformed_pat = re.compile(r"\$\{[^}]*$")
+        # Patterns to detect common malformed variable substitution attempts
+        _malformed_patterns = [
+            # ${{ ... }} double braces (e.g. GitHub Actions syntax confusion)
+            re.compile(r"\$\{\{"),
+            # ${ without matching } (e.g. "${ param ]", "${ param )", "${ param")
+            re.compile(r"\$\{[^}]*$"),
+            # $( ... ) instead of ${ ... }
+            re.compile(r"\$\("),
+            # $[ ... ] instead of ${ ... }
+            re.compile(r"\$\["),
+        ]
         for section in ("deps", "outs"):
             for entry in dvc_stage_config.get(section, []) or []:
-                if match := dvc_param_pat.findall(entry):
-                    keep_params.update(match)
-                elif dvc_param_malformed_pat.search(entry):
+                if any(pat.search(entry) for pat in _malformed_patterns):
                     log.warning(
                         f"Possible syntax error in `{section}` section of `dvc.yaml`: `{entry}`. "
                         "Variable substitution uses the syntax `${ <param_name> }`."
                     )
+                elif match := dvc_param_pat.findall(entry):
+                    keep_params.update(match)
 
         log.info(
             f"Only including the following parameters which are listed in `dvc.yaml`: [green]{', '.join(keep_params)}"
