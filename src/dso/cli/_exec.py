@@ -50,7 +50,7 @@ def dso_exec_quarto(stage: str, skip_compile: bool = True):
         dso_config = {}
     quarto_config = dso_config.get("quarto", {})
     # before script is dso-specific - we retrieve and remove it from the quarto config
-    before_script = quarto_config.pop("before_script", "")
+    before_script = quarto_config.pop("before_script", "") or ""
 
     # The following keys in the quarto configuration are paths. They need to be amended by a ".." to compensate
     # for the `src` directory in the quarto stage. I couln't find a comprehensive specification of the
