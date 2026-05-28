@@ -14,7 +14,11 @@ and this project adheres to [Semantic Versioning][].
 
 -  Watermarks in PDF and SVG are now natively implemented in these formats as text, rather than including an image overlay ([#170](https://github.com/Boehringer-Ingelheim/dso/pull/170))
 -  JSON output support for `dso get-config` ([#157](https://github.com/Boehringer-Ingelheim/dso/issues/157))
--  Add Julia support to project template and add `quarto_jl` stage template ([#172]((https://github.com/Boehringer-Ingelheim/dso/pull/172))
+-  Add Julia support to project template and add `quarto_jl` stage template ([#172](https://github.com/Boehringer-Ingelheim/dso/pull/172))
+
+### Fixes
+
+-  Fix template gitignores for `.dvc` and `.quarto_ipynb` files ([#171](https://github.com/Boehringer-Ingelheim/dso/pull/171))
 
 ### Changes
 
