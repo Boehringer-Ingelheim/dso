@@ -78,6 +78,21 @@
             ]
         },
         {
+            "id": "quarto_jl",
+            "description": "Generate a quarto report using Julia (qmd file)",
+            "usage": "Start editing the `qmd` file in `src` and declare inputs and outputs in `dvc.yaml`",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Stage name (used as folder name), e.g \"01_preprocessing\""
+                },
+                {
+                    "name": "description",
+                    "description": "A short description of the stage, used in the README"
+                }
+            ]
+        },
+        {
             "id": "quarto_ipynb",
             "description": "Generate a quarto report using Python (ipynb file)",
             "usage": "Edit the jupyter notebook in `src` using your favorite editor and declare inputs and outputs in `dvc.yaml`",
