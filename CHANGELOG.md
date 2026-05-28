@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning][].
 
 ### Fixes
 
+-  Fix that setting `before_script` to `null` in `params.in.yaml` throws an `AttributeError` ([#176](https://github.com/Boehringer-Ingelheim/dso/issues/176))
 -  Fix template gitignores for `.dvc` and `.quarto_ipynb` files ([#171](https://github.com/Boehringer-Ingelheim/dso/pull/171))
 
 ### Changes
