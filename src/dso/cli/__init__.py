@@ -32,7 +32,7 @@ click.rich_click.TEXT_MARKUP = "markdown"
     default=False,
     help="Compile all configs in the project",
 )
-@click.argument("args", nargs=-1)
+@click.argument("args", nargs=-1, type=click.Path())
 def dso_compile_config(all, args):
     """Compile params.in.yaml into params.yaml using Jinja2 templating and resolving recursive templates.
 
@@ -78,6 +78,7 @@ def dso_compile_config(all, args):
 )
 @click.argument(
     "stage",
+    type=click.Path(),
 )
 def dso_get_config(stage, all, skip_compile, json):
     """Get the configuration for a given stage and print it to STDOUT in yaml or json format.
@@ -112,6 +113,8 @@ def dso_get_config(stage, all, skip_compile, json):
 @click.command(
     "init",
     help=dedent("""\
+    Initialize a new DSO project. This sets up a git repository and creates all necessary configuration
+    files for git, dvc, uv and dso itself.\n
     If you wish to initialize DSO in an existing project, you can specify an existing directory. In
     this case, it will initialize files from the template that do not exist yet, but never overwrite existing files.\n
     """)
@@ -152,7 +155,7 @@ def dso_init(ctx, name: str | None, *, template_id: str | None = None, library_i
     default=bool(int(os.environ.get("DSO_SKIP_COMPILE", 0))),
     is_flag=True,
 )
-@click.argument("args", nargs=-1)
+@click.argument("args", nargs=-1, type=click.Path())
 def dso_lint(args, skip_compile: bool = False):
     """Lint a dso project
 
@@ -182,8 +185,8 @@ def dso_lint(args, skip_compile: bool = False):
 
 
 @click.command(name="watermark")
-@click.argument("input_image", type=Path)
-@click.argument("output_image", type=Path)
+@click.argument("input_image", type=click.Path())
+@click.argument("output_image", type=click.Path())
 @click.option("--text", help="Text to use as watermark", required=True)
 @click.option(
     "--tile_size",
@@ -204,7 +207,7 @@ def dso_watermark(input_image, output_image, text, **kwargs):
 
     from dso._watermark import Watermarker
 
-    Watermarker.add_watermark(input_image, output_image, text=text, **kwargs)
+    Watermarker.add_watermark(Path(input_image), Path(output_image), text=text, **kwargs)
 
 
 @click.group(invoke_without_command=True)
