@@ -3,5 +3,6 @@
 /temp
 /input/*
 !/input/*.dvc
+!/input/**/*.dvc
 /output/*
 /report/*
