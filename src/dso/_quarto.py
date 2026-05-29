@@ -31,6 +31,8 @@ def render_quarto(
     before_script
         Bash snippet to execute before running quarto (e.g. to setup the enviornment)
     """
+    if not before_script:
+        before_script = ""
     before_script = indent(before_script, " " * 8)
     report_dir = report_dir.absolute()
     report_dir.mkdir(exist_ok=True)

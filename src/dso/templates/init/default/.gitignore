@@ -27,6 +27,14 @@ __pycache__
 *.knit.md
 _quarto.yml
 
+# Julia stuff
+*.ji
+*.so
+*.dylib
+*.dll
+_freeze/
+.qmd.checkpoint
+
 # Slurm
 *.out
 
@@ -48,6 +56,9 @@ sccprj/
 # Windows
 Thumbs.db
 ~$*
+
+# quarto
+*.quarto_ipynb
 
 # dso
 .dso.json

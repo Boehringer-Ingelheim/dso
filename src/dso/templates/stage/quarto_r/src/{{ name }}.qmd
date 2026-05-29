@@ -31,3 +31,11 @@ To locate your files relative to the stage path use `stage_here(..)`.
 # e.g.
 samplesheet <- readr::read_csv(stage_here(params$samplesheet))
 ```
+
+# Session info
+
+```{r}
+#| label: session_info
+
+sessionInfo()
+```
