@@ -36,7 +36,7 @@ def update_references_to_source_recursively(current_path: Path, source_absolute_
             if file_path.is_file():
                 update_references_in_file(file_path, source_direct_path, target_direct_path)
 
-    for dvc_dir in current_path.rglob("*"):
+    for dvc_dir in current_path.glob("*"):
         # search all non-hidden folders with dvc.yaml inside which are not part of target
         if (
             dvc_dir.is_dir()
