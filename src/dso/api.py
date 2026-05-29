@@ -12,7 +12,6 @@ from textwrap import dedent
 
 from dso._get_config import get_config
 from dso._logging import log
-from dso._watermark import Watermarker
 
 from ._util import get_project_root
 
@@ -156,6 +155,8 @@ def WatermarkedFile(output_file: Path | str, **kwargs):
     if not watermark_config:
         yield output_file
     else:
+        from dso._watermark import Watermarker
+
         with NamedTemporaryFile(suffix=output_file.suffix) as f:
             try:
                 yield f.name
