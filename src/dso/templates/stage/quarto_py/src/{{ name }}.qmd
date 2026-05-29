@@ -23,3 +23,12 @@ To locate your files relative to the stage path use `stage_here(..)`.
 # e.g.
 samplesheet = pd.read_csv(stage_here(params["samplesheet"]))
 ```
+
+# Session info
+
+```{python}
+#| label: session_info
+
+import session_info2
+session_info2.session_info()
+```

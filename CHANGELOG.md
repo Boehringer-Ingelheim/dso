@@ -17,7 +17,8 @@ and this project adheres to [Semantic Versioning][].
 -  JSON output support for `dso get-config` ([#157](https://github.com/Boehringer-Ingelheim/dso/issues/157))
 -  Improve shell autocompletion by adding `click.Path()` type to path arguments in CLI commands ([#173](https://github.com/Boehringer-Ingelheim/dso/pull/173))
 -  Add Julia support to project template and add `quarto_jl` stage template ([#172](https://github.com/Boehringer-Ingelheim/dso/pull/172))
--  Add `dso checkout` command as a wrapper around `dvc checkout`, compiling configuration before running ([#178](https://github.com/Boehringer-Ingelheim/dso/issues/178))
+-  Include session info in quarto templates (`quarto_r`, `quarto_py`, `quarto_ipynb`) for provenance ([#178](https://github.com/Boehringer-Ingelheim/dso/issues/178))
+-  Add `dso checkout` command as a wrapper around `dvc checkout`, compiling configuration before running ([#179](https://github.com/Boehringer-Ingelheim/dso/issues/179))
 
 ### Fixes
 

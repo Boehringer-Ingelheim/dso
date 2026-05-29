@@ -13,6 +13,7 @@ classifiers = [
 ]
 dependencies = [
   "dso-core>=0.9",
+  "session-info2",
 ]
 
 [tool.uv]
