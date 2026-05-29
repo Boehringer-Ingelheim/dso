@@ -70,11 +70,25 @@ from dso.cli import dso
 invoke(dso, args=["lint", "--help"])
 ```
 
+## dso checkout
+
+```{click:run}
+from dso.cli import dso
+invoke(dso, args=["checkout", "--help"])
+```
+
 ## dso pull
 
 ```{click:run}
 from dso.cli import dso
 invoke(dso, args=["pull", "--help"])
+```
+
+## dso push
+
+```{click:run}
+from dso.cli import dso
+invoke(dso, args=["push", "--help"])
 ```
 
 ## dso repro

@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=c700b229"></script>
+    <script src="_static/documentation_options.js?v=c21b70fd"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +67,7 @@
     <link rel="prev" title="Shell completion" href="cli_shell_completion.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g589ba128e" />
+  <meta name="docsearch:version" content="0.1.dev1+ge14fb1c52" />
   </head>
   
   
@@ -481,17 +481,18 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <section id="additions">
 <h3>Additions<a class="headerlink" href="#additions" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">read_params</span></code>/<code class="docutils literal notranslate"><span class="pre">get_config</span></code> now warns when <code class="docutils literal notranslate"><span class="pre">deps</span></code>/<code class="docutils literal notranslate"><span class="pre">outs</span></code> sections in <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> contain malformed variable substitution syntax (e.g. <code class="docutils literal notranslate"><span class="pre">${</span> <span class="pre">param</span> <span class="pre">]</span></code> instead of <code class="docutils literal notranslate"><span class="pre">${</span> <span class="pre">param</span> <span class="pre">}</span></code>) (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/issues/151">#151</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_params</span></code>/<code class="docutils literal notranslate"><span class="pre">get_config</span></code> now warns when <code class="docutils literal notranslate"><span class="pre">deps</span></code>/<code class="docutils literal notranslate"><span class="pre">outs</span></code> sections in <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> contain malformed variable substitution syntax (e.g. <code class="docutils literal notranslate"><span class="pre">${</span> <span class="pre">param</span> <span class="pre">]</span></code> instead of <code class="docutils literal notranslate"><span class="pre">${</span> <span class="pre">param</span> <span class="pre">}</span></code>) (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/issues/177">#177</a>)</p></li>
 <li><p>Watermarks in PDF and SVG are now natively implemented in these formats as text, rather than including an image overlay (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/170">#170</a>)</p></li>
 <li><p>JSON output support for <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">get-config</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/issues/157">#157</a>)</p></li>
 <li><p>Improve shell autocompletion by adding <code class="docutils literal notranslate"><span class="pre">click.Path()</span></code> type to path arguments in CLI commands (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/173">#173</a>)</p></li>
 <li><p>Add Julia support to project template and add <code class="docutils literal notranslate"><span class="pre">quarto_jl</span></code> stage template (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/172">#172</a>)</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">checkout</span></code> command as a wrapper around <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">checkout</span></code>, compiling configuration before running (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/issues/178">#178</a>)</p></li>
 </ul>
 </section>
 <section id="fixes">
 <h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Fix that setting <code class="docutils literal notranslate"><span class="pre">before_script</span></code> to <code class="docutils literal notranslate"><span class="pre">null</span></code> in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> throws an <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/issues/176">#176</a>)</p></li>
+<li><p>Fix that setting <code class="docutils literal notranslate"><span class="pre">before_script</span></code> to <code class="docutils literal notranslate"><span class="pre">null</span></code> in <code class="docutils literal notranslate"><span class="pre">params.in.yaml</span></code> throws an <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code> (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/issues/175">#175</a>)</p></li>
 <li><p>Fix template gitignores for <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> and <code class="docutils literal notranslate"><span class="pre">.quarto_ipynb</span></code> files (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/171">#171</a>)</p></li>
 </ul>
 </section>

@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="cli_command_reference.html" />
 <meta property="og:site_name" content="Project name not set" />
-<meta property="og:description" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso pull: dso repro: dso watermark:" />
+<meta property="og:description" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso checkout: dso pull: dso push: dso repro: dso watermark:" />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="_images/social_previews/summary_cli_command_reference_cb5178e2.png" />
-<meta property="og:image:alt" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso pull: dso repro: dso watermark:" />
-<meta name="description" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso pull: dso repro: dso watermark:" />
+<meta property="og:image" content="_images/social_previews/summary_cli_command_reference_b8d12c01.png" />
+<meta property="og:image:alt" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso checkout: dso pull: dso push: dso repro: dso watermark:" />
+<meta name="description" content="dso: dso compile-config: dso create: dso create folder: dso create stage: dso exec: dso exec quarto: dso get-config: dso init: dso lint: dso checkout: dso pull: dso push: dso repro: dso watermark:" />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Command reference &#8212; dso-core</title>
@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=c700b229"></script>
+    <script src="_static/documentation_options.js?v=c21b70fd"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +67,7 @@
     <link rel="prev" title="Installation" href="cli_installation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g589ba128e" />
+  <meta name="docsearch:version" content="0.1.dev1+ge14fb1c52" />
   </head>
   
   
@@ -372,7 +372,9 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-get-config">dso get-config</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init">dso init</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-lint">dso lint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-checkout">dso checkout</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-pull">dso pull</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-push">dso push</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro">dso repro</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-watermark">dso watermark</a></li>
 </ul>
@@ -409,6 +411,8 @@
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">--help   </span>                     Show this message and exit.                    <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">╭─ Commands ───────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">checkout       </span> Wrapper around <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold-Cyan-BGBlack -Ansi-Bold -Ansi-Cyan -Ansi-BGBlack">dvc checkout</span>, compiling configuration before  <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
+<span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">               </span> running.                                                     <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">compile-config </span> Compile params.in.yaml into params.yaml using Jinja2         <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">               </span> templating and resolving recursive templates.                <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">create         </span> Create stage folder structure subcommand.                    <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
@@ -677,6 +681,20 @@
 </pre></div>
 </div>
 </section>
+<section id="dso-checkout">
+<h2>dso checkout<a class="headerlink" href="#dso-checkout" title="Link to this heading">#</a></h2>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>checkout<span class="w"> </span>--help
+                                                                                
+ <span class=" -Ansi -Ansi-Yellow -Ansi-Yellow">Usage:</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold">dso checkout</span> [<span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">OPTIONS</span>] [<span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">ARGS</span>]...                                        
+                                                                                
+ Wrapper around <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold-Cyan-BGBlack -Ansi-Bold -Ansi-Cyan -Ansi-BGBlack">dvc checkout</span>, compiling configuration before running.           
+                                                                                
+<span class=" -Ansi -Ansi-Faint -Ansi-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">--help</span>  Show this message and exit.                                          <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
+<span class=" -Ansi -Ansi-Faint -Ansi-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
 <section id="dso-pull">
 <h2>dso pull<a class="headerlink" href="#dso-pull" title="Link to this heading">#</a></h2>
 <div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>pull<span class="w"> </span>--help
@@ -684,6 +702,20 @@
  <span class=" -Ansi -Ansi-Yellow -Ansi-Yellow">Usage:</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold">dso pull</span> [<span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">OPTIONS</span>] [<span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">ARGS</span>]...                                            
                                                                                 
  Wrapper around <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold-Cyan-BGBlack -Ansi-Bold -Ansi-Cyan -Ansi-BGBlack">dvc pull</span>, compiling configuration before running.               
+                                                                                
+<span class=" -Ansi -Ansi-Faint -Ansi-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
+<span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">--help</span>  Show this message and exit.                                          <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
+<span class=" -Ansi -Ansi-Faint -Ansi-Faint">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+</pre></div>
+</div>
+</section>
+<section id="dso-push">
+<h2>dso push<a class="headerlink" href="#dso-push" title="Link to this heading">#</a></h2>
+<div class="highlight-ansi-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>dso<span class="w"> </span>push<span class="w"> </span>--help
+                                                                                
+ <span class=" -Ansi -Ansi-Yellow -Ansi-Yellow">Usage:</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold">dso push</span> [<span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">OPTIONS</span>] [<span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">ARGS</span>]...                                            
+                                                                                
+ Wrapper around <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold-Cyan-BGBlack -Ansi-Bold -Ansi-Cyan -Ansi-BGBlack">dvc push</span>, compiling configuration before running.               
                                                                                 
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">╭─ Options ────────────────────────────────────────────────────────────────────╮</span>
 <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span> <span class=" -Ansi -Ansi-Bold -Ansi-Bold-Cyan -Ansi-Bold -Ansi-Cyan">--help</span>  Show this message and exit.                                          <span class=" -Ansi -Ansi-Faint -Ansi-Faint">│</span>
@@ -797,7 +829,9 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-get-config">dso get-config</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-init">dso init</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-lint">dso lint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-checkout">dso checkout</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-pull">dso pull</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-push">dso push</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-repro">dso repro</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso-watermark">dso watermark</a></li>
 </ul>
