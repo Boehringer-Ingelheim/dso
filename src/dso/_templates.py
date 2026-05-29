@@ -140,8 +140,10 @@ def prompt_for_template_params(
     for p in template["params"]:
         name = p["name"]
         if name not in kwargs:
-            res = questionary.text(p["description"]).ask()
+            while (res := questionary.text(p["description"]).ask()) == "":  # keep asking if no answer
+                pass
             if res is None:
+                print("exit")
                 sys.exit(1)  # user aborted prompt
             kwargs[name] = res
 
