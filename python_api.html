@@ -51,7 +51,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=c4cf1502"></script>
+    <script src="_static/documentation_options.js?v=752a6439"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -64,7 +64,7 @@
     <link rel="prev" title="Usage" href="python_usage.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+ge09385d49" />
+  <meta name="docsearch:version" content="0.1.dev1+g453740aac" />
   </head>
   
   
@@ -355,6 +355,7 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso.WatermarkedFile"><code class="docutils literal notranslate"><span class="pre">WatermarkedFile()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso.here"><code class="docutils literal notranslate"><span class="pre">here()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso.read_params"><code class="docutils literal notranslate"><span class="pre">read_params()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso.set_stage"><code class="docutils literal notranslate"><span class="pre">set_stage()</span></code></a></li>
@@ -372,6 +373,35 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="module-dso">
 <span id="api-reference"></span><h1>API reference<a class="headerlink" href="#module-dso" title="Link to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="dso.WatermarkedFile">
+<span class="sig-prename descclassname"><span class="pre">dso.</span></span><span class="sig-name descname"><span class="pre">WatermarkedFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dso.WatermarkedFile" title="Link to this definition">#</a></dt>
+<dd><p>Contextmanager that handles adding watermarks to files.</p>
+<p>Currently supports SVG, PDF and all pixel graphics supported by pillow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_file</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Path to final (watermarked) image.</p></li>
+<li><p><strong>kwargs</strong> – Use this to customize watermarks. Takes precedence over the configuration in params.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><em>Temporary filename to which the non-watermarked file needs to be written.</em></p></li>
+<li><p><em>If no watermark configuration is present (neither in params nor in kwargs),</em></p></li>
+<li><p><em>yields the output file path directly without applying any watermark.</em></p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">dso</span><span class="o">.</span><span class="n">WatermarkedFile</span><span class="p">(</span><span class="n">stage_here</span><span class="p">(</span><span class="s2">&quot;output/plot.pdf&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="go">        fig.savefig(f, bbox_inches=&quot;tight&quot;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="dso.here">
 <span class="sig-prename descclassname"><span class="pre">dso.</span></span><span class="sig-name descname"><span class="pre">here</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rel_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dso.here" title="Link to this definition">#</a></dt>
@@ -478,6 +508,7 @@ ensure that one does not forget to keep the <code class="docutils literal notran
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso.WatermarkedFile"><code class="docutils literal notranslate"><span class="pre">WatermarkedFile()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso.here"><code class="docutils literal notranslate"><span class="pre">here()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso.read_params"><code class="docutils literal notranslate"><span class="pre">read_params()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dso.set_stage"><code class="docutils literal notranslate"><span class="pre">set_stage()</span></code></a></li>

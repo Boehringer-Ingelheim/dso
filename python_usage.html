@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=c4cf1502"></script>
+    <script src="_static/documentation_options.js?v=752a6439"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +67,7 @@
     <link rel="prev" title="Contributing guide" href="contributing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+ge09385d49" />
+  <meta name="docsearch:version" content="0.1.dev1+g453740aac" />
   </head>
   
   
@@ -360,6 +360,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#typical-usage">Typical usage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#watermarked-files">Watermarked files</a></li>
 </ul>
             </nav>
         </div>
@@ -401,6 +402,24 @@ relative to the current stage independent of your current working directory, e.g
 </div>
 <p>This works, because <code class="docutils literal notranslate"><span class="pre">read_params</span></code> has stored the path of the current stage in a configuration object that persists in
 the current Python session. <code class="docutils literal notranslate"><span class="pre">stage_here</span></code> can use this information to resolve relative paths.</p>
+</section>
+<section id="watermarked-files">
+<h2>Watermarked files<a class="headerlink" href="#watermarked-files" title="Link to this heading">#</a></h2>
+<p>Use <a class="reference internal" href="python_api.html#dso.WatermarkedFile" title="dso.WatermarkedFile"><code class="xref py py-func docutils literal notranslate"><span class="pre">WatermarkedFile()</span></code></a> to automatically add watermarks to output figures. It is a context manager
+that yields a temporary file path. Write your figure to that path, and upon exiting the context, the watermark
+is applied and the result is saved to the specified output path. Watermark settings are read from the stage’s
+<code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> (under <code class="docutils literal notranslate"><span class="pre">dso.quarto.watermark</span></code>) but can be overridden via keyword arguments.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dso</span><span class="w"> </span><span class="kn">import</span> <span class="n">WatermarkedFile</span><span class="p">,</span> <span class="n">read_params</span><span class="p">,</span> <span class="n">stage_here</span>
+
+<span class="n">read_params</span><span class="p">(</span><span class="s2">&quot;subfolder/my_stage&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="k">with</span> <span class="n">WatermarkedFile</span><span class="p">(</span><span class="n">stage_here</span><span class="p">(</span><span class="s2">&quot;output/plot.pdf&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -453,6 +472,7 @@ the current Python session. <code class="docutils literal notranslate"><span cla
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#typical-usage">Typical usage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#watermarked-files">Watermarked files</a></li>
 </ul>
   </nav></div>
 

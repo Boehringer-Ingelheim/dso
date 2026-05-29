@@ -32,3 +32,22 @@ pd.read_csv(stage_here(params["samplesheet"]))
 
 This works, because `read_params` has stored the path of the current stage in a configuration object that persists in
 the current Python session. `stage_here` can use this information to resolve relative paths.
+
+## Watermarked files
+
+Use {func}`~dso.WatermarkedFile` to automatically add watermarks to output figures. It is a context manager
+that yields a temporary file path. Write your figure to that path, and upon exiting the context, the watermark
+is applied and the result is saved to the specified output path. Watermark settings are read from the stage's
+`params.yaml` (under `dso.quarto.watermark`) but can be overridden via keyword arguments.
+
+```python
+import matplotlib.pyplot as plt
+from dso import WatermarkedFile, read_params, stage_here
+
+read_params("subfolder/my_stage")
+
+fig, ax = plt.subplots()
+ax.plot(range(10), range(10))
+with WatermarkedFile(stage_here("output/plot.pdf")) as f:
+    fig.savefig(f, bbox_inches="tight")
+```
