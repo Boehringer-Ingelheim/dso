@@ -4,12 +4,15 @@ The functionality is the same as provided by the dso-r package.
 """
 
 import os
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
+from tempfile import NamedTemporaryFile
 from textwrap import dedent
 
 from dso._get_config import get_config
 from dso._logging import log
+from dso._watermark import Watermarker
 
 from ._util import get_project_root
 
@@ -20,6 +23,9 @@ class Config:
 
     stage_here: Path | None = None
     """Absolute path to the current stage"""
+
+    dso_config: dict | None = None
+    """DSO configuration read from stage params"""
 
 
 CONFIG = Config()
@@ -108,4 +114,45 @@ def read_params(stage: str | Path) -> dict:
         Path to stage, relative to the project root
     """
     set_stage(stage)
-    return get_config(str(stage), skip_compile=bool(int(os.environ.get("DSO_SKIP_COMPILE", 0))))
+    params = get_config(str(stage), skip_compile=bool(int(os.environ.get("DSO_SKIP_COMPILE", 0))))
+    CONFIG.dso_config = params.get("dso", {})
+    return params
+
+
+@contextmanager
+def WatermarkedFile(output_file: Path | str, **kwargs):
+    """
+    Contextmanager that handles adding watermarks to files.
+
+    Currently supports SVG, PDF and all pixel graphics supported by pillow.
+
+    Parameters
+    ----------
+    output_file
+        Path to final (watermarked) image.
+    kwargs
+        Use this to customize watermarks. Takes precedence over the configuration in params.
+
+    Yields
+    ------
+    Temporary filename to which the non-watermarked file needs to be written.
+
+    Example
+    -------
+    >>> fig, ax = plt.subplots()
+    >>> ax.plot(range(10), range(10))
+    >>> with dso.WatermarkedFile(stage_here("output/plot.pdf")) as f:
+            fig.savefig(f, bbox_inches="tight")
+    """
+    output_file = Path(output_file)
+    watermark_config = {}
+    if CONFIG.dso_config is not None:
+        watermark_config.update(CONFIG.dso_config.get("quarto", {}).get("watermark", {}))
+
+    watermark_config.update(kwargs)
+
+    with NamedTemporaryFile(suffix=output_file.suffix) as f:
+        try:
+            yield f.name
+        finally:
+            Watermarker.add_watermark(f.name, output_file, **watermark_config)
