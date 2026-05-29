@@ -1,3 +1,4 @@
+# Project.toml is the project configuration for Julia. It is only relevant if Julia stages are used within this project.
 [deps]
 DataScienceOperations = "3782fec0-3ce0-4a96-88a6-49560f470476"
 QuartoTools = "5fded309-f5a0-485a-9129-b3749510da85"
