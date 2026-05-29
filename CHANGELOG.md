@@ -12,16 +12,17 @@ and this project adheres to [Semantic Versioning][].
 
 ### Additions
 
--  `read_params`/`get_config` now warns when `deps`/`outs` sections in `dvc.yaml` contain malformed variable substitution syntax (e.g. `${ param ]` instead of `${ param }`) ([#151](https://github.com/Boehringer-Ingelheim/dso/issues/151))
+-  `read_params`/`get_config` now warns when `deps`/`outs` sections in `dvc.yaml` contain malformed variable substitution syntax (e.g. `${ param ]` instead of `${ param }`) ([#177](https://github.com/Boehringer-Ingelheim/dso/issues/177))
 -  Watermarks in PDF and SVG are now natively implemented in these formats as text, rather than including an image overlay ([#170](https://github.com/Boehringer-Ingelheim/dso/pull/170))
 -  JSON output support for `dso get-config` ([#157](https://github.com/Boehringer-Ingelheim/dso/issues/157))
 -  Improve shell autocompletion by adding `click.Path()` type to path arguments in CLI commands ([#173](https://github.com/Boehringer-Ingelheim/dso/pull/173))
 -  Add Julia support to project template and add `quarto_jl` stage template ([#172](https://github.com/Boehringer-Ingelheim/dso/pull/172))
 -  Include session info in quarto templates (`quarto_r`, `quarto_py`, `quarto_ipynb`) for provenance ([#178](https://github.com/Boehringer-Ingelheim/dso/issues/178))
+-  Add `dso checkout` command as a wrapper around `dvc checkout`, compiling configuration before running ([#179](https://github.com/Boehringer-Ingelheim/dso/issues/179))
 
 ### Fixes
 
--  Fix that setting `before_script` to `null` in `params.in.yaml` throws an `AttributeError` ([#176](https://github.com/Boehringer-Ingelheim/dso/issues/176))
+-  Fix that setting `before_script` to `null` in `params.in.yaml` throws an `AttributeError` ([#175](https://github.com/Boehringer-Ingelheim/dso/issues/175))
 -  Fix template gitignores for `.dvc` and `.quarto_ipynb` files ([#171](https://github.com/Boehringer-Ingelheim/dso/pull/171))
 
 ### Changes
