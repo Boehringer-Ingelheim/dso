@@ -57,3 +57,13 @@ Usage <https://boehringer-ingelheim.github.io/dso-r/>
 API reference <https://boehringer-ingelheim.github.io/dso-r/reference/index.html>
 Changelog <https://github.com/Boehringer-Ingelheim/dso-r/blob/main/CHANGELOG.md>
 ```
+
+```{toctree}
+:hidden: true
+:maxdepth: 1
+:caption: DSO Julia API
+
+Usage <https://smlms.github.io/DataScienceOperations.jl/stable/>
+API reference <https://smlms.github.io/DataScienceOperations.jl/stable/api/>
+Changelog: <https://github.com/SMLMS/DataScienceOperations.jl/blob/main/CHANGELOG.md>
+```
