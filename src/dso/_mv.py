@@ -47,9 +47,26 @@ def update_references_to_source_recursively(current_path: Path, source_absolute_
             update_references_to_source_recursively(dvc_dir, source_absolute_path, target_absolute_path)
 
 
+def _is_binary_file(file: Path) -> bool:
+    """
+    Check if a file is binary using the same heuristic as file(1).
+
+    Source: https://stackoverflow.com/a/7392391/2340703
+    """
+    _TEXTCHARS = bytearray({7, 8, 9, 10, 12, 13, 27} | set(range(0x20, 0x100)) - {0x7F})
+    try:
+        with open(file, "rb") as f:
+            return bool(f.read(1024).translate(None, _TEXTCHARS))
+    except OSError:
+        return False
+
+
 def update_references_in_file(file: Path, pattern: str, replacement: str):
     """Update all pattern in file"""
     if file.exists():
+        if _is_binary_file(file):
+            log.debug(f"Skipping binary file {file}")
+            return
         log.debug(f"Updating {file}: replacing '{pattern}' with '{replacement}'")
         try:
             content = file.read_text()
