@@ -136,6 +136,8 @@ def WatermarkedFile(output_file: Path | str, **kwargs):
     Yields
     ------
     Temporary filename to which the non-watermarked file needs to be written.
+    If no watermark configuration is present (neither in params nor in kwargs),
+    yields the output file path directly without applying any watermark.
 
     Example
     -------
@@ -151,8 +153,11 @@ def WatermarkedFile(output_file: Path | str, **kwargs):
 
     watermark_config.update(kwargs)
 
-    with NamedTemporaryFile(suffix=output_file.suffix) as f:
-        try:
-            yield f.name
-        finally:
-            Watermarker.add_watermark(f.name, output_file, **watermark_config)
+    if not watermark_config:
+        yield output_file
+    else:
+        with NamedTemporaryFile(suffix=output_file.suffix) as f:
+            try:
+                yield f.name
+            finally:
+                Watermarker.add_watermark(f.name, output_file, **watermark_config)

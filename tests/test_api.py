@@ -64,3 +64,21 @@ def test_watermarked_file(quarto_stage, tmp_path, format):
 
     assert output_file.exists()
     assert output_file.stat().st_size > 0
+
+
+def test_watermarked_file_no_config(quarto_stage, tmp_path):
+    """Test that WatermarkedFile yields output path directly when no watermark config is present."""
+    chdir(quarto_stage)
+    # Ensure no watermark config is set
+    dso.api.CONFIG.dso_config = {}
+
+    output_file = tmp_path / "output.png"
+
+    with WatermarkedFile(output_file) as f:
+        # When no watermark config, should yield the output file path directly
+        assert Path(f) == output_file
+        img = Image.new("RGB", (100, 100), color=(73, 109, 137))
+        img.save(f)
+
+    assert output_file.exists()
+    assert output_file.stat().st_size > 0
