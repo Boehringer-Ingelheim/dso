@@ -18,7 +18,7 @@ import PIL
 from panflute import Div, Image, RawBlock, run_filter
 
 from dso._logging import log
-from dso._watermark import Watermarker
+from dso._watermark import Watermarker, get_plotly_watermark_html
 
 
 def _get_disclaimer_box(title, text):
@@ -88,6 +88,10 @@ def action(elem, doc):
 
             except PIL.UnidentifiedImageError:
                 log.warning("Image could not be read by PIL. It will not receive a watermark.")
+
+        elif isinstance(elem, RawBlock) and elem.format == "html" and "plotly-graph-div" in elem.text:
+            log.debug("Adding watermark to plotly plot")
+            elem.text = get_plotly_watermark_html(elem.text, **watermark_config)
 
     return elem
 
