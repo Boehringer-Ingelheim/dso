@@ -32,6 +32,24 @@ def test_action_watermarks_plotly():
     assert "pointer-events:none" in result.text
 
 
+def test_action_watermarks_plotly_htmlwidget():
+    """An R plotly (htmlwidgets) RawBlock gets wrapped with the watermark overlay."""
+    doc = _doc_with_watermark()
+    inner = (
+        '<div id="htmlwidget-2abd" style="width:100%;height:900px;" class="plotly html-widget"></div>'
+        '<script type="application/json" data-for="htmlwidget-2abd">{"x":{"data":[]}}</script>'
+    )
+    elem = RawBlock(inner, format="html")
+
+    result = action(elem, doc)
+
+    # original widget html (div + json payload) is preserved and an overlay is added on top
+    assert "plotly html-widget" in result.text
+    assert 'data-for="htmlwidget-2abd"' in result.text
+    assert "dso-watermark-overlay" in result.text
+    assert "pointer-events:none" in result.text
+
+
 def test_action_ignores_non_plotly_rawblock():
     """A RawBlock that is not a plotly plot is left untouched."""
     doc = _doc_with_watermark()
