@@ -53,7 +53,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=752a6439"></script>
+    <script src="../_static/documentation_options.js?v=43097683"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +67,7 @@
     <link rel="prev" title="dso._lint.DSO001" href="../generated/dso._lint.DSO001.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g453740aac" />
+  <meta name="docsearch:version" content="0.1.dev1+gad28e0d78" />
   </head>
   
   
@@ -474,6 +474,7 @@ marking figures as preliminary. The following configuration</p>
 </div>
 <p>On a technical level, watermarking is implemented as a <a class="reference external" href="https://pandoc.org/filters.html">pandoc filter</a> using <a class="reference external" href="https://scorreia.com/software/panflute/">panflute</a>. After quarto created an intermediate markdown file, pandoc parses it into an abstract syntax tree (AST).
 The pandoc filter traverses the AST and manipulates each image before pandoc continues conversion into the destination format (usually HTML).</p>
+<p>Interactive <a class="reference external" href="https://plotly.com/python/">plotly</a> plots are watermarked as well: the same tiled watermark is added as a semi-transparent overlay on top of the plot. The overlay does not capture mouse events, so hovering data points still shows their tooltips — even for points underneath the watermark. Plotly’s “Download plot as png” toolbar button is hidden for watermarked plots, so users cannot download an un-watermarked copy of the figure.</p>
 </section>
 </section>
 
