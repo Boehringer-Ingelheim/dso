@@ -118,4 +118,4 @@ watermark:
 On a technical level, watermarking is implemented as a [pandoc filter](https://pandoc.org/filters.html) using [panflute](https://scorreia.com/software/panflute/). After quarto created an intermediate markdown file, pandoc parses it into an abstract syntax tree (AST).
 The pandoc filter traverses the AST and manipulates each image before pandoc continues conversion into the destination format (usually HTML).
 
-Interactive [plotly](https://plotly.com/python/) plots are watermarked as well: the same tiled watermark is added as a semi-transparent overlay on top of the plot. The overlay does not capture mouse events, so hovering data points still shows their tooltips — even for points underneath the watermark.
+Interactive [plotly](https://plotly.com/python/) plots are watermarked as well: the same tiled watermark is added as a semi-transparent overlay on top of the plot. The overlay does not capture mouse events, so hovering data points still shows their tooltips — even for points underneath the watermark. Plotly's "Download plot as png" toolbar button is hidden for watermarked plots, so users cannot download an un-watermarked copy of the figure.

@@ -63,6 +63,9 @@ def test_get_plotly_watermark_html():
     assert "data:image/svg+xml;base64," in out
     assert "background-repeat:repeat" in out
     assert "background-size:120px 80px" in out
+    # plotly's download button is hidden so users can't grab an un-watermarked copy
+    assert '.modebar-btn[data-title*="download" i]' in out
+    assert "display:none" in out
 
 
 @pytest.mark.parametrize(

@@ -483,6 +483,12 @@ def get_plotly_watermark_html(inner_html: str, **kwargs) -> str:
     (``pointer-events: none``), so hovering data points still shows their tooltips - even
     for points that happen to fall underneath the watermark.
 
+    Plotly's "Download plot as png" button is hidden, so users cannot download an
+    un-watermarked copy of the figure via the toolbar. The button is targeted by a
+    case-insensitive substring match on its ``data-title`` (``*="download" i``), which
+    plotly renders for both Python plotly and R/htmlwidgets. Note that the title text is
+    locale-dependent: if plotly is ever localized, the selector would need to be adjusted.
+
     Parameters
     ----------
     inner_html
@@ -505,4 +511,9 @@ def get_plotly_watermark_html(inner_html: str, **kwargs) -> str:
         '"></div>'
     )
 
-    return f'<div class="dso-watermark-container" style="position:relative;">{inner_html}{overlay}</div>'
+    # Hide plotly's "Download plot as png" toolbar button so users can't grab an
+    # un-watermarked copy. Match any modebar button whose data-title contains "download"
+    # (case-insensitive via the `i` flag); locale-dependent on the English title text.
+    style = '<style>.dso-watermark-container .modebar-btn[data-title*="download" i]{display:none!important;}</style>'
+
+    return f'<div class="dso-watermark-container" style="position:relative;">{style}{inner_html}{overlay}</div>'
