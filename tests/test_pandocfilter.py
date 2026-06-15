@@ -4,10 +4,71 @@ from shutil import copyfile
 from textwrap import dedent
 
 from click.testing import CliRunner
+from panflute import Doc, MetaMap, MetaString, Para, RawBlock, Str
 
 from dso._quarto import render_quarto
 from dso.cli import dso_exec
+from dso.pandocfilter import action
 from tests.conftest import TESTDATA
+
+
+def _doc_with_watermark(text="WATERMARK"):
+    """Build a minimal panflute Doc carrying a watermark config in its metadata."""
+    return Doc(metadata=MetaMap(watermark=MetaMap(text=MetaString(text))))
+
+
+def test_action_watermarks_plotly():
+    """A RawBlock containing a plotly plot gets wrapped with the watermark overlay."""
+    doc = _doc_with_watermark()
+    inner = '<div class="plotly-graph-div" id="abc"></div><script>Plotly.newPlot("abc", []);</script>'
+    elem = RawBlock(inner, format="html")
+
+    result = action(elem, doc)
+
+    # original plot html is preserved (incl. the plotly JS) and an overlay is added on top
+    assert "plotly-graph-div" in result.text
+    assert "Plotly.newPlot" in result.text
+    assert "dso-watermark-overlay" in result.text
+    assert "pointer-events:none" in result.text
+
+
+def test_action_watermarks_plotly_htmlwidget():
+    """An R plotly (htmlwidgets) RawBlock gets wrapped with the watermark overlay."""
+    doc = _doc_with_watermark()
+    inner = (
+        '<div id="htmlwidget-2abd" style="width:100%;height:900px;" class="plotly html-widget"></div>'
+        '<script type="application/json" data-for="htmlwidget-2abd">{"x":{"data":[]}}</script>'
+    )
+    elem = RawBlock(inner, format="html")
+
+    result = action(elem, doc)
+
+    # original widget html (div + json payload) is preserved and an overlay is added on top
+    assert "plotly html-widget" in result.text
+    assert 'data-for="htmlwidget-2abd"' in result.text
+    assert "dso-watermark-overlay" in result.text
+    assert "pointer-events:none" in result.text
+
+
+def test_action_ignores_non_plotly_rawblock():
+    """A RawBlock that is not a plotly plot is left untouched."""
+    doc = _doc_with_watermark()
+    inner = "<div>just some html</div>"
+    elem = RawBlock(inner, format="html")
+
+    result = action(elem, doc)
+
+    assert result.text == inner
+
+
+def test_action_ignores_plain_text():
+    """Non-image, non-RawBlock elements are left untouched."""
+    doc = _doc_with_watermark()
+    elem = Para(Str("hello"))
+
+    result = action(elem, doc)
+
+    assert result is elem
 
 
 def test_pandocfilter(quarto_stage):

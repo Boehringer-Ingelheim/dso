@@ -1,5 +1,6 @@
 """Add text-watermarks to images"""
 
+import base64
 import io
 from abc import abstractmethod
 from dataclasses import dataclass
@@ -177,6 +178,79 @@ class SVGWatermarker(Watermarker):
             return float(parts[2]), float(parts[3])
         raise ValueError("Watermarking requires SVG images that define an explicit width/height or viewBox")
 
+    def _get_text_attrs(self) -> dict[str, str]:
+        """Build the common SVG attributes (font, fill, stroke) for the watermark text elements."""
+        fill = RGBAColor.from_string(self.font_color)
+        stroke = RGBAColor.from_string(self.font_outline_color)
+
+        stroke_attrs: dict[str, str] = {}
+        if self.font_outline > 0:
+            stroke_attrs = {
+                "stroke": stroke.hex_rgb,
+                "stroke-opacity": f"{stroke.a:.4f}",
+                "stroke-width": str(self.font_outline),
+                "paint-order": "stroke fill",
+            }
+
+        return {
+            "font-family": "Helvetica, Arial, sans-serif",
+            "font-size": str(self.font_size),
+            "fill": fill.hex_rgb,
+            "fill-opacity": f"{fill.a:.4f}",
+            **stroke_attrs,
+        }
+
+    def _add_text_elements(self, parent, ns: str = "") -> None:
+        """Add the two watermark <text> elements (top-left and middle-right) to ``parent``."""
+        import xml.etree.ElementTree as ET
+
+        tile_w, tile_h = self.tile_size
+        common_text_attrs = self._get_text_attrs()
+
+        # Position 1: top-left of tile (matches PIL anchor "lt" at (10, 10))
+        # SVG y is baseline; PIL y=10 is top of text. baseline = top + ascent ≈ top + 0.75 * font_size
+        text1 = ET.SubElement(
+            parent,
+            f"{ns}text",
+            {"x": "10", "y": str(10 + self.font_size * 0.75), **common_text_attrs},
+        )
+        text1.text = self.text
+
+        # Position 2: middle-right of tile (matches PIL anchor "rm")
+        # PIL center at y = tile_h/2 + font_size. baseline = center + 0.25 * font_size
+        text2 = ET.SubElement(
+            parent,
+            f"{ns}text",
+            {
+                "x": str(tile_w - 10),
+                "y": str(tile_h / 2 + self.font_size * 1.25),
+                "text-anchor": "end",
+                **common_text_attrs,
+            },
+        )
+        text2.text = self.text
+
+    def get_tile_svg(self) -> str:
+        """Return a standalone, tile-sized SVG document (as a string) containing the watermark text.
+
+        The returned SVG has the size of a single tile and can be repeated (e.g. as a CSS
+        ``background-image``) to fill an arbitrary area with the watermark pattern.
+        """
+        import xml.etree.ElementTree as ET
+
+        tile_w, tile_h = self.tile_size
+        svg = ET.Element(
+            "svg",
+            {
+                "xmlns": "http://www.w3.org/2000/svg",
+                "width": str(tile_w),
+                "height": str(tile_h),
+                "viewBox": f"0 0 {tile_w} {tile_h}",
+            },
+        )
+        self._add_text_elements(svg)
+        return ET.tostring(svg, encoding="unicode")
+
     def apply_and_save(self, input_image: Path | str, output_image: Path | str):
         """Apply the watermark to an image and save it to the specified output file"""
         import xml.etree.ElementTree as ET
@@ -196,25 +270,6 @@ class SVGWatermarker(Watermarker):
 
         width, height = self._get_dimensions(root)
         tile_w, tile_h = self.tile_size
-        fill = RGBAColor.from_string(self.font_color)
-        stroke = RGBAColor.from_string(self.font_outline_color)
-
-        stroke_attrs: dict[str, str] = {}
-        if self.font_outline > 0:
-            stroke_attrs = {
-                "stroke": stroke.hex_rgb,
-                "stroke-opacity": f"{stroke.a:.4f}",
-                "stroke-width": str(self.font_outline),
-                "paint-order": "stroke fill",
-            }
-
-        common_text_attrs = {
-            "font-family": "Helvetica, Arial, sans-serif",
-            "font-size": str(self.font_size),
-            "fill": fill.hex_rgb,
-            "fill-opacity": f"{fill.a:.4f}",
-            **stroke_attrs,
-        }
 
         # Add <defs> at the front if not present
         defs = root.find(f"{ns}defs")
@@ -233,28 +288,7 @@ class SVGWatermarker(Watermarker):
             },
         )
 
-        # Position 1: top-left of tile (matches PIL anchor "lt" at (10, 10))
-        # SVG y is baseline; PIL y=10 is top of text. baseline = top + ascent ≈ top + 0.75 * font_size
-        text1 = ET.SubElement(
-            pattern,
-            f"{ns}text",
-            {"x": "10", "y": str(10 + self.font_size * 0.75), **common_text_attrs},
-        )
-        text1.text = self.text
-
-        # Position 2: middle-right of tile (matches PIL anchor "rm")
-        # PIL center at y = tile_h/2 + font_size. baseline = center + 0.25 * font_size
-        text2 = ET.SubElement(
-            pattern,
-            f"{ns}text",
-            {
-                "x": str(tile_w - 10),
-                "y": str(tile_h / 2 + self.font_size * 1.25),
-                "text-anchor": "end",
-                **common_text_attrs,
-            },
-        )
-        text2.text = self.text
+        self._add_text_elements(pattern, ns)
 
         # Overlay rect filling the full SVG canvas with the tiled pattern
         ET.SubElement(
@@ -439,3 +473,47 @@ class PDFWatermarker(Watermarker):
         pdf.extend(f"trailer\n<< /Size {len(objects) + 1} /Root 1 0 R >>\nstartxref\n{xref_offset}\n%%EOF\n".encode())
 
         return bytes(pdf)
+
+
+def get_plotly_watermark_html(inner_html: str, **kwargs) -> str:
+    """Wrap the HTML of an (interactive) plotly plot with a tiled watermark overlay.
+
+    The watermark is rendered as a repeating, semi-transparent SVG tile placed on top of
+    the plot (high ``z-index``). The overlay does not capture pointer events
+    (``pointer-events: none``), so hovering data points still shows their tooltips - even
+    for points that happen to fall underneath the watermark.
+
+    Plotly's "Download plot as png" button is hidden, so users cannot download an
+    un-watermarked copy of the figure via the toolbar. The button is targeted by a
+    case-insensitive substring match on its ``data-title`` (``*="download" i``), which
+    plotly renders for both Python plotly and R/htmlwidgets. Note that the title text is
+    locale-dependent: if plotly is ever localized, the selector would need to be adjusted.
+
+    Parameters
+    ----------
+    inner_html
+        The original HTML of the plotly plot (the ``<div class="plotly-graph-div">`` and its
+        accompanying ``<script>``).
+    kwargs
+        Watermark options forwarded to :class:`SVGWatermarker` (e.g. ``text``, ``tile_size``,
+        ``font_size``, ``font_color``).
+    """
+    wm = SVGWatermarker(**kwargs)
+    tile_w, tile_h = wm.tile_size
+    data_uri = "data:image/svg+xml;base64," + base64.b64encode(wm.get_tile_svg().encode()).decode()
+
+    overlay = (
+        '<div class="dso-watermark-overlay" style="'
+        "position:absolute;top:0;left:0;width:100%;height:100%;"
+        "pointer-events:none;z-index:1000;"
+        f"background-image:url('{data_uri}');"
+        f"background-repeat:repeat;background-size:{tile_w}px {tile_h}px;"
+        '"></div>'
+    )
+
+    # Hide plotly's "Download plot as png" toolbar button so users can't grab an
+    # un-watermarked copy. Match any modebar button whose data-title contains "download"
+    # (case-insensitive via the `i` flag); locale-dependent on the English title text.
+    style = '<style>.dso-watermark-container .modebar-btn[data-title*="download" i]{display:none!important;}</style>'
+
+    return f'<div class="dso-watermark-container" style="position:relative;">{style}{inner_html}{overlay}</div>'

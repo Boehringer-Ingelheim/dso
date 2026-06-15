@@ -18,7 +18,7 @@ import PIL
 from panflute import Div, Image, RawBlock, run_filter
 
 from dso._logging import log
-from dso._watermark import Watermarker
+from dso._watermark import Watermarker, get_plotly_watermark_html
 
 
 def _get_disclaimer_box(title, text):
@@ -70,6 +70,22 @@ def _sanitize_watermark_config(config):
     return config
 
 
+def _is_plotly_html(text: str) -> bool:
+    """Return whether a raw HTML block contains an (interactive) plotly plot.
+
+    Detects both flavours of plotly output found in quarto reports:
+      * Python plotly: ``<div class="plotly-graph-div" ...>``
+      * R plotly (htmlwidgets): ``<div ... class="plotly html-widget">`` plus a
+        ``<script type="application/json" data-for="htmlwidget-...">`` payload.
+    """
+    if "plotly-graph-div" in text:
+        return True
+    # R htmlwidgets: the rendered container carries both the "plotly" and the
+    # "html-widget" classes (order may vary). The "html-widget" class (with hyphen)
+    # only appears on the widget container, not in the JSON payload.
+    return "html-widget" in text and "plotly" in text
+
+
 def action(elem, doc):
     """Panflutes action"""
     watermark_config = _sanitize_watermark_config(doc.get_metadata("watermark"))
@@ -88,6 +104,10 @@ def action(elem, doc):
 
             except PIL.UnidentifiedImageError:
                 log.warning("Image could not be read by PIL. It will not receive a watermark.")
+
+        elif isinstance(elem, RawBlock) and elem.format == "html" and _is_plotly_html(elem.text):
+            log.debug("Adding watermark to plotly plot")
+            elem.text = get_plotly_watermark_html(elem.text, **watermark_config)
 
     return elem
 

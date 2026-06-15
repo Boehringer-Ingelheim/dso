@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## v1.1.0
+
+### Additions
+-  Watermarks are now also added to interactive plotly plots in quarto reports, as a semi-transparent overlay that does not interfere with hovering data points. Plotly's image download button is hidden so users cannot download an un-watermarked copy ([#182](https://github.com/Boehringer-Ingelheim/dso/issues/182))
+
 ## v1.0.0
 
 ### Additions
