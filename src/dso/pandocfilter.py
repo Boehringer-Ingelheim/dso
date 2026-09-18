@@ -60,7 +60,7 @@ def _sanitize_watermark_config(config):
         if f in config:
             config[f] = int(config[f])
     # special handling for tile size; it's a list; but if it contains only one element
-    # then it has the same widht and height (quarto or yaml limitation that list can't contain two identical elements)
+    # then it has the same width and height (quarto or yaml limitation that list can't contain two identical elements)
     if "tile_size" in config:
         if len(config["tile_size"]) == 1:
             size = int(config["tile_size"][0])

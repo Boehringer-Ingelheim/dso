@@ -20,11 +20,11 @@ def dso_exec_quarto(stage: str, skip_compile: bool = True):
     """
     Render a quarto stage. Quarto parameters are inherited from params.yaml
 
-    A quarto stage is assmed to have the following structure:
+    A quarto stage is assumed to have the following structure:
      * One or multiple `.qmd` files in `src`
      * Reports will be stored in `report`
 
-    No `_quarto.yml` shall be present as it will be automatically created tempoarily. Instead
+    No `_quarto.yml` shall be present as it will be automatically created temporarily. Instead
     supply quarto parameters in `params.in.yaml` under the key `dso.quarto`.
 
     Parameters

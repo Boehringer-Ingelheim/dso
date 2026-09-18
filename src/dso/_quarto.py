@@ -29,7 +29,7 @@ def render_quarto(
     report_dir
         Output directory of the rendered document
     before_script
-        Bash snippet to execute before running quarto (e.g. to setup the enviornment)
+        Bash snippet to execute before running quarto (e.g. to setup the environment)
     """
     if not before_script:
         before_script = ""
