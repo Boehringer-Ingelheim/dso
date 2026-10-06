@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## v1.1.1
+
+### Fixes
+
+-  `dso compile-config` no longer creates `params.yaml` with mode `600`; newly created files now respect the umask ([#186](https://github.com/Boehringer-Ingelheim/dso/issues/186))
+
 ## v1.1.0
 
 ### Additions
