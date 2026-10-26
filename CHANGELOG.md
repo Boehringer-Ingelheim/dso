@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning][].
 
 ### Fixes
 
--  Fix stage template gitignores so that DVC discovers `.dvc` files in `input/`. Previously, `dvc pull`/`dvc push` (and `dso pull`/`dso push`) without explicit targets silently skipped them.
+-  Fix stage template gitignores so that DVC discovers `.dvc` files in `input/`. Previously, `dvc pull`/`dvc push` (and `dso pull`/`dso push`) without explicit targets silently skipped them ([#189](https://github.com/Boehringer-Ingelheim/dso/pull/189))
 
 ## v1.1.0
 
