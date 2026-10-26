@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## Unreleased
+
+### Fixes
+
+-  Fix stage template gitignores so that DVC discovers `.dvc` files in `input/`. Previously, `dvc pull`/`dvc push` (and `dso pull`/`dso push`) without explicit targets silently skipped them.
+
 ## v1.1.0
 
 ### Additions

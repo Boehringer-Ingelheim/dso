@@ -1,6 +1,7 @@
 import json
 from os import chdir
-from subprocess import check_call
+from pathlib import Path
+from subprocess import call, check_call
 
 import pytest
 from click.testing import CliRunner
@@ -147,6 +148,44 @@ def test_create_stage(dso_project, template, stage_path, expected_src, abspath):
     # Check that all pre-commit checks pass on the newly initiated template
     check_call(["pre-commit", "install"], cwd=dso_project)
     check_call(["pre-commit", "run", "--all-files"], cwd=dso_project)
+
+
+@pytest.mark.parametrize("template", ["bash", "quarto_r", "quarto_py", "quarto_ipynb", "quarto_jl"])
+def test_create_stage_dvc_tracked_input(dso_project, template):
+    """
+    `.dvc` files in the `input` folder of a stage must be discoverable by DVC.
+
+    DVC skips directories that its git backend (dulwich) reports as ignored when collecting `.dvc` files.
+    dulwich matched `/input/*` against the `input/` directory itself, so `dvc pull`/`dvc push` without
+    explicit targets silently skipped all `.dvc` files in `input/`.
+    """
+    from dvc.repo import Repo
+
+    from dso._compile_config import compile_all_configs
+
+    runner = CliRunner()
+    chdir(dso_project)
+    result = runner.invoke(
+        dso_create, ["stage", "teststage", "--template", template, "--description", "testdescription"]
+    )
+    print(result.output)
+    assert result.exit_code == 0
+
+    input_dir = dso_project / "teststage" / "input"
+    input_dir.mkdir(exist_ok=True)
+    (input_dir / "data.txt").write_text("foo\n")
+    (input_dir / "untracked.txt").write_text("bar\n")
+    compile_all_configs([dso_project])
+
+    with Repo(dso_project) as repo:
+        repo.add(str(input_dir / "data.txt"))
+    with Repo(dso_project) as repo:
+        dvc_files = {Path(stage.path).relative_to(dso_project) for stage in repo.index.stages}
+    assert Path("teststage/input/data.txt.dvc") in dvc_files
+
+    # git must still ignore input data, but not the `.dvc` files
+    assert call(["git", "check-ignore", "-q", "teststage/input/untracked.txt"], cwd=dso_project) == 0
+    assert call(["git", "check-ignore", "-q", "teststage/input/data.txt.dvc"], cwd=dso_project) == 1
 
 
 def test_create_folder(dso_project):
