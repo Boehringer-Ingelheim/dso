@@ -6,6 +6,8 @@ on:
 
 name: pre-commit
 
+permissions: {}
+
 jobs:
   pre-commit:
     permissions:
@@ -14,16 +16,17 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-        with:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        # credentials needed by git-auto-commit-action to push autofixes
+        with: # zizmor: ignore[artipacked]
           ref: ${{ github.head_ref }}
 
-      - uses: j178/prek-action@v2
+      - uses: j178/prek-action@5337cb91e0fa35a7ff31b9ca345126d8bbbcdf16 # v2.0.6
         with:
           # only run the pre-commit config in the project root, not in templates
           extra-args: "--all-files --config ./.pre-commit-config.yaml"
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5.2.0
         if: "!cancelled()"
         with:
           commit_message: pre-commit autofixes
