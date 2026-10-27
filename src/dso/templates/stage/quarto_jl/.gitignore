@@ -1,7 +1,7 @@
 /log
 /tmp
 /temp
-/input/*
+/input/?*
 !/input/*.dvc
 /output/*
 /report/*
