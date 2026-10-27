@@ -8,11 +8,6 @@ The format is based on [Keep a Changelog][], and this project adheres to
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
-## Unreleased
-
-### Fixes
-
--  Fix stage template gitignores so that DVC discovers `.dvc` files in `input/`. Previously, `dvc pull`/`dvc push` (and `dso pull`/`dso push`) without explicit targets silently skipped them ([#189](https://github.com/Boehringer-Ingelheim/dso/pull/189))
 
 ## v1.1.1
 
@@ -21,6 +16,7 @@ The format is based on [Keep a Changelog][], and this project adheres to
 - `dso compile-config` no longer creates `params.yaml` with mode `600`; newly
   created files now respect the umask
   ([#187](https://github.com/Boehringer-Ingelheim/dso/pulls/187))
+-  Fix stage template gitignores so that DVC discovers `.dvc` files in `input/`. Previously, `dvc pull`/`dvc push` (and `dso pull`/`dso push`) without explicit targets silently skipped them ([#189](https://github.com/Boehringer-Ingelheim/dso/pull/189))
 
 ### Chore
 
