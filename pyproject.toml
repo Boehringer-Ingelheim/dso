@@ -15,10 +15,9 @@ authors = [
   { name = "Thomas Schwarzl" },
   { name = "Alexander Peltzer" },
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 classifiers = [
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
@@ -40,19 +39,24 @@ dependencies = [
   "svgutils",
   "uv",
 ]
+# https://docs.pypi.org/project_metadata/#project-urls
 urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
 urls.Home-page = "https://github.com/Boehringer-Ingelheim/dso"
 urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
 scripts.dso = "dso.cli:dso"
 
 [dependency-groups]
-dev = [ "hatch", "pre-commit" ]
+dev = [
+  "hatch",
+  "prek",
+  "twine>=4.0.2",
+]
 test = [
-  "coverage",
+  "coverage>=7.10",
   "freezegun",
   "pytest",
   "pytest-asyncio", # for async tests
-  "pytest-cov",
+  "pytest-cov",     # For VS Code’s coverage functionality
   "pytest-xdist",   # for parallel testing with `pytest -n`
   "quarto",
 ]
@@ -64,6 +68,7 @@ doc = [
   "ipython",
   "matplotlib",
   "myst-parser",
+  "scverse-misc[sphinx]>=0.1.2",
   "sphinx>=8.1",
   "sphinx-autodoc-typehints",
   "sphinx-book-theme>=1",
@@ -75,26 +80,26 @@ doc = [
 ]
 
 [tool.hatch]
+version.source = "vcs"
 build.targets.wheel.packages = [ "src/dso" ]
 envs.default.installer = "uv"
 envs.default.dependency-groups = [ "dev" ]
-envs.docs.dependency-groups = [ "doc" ]
-envs.docs.scripts.build = "sphinx-build -M html docs docs/_build {args}"
-envs.docs.scripts.open = "python -m webbrowser -t docs/_build/html/index.html"
+envs.docs.scripts.build = "sphinx-build -M html docs docs/_build -W {args}"
 envs.docs.scripts.clean = "git clean -fdX -- {args:docs}"
-envs.hatch-test.dependency-groups = [ "dev", "test" ]
+envs.docs.scripts.open = "python -m webbrowser -t docs/_build/html/index.html"
+envs.docs.dependency-groups = [ "doc" ]
 envs.hatch-test.matrix = [
   # Test the lowest and highest supported Python versions with normal deps
-  { deps = [ "stable" ], python = [ "3.11", "3.14" ] },
+  { deps = [ "stable" ], python = [ "3.12", "3.14" ] },
   # Test the newest supported Python version also with pre-release deps
   { deps = [ "pre" ], python = [ "3.14" ] },
 ]
 # If the matrix variable `deps` is set to "pre",
 # set the environment variable `UV_PRERELEASE` to "allow".
 envs.hatch-test.overrides.matrix.deps.env-vars = [
-  { key = "UV_PRERELEASE", value = "allow", if = [ "pre" ] },
+  { value = "allow", key = "UV_PRERELEASE", if = [ "pre" ] },
 ]
-version.source = "vcs"
+envs.hatch-test.dependency-groups = [ "dev", "test" ]
 
 [tool.ruff]
 line-length = 120
@@ -147,11 +152,11 @@ lint.per-file-ignores."tests/*" = [ "D" ]
 lint.pydocstyle.convention = "numpy"
 
 [tool.pytest]
-ini_options.testpaths = [ "tests" ]
-ini_options.xfail_strict = true
-ini_options.addopts = [
+addopts = [
   "--import-mode=importlib", # allow using test files with same name
 ]
+strict = true
+testpaths = [ "tests" ]
 
 [tool.coverage]
 run.omit = [
@@ -162,6 +167,7 @@ run.source = [ "dso" ]
 
 [tool.cruft]
 skip = [
+  ".git",
   "tests",
   "src/**/__init__.py",
   "src/**/basic.py",
