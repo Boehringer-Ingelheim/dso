@@ -4,7 +4,8 @@ from textwrap import dedent
 import pytest
 from click.testing import CliRunner
 
-from dso.get_config import _filter_nested_dict, cli, get_config
+from dso._get_config import _filter_nested_dict, get_config
+from dso.cli import dso_get_config
 
 
 @pytest.mark.parametrize(
@@ -142,6 +143,165 @@ def test_get_config_order(dso_project):
     assert list(config["B1"]) == ["C", "A", "D", "B", "Z", "X"]
 
 
+def test_get_config_matrix(dso_project):
+    """Test that get-config is compatible with dvc's matrix feature"""
+    chdir(dso_project)
+    stage = dso_project / "mystage"
+    stage.mkdir()
+    (stage / "params.in.yaml").touch()
+
+    (dso_project / "params.in.yaml").write_text(
+        dedent(
+            """\
+            matrix_param: ['p1', 'p2']
+            A: "aaa"
+            B: "bbb"
+            """
+        )
+    )
+
+    (stage / "dvc.yaml").write_text(
+        dedent(
+            """\
+            stages:
+               mystage01:
+                 matrix:
+                    mp: ${ matrix_param }
+                 params:
+                   - A
+                   - item.mp
+                 outs:
+                   - output/${ item.mp }
+                 cmd: "echo Hello World!"
+            """
+        )
+    )
+
+    config = get_config("mystage")
+    assert list(config) == ["A"]
+
+
+def test_get_config_malformed_variable_substitution(dso_project, capfd):
+    """Test that get_config warns when dvc.yaml contains malformed variable substitution syntax"""
+    chdir(dso_project)
+    stage = dso_project / "mystage"
+    stage.mkdir()
+    (stage / "params.in.yaml").touch()
+
+    (dso_project / "params.in.yaml").write_text(
+        dedent(
+            """\
+            test_param: "output/test.txt"
+            other_param: "something"
+            """
+        )
+    )
+
+    (stage / "dvc.yaml").write_text(
+        dedent(
+            """\
+            stages:
+               mystage01:
+                 params:
+                   - other_param
+                 outs:
+                   - ${ test_param ]
+                 cmd: "echo Hello World!"
+            """
+        )
+    )
+
+    config = get_config("mystage")
+    # The malformed entry should not be parsed as a parameter
+    assert config == {"other_param": "something"}
+    # Check that a warning was emitted
+    captured = capfd.readouterr()
+    assert "Possible syntax error" in captured.err or "Possible syntax error" in captured.out
+
+
+def test_get_config_malformed_variable_substitution_deps(dso_project, capfd):
+    """Test that get_config warns when deps section has malformed variable substitution"""
+    chdir(dso_project)
+    stage = dso_project / "mystage"
+    stage.mkdir()
+    (stage / "params.in.yaml").touch()
+
+    (dso_project / "params.in.yaml").write_text(
+        dedent(
+            """\
+            test_param: "input/test.txt"
+            other_param: "something"
+            """
+        )
+    )
+
+    (stage / "dvc.yaml").write_text(
+        dedent(
+            """\
+            stages:
+               mystage01:
+                 params:
+                   - other_param
+                 deps:
+                   - ${ test_param ]
+                 cmd: "echo Hello World!"
+            """
+        )
+    )
+
+    config = get_config("mystage")
+    assert config == {"other_param": "something"}
+    captured = capfd.readouterr()
+    assert "Possible syntax error" in captured.err or "Possible syntax error" in captured.out
+
+
+@pytest.mark.parametrize(
+    "malformed_entry",
+    [
+        "${ test_param ]",  # ] instead of }
+        "${ test_param )",  # ) instead of }
+        "${ test_param",  # no closing brace at all
+        "$( test_param )",  # wrong brackets $()
+        "$[ test_param ]",  # wrong brackets $[]
+        "${{ test_param }}",  # double braces (GitHub Actions syntax)
+    ],
+)
+def test_get_config_malformed_variable_patterns(dso_project, capfd, malformed_entry):
+    """Test that get_config warns for various common malformed variable substitution patterns"""
+    chdir(dso_project)
+    stage = dso_project / "mystage"
+    stage.mkdir()
+    (stage / "params.in.yaml").touch()
+
+    (dso_project / "params.in.yaml").write_text(
+        dedent(
+            """\
+            test_param: "output/test.txt"
+            other_param: "something"
+            """
+        )
+    )
+
+    (stage / "dvc.yaml").write_text(
+        dedent(
+            f"""\
+            stages:
+               mystage01:
+                 params:
+                   - other_param
+                 outs:
+                   - {malformed_entry}
+                 cmd: "echo Hello World!"
+            """
+        )
+    )
+
+    config = get_config("mystage")
+    assert config == {"other_param": "something"}
+    captured = capfd.readouterr()
+    assert "Possible syntax error" in captured.err or "Possible syntax error" in captured.out
+
+
 def test_get_config_path_relative_to_root_dir(quarto_stage):
     chdir(quarto_stage)
     config1 = get_config("quarto_stage")
@@ -161,6 +321,6 @@ def test_get_config_invalid_stage(dso_project):
 def test_get_config_cli(quarto_stage):
     runner = CliRunner()
     chdir(quarto_stage)
-    result = runner.invoke(cli, ["quarto_stage"])
+    result = runner.invoke(dso_get_config, ["quarto_stage"])
     assert result.exit_code == 0
     assert "quarto:" in result.output

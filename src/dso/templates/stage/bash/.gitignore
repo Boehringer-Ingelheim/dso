@@ -1,4 +1,8 @@
 /log
 /tmp
 /temp
-*.rmarkdown
+/input/*
+!/input/*.dvc
+!/input/**/*.dvc
+/output/*
+/report/*

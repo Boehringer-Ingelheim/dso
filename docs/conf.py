@@ -5,13 +5,20 @@
 # https://www.sphinx-doc.org/page/usage/configuration.html
 
 # -- Path setup --------------------------------------------------------------
+import os
 import shutil
 import sys
 from datetime import datetime
 from importlib.metadata import metadata
 from pathlib import Path
 
+import rich_click as click
 from sphinxcontrib import katex
+
+# set maximum width for help pages
+click.rich_click.MAX_WIDTH = 96
+# Set force color for rich outputs shown in the docs
+os.environ["FORCE_COLOR"] = "1"
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE / "extensions"))
@@ -32,14 +39,14 @@ repository_url = urls["Source"]
 # The full version, including alpha/beta/rc tags
 release = info["Version"]
 
-bibtex_bibfiles = ["references.bib"]
+# bibtex_bibfiles = ["references.bib"]
 templates_path = ["_templates"]
 nitpicky = True  # Warn about broken links
 needs_sphinx = "4.0"
 
 html_context = {
     "display_github": True,  # Integrate GitHub
-    "github_user": "sturmgre",
+    "github_user": "Boehringer-Ingelheim",
     "github_repo": "dso",
     "github_version": "main",
     "conf_py_path": "/docs/",
@@ -50,19 +57,20 @@ html_context = {
 # Add any Sphinx extension module names here, as strings.
 # They can be extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
-    "myst_nb",
+    "myst_parser",
+    "sphinx_design",
     "sphinx_copybutton",
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
-    "sphinxcontrib.bibtex",
+    # "sphinxcontrib.bibtex",
     "sphinxcontrib.katex",
     "sphinx_autodoc_typehints",
-    "sphinx_design",
     "IPython.sphinxext.ipython_console_highlighting",
     "sphinxext.opengraph",
     "scverse_misc.sphinx_ext",
+    "click_extra.sphinx",
     *[p.stem for p in (HERE / "extensions").glob("*.py")],
 ]
 
@@ -89,6 +97,7 @@ nb_execution_mode = "off"
 nb_merge_streams = True
 typehints_defaults = "braces"
 always_use_bars_union = True  # use `|` instead of `Union` in types even when building with Python ≤3.14
+click_extra_enable_exec_directives = True
 
 source_suffix = {
     ".rst": "restructuredtext",

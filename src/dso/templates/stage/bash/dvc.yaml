@@ -1,13 +1,18 @@
 stages:
-  {{ stage_name }}:
+  "{{ name }}":
     params: []
     deps: []
     outs:
       - output
     cmd:
       - |
-        bash << EOF
+        bash -euo pipefail << EOF
 
         # add bash code here
+        mkdir -p output && echo "Hello World" > output/hello.txt
+
+        # For more complex shell logic like variables or loops
+        # add a script src/{{ name }}.sh and execute from here:
+        # bash src/{{ name }}.sh
 
         EOF

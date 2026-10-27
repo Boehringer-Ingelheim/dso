@@ -1,3 +1,3 @@
-# {{ stage_name }}
+# {{ name }}
 
-{{ stage_description }}
+{{ description }}

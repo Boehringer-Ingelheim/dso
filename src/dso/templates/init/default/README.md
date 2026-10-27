@@ -1,3 +1,3 @@
-# {{ project_name }}
+# {{ name }}
 
-{{ project_description }}
+{{ description }}

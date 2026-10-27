@@ -1,11 +1,10 @@
 [build-system]
 build-backend = "hatchling.build"
-requires = [ "hatchling" ]
+requires = [ "hatch-vcs", "hatchling" ]
 
 [project]
 name = "dso-core"
-version = "0.0.1"
-description = "data science operations"
+description = "Data Science Operations on top of dvc"
 readme = "README.md"
 license = { file = "LICENSE" }
 maintainers = [
@@ -13,6 +12,8 @@ maintainers = [
 ]
 authors = [
   { name = "Gregor Sturm" },
+  { name = "Thomas Schwarzl" },
+  { name = "Alexander Peltzer" },
 ]
 requires-python = ">=3.12"
 classifiers = [
@@ -21,38 +22,59 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
 ]
+dynamic = [ "version" ]
 dependencies = [
-  "anndata",
-  # for debug logging (referenced from the issue template)
-  "session-info2",
+  "dvc",
+  "hiyapyco>=0.7",
+  "jinja2",
+  "panflute",
+  "pillow",
+  "pre-commit",
+  "pypdf",
+  "pyyaml",
+  "questionary>=2.1",
+  "rich",
+  "rich-click",
+  "ruamel-yaml",
+  "svgutils",
+  "uv",
 ]
 # https://docs.pypi.org/project_metadata/#project-urls
-urls.Documentation = "https://dso-core.readthedocs.io/"
-urls.Homepage = "https://github.com/sturmgre/dso"
-urls.Source = "https://github.com/sturmgre/dso"
+urls.Documentation = "https://github.com/Boehringer-Ingelheim/dso"
+urls.Home-page = "https://github.com/Boehringer-Ingelheim/dso"
+urls.Source = "https://github.com/Boehringer-Ingelheim/dso"
+scripts.dso = "dso.cli:dso"
 
 [dependency-groups]
 dev = [
+  "hatch",
   "prek",
   "twine>=4.0.2",
 ]
 test = [
   "coverage>=7.10",
+  "freezegun",
   "pytest",
+  "pytest-asyncio", # for async tests
   "pytest-cov",     # For VS Code’s coverage functionality
+  "pytest-xdist",   # for parallel testing with `pytest -n`
+  "quarto",
 ]
 doc = [
+  "click-extra[sphinx]>=5.1",
+  "docutils>=0.8,!=0.18.*,!=0.19.*",
+  # For notebooks
   "ipykernel",
   "ipython",
-  "myst-nb>=1.1",
-  "pandas",
+  "matplotlib",
+  "myst-parser",
   "scverse-misc[sphinx]>=0.1.2",
   "sphinx>=8.1",
   "sphinx-autodoc-typehints",
   "sphinx-book-theme>=1",
   "sphinx-copybutton",
   "sphinx-design",
-  "sphinxcontrib-bibtex>=1",
+  # "sphinxcontrib-bibtex>=1",
   "sphinxcontrib-katex",
   "sphinxext-opengraph",
 ]
@@ -77,11 +99,13 @@ envs.hatch-test.overrides.matrix.deps.env-vars = [
   { value = "allow", key = "UV_PRERELEASE", if = [ "pre" ] },
 ]
 envs.hatch-test.dependency-groups = [ "dev", "test" ]
+version.source = "vcs"
 
 [tool.ruff]
 line-length = 120
 src = [ "src" ]
 extend-include = [ "*.ipynb" ]
+exclude = [ "src/dso/hiyapyco.py" ]
 format.docstring-code-format = true
 lint.select = [
   "B",      # flake8-bugbear
@@ -97,21 +121,32 @@ lint.select = [
   "W",      # Warning detected by Pycodestyle
 ]
 lint.ignore = [
-  "B008", # Errors from function calls in argument defaults. These are fine when the result is immutable.
-  "D100", # Missing docstring in public module
-  "D104", # Missing docstring in public package
-  "D105", # __magic__ methods are often self-explanatory, allow missing docstrings
-  "D107", # Missing docstring in __init__
-  # Disable one in each pair of mutually incompatible rules
-  "D203", # We don’t want a blank line before a class docstring
-  "D213", # <> We want docstrings to start immediately after the opening triple quote
-  "D400", # first line should end with a period [Bug: doesn’t work with single-line docstrings]
-  "D401", # First line should be in imperative mood; try rephrasing
-  "E501", # line too long -> we accept long comment lines; formatter gets rid of long code lines
-  "E731", # Do not assign a lambda expression, use a def -> lambda expression assignments are convenient
-  "E741", # allow I, O, l as variable names -> I is the identity matrix
+  # Errors from function calls in argument defaults. These are fine when the result is immutable.
+  "B008",
+  # Missing docstring in public module
+  "D100",
+  # Missing docstring in public package
+  "D104",
+  # __magic__ methods are often self-explanatory, allow missing docstrings
+  "D105",
+  # Missing docstring in __init__
+  "D107",
+  ## Disable one in each pair of mutually incompatible rules
+  # We don’t want a blank line before a class docstring
+  "D203",
+  # We want docstrings to start immediately after the opening triple quote
+  "D213",
+  # first line should end with a period [Bug: doesn't work with single-line docstrings]
+  "D400",
+  # First line should be in imperative mood; try rephrasing
+  "D401",
+  # line too long -> we accept long comment lines; formatter gets rid of long code lines
+  "E501",
+  # Do not assign a lambda expression, use a def -> lambda expression assignments are convenient
+  "E731",
+  # allow I, O, l as variable names -> I is the identity matrix
+  "E741",
 ]
-lint.per-file-ignores."*/__init__.py" = [ "F401" ]
 lint.per-file-ignores."docs/*" = [ "I" ]
 lint.per-file-ignores."tests/*" = [ "D" ]
 lint.pydocstyle.convention = "numpy"

@@ -8,6 +8,9 @@ buck-out/
 __pycache__/
 .*cache/
 
+# UV
+uv.lock
+
 # Distribution / packaging
 /dist/
 
@@ -19,3 +22,7 @@ __pycache__/
 # docs
 /docs/generated/
 /docs/_build/
+
+# Windows
+Thumbs.db
+~$*

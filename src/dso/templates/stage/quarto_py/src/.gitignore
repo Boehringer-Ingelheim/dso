@@ -1,0 +1,6 @@
+/.quarto/
+/*.html
+# temporary quarto files
+*.rmarkdown
+/_quarto.yml
+/*_files/

@@ -1,0 +1,12 @@
+stages:
+  "{{ name }}":
+    params:
+      - dso.quarto
+    deps:
+      - src/{{ name }}.qmd
+    outs:
+      - output
+      - report/{{ name }}.html
+    cmd:
+      - mkdir -p output
+      - uv run dso exec quarto .
