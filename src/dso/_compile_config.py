@@ -201,7 +201,7 @@ def compile_all_configs(paths: Sequence[Path]):
                 ruamel.dump(conf, f)
             # check for equivalience
             if not out_file.exists() or not filecmp.cmp(f.name, out_file, shallow=False):
-                shutil.copy(tmpfile.name, out_file)
+                shutil.copyfile(tmpfile.name, out_file)
                 log.debug(f"Compiled ./{config.relative_to(project_root)} to {out_file.name}")
             else:
                 log.debug(f"./{config.relative_to(project_root)} [green]is already up-to-date!")
