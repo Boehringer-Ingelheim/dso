@@ -80,6 +80,7 @@ doc = [
 ]
 
 [tool.hatch]
+version.source = "vcs"
 build.targets.wheel.packages = [ "src/dso" ]
 envs.default.installer = "uv"
 envs.default.dependency-groups = [ "dev" ]
@@ -99,7 +100,6 @@ envs.hatch-test.overrides.matrix.deps.env-vars = [
   { value = "allow", key = "UV_PRERELEASE", if = [ "pre" ] },
 ]
 envs.hatch-test.dependency-groups = [ "dev", "test" ]
-version.source = "vcs"
 
 [tool.ruff]
 line-length = 120
