@@ -1,0 +1,4 @@
+table.corner-table th:first-child,
+table.corner-table td:first-child {
+  white-space: nowrap;
+}
