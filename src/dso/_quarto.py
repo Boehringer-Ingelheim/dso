@@ -20,7 +20,6 @@ def render_quarto(
     report_dir: Path,
     before_script: str,
     cwd: Path,
-    with_pandocfilter: bool = False,
 ):
     """
     Render a quarto project
@@ -49,25 +48,6 @@ def render_quarto(
         if f.is_file():
             f.unlink()
 
-    # Enable pandocfilter if requested.
-    # We create a temporary script that then calls the current python binary with the dso.pandocfilter module
-    # This may seem cumbersome, but we do it this way because
-    #  * pandoc only supports a single binary for `--filter`, referring to subcommands or `-m` is not possible here
-    #  * we want to ensure that exactly the same python/dso version is used for the pandocfilter as for the
-    #    parent command (important when running through dso-mgr)
-    filter_script = None
-    if with_pandocfilter:
-        with tempfile.NamedTemporaryFile(delete=False, mode="w") as f:
-            f.write("#!/bin/bash\n")
-            f.write(f'{sys.executable} -m dso.pandocfilter "$@"\n')
-            filter_script = Path(f.name)
-
-        filter_script.chmod(filter_script.stat().st_mode | stat.S_IEXEC)
-
-        pandocfilter = f"--filter {filter_script}"
-    else:
-        pandocfilter = ""
-
     # propagate quiet setting to quarto
     quiet = "--quiet" if bool(int(os.environ.get("DSO_QUIET", 0))) else ""
     script = dedent(
@@ -80,14 +60,10 @@ def render_quarto(
 
         {before_script}
 
-        quarto render "{quarto_dir}" --execute --output-dir "{report_dir}" {quiet} {pandocfilter}
+        quarto render "{quarto_dir}" --execute --output-dir "{report_dir}" {quiet}
         """
     )
     res = subprocess.run(script, shell=True, executable="/bin/bash", cwd=cwd)
-
-    # clean up
-    if filter_script is not None:
-        filter_script.unlink()
 
     if res.returncode:
         sys.exit(res.returncode)
@@ -98,13 +74,33 @@ def quarto_config_yml(quarto_config: dict | None, quarto_dir: Path):
     """
     Context manager that temporarily creates a _quarto.yml file and cleans up after itself
 
-    If a disclaimer is configured, a lua filter that adds the disclaimer as a quarto callout is registered.
-    It runs at the `pre-ast` entry point, such that quarto renders the callout in all output formats (e.g. PDF).
+    Registers DSO's filters in `_quarto.yml` if the corresponding options are set:
+     * `disclaimer`: lua filter that adds the disclaimer as a quarto callout. It runs at the `pre-ast` entry point,
+       such that quarto renders the callout in all output formats (e.g. PDF).
+     * `watermark`: pandoc filter that adds watermarks to images and plotly plots. It runs at the `post-quarto`
+       entry point, as otherwise quarto would rewrite the paths of the (temporary) watermarked images.
     """
     quarto_config = dict(quarto_config) if quarto_config is not None else {}
+    filters = list(quarto_config.get("filters") or [])
     if quarto_config.get("disclaimer"):
-        disclaimer_filter = {"path": str(resources.files(assets) / "disclaimer.lua"), "at": "pre-ast"}
-        quarto_config["filters"] = [*(quarto_config.get("filters") or []), disclaimer_filter]
+        filters.append({"path": str(resources.files(assets) / "disclaimer.lua"), "at": "pre-ast"})
+
+    # The watermark filter is a temporary script that calls the current python binary with the dso.pandocfilter
+    # module. This may seem cumbersome, but we do it this way because
+    #  * pandoc only supports a single binary for a filter, referring to subcommands or `-m` is not possible here
+    #  * we want to ensure that exactly the same python/dso version is used for the pandocfilter as for the
+    #    parent command (important when running through dso-mgr)
+    filter_script = None
+    if quarto_config.get("watermark"):
+        with tempfile.NamedTemporaryFile(delete=False, mode="w") as f:
+            f.write("#!/bin/bash\n")
+            f.write(f'{sys.executable} -m dso.pandocfilter "$@"\n')
+            filter_script = Path(f.name)
+        filter_script.chmod(filter_script.stat().st_mode | stat.S_IEXEC)
+        filters.append({"path": str(filter_script), "type": "json", "at": "post-quarto"})
+
+    if filters:
+        quarto_config["filters"] = filters
     config_file = quarto_dir / "_quarto.yml"
     yaml = YAML(typ="safe")
     yaml.dump(quarto_config, config_file)
@@ -112,3 +108,5 @@ def quarto_config_yml(quarto_config: dict | None, quarto_dir: Path):
         yield
     finally:
         config_file.unlink()
+        if filter_script is not None:
+            filter_script.unlink()

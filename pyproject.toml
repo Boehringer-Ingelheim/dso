@@ -27,7 +27,8 @@ dependencies = [
   "dvc",
   "hiyapyco>=0.7",
   "jinja2",
-  "panflute",
+  # dev version required for typst support (https://github.com/sergiocorreia/panflute/pull/244)
+  "panflute @ git+https://github.com/sergiocorreia/panflute@1ad0ad77267de77976f7f18fbb49715748f79375",
   "pillow",
   "pre-commit",
   "pypdf",
@@ -81,6 +82,7 @@ doc = [
 
 [tool.hatch]
 version.source = "vcs"
+metadata.allow-direct-references = true
 build.targets.wheel.packages = [ "src/dso" ]
 envs.default.installer = "uv"
 envs.default.dependency-groups = [ "dev" ]

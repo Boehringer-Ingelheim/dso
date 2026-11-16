@@ -1,5 +1,6 @@
 import hashlib
 from os import chdir
+from pathlib import Path
 from shutil import copyfile
 from textwrap import dedent
 
@@ -18,22 +19,27 @@ def _doc_with_watermark(text="WATERMARK"):
     return Doc(metadata=MetaMap(watermark=MetaMap(text=MetaString(text))))
 
 
-def test_quarto_config_yml_registers_disclaimer_filter(tmp_path):
-    """A disclaimer registers the lua filter at the pre-ast entry point (in addition to user-defined filters)."""
-    config = {"disclaimer": {"title": "t", "text": "x"}, "filters": ["user.lua"]}
+def test_quarto_config_yml_registers_filters(tmp_path):
+    """Disclaimer and watermark filters are registered at the right entry points, in addition to user filters."""
+    config = {"disclaimer": {"title": "t", "text": "x"}, "watermark": {"text": "w"}, "filters": ["user.lua"]}
     with quarto_config_yml(config, tmp_path):
         written = YAML(typ="safe").load(tmp_path / "_quarto.yml")
-    assert written["filters"][0] == "user.lua"
-    assert written["filters"][1]["at"] == "pre-ast"
-    assert written["filters"][1]["path"].endswith("disclaimer.lua")
-    # input config is not modified and _quarto.yml is cleaned up
+        user_filter, disclaimer_filter, watermark_filter = written["filters"]
+        assert user_filter == "user.lua"
+        assert disclaimer_filter["at"] == "pre-ast"
+        assert disclaimer_filter["path"].endswith("disclaimer.lua")
+        assert watermark_filter["at"] == "post-quarto"
+        assert watermark_filter["type"] == "json"
+        assert "dso.pandocfilter" in Path(watermark_filter["path"]).read_text()
+    # input config is not modified; _quarto.yml and the temporary filter script are cleaned up
     assert config["filters"] == ["user.lua"]
     assert not (tmp_path / "_quarto.yml").exists()
+    assert not Path(watermark_filter["path"]).exists()
 
 
-def test_quarto_config_yml_no_disclaimer(tmp_path):
-    """Without disclaimer (or if it is overridden with null), no filter is registered."""
-    for config in [{}, {"disclaimer": None}, None]:
+def test_quarto_config_yml_no_filters(tmp_path):
+    """Without disclaimer/watermark (or if they are overridden with null), no filter is registered."""
+    for config in [{}, {"disclaimer": None, "watermark": None}, None]:
         with quarto_config_yml(config, tmp_path):
             written = YAML(typ="safe").load(tmp_path / "_quarto.yml") or {}
         assert "filters" not in written
@@ -157,7 +163,6 @@ def test_pandocfilter(quarto_stage):
             quarto_stage / "report",
             before_script="",
             cwd=quarto_stage,
-            with_pandocfilter=True,
         )
 
     checksums_after = {}
@@ -230,7 +235,6 @@ def test_disclaimer_typst(quarto_stage):
             quarto_stage / "report",
             before_script="",
             cwd=quarto_stage,
-            with_pandocfilter=True,
         )
 
     typ_files = list((quarto_stage / "src").glob("*.typ")) + list((quarto_stage / "report").glob("*.typ"))

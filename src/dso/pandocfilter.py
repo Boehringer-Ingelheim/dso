@@ -1,7 +1,7 @@
 """
 Pandocfilter that adds watermarks to images and plotly plots in quarto reports
 
-Called internally by `dso exec quarto` via `python -m dso.pandocfilter`.
+Registered by `dso exec quarto` in `_quarto.yml` and called via `python -m dso.pandocfilter`.
 The disclaimer is not handled here, but by a lua filter (`assets/disclaimer.lua`).
 """
 
@@ -13,13 +13,9 @@ from tempfile import NamedTemporaryFile
 
 import PIL
 from panflute import Image, RawBlock, run_filter
-from panflute.elements import RAW_FORMATS
 
 from dso._logging import log
 from dso._watermark import Watermarker, get_plotly_watermark_html
-
-# panflute doesn't know about the typst format yet and would fail on raw typst blocks (e.g. quarto callouts)
-RAW_FORMATS.add("typst")
 
 
 def _sanitize_watermark_config(config):
