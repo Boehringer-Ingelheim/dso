@@ -1,0 +1,57 @@
+.sd-tab-set.tabs-vertical {
+  display: grid;
+  /* The pane's track is floored at zero: a bare `1fr` means `minmax(auto, 1fr)`,
+   * whose floor grows to the widest line the pane cannot break, like a long URL
+   * in a code block, and pushes the pane under the sidebar. */
+  grid-template-columns: minmax(7rem, max-content) minmax(0, 1fr);
+  align-items: start;
+}
+
+/* No column gap: the marker of the active label then sits on the rule of the
+ * pane, the way horizontal tabs merge an underline into an overline. */
+.sd-tab-set.tabs-vertical > label {
+  grid-column: 1;
+  text-align: left;
+  padding-right: 1rem;
+  border-bottom: none;
+  border-right: 0.125rem solid transparent;
+}
+.sd-tab-set.tabs-vertical > input:checked + label {
+  border-right-color: var(--sd-color-tabs-underline-active);
+}
+.sd-tab-set.tabs-vertical > .sd-tab-content {
+  grid-column: 2;
+  /* Span every row, or the height of the pane inflates the first row and
+   * pushes the labels down the rail. `1 / -1` counts from the last explicit
+   * row, and the grid declares none, so the span overshoots any tab count. */
+  grid-row: 1 / span 99;
+  align-self: stretch;
+  padding: 0 0 0 1.5rem;
+  /* sphinx-design rules a pane with two shadows, one above and one below. A
+   * single hairline down the left edge replaces them. */
+  box-shadow: -0.0625rem 0 var(--sd-color-tabs-overline);
+}
+
+/* Too narrow for two columns: restate the values of sphinx-design, since a
+ * shorthand cannot fall back to the value of another stylesheet. */
+@media (max-width: 50em) {
+  .sd-tab-set.tabs-vertical {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .sd-tab-set.tabs-vertical > label {
+    padding: 1em 1.25em 0.5em;
+    border-right: none;
+    border-bottom: 0.125rem solid transparent;
+  }
+  .sd-tab-set.tabs-vertical > input:checked + label {
+    border-bottom-color: var(--sd-color-tabs-underline-active);
+  }
+  .sd-tab-set.tabs-vertical > .sd-tab-content {
+    align-self: auto;
+    padding: 0.75rem 0;
+    box-shadow:
+      0 -0.0625rem var(--sd-color-tabs-overline),
+      0 0.0625rem var(--sd-color-tabs-underline);
+  }
+}
