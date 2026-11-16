@@ -1,14 +1,20 @@
+import base64
 import hashlib
+import json
+import urllib.parse
 from os import chdir
+from pathlib import Path
 from shutil import copyfile
 from textwrap import dedent
 
+import panflute.elements
+import pytest
 from click.testing import CliRunner
-from panflute import Doc, MetaMap, MetaString, Para, RawBlock, Str
+from panflute import Doc, Image, MetaMap, MetaString, Para, RawBlock, Str
 
 from dso._quarto import render_quarto
 from dso.cli import dso_exec
-from dso.pandocfilter import action
+from dso.pandocfilter import _get_watermark_dir, action
 from tests.conftest import TESTDATA
 
 
@@ -69,6 +75,50 @@ def test_action_ignores_plain_text():
     result = action(elem, doc)
 
     assert result is elem
+
+
+def _quarto_filter_params(**params):
+    return base64.b64encode(json.dumps(params).encode()).decode()
+
+
+@pytest.mark.parametrize(
+    "env,expected",
+    [
+        (None, None),
+        ("", None),
+        ("not-base64-json", None),
+        (_quarto_filter_params(), None),
+        (_quarto_filter_params(**{"mediabag-dir": "doc_files/mediabag"}), Path("doc_files/mediabag")),
+    ],
+)
+def test_get_watermark_dir(monkeypatch, env, expected):
+    if env is None:
+        monkeypatch.delenv("QUARTO_FILTER_PARAMS", raising=False)
+    else:
+        monkeypatch.setenv("QUARTO_FILTER_PARAMS", env)
+    assert _get_watermark_dir() == expected
+
+
+def test_action_watermarks_image_in_mediabag(tmp_path, monkeypatch):
+    """Watermarked images are written to the quarto mediabag dir (relative path), the original is untouched."""
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("QUARTO_FILTER_PARAMS", _quarto_filter_params(**{"mediabag-dir": "doc_files/mediabag"}))
+    copyfile(TESTDATA / "git_logo.svg", tmp_path / "git logo.svg")
+    original = (tmp_path / "git logo.svg").read_bytes()
+    doc = _doc_with_watermark()
+    elem = Image(url="git%20logo.svg")
+
+    result = action(elem, doc)
+
+    out_path = Path(urllib.parse.unquote(result.url))
+    assert not out_path.is_absolute()
+    assert out_path.parent == Path("doc_files/mediabag")
+    assert out_path.name.startswith("git logo.wm.")
+    assert out_path.suffix == ".svg"
+    assert "WATERMARK" in out_path.read_text()
+    assert (tmp_path / "git logo.svg").read_bytes() == original
+    # nothing else was written to the document directory
+    assert sorted(p.name for p in tmp_path.iterdir()) == ["doc_files", "git logo.svg"]
 
 
 def test_pandocfilter(quarto_stage):
@@ -148,6 +198,43 @@ def test_pandocfilter(quarto_stage):
     assert "Disclaimer" in out_html
     assert "This is a disclaimer" in out_html
     assert "callout-important" in out_html
+
+
+@pytest.mark.skipif(
+    "typst" not in panflute.elements.RAW_FORMATS,
+    reason="installed panflute version does not support raw typst (sergiocorreia/panflute#265)",
+)
+def test_pandocfilter_typst(quarto_stage):
+    """Watermarked images must be within the project directory, otherwise typst can't read them (#193)"""
+    src = quarto_stage / "src"
+    for ext in ["png", "svg"]:
+        copyfile(TESTDATA / f"git_logo.{ext}", src / f"git_logo.{ext}")
+    (src / "_quarto.yml").write_text(
+        dedent(
+            """\
+            format: typst
+            watermark:
+                text: WATERMARK
+            """
+        )
+    )
+    (src / "quarto_stage.qmd").write_text("![PNG Image](git_logo.png)\n\n![SVG Image](git_logo.svg)\n")
+
+    def _project_files():
+        # ignore the rendered report and quarto's own cache
+        return {
+            p: p.read_bytes()
+            for p in quarto_stage.rglob("*")
+            if p.is_file() and not {"report", ".quarto"} & set(p.relative_to(quarto_stage).parts)
+        }
+
+    files_before = _project_files()
+
+    render_quarto(src, quarto_stage / "report", before_script="", cwd=quarto_stage, with_pandocfilter=True)
+
+    assert (quarto_stage / "report" / "quarto_stage.pdf").exists()
+    # original files are not modified and no leftover files are written into the project
+    assert _project_files() == files_before
 
 
 def test_override_config(quarto_stage):

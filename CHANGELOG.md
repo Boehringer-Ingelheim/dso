@@ -14,6 +14,10 @@ The format is based on [Keep a Changelog][], and this project adheres to
 
 - Don't run dso pandocfilter if watermark/disclaimer are disabled entirely
   ([#195](https://github.com/Boehringer-Ingelheim/dso/pull/195/))
+- Watermarked images in quarto reports are now written to the document's temporary `<name>_files/mediabag`
+  directory and referenced by a relative path instead of an absolute path in the system temp directory. This fixes
+  watermarks for Typst output, which can only read files within the project directory. Original images are still
+  never modified inplace ([#197](https://github.com/Boehringer-Ingelheim/dso/pull/197)).
 
 ## v1.1.1
 
