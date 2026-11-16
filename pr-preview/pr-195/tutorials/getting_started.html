@@ -45,10 +45,12 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=4418a689" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx_autodoc_typehints.css?v=057ac668" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
     <link rel="stylesheet" type="text/css" href="../_static/katex-math.css?v=05624691" />
-    <link rel="stylesheet" type="text/css" href="../_static/click-extra.css?v=59573e2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/click-extra.css?v=a1a89c26" />
+    <link rel="stylesheet" type="text/css" href="../_static/click-extra-crosshair.css?v=4d4ab7eb" />
+    <link rel="stylesheet" type="text/css" href="../_static/click-extra-tabs.css?v=9483eb58" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=366103d0" />
   
   <!-- So that users can add custom icons -->
@@ -57,13 +59,14 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../_static/documentation_options.js?v=7dbd820c"></script>
+    <script src="../_static/documentation_options.js?v=7715fe09"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script src="../_static/click-extra-crosshair.js?v=c8060333"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/getting_started';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -72,7 +75,7 @@
     <link rel="prev" title="DSO: data science operations" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g2fe04b374" />
+  <meta name="docsearch:version" content="0.1.dev1+gced6f8dfa" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -453,7 +456,7 @@
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
 <p>This section will guide you through the most important features of dso and show how to work with a dso project.</p>
 <section id="dso-init-initialize-a-project">
-<h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project<a class="headerlink" href="#dso-init-initialize-a-project" title="Link to this heading">#</a></h2>
+<span id="dso-init----initialize-a-project"></span><h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> – Initialize a project<a class="headerlink" href="#dso-init-initialize-a-project" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">init</span></code> initializes a new project in your current directory. In the context of DSO, a project is a structured
 folder where input files, scripts and output files are organized and managed.</p>
 <p>To initialize a project use the following command:</p>
@@ -464,7 +467,7 @@ dso<span class="w"> </span>init<span class="w"> </span>test_project<span class="
 <p>It creates the root directory of your project and <strong>initializes a git repository</strong> with all the necessary configuration files for <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">dvc</span></code>, <code class="docutils literal notranslate"><span class="pre">uv</span></code> and <code class="docutils literal notranslate"><span class="pre">dso</span></code> itself.</p>
 </section>
 <section id="dso-create-add-folders-or-stages-to-your-project">
-<h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project<a class="headerlink" href="#dso-create-add-folders-or-stages-to-your-project" title="Link to this heading">#</a></h2>
+<span id="dso-create----add-folders-or-stages-to-your-project"></span><h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> – Add folders or stages to your project<a class="headerlink" href="#dso-create-add-folders-or-stages-to-your-project" title="Link to this heading">#</a></h2>
 <p>We consider a <em>stage</em> an individual step in your analysis, usually a script/notebook with defined inputs and outputs.
 Stages can be organized in <em>folders</em> with arbitrary structures. <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">create</span></code> initializes folders and stages
 from predefined templates. We recommend naming stages with a numeric prefix, e.g. <code class="docutils literal notranslate"><span class="pre">01_</span></code> to declare the
@@ -523,7 +526,7 @@ in YAML-base configuration files. You can add a <code class="docutils literal no
 <li><p><code class="docutils literal notranslate"><span class="pre">src/&lt;stage_name&gt;.qmd</span></code> (when using <code class="docutils literal notranslate"><span class="pre">quarto</span></code> template): A Quarto file containing your script that runs the analysis for this stage.</p></li>
 </ul>
 <section id="dvc-yaml">
-<h3>dvc.yaml<a class="headerlink" href="#dvc-yaml" title="Link to this heading">#</a></h3>
+<span id="dvcyaml"></span><h3>dvc.yaml<a class="headerlink" href="#dvc-yaml" title="Link to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code> file contains information about the parameters, inputs, outputs, and commands used and executes in your stage.
 Variables stored in the <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> of a stage can be directly used within the <code class="docutils literal notranslate"><span class="pre">dvc.yaml</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>stages:
@@ -579,7 +582,7 @@ For more information see <a class="reference internal" href="../user_guide/quart
 </section>
 </section>
 <section id="dso-repro-reproducing-all-stages">
-<h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages<a class="headerlink" href="#dso-repro-reproducing-all-stages" title="Link to this heading">#</a></h2>
+<span id="dso-repro----reproducing-all-stages"></span><h2><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> – Reproducing all stages<a class="headerlink" href="#dso-repro-reproducing-all-stages" title="Link to this heading">#</a></h2>
 <p>To execute (or <em>reproduce</em>, in dvc-speak) all scripts in a project, use <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code>.
 <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> is a wrapper around <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">repro</span></code> that</p>
 <ul class="simple">

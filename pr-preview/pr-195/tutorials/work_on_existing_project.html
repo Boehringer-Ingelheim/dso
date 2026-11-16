@@ -45,10 +45,12 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=4418a689" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx_autodoc_typehints.css?v=057ac668" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
     <link rel="stylesheet" type="text/css" href="../_static/katex-math.css?v=05624691" />
-    <link rel="stylesheet" type="text/css" href="../_static/click-extra.css?v=59573e2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/click-extra.css?v=a1a89c26" />
+    <link rel="stylesheet" type="text/css" href="../_static/click-extra-crosshair.css?v=4d4ab7eb" />
+    <link rel="stylesheet" type="text/css" href="../_static/click-extra-tabs.css?v=9483eb58" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=366103d0" />
   
   <!-- So that users can add custom icons -->
@@ -57,13 +59,14 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../_static/documentation_options.js?v=7dbd820c"></script>
+    <script src="../_static/documentation_options.js?v=7715fe09"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script src="../_static/click-extra-crosshair.js?v=c8060333"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/work_on_existing_project';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -72,7 +75,7 @@
     <link rel="prev" title="Getting started" href="getting_started.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g2fe04b374" />
+  <meta name="docsearch:version" content="0.1.dev1+gced6f8dfa" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -440,7 +443,7 @@
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="collaborating-on-an-existing-dso-dvc-project">
-<h1>Collaborating on an existing DSO/DVC Project<a class="headerlink" href="#collaborating-on-an-existing-dso-dvc-project" title="Link to this heading">#</a></h1>
+<span id="collaborating-on-an-existing-dsodvc-project"></span><h1>Collaborating on an existing DSO/DVC Project<a class="headerlink" href="#collaborating-on-an-existing-dso-dvc-project" title="Link to this heading">#</a></h1>
 <p>If a DSO project is already set up and you want to collaborate or extend it, follow these guidelines. For general information about DSO or DVC, please check out the <a class="reference internal" href="getting_started.html"><span class="std std-doc">DSO getting-started page</span></a> and the <a class="reference external" href="https://dvc.org/doc">DVC documentation</a>.</p>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h2>
@@ -472,7 +475,7 @@ dso<span class="w"> </span>pull
 <p>After pulling the source code from the git repository and the respective data from the DVC remote storage, everything is set-up to make changes and expand on the dso project. Please follow the instructions on how-to set-up folders, stages, or configuration files described in the <a class="reference internal" href="getting_started.html"><span class="std std-doc">dso getting-started page</span></a>.</p>
 </section>
 <section id="fixing-merge-conflicts-in-dvc-lock-files">
-<h3>Fixing merge conflicts in dvc.lock files<a class="headerlink" href="#fixing-merge-conflicts-in-dvc-lock-files" title="Link to this heading">#</a></h3>
+<span id="fixing-merge-conflicts-in-dvclock-files"></span><h3>Fixing merge conflicts in dvc.lock files<a class="headerlink" href="#fixing-merge-conflicts-in-dvc-lock-files" title="Link to this heading">#</a></h3>
 <p>When merging branches it is expected that <code class="docutils literal notranslate"><span class="pre">dvc.lock</span></code> files are conflicting. There’s usually no point in trying to resolve conflicts, as <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code> will anyway have to be run after a successful merge, regenerating the respective lockfiles.
 With the following bash onliner, you can remove all offending <code class="docutils literal notranslate"><span class="pre">dvc.lock</span></code> files. You can then conclude the merge and run <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">repro</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove all conflicting lock files</span>
