@@ -89,7 +89,7 @@ def quarto_config_yml(quarto_config: dict | None, quarto_dir: Path):
     # module. This may seem cumbersome, but we do it this way because
     #  * pandoc only supports a single binary for a filter, referring to subcommands or `-m` is not possible here
     #  * we want to ensure that exactly the same python/dso version is used for the pandocfilter as for the
-    #    parent command (important when running through dso-mgr)
+    #    parent command (important when running dso from a venv)
     filter_script = None
     if quarto_config.get("watermark"):
         with tempfile.NamedTemporaryFile(delete=False, mode="w") as f:
