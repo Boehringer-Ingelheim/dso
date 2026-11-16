@@ -29,7 +29,7 @@ dependencies = [
   "jinja2",
   "panflute",
   "pillow",
-  "pre-commit",
+  "prek",
   "pypdf",
   "pyyaml",
   "questionary>=2.1",

@@ -146,8 +146,8 @@ def test_create_stage(dso_project, template, stage_path, expected_src, abspath):
         )
     assert "testdescription" in (dso_project / stage_path / "README.md").read_text()
     # Check that all pre-commit checks pass on the newly initiated template
-    check_call(["pre-commit", "install"], cwd=dso_project)
-    check_call(["pre-commit", "run", "--all-files"], cwd=dso_project)
+    check_call(["prek", "install"], cwd=dso_project)
+    check_call(["prek", "run", "--all-files"], cwd=dso_project)
 
 
 @pytest.mark.parametrize("template", ["bash", "quarto_r", "quarto_py", "quarto_ipynb", "quarto_jl"])
@@ -198,8 +198,8 @@ def test_create_folder(dso_project):
     assert (dso_project / "testfolder" / "dvc.yaml").is_file()
     assert (dso_project / "testfolder" / "params.in.yaml").is_file()
     # Check that all pre-commit checks pass on the newly initiated template
-    check_call(["pre-commit", "install"], cwd=dso_project)
-    check_call(["pre-commit", "run", "--all-files"], cwd=dso_project)
+    check_call(["prek", "install"], cwd=dso_project)
+    check_call(["prek", "run", "--all-files"], cwd=dso_project)
 
 
 def test_create_folder_existing_dir(dso_project):
@@ -215,5 +215,5 @@ def test_create_folder_existing_dir(dso_project):
     assert (dso_project / "testfolder" / "dvc.yaml").is_file()
     assert (dso_project / "testfolder" / "params.in.yaml").is_file()
     # Check that all pre-commit checks pass on the newly initiated template
-    check_call(["pre-commit", "install"], cwd=dso_project)
-    check_call(["pre-commit", "run", "--all-files"], cwd=dso_project)
+    check_call(["prek", "install"], cwd=dso_project)
+    check_call(["prek", "run", "--all-files"], cwd=dso_project)
