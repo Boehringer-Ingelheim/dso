@@ -31,6 +31,9 @@ The format is based on [Keep a Changelog][], and this project adheres to
   directory and referenced by a relative path instead of an absolute path in the system temp directory. This fixes
   watermarks for Typst output, which can only read files within the project directory. Original images are still
   never modified inplace ([#197](https://github.com/Boehringer-Ingelheim/dso/pull/197)).
+- Add `**/*.quarto_ipynb` to the `.gitignore` of quarto stage templates. Otherwise, quarto (>= 1.5) appends
+  it to `src/.gitignore` when rendering the stage, leaving uncommitted changes in the git repo
+  ([#198](https://github.com/Boehringer-Ingelheim/dso/pull/198))
 
 ## v1.1.1
 
