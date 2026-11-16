@@ -175,13 +175,14 @@ def check_ask_pre_commit(dir: Path):
     if config.get("check_ask_pre_commit", True):
         project_root = get_project_root(dir)
         hook = project_root / ".git" / "hooks" / "pre-commit"
-        if not hook.is_file() or "pre-commit" not in hook.read_text():
+        # Hooks installed by either prek or the legacy pre-commit tool are accepted
+        if not hook.is_file() or not any(x in hook.read_text() for x in ["prek", "pre-commit"]):
             console.print("Pre-commit hooks are not installed in this project.")
             console.print(
                 "This hooks will take care of running consistency checks and automatically syncing [bold]dvc."
             )
             if Confirm.ask("[bold]Do you want to install the pre-commit hooks now?"):
-                res = subprocess.run(["pre-commit", "install"], cwd=project_root)
+                res = subprocess.run(["prek", "install"], cwd=project_root)
                 if res.returncode:
                     log.error("Failed to install pre-commit hooks")
                     sys.exit(res.returncode)

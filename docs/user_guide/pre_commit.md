@@ -8,14 +8,22 @@ fixed. Some issues can automatically be fixed by the hooks.
 Pre-commit hooks are defined in a `.pre-commit-config.yaml` file at the root
 of a repository. The [DSO project template](templates.md) comes with a default configuration that is detailled below.
 
+DSO uses [prek](https://prek.j178.dev/) to manage and run the hooks. prek is a fast, drop-in replacement
+for `pre-commit` that reads the same `.pre-commit-config.yaml` file. It is installed automatically as a dependency of DSO.
+
 To activate pre-commit integration, the hooks need to be installed in each repository separately. The DSO CLI
 will ask the user whether to do so. You can also install the hooks manually by running
 
 ```bash
-pre-commit install
+prek install
 ```
 
 This will write the hooks into the `.git` directory.
+To run all hooks on all files (not only the staged ones), use
+
+```bash
+prek run --all-files
+```
 
 ## Example
 

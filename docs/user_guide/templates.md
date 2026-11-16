@@ -11,7 +11,7 @@ DSO currently comes with the following templates:
 Project templates:
 
 -   [default](https://github.com/Boehringer-Ingelheim/dso/tree/main/src/dso/templates/init/default) - Default template, with
-    integration of `git`, `dvc`, `uv`, `pre-commit`, and `editorconfig`.
+    integration of `git`, `dvc`, `uv`, `pre-commit` (via [prek](https://prek.j178.dev/)), and `editorconfig`.
 
 Folder templates:
 

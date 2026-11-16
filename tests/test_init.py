@@ -100,8 +100,8 @@ def test_init(tmp_path):
         assert (td / "testproject" / ".git").is_dir()
         assert "testdescription" in (td / "testproject" / "README.md").read_text()
         # Check that all pre-commit checks pass on the newly initiated template
-        check_call(["pre-commit", "install"], cwd=td / "testproject")
-        check_call(["pre-commit", "run", "--all-files"], cwd=td / "testproject")
+        check_call(["prek", "install"], cwd=td / "testproject")
+        check_call(["prek", "run", "--all-files"], cwd=td / "testproject")
 
 
 def test_init_existing_dir(dso_project):
@@ -118,5 +118,5 @@ def test_init_existing_dir(dso_project):
     assert "testdescription" in (dso_project / "README.md").read_text()
 
     # Check that all pre-commit checks pass on the newly initiated template
-    check_call(["pre-commit", "install"], cwd=dso_project)
-    check_call(["pre-commit", "run", "--all-files"], cwd=dso_project)
+    check_call(["prek", "install"], cwd=dso_project)
+    check_call(["prek", "run", "--all-files"], cwd=dso_project)

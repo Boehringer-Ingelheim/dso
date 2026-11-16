@@ -30,7 +30,7 @@ dependencies = [
   # dev version required for typst support (https://github.com/sergiocorreia/panflute/pull/244)
   "panflute @ git+https://github.com/sergiocorreia/panflute@1ad0ad77267de77976f7f18fbb49715748f79375",
   "pillow",
-  "pre-commit",
+  "prek",
   "pypdf",
   "pyyaml",
   "questionary>=2.1",

@@ -39,8 +39,8 @@ def test_mv_stage(quarto_stage: Path, source: str, target: str):
     assert target in (renamed_dir / "README.md").read_text()
 
     # Check that all pre-commit checks pass on the renamed template
-    check_call(["pre-commit", "install"], cwd=renamed_dir)
-    check_call(["pre-commit", "run", "--all-files"], cwd=renamed_dir)
+    check_call(["prek", "install"], cwd=renamed_dir)
+    check_call(["prek", "run", "--all-files"], cwd=renamed_dir)
 
 
 def assert_params_file_content(path, rel_to_source, rel_to_target, file, similar=""):
