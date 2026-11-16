@@ -10,6 +10,13 @@ The format is based on [Keep a Changelog][], and this project adheres to
 
 ## [Unreleased]
 
+### Chore
+
+- Switch from `pre-commit` to [prek](https://prek.j178.dev/) for managing git hooks.
+  `prek` replaces `pre-commit` as a dependency and `dso` now installs hooks with `prek install`.
+  The `.pre-commit-config.yaml` format is unchanged
+  ([#181](https://github.com/Boehringer-Ingelheim/dso/issues/181))
+
 ### Fixes
 
 - Don't run dso pandocfilter if watermark/disclaimer are disabled entirely
