@@ -59,7 +59,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="_static/documentation_options.js?v=4c707f8e"></script>
+    <script src="_static/documentation_options.js?v=54ba48c2"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="Shell completion" href="cli_shell_completion.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g4814fa9ef" />
+  <meta name="docsearch:version" content="0.1.dev1+g1b04a90ff" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -561,6 +561,10 @@
 <ul class="simple">
 <li><p>Don’t run dso pandocfilter if watermark/disclaimer are disabled entirely
 (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/195/">#195</a>)</p></li>
+<li><p>Watermarked images in quarto reports are now written to the document’s temporary <code class="docutils literal notranslate"><span class="pre">&lt;name&gt;_files/mediabag</span></code>
+directory and referenced by a relative path instead of an absolute path in the system temp directory. This fixes
+watermarks for Typst output, which can only read files within the project directory. Original images are still
+never modified inplace (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/197">#197</a>).</p></li>
 </ul>
 </section>
 </section>
