@@ -59,7 +59,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="_static/documentation_options.js?v=7dfd584f"></script>
+    <script src="_static/documentation_options.js?v=37d5f1c9"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="Shell completion" href="cli_shell_completion.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g7a222b006" />
+  <meta name="docsearch:version" content="0.1.dev1+g6ef9f4946" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -581,6 +581,9 @@ version of panflute for Typst support
 directory and referenced by a relative path instead of an absolute path in the system temp directory. This fixes
 watermarks for Typst output, which can only read files within the project directory. Original images are still
 never modified inplace (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/197">#197</a>).</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">**/*.quarto_ipynb</span></code> to the <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> of quarto stage templates. Otherwise, quarto (&gt;= 1.5) appends
+it to <code class="docutils literal notranslate"><span class="pre">src/.gitignore</span></code> when rendering the stage, leaving uncommitted changes in the git repo
+(<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/198">#198</a>)</p></li>
 </ul>
 </section>
 </section>
