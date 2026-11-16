@@ -100,6 +100,18 @@ def _get_watermark_dir() -> Path | None:
 
     Returns None if the directory can't be determined (e.g. when not running through quarto).
     """
+    # NOTE: `QUARTO_FILTER_PARAMS` and its `mediabag-dir` key are internal to quarto and not documented.
+    # If they ever disappear, we fall back to a system temp dir (works for HTML, but not for typst).
+    # References (quarto v1.11.9):
+    #  * mediabag dir is `<name>_files/mediabag`, relative to the document directory:
+    #    https://github.com/quarto-dev/quarto-cli/blob/v1.11.9/src/command/render/render-paths.ts#L17-L19
+    #    https://github.com/quarto-dev/quarto-cli/blob/v1.11.9/src/command/render/render.ts#L116-L120
+    #  * it is added to the filter params as `mediabag-dir`:
+    #    https://github.com/quarto-dev/quarto-cli/blob/v1.11.9/src/command/render/filters.ts#L571
+    #  * filter params are passed as base64-encoded JSON in the env of pandoc (and therefore of all filters):
+    #    https://github.com/quarto-dev/quarto-cli/blob/v1.11.9/src/command/render/pandoc.ts#L343-L345
+    #  * the mediabag dir is deleted after rendering (unless it is required by the output):
+    #    https://github.com/quarto-dev/quarto-cli/blob/v1.11.9/src/command/render/cleanup.ts#L85-L90
     params = os.environ.get("QUARTO_FILTER_PARAMS")
     if not params:
         return None
