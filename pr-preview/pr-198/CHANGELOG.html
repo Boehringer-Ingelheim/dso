@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="CHANGELOG.html" />
 <meta property="og:site_name" content="dso-core" />
-<meta property="og:description" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning. Unreleased: Fixes: The quarto disclaim..." />
+<meta property="og:description" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.[Unreleased]: Fixes: Don’t run dso pand..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
 <meta property="og:image" content="_images/social_previews/summary_CHANGELOG_79814621.png" />
-<meta property="og:image:alt" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning. Unreleased: Fixes: The quarto disclaim..." />
-<meta name="description" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning. Unreleased: Fixes: The quarto disclaim..." />
+<meta property="og:image:alt" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.[Unreleased]: Fixes: Don’t run dso pand..." />
+<meta name="description" content="All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.[Unreleased]: Fixes: Don’t run dso pand..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Changelog &#8212; dso-core</title>
@@ -59,7 +59,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="_static/documentation_options.js?v=f1e55e9c"></script>
+    <script src="_static/documentation_options.js?v=2fbc13fb"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="Shell completion" href="cli_shell_completion.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g919a45cf4" />
+  <meta name="docsearch:version" content="0.1.dev1+g43a8c7b0c" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -423,7 +423,7 @@
             </div>
             <nav aria-label="Page">
                 <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unreleased">Unreleased</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unreleased">[Unreleased]</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
 </ul>
 </li>
@@ -555,10 +555,12 @@
 <p>The format is based on <a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>, and this project adheres to
 <a class="reference external" href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <section id="unreleased">
-<h2>Unreleased<a class="headerlink" href="#unreleased" title="Link to this heading">#</a></h2>
+<h2>[Unreleased]<a class="headerlink" href="#unreleased" title="Link to this heading">#</a></h2>
 <section id="fixes">
 <h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
 <ul class="simple">
+<li><p>Don’t run dso pandocfilter if watermark/disclaimer are disabled entirely
+(<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/195/">#195</a>)</p></li>
 <li><p>The quarto disclaimer is now added as a native quarto callout instead of raw HTML, so it is also shown in
 non-HTML output formats such as PDF (Typst/LaTeX). The disclaimer is now handled by a lua filter instead of the
 watermark pandoc filter. Markdown formatting in the disclaimer text is now supported. Both filters are now
@@ -576,7 +578,10 @@ version of panflute for Typst support
 <li><p><code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">compile-config</span></code> no longer creates <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code> with mode <code class="docutils literal notranslate"><span class="pre">600</span></code>; newly
 created files now respect the umask
 (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pulls/187">#187</a>)</p></li>
-<li><p>Fix stage template gitignores so that DVC discovers <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> files in <code class="docutils literal notranslate"><span class="pre">input/</span></code>. Previously, <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">pull</span></code>/<code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">push</span></code> (and <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">pull</span></code>/<code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">push</span></code>) without explicit targets silently skipped them (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/189">#189</a>)</p></li>
+<li><p>Fix stage template gitignores so that DVC discovers <code class="docutils literal notranslate"><span class="pre">.dvc</span></code> files in <code class="docutils literal notranslate"><span class="pre">input/</span></code>.
+Previously, <code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">pull</span></code>/<code class="docutils literal notranslate"><span class="pre">dvc</span> <span class="pre">push</span></code> (and <code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">pull</span></code>/<code class="docutils literal notranslate"><span class="pre">dso</span> <span class="pre">push</span></code>) without explicit
+targets silently skipped them
+(<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/189">#189</a>)</p></li>
 </ul>
 </section>
 <section id="chore">
@@ -1310,7 +1315,7 @@ they are always relative to the compiled params.yaml files.</p></li>
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unreleased">Unreleased</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unreleased">[Unreleased]</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
 </ul>
 </li>
