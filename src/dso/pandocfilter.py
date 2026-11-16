@@ -1,12 +1,8 @@
 """
-Pandocfilter that add watermarks to quarto reports
+Pandocfilter that adds watermarks to images and plotly plots in quarto reports
 
- * warning box at the top
- * watermark to all PNG images
-
-Called internally by `dso exec quarto` via `python -m dso.pandocfilter {disclaimer,watermark}`.
-The `disclaimer` stage needs to run before quarto's filters (`pre-ast`), such that quarto
-renders the callout in all output formats. The `watermark` stage runs after quarto's filters.
+Called internally by `dso exec quarto` via `python -m dso.pandocfilter`.
+The disclaimer is not handled here, but by a lua filter (`assets/disclaimer.lua`).
 """
 
 import sys
@@ -16,7 +12,7 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 
 import PIL
-from panflute import Div, Image, Para, RawBlock, Space, Str, run_filter
+from panflute import Image, RawBlock, run_filter
 from panflute.elements import RAW_FORMATS
 
 from dso._logging import log
@@ -24,35 +20,6 @@ from dso._watermark import Watermarker, get_plotly_watermark_html
 
 # panflute doesn't know about the typst format yet and would fail on raw typst blocks (e.g. quarto callouts)
 RAW_FORMATS.add("typst")
-
-
-def _text_to_inlines(text):
-    """Convert plain text into a list of panflute inline elements (words separated by spaces)."""
-    inlines = []
-    for word in str(text).split():
-        if inlines:
-            inlines.append(Space())
-        inlines.append(Str(word))
-    return inlines
-
-
-def _get_disclaimer_box(title, text):
-    """
-    Build the disclaimer as a quarto callout.
-
-    Using a native callout Div (rather than raw HTML) ensures quarto renders
-    it in all output formats (e.g. HTML, Typst, LaTeX).
-    """
-    title = " ".join(str(title).split())
-    return Div(Para(*_text_to_inlines(text)), classes=["callout-important"], attributes={"title": title})
-
-
-def prepare(doc):
-    """Panflutes prepare"""
-    disclaimer_title = doc.get_metadata("disclaimer.title")
-    disclaimer_text = doc.get_metadata("disclaimer.text")
-    if disclaimer_title is not None and disclaimer_text is not None:
-        doc.content.insert(0, _get_disclaimer_box(disclaimer_title, disclaimer_text))
 
 
 def _sanitize_watermark_config(config):
@@ -115,15 +82,5 @@ def action(elem, doc):
     return elem
 
 
-def _noop(elem, doc):
-    return elem
-
-
 if __name__ == "__main__":
-    stage = sys.argv[1] if len(sys.argv) > 1 else None
-    if stage == "disclaimer":
-        run_filter(_noop, prepare=prepare, doc=None)
-    elif stage == "watermark":
-        run_filter(action, doc=None)
-    else:
-        run_filter(action, prepare=prepare, doc=None)
+    run_filter(action, doc=None)

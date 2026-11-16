@@ -14,10 +14,10 @@ The format is based on [Keep a Changelog][], and this project adheres to
 ### Fixes
 
 - The quarto disclaimer is now added as a native quarto callout instead of raw HTML, so it is also shown in
-  non-HTML output formats such as PDF (Typst/LaTeX). To this end, the disclaimer part of the pandoc filter now runs
-  at quarto's `pre-ast` entry point, while watermarking still runs after quarto's filters. The pandoc filter
-  also no longer fails on raw Typst blocks
-  ([#192](https://github.com/Boehringer-Ingelheim/dso/issues/192))
+  non-HTML output formats such as PDF (Typst/LaTeX). The disclaimer is now handled by a lua filter registered in
+  `_quarto.yml` instead of the watermark pandoc filter. Markdown formatting in the disclaimer text is now supported.
+  The watermark pandoc filter also no longer fails on raw Typst blocks
+  ([#198](https://github.com/Boehringer-Ingelheim/dso/pull/198))
 
 ## v1.1.1
 
