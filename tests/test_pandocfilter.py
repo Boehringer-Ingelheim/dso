@@ -4,17 +4,33 @@ from shutil import copyfile
 from textwrap import dedent
 
 from click.testing import CliRunner
-from panflute import Doc, MetaMap, MetaString, Para, RawBlock, Str
+from panflute import Div, Doc, MetaMap, MetaString, Para, RawBlock, Str, stringify
 
 from dso._quarto import render_quarto
 from dso.cli import dso_exec
-from dso.pandocfilter import action
+from dso.pandocfilter import action, prepare
 from tests.conftest import TESTDATA
 
 
 def _doc_with_watermark(text="WATERMARK"):
     """Build a minimal panflute Doc carrying a watermark config in its metadata."""
     return Doc(metadata=MetaMap(watermark=MetaMap(text=MetaString(text))))
+
+
+def test_prepare_adds_disclaimer_callout():
+    """The disclaimer is added as a native quarto callout (not raw HTML) so it works in all output formats."""
+    doc = Doc(
+        Para(Str("content")),
+        metadata=MetaMap(disclaimer=MetaMap(title=MetaString("My Title"), text=MetaString("This is a\ndisclaimer"))),
+    )
+
+    prepare(doc)
+
+    box = doc.content[0]
+    assert isinstance(box, Div)
+    assert "callout-important" in box.classes
+    assert box.attributes["title"] == "My Title"
+    assert stringify(box).strip() == "This is a disclaimer"
 
 
 def test_action_watermarks_plotly():
@@ -148,6 +164,7 @@ def test_pandocfilter(quarto_stage):
     assert "Disclaimer" in out_html
     assert "This is a disclaimer" in out_html
     assert "callout-important" in out_html
+    assert "callout-titled" in out_html
 
 
 def test_override_config(quarto_stage):
@@ -187,3 +204,39 @@ def test_override_config(quarto_stage):
 
     out_html = (quarto_stage / "report" / "quarto_stage.html").read_text()
     assert "test disclaimer" not in out_html
+
+
+def test_disclaimer_typst(quarto_stage):
+    """The disclaimer must also be rendered in non-HTML output formats (e.g. typst)"""
+    quarto_yml = dedent(
+        """\
+        format:
+            typst:
+                keep-typ: true
+        disclaimer:
+            title: Disclaimer
+            text: This is a disclaimer
+        watermark:
+            text: WATERMARK
+        """
+    )
+    (quarto_stage / "src" / "_quarto.yml").write_text(quarto_yml)
+    (quarto_stage / "src" / "quarto_stage.qmd").write_text("This is a quarto document\n")
+
+    render_quarto(
+        quarto_stage / "src",
+        quarto_stage / "report",
+        before_script="",
+        cwd=quarto_stage,
+        with_pandocfilter=True,
+    )
+
+    typ_files = list((quarto_stage / "src").glob("*.typ")) + list((quarto_stage / "report").glob("*.typ"))
+    assert typ_files
+    out_typ = typ_files[0].read_text()
+    # rendered as a proper quarto callout
+    assert "#callout(" in out_typ
+    assert "Disclaimer" in out_typ
+    assert "This is a disclaimer" in out_typ
+    # the temporarily registered pandocfilter is removed from _quarto.yml again
+    assert (quarto_stage / "src" / "_quarto.yml").read_text() == quarto_yml

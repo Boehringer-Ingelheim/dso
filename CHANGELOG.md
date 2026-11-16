@@ -9,6 +9,16 @@ The format is based on [Keep a Changelog][], and this project adheres to
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
 
+## Unreleased
+
+### Fixes
+
+- The quarto disclaimer is now added as a native quarto callout instead of raw HTML, so it is also shown in
+  non-HTML output formats such as PDF (Typst/LaTeX). To this end, the disclaimer part of the pandoc filter now runs
+  at quarto's `pre-ast` entry point, while watermarking still runs after quarto's filters. The pandoc filter
+  also no longer fails on raw Typst blocks
+  ([#192](https://github.com/Boehringer-Ingelheim/dso/issues/192))
+
 ## v1.1.1
 
 ### Fixes

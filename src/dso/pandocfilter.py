@@ -4,7 +4,9 @@ Pandocfilter that add watermarks to quarto reports
  * warning box at the top
  * watermark to all PNG images
 
-Called internally by `dso exec quarto` via `python -m dso.pandocfilter`.
+Called internally by `dso exec quarto` via `python -m dso.pandocfilter {disclaimer,watermark}`.
+The `disclaimer` stage needs to run before quarto's filters (`pre-ast`), such that quarto
+renders the callout in all output formats. The `watermark` stage runs after quarto's filters.
 """
 
 import sys
@@ -12,35 +14,37 @@ import urllib.parse
 from copy import copy
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from textwrap import dedent
 
 import PIL
-from panflute import Div, Image, RawBlock, run_filter
+from panflute import Div, Image, Para, RawBlock, Space, Str, run_filter
+from panflute.elements import RAW_FORMATS
 
 from dso._logging import log
 from dso._watermark import Watermarker, get_plotly_watermark_html
 
+# panflute doesn't know about the typst format yet and would fail on raw typst blocks (e.g. quarto callouts)
+RAW_FORMATS.add("typst")
+
+
+def _text_to_inlines(text):
+    """Convert plain text into a list of panflute inline elements (words separated by spaces)."""
+    inlines = []
+    for word in str(text).split():
+        if inlines:
+            inlines.append(Space())
+        inlines.append(Str(word))
+    return inlines
+
 
 def _get_disclaimer_box(title, text):
-    title = str(title).strip().replace("\n", " ")
-    text = str(text).strip().replace("\n", " ")
-    return dedent(
-        f"""\
-        <div class="callout callout-style-default callout-important callout-titled">
-        <div class="callout-header d-flex align-content-center">
-        <div class="callout-icon-container">
-        <i class="callout-icon"></i>
-        </div>
-        <div class="callout-title-container flex-fill">
-        {title}
-        </div>
-        </div>
-        <div class="callout-body-container callout-body">
-        <p>{text}</p>
-        </div>
-        </div>
-        """
-    )
+    """
+    Build the disclaimer as a quarto callout.
+
+    Using a native callout Div (rather than raw HTML) ensures quarto renders
+    it in all output formats (e.g. HTML, Typst, LaTeX).
+    """
+    title = " ".join(str(title).split())
+    return Div(Para(*_text_to_inlines(text)), classes=["callout-important"], attributes={"title": title})
 
 
 def prepare(doc):
@@ -48,8 +52,7 @@ def prepare(doc):
     disclaimer_title = doc.get_metadata("disclaimer.title")
     disclaimer_text = doc.get_metadata("disclaimer.text")
     if disclaimer_title is not None and disclaimer_text is not None:
-        div = Div(RawBlock(_get_disclaimer_box(disclaimer_title, disclaimer_text), format="html"))
-        doc.content.insert(0, div)
+        doc.content.insert(0, _get_disclaimer_box(disclaimer_title, disclaimer_text))
 
 
 def _sanitize_watermark_config(config):
@@ -112,5 +115,15 @@ def action(elem, doc):
     return elem
 
 
+def _noop(elem, doc):
+    return elem
+
+
 if __name__ == "__main__":
-    run_filter(action, prepare=prepare, doc=None)
+    stage = sys.argv[1] if len(sys.argv) > 1 else None
+    if stage == "disclaimer":
+        run_filter(_noop, prepare=prepare, doc=None)
+    elif stage == "watermark":
+        run_filter(action, doc=None)
+    else:
+        run_filter(action, prepare=prepare, doc=None)

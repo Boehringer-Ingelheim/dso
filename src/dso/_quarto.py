@@ -47,21 +47,26 @@ def render_quarto(
             f.unlink()
 
     # Enable pandocfilter if requested.
-    # We create a temporary script that then calls the current python binary with the dso.pandocfilter module
+    # We create temporary scripts that then call the current python binary with the dso.pandocfilter module
     # This may seem cumbersome, but we do it this way because
-    #  * pandoc only supports a single binary for `--filter`, referring to subcommands or `-m` is not possible here
+    #  * pandoc only supports a single binary for a filter, referring to subcommands or `-m` is not possible here
     #  * we want to ensure that exactly the same python/dso version is used for the pandocfilter as for the
     #    parent command (important when running through dso-mgr)
-    filter_script = None
+    # The filter runs in two stages:
+    #  * `disclaimer` is registered in `_quarto.yml` at the `pre-ast` entry point. Only then quarto processes
+    #    the disclaimer callout, which is required for it to be rendered in all output formats (e.g. PDF).
+    #    See https://github.com/Boehringer-Ingelheim/dso/issues/192
+    #  * `watermark` is passed via `--filter` and therefore runs after quarto's own filters
+    filter_scripts = {}
     if with_pandocfilter:
-        with tempfile.NamedTemporaryFile(delete=False, mode="w") as f:
-            f.write("#!/bin/bash\n")
-            f.write(f'{sys.executable} -m dso.pandocfilter "$@"\n')
-            filter_script = Path(f.name)
+        for stage in ["disclaimer", "watermark"]:
+            with tempfile.NamedTemporaryFile(delete=False, mode="w") as f:
+                f.write("#!/bin/bash\n")
+                f.write(f'{sys.executable} -m dso.pandocfilter {stage} "$@"\n')
+                filter_scripts[stage] = Path(f.name)
+            filter_scripts[stage].chmod(filter_scripts[stage].stat().st_mode | stat.S_IEXEC)
 
-        filter_script.chmod(filter_script.stat().st_mode | stat.S_IEXEC)
-
-        pandocfilter = f"--filter {filter_script}"
+        pandocfilter = f"--filter {filter_scripts['watermark']}"
     else:
         pandocfilter = ""
 
@@ -80,14 +85,37 @@ def render_quarto(
         quarto render "{quarto_dir}" --execute --output-dir "{report_dir}" {quiet} {pandocfilter}
         """
     )
-    res = subprocess.run(script, shell=True, executable="/bin/bash", cwd=cwd)
-
-    # clean up
-    if filter_script is not None:
-        filter_script.unlink()
+    try:
+        with _pre_ast_filter_in_quarto_config(filter_scripts.get("disclaimer"), quarto_dir):
+            res = subprocess.run(script, shell=True, executable="/bin/bash", cwd=cwd)
+    finally:
+        for filter_script in filter_scripts.values():
+            filter_script.unlink()
 
     if res.returncode:
         sys.exit(res.returncode)
+
+
+@contextmanager
+def _pre_ast_filter_in_quarto_config(filter_script: Path | None, quarto_dir: Path):
+    """Context manager that temporarily registers a json filter at the `pre-ast` entry point in `_quarto.yml`"""
+    if filter_script is None:
+        yield
+        return
+    config_file = quarto_dir / "_quarto.yml"
+    original_config = config_file.read_text() if config_file.exists() else None
+    yaml = YAML(typ="safe")
+    quarto_config = (yaml.load(original_config) if original_config is not None else None) or {}
+    filters = quarto_config.get("filters") or []
+    quarto_config["filters"] = [{"path": str(filter_script), "type": "json", "at": "pre-ast"}, *filters]
+    yaml.dump(quarto_config, config_file)
+    try:
+        yield
+    finally:
+        if original_config is None:
+            config_file.unlink()
+        else:
+            config_file.write_text(original_config)
 
 
 @contextmanager
