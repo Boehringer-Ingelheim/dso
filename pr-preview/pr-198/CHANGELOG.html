@@ -59,7 +59,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="_static/documentation_options.js?v=cb36dbae"></script>
+    <script src="_static/documentation_options.js?v=525bb144"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="Shell completion" href="cli_shell_completion.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+gc5e456652" />
+  <meta name="docsearch:version" content="0.1.dev1+gdc63d45d4" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -560,10 +560,10 @@
 <h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>The quarto disclaimer is now added as a native quarto callout instead of raw HTML, so it is also shown in
-non-HTML output formats such as PDF (Typst/LaTeX). To this end, the disclaimer part of the pandoc filter now runs
-at quarto’s <code class="docutils literal notranslate"><span class="pre">pre-ast</span></code> entry point, while watermarking still runs after quarto’s filters. The pandoc filter
-also no longer fails on raw Typst blocks
-(<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/issues/192">#192</a>)</p></li>
+non-HTML output formats such as PDF (Typst/LaTeX). The disclaimer is now handled by a lua filter registered in
+<code class="docutils literal notranslate"><span class="pre">_quarto.yml</span></code> instead of the watermark pandoc filter. Markdown formatting in the disclaimer text is now supported.
+The watermark pandoc filter also no longer fails on raw Typst blocks
+(<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/198">#198</a>)</p></li>
 </ul>
 </section>
 </section>
