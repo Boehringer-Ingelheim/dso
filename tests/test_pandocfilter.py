@@ -7,12 +7,12 @@ from pathlib import Path
 from shutil import copyfile
 from textwrap import dedent
 
-import panflute.elements
 import pytest
 from click.testing import CliRunner
 from panflute import Doc, Image, MetaMap, MetaString, Para, RawBlock, Str
+from ruamel.yaml import YAML
 
-from dso._quarto import render_quarto
+from dso._quarto import quarto_config_yml, render_quarto
 from dso.cli import dso_exec
 from dso.pandocfilter import _get_watermark_dir, action
 from tests.conftest import TESTDATA
@@ -21,6 +21,32 @@ from tests.conftest import TESTDATA
 def _doc_with_watermark(text="WATERMARK"):
     """Build a minimal panflute Doc carrying a watermark config in its metadata."""
     return Doc(metadata=MetaMap(watermark=MetaMap(text=MetaString(text))))
+
+
+def test_quarto_config_yml_registers_filters(tmp_path):
+    """Disclaimer and watermark filters are registered at the right entry points, in addition to user filters."""
+    config = {"disclaimer": {"title": "t", "text": "x"}, "watermark": {"text": "w"}, "filters": ["user.lua"]}
+    with quarto_config_yml(config, tmp_path):
+        written = YAML(typ="safe").load(tmp_path / "_quarto.yml")
+        user_filter, disclaimer_filter, watermark_filter = written["filters"]
+        assert user_filter == "user.lua"
+        assert disclaimer_filter["at"] == "pre-ast"
+        assert disclaimer_filter["path"].endswith("disclaimer.lua")
+        assert watermark_filter["at"] == "post-quarto"
+        assert watermark_filter["type"] == "json"
+        assert "dso.pandocfilter" in Path(watermark_filter["path"]).read_text()
+    # input config is not modified; _quarto.yml and the temporary filter script are cleaned up
+    assert config["filters"] == ["user.lua"]
+    assert not (tmp_path / "_quarto.yml").exists()
+    assert not Path(watermark_filter["path"]).exists()
+
+
+def test_quarto_config_yml_no_filters(tmp_path):
+    """Without disclaimer/watermark (or if they are disabled with a falsy value), no filter is registered."""
+    for config in [{}, {"disclaimer": None, "watermark": None}, {"disclaimer": "", "watermark": ""}, None]:
+        with quarto_config_yml(config, tmp_path):
+            written = YAML(typ="safe").load(tmp_path / "_quarto.yml") or {}
+        assert "filters" not in written
 
 
 def test_action_watermarks_plotly():
@@ -133,7 +159,7 @@ def test_pandocfilter(quarto_stage):
         with (quarto_stage / "src" / f"git_logo.{ext}").open("rb") as f:
             checksums_before[ext] = hashlib.file_digest(f, "md5").hexdigest()
 
-    (quarto_stage / "src" / "_quarto.yml").write_text(
+    quarto_config = YAML(typ="safe").load(
         dedent(
             """\
             format:
@@ -179,13 +205,13 @@ def test_pandocfilter(quarto_stage):
         )
     )
 
-    render_quarto(
-        quarto_stage / "src",
-        quarto_stage / "report",
-        before_script="",
-        cwd=quarto_stage,
-        with_pandocfilter=True,
-    )
+    with quarto_config_yml(quarto_config, quarto_stage / "src"):
+        render_quarto(
+            quarto_stage / "src",
+            quarto_stage / "report",
+            before_script="",
+            cwd=quarto_stage,
+        )
 
     checksums_after = {}
     for ext in ["png", "pdf", "svg"]:
@@ -198,26 +224,16 @@ def test_pandocfilter(quarto_stage):
     assert "Disclaimer" in out_html
     assert "This is a disclaimer" in out_html
     assert "callout-important" in out_html
+    # only present if quarto actually processed the callout
+    assert "callout-titled" in out_html
 
 
-@pytest.mark.skipif(
-    "typst" not in panflute.elements.RAW_FORMATS,
-    reason="installed panflute version does not support raw typst (sergiocorreia/panflute#265)",
-)
 def test_pandocfilter_typst(quarto_stage):
     """Watermarked images must be within the project directory, otherwise typst can't read them (#193)"""
     src = quarto_stage / "src"
     for ext in ["png", "svg"]:
         copyfile(TESTDATA / f"git_logo.{ext}", src / f"git_logo.{ext}")
-    (src / "_quarto.yml").write_text(
-        dedent(
-            """\
-            format: typst
-            watermark:
-                text: WATERMARK
-            """
-        )
-    )
+    quarto_config = {"format": "typst", "watermark": {"text": "WATERMARK"}}
     (src / "quarto_stage.qmd").write_text("![PNG Image](git_logo.png)\n\n![SVG Image](git_logo.svg)\n")
 
     def _project_files():
@@ -230,7 +246,8 @@ def test_pandocfilter_typst(quarto_stage):
 
     files_before = _project_files()
 
-    render_quarto(src, quarto_stage / "report", before_script="", cwd=quarto_stage, with_pandocfilter=True)
+    with quarto_config_yml(quarto_config, src):
+        render_quarto(src, quarto_stage / "report", before_script="", cwd=quarto_stage)
 
     assert (quarto_stage / "report" / "quarto_stage.pdf").exists()
     # original files are not modified and no leftover files are written into the project
@@ -274,3 +291,30 @@ def test_override_config(quarto_stage):
 
     out_html = (quarto_stage / "report" / "quarto_stage.html").read_text()
     assert "test disclaimer" not in out_html
+
+
+def test_disclaimer_typst(quarto_stage):
+    """The disclaimer must also be rendered in non-HTML output formats (e.g. typst)"""
+    # watermark is enabled to ensure the pandocfilter can handle the raw typst blocks generated by quarto
+    quarto_config = {
+        "format": {"typst": {"keep-typ": True}},
+        "disclaimer": {"title": "Disclaimer", "text": "This is a *disclaimer*"},
+        "watermark": {"text": "WATERMARK"},
+    }
+    (quarto_stage / "src" / "quarto_stage.qmd").write_text("This is a quarto document\n")
+
+    with quarto_config_yml(quarto_config, quarto_stage / "src"):
+        render_quarto(
+            quarto_stage / "src",
+            quarto_stage / "report",
+            before_script="",
+            cwd=quarto_stage,
+        )
+
+    typ_files = list((quarto_stage / "src").glob("*.typ")) + list((quarto_stage / "report").glob("*.typ"))
+    assert typ_files
+    out_typ = typ_files[0].read_text()
+    # rendered as a proper quarto callout
+    assert "#callout(" in out_typ
+    assert "Disclaimer" in out_typ
+    assert "This is a #emph[disclaimer]" in out_typ

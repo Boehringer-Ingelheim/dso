@@ -2,6 +2,7 @@
 /*.html
 # temporary quarto files
 *.rmarkdown
+**/*.quarto_ipynb
 /_quarto.yml
 /*_files/
 /*_cache/
