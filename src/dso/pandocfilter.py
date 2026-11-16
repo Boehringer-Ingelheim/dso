@@ -7,6 +7,9 @@ Pandocfilter that add watermarks to quarto reports
 Called internally by `dso exec quarto` via `python -m dso.pandocfilter`.
 """
 
+import base64
+import json
+import os
 import sys
 import urllib.parse
 from copy import copy
@@ -86,6 +89,42 @@ def _is_plotly_html(text: str) -> bool:
     return "html-widget" in text and "plotly" in text
 
 
+def _get_watermark_dir() -> Path | None:
+    """Get the directory where watermarked images are stored.
+
+    This is the quarto "mediabag" directory within the document's `<name>_files` folder. Quarto passes its
+    location (relative to the working directory of pandoc, i.e. the directory of the document) to filters via
+    the `QUARTO_FILTER_PARAMS` environment variable. Storing images there (instead of a system temp dir) is
+    important for output formats like typst that can only read files within the project directory.
+    The directory is temporary and gets cleaned up by quarto (unless it is needed as a resource for the output).
+
+    Returns None if the directory can't be determined (e.g. when not running through quarto).
+    """
+    params = os.environ.get("QUARTO_FILTER_PARAMS")
+    if not params:
+        return None
+    try:
+        mediabag_dir = json.loads(base64.b64decode(params)).get("mediabag-dir")
+    except ValueError:
+        log.debug("Could not parse QUARTO_FILTER_PARAMS")
+        return None
+    if not mediabag_dir:
+        return None
+    return Path(mediabag_dir)
+
+
+def _get_watermark_path(path: Path) -> Path:
+    """Get a new path for a watermarked version of `path`, so that the original image is not modified inplace."""
+    out_dir = _get_watermark_dir()
+    if out_dir is None:
+        with NamedTemporaryFile(delete=False, suffix=path.suffix) as f:
+            return Path(f.name)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    with NamedTemporaryFile(delete=False, dir=out_dir, prefix=f"{path.stem}.wm.", suffix=path.suffix) as f:
+        # keep the path relative to the document, as typst doesn't support absolute paths outside its root
+        return out_dir / Path(f.name).name
+
+
 def action(elem, doc):
     """Panflutes action"""
     watermark_config = _sanitize_watermark_config(doc.get_metadata("watermark"))
@@ -97,10 +136,9 @@ def action(elem, doc):
             try:
                 log.debug(f"Modifying image {elem.url}")
                 path = Path(urllib.parse.unquote(elem.url))
-                # use a temporary file to add the watermark, otherwise the original file may be modified inplace
-                out_path = NamedTemporaryFile(delete=False, suffix=path.suffix).name
+                out_path = _get_watermark_path(path)
                 Watermarker.add_watermark(path, out_path, **watermark_config)
-                elem.url = urllib.parse.quote(out_path)
+                elem.url = urllib.parse.quote(out_path.as_posix())
 
             except PIL.UnidentifiedImageError:
                 log.warning("Image could not be read by PIL. It will not receive a watermark.")

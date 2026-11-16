@@ -8,6 +8,14 @@ The format is based on [Keep a Changelog][], and this project adheres to
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## Unreleased
+
+### Fixes
+
+- Watermarked images in quarto reports are now written to the document's temporary `<name>_files/mediabag`
+  directory and referenced by a relative path instead of an absolute path in the system temp directory. This fixes
+  watermarks for Typst output, which can only read files within the project directory. Original images are still
+  never modified inplace ([#193](https://github.com/Boehringer-Ingelheim/dso/issues/193)).
 
 ## v1.1.1
 
