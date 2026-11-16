@@ -20,6 +20,10 @@ The format is based on [Keep a Changelog][], and this project adheres to
   registered in the temporary `_quarto.yml` instead of via the `--filter` CLI option. Requires the development
   version of panflute for Typst support
   ([#198](https://github.com/Boehringer-Ingelheim/dso/pull/198))
+- Watermarked images in quarto reports are now written to the document's temporary `<name>_files/mediabag`
+  directory and referenced by a relative path instead of an absolute path in the system temp directory. This fixes
+  watermarks for Typst output, which can only read files within the project directory. Original images are still
+  never modified inplace ([#197](https://github.com/Boehringer-Ingelheim/dso/pull/197)).
 
 ## v1.1.1
 
