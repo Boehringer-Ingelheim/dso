@@ -45,10 +45,12 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=4418a689" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx_autodoc_typehints.css?v=057ac668" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=6a604523" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
     <link rel="stylesheet" type="text/css" href="_static/katex-math.css?v=05624691" />
-    <link rel="stylesheet" type="text/css" href="_static/click-extra.css?v=59573e2f" />
+    <link rel="stylesheet" type="text/css" href="_static/click-extra.css?v=a1a89c26" />
+    <link rel="stylesheet" type="text/css" href="_static/click-extra-crosshair.css?v=4d4ab7eb" />
+    <link rel="stylesheet" type="text/css" href="_static/click-extra-tabs.css?v=9483eb58" />
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=366103d0" />
   
   <!-- So that users can add custom icons -->
@@ -57,13 +59,14 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="_static/documentation_options.js?v=23a59554"></script>
+    <script src="_static/documentation_options.js?v=4c707f8e"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
-    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="_static/design-tabs.js?v=fcb327ea"></script>
+    <script src="_static/click-extra-crosshair.js?v=c8060333"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'contributing';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -72,7 +75,7 @@
     <link rel="prev" title="Changelog" href="CHANGELOG.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g171e63c97" />
+  <meta name="docsearch:version" content="0.1.dev1+g4814fa9ef" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -432,7 +435,7 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-documentation">Writing documentation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hints">Hints</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-docs-locally">Building the docs locally</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#docs-building">Building the docs locally</a></li>
 </ul>
 </li>
 </ul>
@@ -473,8 +476,8 @@ it is still possible to use different tools to manage dependencies, such as <cod
 you need additional python packages to <a class="reference internal" href="#writing-tests">run tests</a> and <a class="reference internal" href="#docs-building">build the documentation</a>.</p>
 <div class="sd-tab-set docutils">
 <input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="hatch" for="sd-tab-item-0">
-Hatch</label><div class="sd-tab-content docutils">
+<label aria-controls="sd-tab-item-0-content" class="sd-tab-label" data-sync-group="tab" data-sync-id="hatch" for="sd-tab-item-0">
+Hatch</label><div class="sd-tab-content docutils" id="sd-tab-item-0-content">
 <p>On the command line, you typically interact with hatch through its command line interface (CLI).
 Running one of the following commands will automatically resolve the environments for testing and
 building the documentation in the background:</p>
@@ -525,8 +528,8 @@ In this example, it would be <code class="docutils literal notranslate"><span cl
 <p>and manually point it to the python binary.</p>
 </div>
 <input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="uv" for="sd-tab-item-1">
-uv</label><div class="sd-tab-content docutils">
+<label aria-controls="sd-tab-item-1-content" class="sd-tab-label" data-sync-group="tab" data-sync-id="uv" for="sd-tab-item-1">
+uv</label><div class="sd-tab-content docutils" id="sd-tab-item-1-content">
 <p>A popular choice for managing virtual environments is <a class="reference external" href="https://docs.astral.sh/uv/">uv</a>.
 The main disadvantage compared to hatch is that it supports only a single environment per project at a time,
 which requires you to mix the dependencies for running tests and building docs.
@@ -540,8 +543,8 @@ only because an outdated sphinx plugin pins an older version.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">.venv</span></code> directory is typically automatically discovered by IDEs such as VS Code.</p>
 </div>
 <input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="pip" for="sd-tab-item-2">
-Pip</label><div class="sd-tab-content docutils">
+<label aria-controls="sd-tab-item-2-content" class="sd-tab-label" data-sync-group="tab" data-sync-id="pip" for="sd-tab-item-2">
+Pip</label><div class="sd-tab-content docutils" id="sd-tab-item-2-content">
 <p>Pip is nowadays mostly superseded by environment manager such as <a class="reference external" href="https://hatch.pypa.io/latest/">hatch</a>.
 However, for the sake of completeness, and since it’s ubiquitously available,
 we describe how you can manage environments manually using <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
@@ -579,15 +582,15 @@ Consider enabling this option for <a class="reference external" href="https://do
 <section id="writing-tests">
 <span id="id1"></span><h2>Writing tests<a class="headerlink" href="#writing-tests" title="Link to this heading">#</a></h2>
 <p>This package uses <a class="reference external" href="https://docs.pytest.org/">pytest</a> for automated testing.
-Please write <a class="reference external" href="https://scanpy.scverse.org/en/stable/dev/testing.html" title="(in Scanpy v1.12.4)"><span>Tests</span></a> for every function added to the package.</p>
+Please write <a class="reference external" href="https://scanpy.scverse.org/en/stable/dev/testing.html" title="(in Scanpy v1.13.0)"><span>Tests</span></a> for every function added to the package.</p>
 <p>Most IDEs integrate with pytest and provide a GUI to run tests.
 If you set up your virtual environments as described in <a class="reference internal" href="#installing-dev-dependencies">installing dev dependencies</a>,
 test cases should be automatically discovered by your IDE.</p>
 <p>Alternatively, you can run all tests from the command line by executing</p>
 <div class="sd-tab-set docutils">
 <input checked="checked" id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="hatch" for="sd-tab-item-3">
-Hatch</label><div class="sd-tab-content docutils">
+<label aria-controls="sd-tab-item-3-content" class="sd-tab-label" data-sync-group="tab" data-sync-id="hatch" for="sd-tab-item-3">
+Hatch</label><div class="sd-tab-content docutils" id="sd-tab-item-3-content">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span><span class="nb">test</span><span class="w">  </span><span class="c1"># test with the highest supported Python version</span>
 <span class="c1"># or</span>
 hatch<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--all<span class="w">  </span><span class="c1"># test with all supported Python versions</span>
@@ -595,15 +598,15 @@ hatch<span class="w"> </span><span class="nb">test</span><span class="w"> </span
 </div>
 </div>
 <input id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="uv" for="sd-tab-item-4">
-uv</label><div class="sd-tab-content docutils">
+<label aria-controls="sd-tab-item-4-content" class="sd-tab-label" data-sync-group="tab" data-sync-id="uv" for="sd-tab-item-4">
+uv</label><div class="sd-tab-content docutils" id="sd-tab-item-4-content">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>pytest
 </pre></div>
 </div>
 </div>
 <input id="sd-tab-item-5" name="sd-tab-set-1" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="pip" for="sd-tab-item-5">
-Pip</label><div class="sd-tab-content docutils">
+<label aria-controls="sd-tab-item-5-content" class="sd-tab-label" data-sync-group="tab" data-sync-id="pip" for="sd-tab-item-5">
+Pip</label><div class="sd-tab-content docutils" id="sd-tab-item-5-content">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
 pytest
 </pre></div>
@@ -651,7 +654,7 @@ This project uses <a class="reference external" href="https://www.sphinx-doc.org
 <li><p><a class="reference external" href="https://numpydoc.readthedocs.io/page/format.html">Numpy-style docstrings</a> (through the <a class="reference external" href="https://www.sphinx-doc.org/page/usage/extensions/napoleon.html">napoloen</a> extension).</p></li>
 <li><p><a class="reference external" href="https://github.com/tox-dev/sphinx-autodoc-typehints">sphinx-autodoc-typehints</a>, to automatically reference annotated input and output types</p></li>
 </ul>
-<p>See scanpy’s <a class="reference external" href="https://scanpy.scverse.org/en/stable/dev/documentation.html" title="(in Scanpy v1.12.4)"><span>Documentation</span></a> for more information on how to write your own.</p>
+<p>See scanpy’s <a class="reference external" href="https://scanpy.scverse.org/en/stable/dev/documentation.html" title="(in Scanpy v1.13.0)"><span>Documentation</span></a> for more information on how to write your own.</p>
 <section id="hints">
 <h3>Hints<a class="headerlink" href="#hints" title="Link to this heading">#</a></h3>
 <ul class="simple">
@@ -661,20 +664,20 @@ Only if you do so can sphinx automatically create a link to the external documen
 you can add an entry to the <code class="docutils literal notranslate"><span class="pre">nitpick_ignore</span></code> list in <code class="docutils literal notranslate"><span class="pre">docs/conf.py</span></code></p></li>
 </ul>
 </section>
-<section id="building-the-docs-locally">
-<span id="docs-building"></span><h3>Building the docs locally<a class="headerlink" href="#building-the-docs-locally" title="Link to this heading">#</a></h3>
+<section id="docs-building">
+<span id="building-the-docs-locally"></span><h3>Building the docs locally<a class="headerlink" href="#docs-building" title="Link to this heading">#</a></h3>
 <div class="sd-tab-set docutils">
 <input checked="checked" id="sd-tab-item-6" name="sd-tab-set-2" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="hatch" for="sd-tab-item-6">
-Hatch</label><div class="sd-tab-content docutils">
+<label aria-controls="sd-tab-item-6-content" class="sd-tab-label" data-sync-group="tab" data-sync-id="hatch" for="sd-tab-item-6">
+Hatch</label><div class="sd-tab-content docutils" id="sd-tab-item-6-content">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hatch<span class="w"> </span>run<span class="w"> </span>docs:build
 hatch<span class="w"> </span>run<span class="w"> </span>docs:open
 </pre></div>
 </div>
 </div>
 <input id="sd-tab-item-7" name="sd-tab-set-2" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="uv" for="sd-tab-item-7">
-uv</label><div class="sd-tab-content docutils">
+<label aria-controls="sd-tab-item-7-content" class="sd-tab-label" data-sync-group="tab" data-sync-id="uv" for="sd-tab-item-7">
+uv</label><div class="sd-tab-content docutils" id="sd-tab-item-7-content">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs
 uv<span class="w"> </span>run<span class="w"> </span>sphinx-build<span class="w"> </span>-M<span class="w"> </span>html<span class="w"> </span>.<span class="w"> </span>_build<span class="w"> </span>-W
 <span class="o">(</span>xdg-<span class="o">)</span>open<span class="w"> </span>_build/html/index.html
@@ -682,8 +685,8 @@ uv<span class="w"> </span>run<span class="w"> </span>sphinx-build<span class="w"
 </div>
 </div>
 <input id="sd-tab-item-8" name="sd-tab-set-2" type="radio">
-<label class="sd-tab-label" data-sync-group="tab" data-sync-id="pip" for="sd-tab-item-8">
-Pip</label><div class="sd-tab-content docutils">
+<label aria-controls="sd-tab-item-8-content" class="sd-tab-label" data-sync-group="tab" data-sync-id="pip" for="sd-tab-item-8">
+Pip</label><div class="sd-tab-content docutils" id="sd-tab-item-8-content">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
 <span class="nb">cd</span><span class="w"> </span>docs
 sphinx-build<span class="w"> </span>-M<span class="w"> </span>html<span class="w"> </span>.<span class="w"> </span>_build<span class="w"> </span>-W
@@ -755,7 +758,7 @@ sphinx-build<span class="w"> </span>-M<span class="w"> </span>html<span class="w
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-documentation">Writing documentation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hints">Hints</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-docs-locally">Building the docs locally</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#docs-building">Building the docs locally</a></li>
 </ul>
 </li>
 </ul>
