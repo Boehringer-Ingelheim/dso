@@ -38,8 +38,8 @@ def test_quarto_config_yml_registers_filters(tmp_path):
 
 
 def test_quarto_config_yml_no_filters(tmp_path):
-    """Without disclaimer/watermark (or if they are overridden with null), no filter is registered."""
-    for config in [{}, {"disclaimer": None, "watermark": None}, None]:
+    """Without disclaimer/watermark (or if they are disabled with a falsy value), no filter is registered."""
+    for config in [{}, {"disclaimer": None, "watermark": None}, {"disclaimer": "", "watermark": ""}, None]:
         with quarto_config_yml(config, tmp_path):
             written = YAML(typ="safe").load(tmp_path / "_quarto.yml") or {}
         assert "filters" not in written

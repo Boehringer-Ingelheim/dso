@@ -14,7 +14,6 @@ The format is based on [Keep a Changelog][], and this project adheres to
 
 - Don't run dso pandocfilter if watermark/disclaimer are disabled entirely
   ([#195](https://github.com/Boehringer-Ingelheim/dso/pull/195/))
-
 - The quarto disclaimer is now added as a native quarto callout instead of raw HTML, so it is also shown in
   non-HTML output formats such as PDF (Typst/LaTeX). The disclaimer is now handled by a lua filter instead of the
   watermark pandoc filter. Markdown formatting in the disclaimer text is now supported. Both filters are now
