@@ -254,6 +254,36 @@ def test_pandocfilter_typst(quarto_stage):
     assert _project_files() == files_before
 
 
+def test_pandocfilter_isolated_from_before_script(quarto_stage, tmp_path):
+    """The pandocfilter must not pick up python packages from a PYTHONPATH set in `before_script`.
+
+    Reproduces a failure where `module load` of a different python version prepended its site-packages
+    to PYTHONPATH. `pypdf` then imported an incompatible `cryptography` -> `cffi`, failing with
+    "Version mismatch: this is the 'cffi' package version 1.15.1 [...]".
+    """
+    foreign_site_packages = tmp_path / "foreign_site_packages"
+    for pkg, code in {
+        "cryptography": "import cffi\n",
+        "cffi": "raise Exception(\"Version mismatch: this is the 'cffi' package version 1.15.1\")\n",
+    }.items():
+        (foreign_site_packages / pkg).mkdir(parents=True)
+        (foreign_site_packages / pkg / "__init__.py").write_text(code)
+
+    src = quarto_stage / "src"
+    copyfile(TESTDATA / "git_logo.png", src / "git_logo.png")
+    (src / "quarto_stage.qmd").write_text("![PNG Image](git_logo.png)\n")
+
+    with quarto_config_yml({"watermark": {"text": "WATERMARK"}}, src):
+        render_quarto(
+            src,
+            quarto_stage / "report",
+            before_script=f'export PYTHONPATH="{foreign_site_packages}"',
+            cwd=quarto_stage,
+        )
+
+    assert "git_logo.wm." in (quarto_stage / "report" / "quarto_stage.html").read_text()
+
+
 def test_override_config(quarto_stage):
     """Test that it's possible to remove a watermark/disclaimer by overriding the config with null"""
     # I didn't find a straightforward way of testing programmatically that there's really no watermark.
