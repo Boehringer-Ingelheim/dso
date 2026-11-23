@@ -27,8 +27,7 @@ dependencies = [
   "dvc",
   "hiyapyco>=0.7",
   "jinja2",
-  # dev version required for typst support (https://github.com/sergiocorreia/panflute/pull/244)
-  "panflute @ git+https://github.com/sergiocorreia/panflute@1ad0ad77267de77976f7f18fbb49715748f79375",
+  "panflute>=3",      # typst support added in 3.0
   "pillow",
   "prek",
   "pypdf",
