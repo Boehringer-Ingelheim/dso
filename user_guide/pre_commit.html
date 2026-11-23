@@ -59,7 +59,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../_static/documentation_options.js?v=54ba48c2"></script>
+    <script src="../_static/documentation_options.js?v=c55aaf33"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="Configuration files" href="params_files.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g1b04a90ff" />
+  <meta name="docsearch:version" content="0.1.dev1+g951c76af5" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -445,12 +445,18 @@ If the checks fail, the commit will be aborted and needs to be retried once the 
 fixed. Some issues can automatically be fixed by the hooks.</p>
 <p>Pre-commit hooks are defined in a <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> file at the root
 of a repository. The <a class="reference internal" href="templates.html"><span class="std std-doc">DSO project template</span></a> comes with a default configuration that is detailled below.</p>
+<p>DSO uses <a class="reference external" href="https://prek.j178.dev/">prek</a> to manage and run the hooks. prek is a fast, drop-in replacement
+for <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> that reads the same <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> file. It is installed automatically as a dependency of DSO.</p>
 <p>To activate pre-commit integration, the hooks need to be installed in each repository separately. The DSO CLI
 will ask the user whether to do so. You can also install the hooks manually by running</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pre-commit<span class="w"> </span>install
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>prek<span class="w"> </span>install
 </pre></div>
 </div>
-<p>This will write the hooks into the <code class="docutils literal notranslate"><span class="pre">.git</span></code> directory.</p>
+<p>This will write the hooks into the <code class="docutils literal notranslate"><span class="pre">.git</span></code> directory.
+To run all hooks on all files (not only the staged ones), use</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>prek<span class="w"> </span>run<span class="w"> </span>--all-files
+</pre></div>
+</div>
 <section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Let’s assume we made some changes that are already in the git staging area (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code>) and are about

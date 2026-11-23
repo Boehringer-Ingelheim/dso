@@ -87,6 +87,9 @@ dso:
 
 ![quarto disclaimer](../img/dso-quarto-disclaimer.png)
 
+The disclaimer is added as a quarto [callout](https://quarto.org/docs/authoring/callouts.html) and is therefore
+shown in all output formats (e.g. HTML and PDF via Typst or LaTeX). The text may contain markdown formatting.
+
 ## Watermarking
 
 DSO can automatically add watermarks to all plots in a quarto document. Again, this might be useful for
