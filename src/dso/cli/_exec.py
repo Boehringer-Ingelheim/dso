@@ -79,7 +79,6 @@ def dso_exec_quarto(stage: str, skip_compile: bool = True):
             report_dir=stage_dir / "report",
             before_script=before_script,
             cwd=stage_dir,
-            with_pandocfilter=bool(quarto_config.get("watermark")) or bool(quarto_config.get("disclaimer")),
         )
 
 

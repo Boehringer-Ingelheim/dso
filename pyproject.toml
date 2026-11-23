@@ -27,7 +27,7 @@ dependencies = [
   "dvc",
   "hiyapyco>=0.7",
   "jinja2",
-  "panflute",
+  "panflute>=3",      # typst support added in 3.0
   "pillow",
   "prek",
   "pypdf",
@@ -81,6 +81,7 @@ doc = [
 
 [tool.hatch]
 version.source = "vcs"
+metadata.allow-direct-references = true
 build.targets.wheel.packages = [ "src/dso" ]
 envs.default.installer = "uv"
 envs.default.dependency-groups = [ "dev" ]

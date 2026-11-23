@@ -1,10 +1,8 @@
 """
-Pandocfilter that add watermarks to quarto reports
+Pandocfilter that adds watermarks to images and plotly plots in quarto reports
 
- * warning box at the top
- * watermark to all PNG images
-
-Called internally by `dso exec quarto` via `python -m dso.pandocfilter`.
+Registered by `dso exec quarto` in `_quarto.yml` and called via `python -m dso.pandocfilter`.
+The disclaimer is not handled here, but by a lua filter (`assets/disclaimer.lua`).
 """
 
 import base64
@@ -15,44 +13,12 @@ import urllib.parse
 from copy import copy
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from textwrap import dedent
 
 import PIL
-from panflute import Div, Image, RawBlock, run_filter
+from panflute import Image, RawBlock, run_filter
 
 from dso._logging import log
 from dso._watermark import Watermarker, get_plotly_watermark_html
-
-
-def _get_disclaimer_box(title, text):
-    title = str(title).strip().replace("\n", " ")
-    text = str(text).strip().replace("\n", " ")
-    return dedent(
-        f"""\
-        <div class="callout callout-style-default callout-important callout-titled">
-        <div class="callout-header d-flex align-content-center">
-        <div class="callout-icon-container">
-        <i class="callout-icon"></i>
-        </div>
-        <div class="callout-title-container flex-fill">
-        {title}
-        </div>
-        </div>
-        <div class="callout-body-container callout-body">
-        <p>{text}</p>
-        </div>
-        </div>
-        """
-    )
-
-
-def prepare(doc):
-    """Panflutes prepare"""
-    disclaimer_title = doc.get_metadata("disclaimer.title")
-    disclaimer_text = doc.get_metadata("disclaimer.text")
-    if disclaimer_title is not None and disclaimer_text is not None:
-        div = Div(RawBlock(_get_disclaimer_box(disclaimer_title, disclaimer_text), format="html"))
-        doc.content.insert(0, div)
 
 
 def _sanitize_watermark_config(config):
@@ -163,4 +129,4 @@ def action(elem, doc):
 
 
 if __name__ == "__main__":
-    run_filter(action, prepare=prepare, doc=None)
+    run_filter(action, doc=None)
