@@ -95,6 +95,7 @@ def quarto_config_yml(quarto_config: dict | None, quarto_dir: Path):
     if quarto_config.get("watermark"):
         with tempfile.NamedTemporaryFile(delete=False, mode="w") as f:
             f.write("#!/bin/bash\n")
+            # -I for environment isolation: ignore e.g. PYTHONPATH  that might have been set in `before_script`.
             f.write(f'{shlex.quote(sys.executable)} -I -m dso.pandocfilter "$@"\n')
             filter_script = Path(f.name)
         filter_script.chmod(filter_script.stat().st_mode | stat.S_IEXEC)

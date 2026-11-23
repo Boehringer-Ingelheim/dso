@@ -8,31 +8,45 @@ The format is based on [Keep a Changelog][], and this project adheres to
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## v1.1.3
+
+### Fixes
+
+- Run the watermark pandoc filter in Python's isolated mode (`python -I`), so
+  that environment variables set in `before_script` (e.g. a `PYTHONPATH` from
+  loading an environment module) can't make the filter import incompatible
+  packages. ([#202](https://github.com/Boehringer-Ingelheim/dso/pull/202))
+
 ## v1.1.2
 
 ### Chore
 
-- Switch from `pre-commit` to [prek](https://prek.j178.dev/) for managing git hooks.
-  `prek` replaces `pre-commit` as a dependency and `dso` now installs hooks with `prek install`.
-  The `.pre-commit-config.yaml` format is unchanged
+- Switch from `pre-commit` to [prek](https://prek.j178.dev/) for managing git
+  hooks. `prek` replaces `pre-commit` as a dependency and `dso` now installs
+  hooks with `prek install`. The `.pre-commit-config.yaml` format is unchanged
   ([#181](https://github.com/Boehringer-Ingelheim/dso/issues/181))
 
 ### Fixes
 
 - Don't run dso pandocfilter if watermark/disclaimer are disabled entirely
   ([#195](https://github.com/Boehringer-Ingelheim/dso/pull/195/))
-- The quarto disclaimer is now added as a native quarto callout instead of raw HTML, so it is also shown in
-  non-HTML output formats such as PDF (Typst/LaTeX). The disclaimer is now handled by a lua filter instead of the
-  watermark pandoc filter. Markdown formatting in the disclaimer text is now supported. Both filters are now
-  registered in the temporary `_quarto.yml` instead of via the `--filter` CLI option. Requires the development
-  version of panflute for Typst support
+- The quarto disclaimer is now added as a native quarto callout instead of raw
+  HTML, so it is also shown in non-HTML output formats such as PDF
+  (Typst/LaTeX). The disclaimer is now handled by a lua filter instead of the
+  watermark pandoc filter. Markdown formatting in the disclaimer text is now
+  supported. Both filters are now registered in the temporary `_quarto.yml`
+  instead of via the `--filter` CLI option. Requires the development version of
+  panflute for Typst support
   ([#198](https://github.com/Boehringer-Ingelheim/dso/pull/198))
-- Watermarked images in quarto reports are now written to the document's temporary `<name>_files/mediabag`
-  directory and referenced by a relative path instead of an absolute path in the system temp directory. This fixes
-  watermarks for Typst output, which can only read files within the project directory. Original images are still
-  never modified inplace ([#197](https://github.com/Boehringer-Ingelheim/dso/pull/197)).
-- Add `**/*.quarto_ipynb` to the `.gitignore` of quarto stage templates. Otherwise, quarto (>= 1.5) appends
-  it to `src/.gitignore` when rendering the stage, leaving uncommitted changes in the git repo
+- Watermarked images in quarto reports are now written to the document's
+  temporary `<name>_files/mediabag` directory and referenced by a relative path
+  instead of an absolute path in the system temp directory. This fixes
+  watermarks for Typst output, which can only read files within the project
+  directory. Original images are still never modified inplace
+  ([#197](https://github.com/Boehringer-Ingelheim/dso/pull/197)).
+- Add `**/*.quarto_ipynb` to the `.gitignore` of quarto stage templates.
+  Otherwise, quarto (>= 1.5) appends it to `src/.gitignore` when rendering the
+  stage, leaving uncommitted changes in the git repo
   ([#198](https://github.com/Boehringer-Ingelheim/dso/pull/198))
 
 ## v1.1.1
