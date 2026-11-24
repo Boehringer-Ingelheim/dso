@@ -59,7 +59,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="_static/documentation_options.js?v=f82a5725"></script>
+    <script src="_static/documentation_options.js?v=b5dec427"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="Shell completion" href="cli_shell_completion.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g095ff9f90" />
+  <meta name="docsearch:version" content="0.1.dev1+g2291e4e29" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -568,6 +568,11 @@
 that environment variables set in <code class="docutils literal notranslate"><span class="pre">before_script</span></code> (e.g. a <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> from
 loading an environment module) can’t make the filter import incompatible
 packages. (<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/pull/202">#202</a>)</p></li>
+<li><p>Add the watermark to R plotly widgets that are printed from a <code class="docutils literal notranslate"><span class="pre">results:</span> <span class="pre">asis</span></code>
+chunk (e.g. in a loop via <code class="docutils literal notranslate"><span class="pre">print(htmltools::tagList(widget))</span></code>). In that case
+pandoc parses the widget container into a native <code class="docutils literal notranslate"><span class="pre">Div</span></code> instead of a raw HTML
+block, which was previously not detected by the watermark filter.
+(<a class="reference external" href="https://github.com/Boehringer-Ingelheim/dso/issues/200">#200</a>)</p></li>
 </ul>
 </section>
 </section>
