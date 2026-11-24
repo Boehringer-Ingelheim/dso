@@ -15,10 +15,10 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 
 import PIL
-from panflute import Image, RawBlock, run_filter
+from panflute import Div, Image, RawBlock, run_filter
 
 from dso._logging import log
-from dso._watermark import Watermarker, get_plotly_watermark_html
+from dso._watermark import Watermarker, get_plotly_watermark_html, get_plotly_watermark_parts
 
 
 def _sanitize_watermark_config(config):
@@ -53,6 +53,17 @@ def _is_plotly_html(text: str) -> bool:
     # "html-widget" classes (order may vary). The "html-widget" class (with hyphen)
     # only appears on the widget container, not in the JSON payload.
     return "html-widget" in text and "plotly" in text
+
+
+def _is_plotly_div(elem: Div) -> bool:
+    """Return whether a native pandoc `Div` is the container of an (interactive) plotly plot.
+
+    This happens if the widget HTML is written directly into the markdown (e.g. via
+    ``print(htmltools::tagList(widget))`` in a ``results: asis`` chunk). Pandoc then parses the
+    container ``<div>`` into a native `Div`, followed by a separate `RawBlock` with the JSON payload.
+    """
+    classes = set(elem.classes)
+    return {"plotly", "html-widget"} <= classes or "plotly-graph-div" in classes
 
 
 def _get_watermark_dir() -> Path | None:
@@ -124,6 +135,18 @@ def action(elem, doc):
         elif isinstance(elem, RawBlock) and elem.format == "html" and _is_plotly_html(elem.text):
             log.debug("Adding watermark to plotly plot")
             elem.text = get_plotly_watermark_html(elem.text, **watermark_config)
+
+        elif isinstance(elem, Div) and _is_plotly_div(elem):
+            log.debug("Adding watermark to plotly plot")
+            style_html, overlay_html = get_plotly_watermark_parts(**watermark_config)
+            # The JSON payload following the div doesn't need to be wrapped, as plotly renders into the div.
+            return Div(
+                RawBlock(style_html, format="html"),
+                elem,
+                RawBlock(overlay_html, format="html"),
+                classes=["dso-watermark-container"],
+                attributes={"style": "position:relative;"},
+            )
 
     return elem
 

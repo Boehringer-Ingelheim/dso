@@ -16,6 +16,11 @@ The format is based on [Keep a Changelog][], and this project adheres to
   that environment variables set in `before_script` (e.g. a `PYTHONPATH` from
   loading an environment module) can't make the filter import incompatible
   packages. ([#202](https://github.com/Boehringer-Ingelheim/dso/pull/202))
+- Add the watermark to R plotly widgets that are printed from a `results: asis`
+  chunk (e.g. in a loop via `print(htmltools::tagList(widget))`). In that case
+  pandoc parses the widget container into a native `Div` instead of a raw HTML
+  block, which was previously not detected by the watermark filter.
+  ([#200](https://github.com/Boehringer-Ingelheim/dso/issues/200))
 
 ## v1.1.2
 

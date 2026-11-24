@@ -9,7 +9,7 @@ from textwrap import dedent
 
 import pytest
 from click.testing import CliRunner
-from panflute import Doc, Image, MetaMap, MetaString, Para, RawBlock, Str
+from panflute import Div, Doc, Image, MetaMap, MetaString, Para, RawBlock, Str
 from ruamel.yaml import YAML
 
 from dso._quarto import quarto_config_yml, render_quarto
@@ -80,6 +80,31 @@ def test_action_watermarks_plotly_htmlwidget():
     assert 'data-for="htmlwidget-2abd"' in result.text
     assert "dso-watermark-overlay" in result.text
     assert "pointer-events:none" in result.text
+
+
+@pytest.mark.parametrize("classes", [["plotly", "html-widget", "html-fill-item"], ["plotly-graph-div"]])
+def test_action_watermarks_plotly_div(classes):
+    """A native Div holding a plotly plot (e.g. from an R `results: asis` chunk) gets wrapped with the overlay."""
+    doc = _doc_with_watermark()
+    elem = Div(identifier="htmlwidget-6bf0", classes=classes, attributes={"style": "width:100%;height:400px;"})
+
+    result = action(elem, doc)
+
+    assert isinstance(result, Div)
+    assert result.classes == ["dso-watermark-container"]
+    assert result.attributes["style"] == "position:relative;"
+    style, plot, overlay = result.content
+    assert "modebar-btn" in style.text
+    assert plot is elem
+    assert "dso-watermark-overlay" in overlay.text
+
+
+def test_action_ignores_non_plotly_div():
+    """A Div that is not a plotly plot is left untouched."""
+    doc = _doc_with_watermark()
+    elem = Div(classes=["html-widget", "leaflet"])
+
+    assert action(elem, doc) is elem
 
 
 def test_action_ignores_non_plotly_rawblock():
