@@ -475,8 +475,8 @@ class PDFWatermarker(Watermarker):
         return bytes(pdf)
 
 
-def get_plotly_watermark_html(inner_html: str, **kwargs) -> str:
-    """Wrap the HTML of an (interactive) plotly plot with a tiled watermark overlay.
+def get_plotly_watermark_parts(**kwargs) -> tuple[str, str]:
+    """Get the HTML snippets needed to add a tiled watermark overlay to an (interactive) plotly plot.
 
     The watermark is rendered as a repeating, semi-transparent SVG tile placed on top of
     the plot (high ``z-index``). The overlay does not capture pointer events
@@ -489,14 +489,18 @@ def get_plotly_watermark_html(inner_html: str, **kwargs) -> str:
     plotly renders for both Python plotly and R/htmlwidgets. Note that the title text is
     locale-dependent: if plotly is ever localized, the selector would need to be adjusted.
 
+    Both snippets need to be placed inside a container with class ``dso-watermark-container``
+    and ``position:relative``, the style before and the overlay after the plot.
+
     Parameters
     ----------
-    inner_html
-        The original HTML of the plotly plot (the ``<div class="plotly-graph-div">`` and its
-        accompanying ``<script>``).
     kwargs
         Watermark options forwarded to :class:`SVGWatermarker` (e.g. ``text``, ``tile_size``,
         ``font_size``, ``font_color``).
+
+    Returns
+    -------
+    A tuple ``(style_html, overlay_html)``.
     """
     wm = SVGWatermarker(**kwargs)
     tile_w, tile_h = wm.tile_size
@@ -516,4 +520,22 @@ def get_plotly_watermark_html(inner_html: str, **kwargs) -> str:
     # (case-insensitive via the `i` flag); locale-dependent on the English title text.
     style = '<style>.dso-watermark-container .modebar-btn[data-title*="download" i]{display:none!important;}</style>'
 
+    return style, overlay
+
+
+def get_plotly_watermark_html(inner_html: str, **kwargs) -> str:
+    """Wrap the HTML of an (interactive) plotly plot with a tiled watermark overlay.
+
+    See :func:`get_plotly_watermark_parts` for details.
+
+    Parameters
+    ----------
+    inner_html
+        The original HTML of the plotly plot (the ``<div class="plotly-graph-div">`` and its
+        accompanying ``<script>``).
+    kwargs
+        Watermark options forwarded to :class:`SVGWatermarker` (e.g. ``text``, ``tile_size``,
+        ``font_size``, ``font_color``).
+    """
+    style, overlay = get_plotly_watermark_parts(**kwargs)
     return f'<div class="dso-watermark-container" style="position:relative;">{style}{inner_html}{overlay}</div>'
